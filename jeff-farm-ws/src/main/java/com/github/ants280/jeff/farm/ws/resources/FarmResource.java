@@ -2,6 +2,7 @@ package com.github.ants280.jeff.farm.ws.resources;
 
 import com.github.ants280.jeff.farm.ws.dao.FarmDao;
 import com.github.ants280.jeff.farm.ws.entity.Farm;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -42,6 +43,16 @@ public class FarmResource
 	public Response getFarms()
 	{
 		List<Farm> farms = farmDao.read();
+		
+		Farm farm1 = new Farm();
+		farm1.setId(1);
+		farm1.setName("farm1");
+		farm1.setLocation("location1");
+		Farm farm2 = new Farm();
+		farm2.setId(2);
+		farm2.setName("farm2");
+		farm2.setLocation("location2");
+		farms = Arrays.asList(farm1, farm2);
 
 		return Response.ok(farms).build();
 	}
