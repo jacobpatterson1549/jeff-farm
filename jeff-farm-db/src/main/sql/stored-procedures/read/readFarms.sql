@@ -2,13 +2,10 @@
 
 DROP PROCEDURE IF EXISTS readFarms//
 
-CREATE PROCEDURE readFarms (
-	OUT farmID INT,
-	IN farmName VARCHAR(255),
-	IN farmLocation VARCHAR(255))
+CREATE PROCEDURE readFarms ()
 
 	BEGIN
-		SELECT ID, name, farmLocation
+		SELECT ID, name, location
 		FROM farms
 		WHERE active = 1;
 	END//
