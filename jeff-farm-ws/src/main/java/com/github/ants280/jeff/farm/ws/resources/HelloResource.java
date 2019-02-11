@@ -10,7 +10,7 @@ public class HelloResource
 	@GET
 	public String hello(@QueryParam("name") String name)
 	{
-		// http://localhost:8080/jeff-farm-ws/resources/hello?name=jacob
+		// http://localhost:8080/jeff-farm-ws/hello?name=jacob
 		return String.format("Hello, %s!", name);
 	}
 
