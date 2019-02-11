@@ -32,8 +32,7 @@ export default {
   methods: {
     getTable() {
       axios.get("farm").then(response => {
-        console.log(response);
-        this.itemList = response;
+        this.itemList = response.data;
       });
     }
   },
@@ -45,7 +44,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1 {
-  margin: 40px 0 0;
+table,
+th,
+td {
+  border: 1px solid black;
 }
 </style>
