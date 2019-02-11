@@ -37,7 +37,7 @@
 								<requireMavenVersion>
 									<version>3.3.9</version>
 								</requireMavenVersion>
-							</rules>    
+							</rules>
 						</configuration>
 					</execution>
 				</executions>
@@ -98,21 +98,21 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.3</version>
-				<executions> 
-					<execution>  
-						<id>pre-test</id>  
-						<goals>  
-							<goal>prepare-agent</goal>  
-						</goals>  
-					</execution> 
-					<execution>  
-						<id>post-test</id>  
-						<phase>test</phase>  
-						<goals>  
-							<goal>report</goal>  
-						</goals>  
-					</execution>  
-				</executions>  
+				<executions>
+					<execution>
+						<id>pre-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>post-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -134,7 +134,7 @@
 			<artifactId>jersey-container-servlet</artifactId>
 		</dependency>
 		<dependency>
-			<!--json support--> 
+			<!--json support-->
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-binding</artifactId>
 		</dependency>
@@ -143,17 +143,53 @@
 			<groupId>org.glassfish.jersey.inject</groupId>
 			<artifactId>jersey-hk2</artifactId>
 		</dependency>
-		
-		<!--		<dependency>
+		<dependency>
+			<!--ServletContextListener-->
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>8.0</version>
+		</dependency>
+		<dependency>
+			<!--data access-->
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
-		</dependency>-->
+		</dependency>
 		<!--		<dependency>
-			 data access 
+			data access
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>5.4.1.Final</version>
 		</dependency>-->
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>org.eclipse.persistence.core</artifactId>
+			<version>2.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>org.eclipse.persistence.asm</artifactId>
+			<version>2.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>org.eclipse.persistence.antlr</artifactId>
+			<version>2.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>org.eclipse.persistence.jpa</artifactId>
+			<version>2.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>org.eclipse.persistence.jpa.jpql</artifactId>
+			<version>2.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>javax.persistence</artifactId>
+			<version>2.1.0</version>
+		</dependency>
 	</dependencies>
 </project>

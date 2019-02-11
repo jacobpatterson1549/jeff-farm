@@ -2,13 +2,13 @@ package com.github.ants280.jeff.farm.ws.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-//import javax.persistence.Entity;
-//import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-//@Entity
+@Entity
 public class Farm implements Serializable
 {
-//	@Id
+	@Id
 	private int id;
 	
 	private String name;

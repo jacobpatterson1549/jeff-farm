@@ -12,5 +12,5 @@ public interface BaseDao<T>
 	
 	public void update(T entity);
 	
-	public void delete(T entity);
+	public void delete(int id);
 }
