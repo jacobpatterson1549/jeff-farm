@@ -4,36 +4,53 @@ import com.github.ants280.jeff.farm.ws.entity.Farm;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import org.jvnet.hk2.annotations.Service;
 
 @Service
 public class FarmDao implements BaseDao<Farm>
 {
+	private final StoredProcedureQuery createStoredProcedure;
+	private final StoredProcedureQuery readStoredProcedure;
+	private final StoredProcedureQuery updateStoredProcedure;
+	private final StoredProcedureQuery deleteStoredProcedure;
+	
 	@Inject
-	private EntityManager entityManager;
+	public FarmDao(EntityManager entityManager)
+	{
+		this.createStoredProcedure = entityManager.createStoredProcedureQuery("createFarm");
+		this.readStoredProcedure = entityManager.createStoredProcedureQuery("readFarms", Farm.class);
+		this.updateStoredProcedure = entityManager.createStoredProcedureQuery("updateFarm");
+		this.deleteStoredProcedure = entityManager.createStoredProcedureQuery("deleteFarm");
+		
+		createStoredProcedure.registerStoredProcedureParameter("farmName", String.class, ParameterMode.IN);
+		createStoredProcedure.registerStoredProcedureParameter("farmLocation", String.class, ParameterMode.IN);
+		createStoredProcedure.registerStoredProcedureParameter("farmId", Integer.class, ParameterMode.OUT);
+		
+		updateStoredProcedure.registerStoredProcedureParameter("farmId", Integer.class, ParameterMode.IN);
+		updateStoredProcedure.registerStoredProcedureParameter("farmName", String.class, ParameterMode.IN);
+		updateStoredProcedure.registerStoredProcedureParameter("farmLocation", String.class, ParameterMode.IN);
+		
+		updateStoredProcedure.registerStoredProcedureParameter("delete", Integer.class, ParameterMode.IN);
+	}
 
 	@Override
 	public int create(Farm farm)
 	{
-		StoredProcedureQuery query = entityManager
-				.createStoredProcedureQuery("createFarm")
+		StoredProcedureQuery query = createStoredProcedure
 				.setParameter("farmName", farm.getName())
 				.setParameter("farmLocation", farm.getLocation());
 		boolean resultSetReturned = query.execute();
 		assert resultSetReturned;
 
-		Object farmId = query.getOutputParameterValue("farmID");
-		return farmId == null
-				? -1
-				: Integer.valueOf(farmId.toString());
+		return (Integer) query.getSingleResult();
 	}
 
 	@Override
 	public List<Farm> read()
 	{
-		StoredProcedureQuery query = entityManager
-				.createStoredProcedureQuery("readFarms", Farm.class);
+		StoredProcedureQuery query = readStoredProcedure;
 		boolean resultSetReturned = query.execute();
 		assert resultSetReturned;
 
@@ -44,8 +61,7 @@ public class FarmDao implements BaseDao<Farm>
 	@Override
 	public void update(Farm farm)
 	{
-		StoredProcedureQuery query = entityManager
-				.createStoredProcedureQuery("updateFarm")
+		StoredProcedureQuery query = updateStoredProcedure
 				.setParameter("farmID", farm.getId())
 				.setParameter("farmName", farm.getName())
 				.setParameter("farmLocation", farm.getLocation());
@@ -57,8 +73,7 @@ public class FarmDao implements BaseDao<Farm>
 	@Override
 	public void delete(int id)
 	{
-		StoredProcedureQuery query = entityManager
-				.createStoredProcedureQuery("deleteFarm")
+		StoredProcedureQuery query = deleteStoredProcedure
 				.setParameter("farmID", id);
 		int executeUpdate = query.executeUpdate();
 		assert executeUpdate == 1;

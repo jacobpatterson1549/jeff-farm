@@ -1,18 +1,43 @@
 <template>
   <div>
-    <h1>{{ msg }}</h1>
-    <p>ittemList:</p>
-    <p>{{ itemList }}</p>
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Location</th>
-      </tr>
-      <tr v-for="item in itemList" :key="item.id">
-        <td>{{ item.name }}</td>
-        <td>{{ item.location }}</td>
-      </tr>
-    </table>
+    <h2>{{ msg }}</h2>
+    <span
+      class="tab"
+      :class="{ activeTab: selectedTab === tab }"
+      v-for="(tab, index) in tabs"
+      :key="index"
+      @click="selectedTab = tab"
+      >{{ tab }}</span
+    >
+
+    <div v-show="selectedTab === 'List'">
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+        </tr>
+        <tr v-for="item in itemList" :key="item.id">
+          <td>{{ item.name }}</td>
+          <td>{{ item.location }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div v-show="selectedTab === 'Create'">
+      <form @submit="onSubmit">
+        <p>
+          <label for="farmName">Name</label>
+          <input v-model="farmName" required />
+        </p>
+        <p>
+          <label for="farmLocation">Location</label>
+          <input v-model="farmLocation" />
+        </p>
+        <p>
+          <input type="submit" value="Submit" />
+        </p>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -26,14 +51,31 @@ export default {
   },
   data() {
     return {
+      tabs: ["List", "Create"],
+      selectedTab: "List",
+      farmName: null,
+      farmLocation: null,
       itemList: []
     };
   },
   methods: {
     getTable() {
-      axios.get("farm").then(response => {
+      return axios.get("farm").then(response => {
         this.itemList = response.data;
       });
+    },
+    onSubmit() {
+      return axios
+        .post("farm", { name: this.farmName, location: this.farmLocation })
+        .then(response1 => {
+          if (response1.data) {
+            return this.getTable().then(response2 => {
+              if (response2.data) {
+                this.selectedTab = "List";
+              }
+            });
+          }
+        });
     }
   },
   mounted: function() {
@@ -44,9 +86,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-table,
+/* table,
 th,
 td {
+  border: 1px solid black;
+} */
+tr:nth-child(even) {
+  background-color: #aaaaaa;
+}
+.tab {
+  background-color: #aaaaaa;
+}
+.activeTab {
   border: 1px solid black;
 }
 </style>

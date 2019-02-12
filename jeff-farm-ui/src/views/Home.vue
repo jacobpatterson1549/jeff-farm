@@ -1,7 +1,8 @@
 <template>
   <div>
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <Farm msg="Welcome to Your Vue.js App" />
+    <img alt="Vue logo" src="../assets/chickens.jpg" />
+    <h1>jeff-farm-ws</h1>
+    <Farm msg="viewing farms" />
   </div>
 </template>
 
