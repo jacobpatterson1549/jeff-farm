@@ -30,6 +30,10 @@
 			<param-name>cors.allowed.headers</param-name>
 			<param-value>Access-Control-Allow-Origin, Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers</param-value>
 		</init-param>
+		<init-param>
+			<param-name>cors.allowed.methods</param-name>
+			<param-value>DELETE,PUT, GET,POST,HEAD,OPTIONS</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>CorsFilter</filter-name>
