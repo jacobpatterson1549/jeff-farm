@@ -15,7 +15,7 @@ public class FarmDao implements BaseDao<Farm>
 	private final StoredProcedureQuery readStoredProcedure;
 	private final StoredProcedureQuery updateStoredProcedure;
 	private final StoredProcedureQuery deleteStoredProcedure;
-	
+
 	@Inject
 	public FarmDao(EntityManager entityManager)
 	{
@@ -23,15 +23,15 @@ public class FarmDao implements BaseDao<Farm>
 		this.readStoredProcedure = entityManager.createStoredProcedureQuery("readFarms", Farm.class);
 		this.updateStoredProcedure = entityManager.createStoredProcedureQuery("updateFarm");
 		this.deleteStoredProcedure = entityManager.createStoredProcedureQuery("deleteFarm");
-		
+
 		createStoredProcedure.registerStoredProcedureParameter("farmName", String.class, ParameterMode.IN);
 		createStoredProcedure.registerStoredProcedureParameter("farmLocation", String.class, ParameterMode.IN);
 		createStoredProcedure.registerStoredProcedureParameter("farmId", Integer.class, ParameterMode.OUT);
-		
+
 		updateStoredProcedure.registerStoredProcedureParameter("farmId", Integer.class, ParameterMode.IN);
 		updateStoredProcedure.registerStoredProcedureParameter("farmName", String.class, ParameterMode.IN);
 		updateStoredProcedure.registerStoredProcedureParameter("farmLocation", String.class, ParameterMode.IN);
-		
+
 		updateStoredProcedure.registerStoredProcedureParameter("delete", Integer.class, ParameterMode.IN);
 	}
 
@@ -42,9 +42,11 @@ public class FarmDao implements BaseDao<Farm>
 				.setParameter("farmName", farm.getName())
 				.setParameter("farmLocation", farm.getLocation());
 		boolean resultSetReturned = query.execute();
-		assert resultSetReturned;
+		assert !resultSetReturned;
 
-		return (Integer) query.getSingleResult();
+		Object outputParameterValue = query.getOutputParameterValue("farmId");
+		
+		return (Integer) outputParameterValue;
 	}
 
 	@Override
@@ -55,6 +57,8 @@ public class FarmDao implements BaseDao<Farm>
 		assert resultSetReturned;
 
 		List resultList = query.getResultList();
+		assert !query.hasMoreResults();
+		
 		return (List<Farm>) resultList;
 	}
 
@@ -67,7 +71,6 @@ public class FarmDao implements BaseDao<Farm>
 				.setParameter("farmLocation", farm.getLocation());
 		int executeUpdate = query.executeUpdate();
 		assert executeUpdate == 1;
-
 	}
 
 	@Override
@@ -78,5 +81,4 @@ public class FarmDao implements BaseDao<Farm>
 		int executeUpdate = query.executeUpdate();
 		assert executeUpdate == 1;
 	}
-
 }
