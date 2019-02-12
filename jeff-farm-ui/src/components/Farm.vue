@@ -15,10 +15,15 @@
         <tr>
           <th>Name</th>
           <th>Location</th>
+          <th>Delete?</th>
         </tr>
         <tr v-for="item in itemList" :key="item.id">
           <td>{{ item.name }}</td>
           <td>{{ item.location }}</td>
+          <td>
+            <!-- <p>:(</p> -->
+            <button v-on:click="deleteItem(item)">Delete</button>
+          </td>
         </tr>
       </table>
     </div>
@@ -61,7 +66,10 @@ export default {
   methods: {
     getTable() {
       return axios.get("farm").then(response => {
-        this.itemList = response.data;
+        if (response.status === 200) {
+          this.itemList = response.data;
+        }
+        // TODO: else show error
       });
     },
     onSubmit() {
@@ -71,7 +79,18 @@ export default {
           if (response.status === 200) {
             return this.getTable().then((this.selectedTab = "List"));
           }
+          // TODO: else show error
         });
+    },
+    deleteItem(farm) {
+      if (confirm("Delete " + farm.name + "?")) {
+        axios.delete("farm/" + farm.id).then(response => {
+          if (response.status === 200) {
+            return this.getTable().then((this.selectedTab = "List"));
+          }
+          // TODO: else show error
+        });
+      }
     }
   },
   mounted: function() {

@@ -26,13 +26,13 @@ public class FarmDao implements BaseDao<Farm>
 
 		createStoredProcedure.registerStoredProcedureParameter("farmName", String.class, ParameterMode.IN);
 		createStoredProcedure.registerStoredProcedureParameter("farmLocation", String.class, ParameterMode.IN);
-		createStoredProcedure.registerStoredProcedureParameter("farmId", Integer.class, ParameterMode.OUT);
+		createStoredProcedure.registerStoredProcedureParameter("farmID", Integer.class, ParameterMode.OUT);
 
-		updateStoredProcedure.registerStoredProcedureParameter("farmId", Integer.class, ParameterMode.IN);
+		updateStoredProcedure.registerStoredProcedureParameter("farmID", Integer.class, ParameterMode.IN);
 		updateStoredProcedure.registerStoredProcedureParameter("farmName", String.class, ParameterMode.IN);
 		updateStoredProcedure.registerStoredProcedureParameter("farmLocation", String.class, ParameterMode.IN);
 
-		updateStoredProcedure.registerStoredProcedureParameter("delete", Integer.class, ParameterMode.IN);
+		deleteStoredProcedure.registerStoredProcedureParameter("farmID", Integer.class, ParameterMode.IN);
 	}
 
 	@Override
