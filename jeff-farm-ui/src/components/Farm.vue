@@ -67,13 +67,9 @@ export default {
     onSubmit() {
       return axios
         .post("farm", { name: this.farmName, location: this.farmLocation })
-        .then(response1 => {
-          if (response1.data) {
-            return this.getTable().then(response2 => {
-              if (response2.data) {
-                this.selectedTab = "List";
-              }
-            });
+        .then(response => {
+          if (response.status === 200) {
+            return this.getTable().then((this.selectedTab = "List"));
           }
         });
     }
