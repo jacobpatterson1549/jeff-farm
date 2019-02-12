@@ -1,7 +1,6 @@
 package com.github.ants280.jeff.farm.ws.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -15,12 +14,6 @@ public class Farm implements Serializable
 	
 	private String location;
 	
-	private Timestamp createdDate;
-	
-	private Timestamp modifiedDate;
-	
-	private boolean active;
-
 	public int getId()
 	{
 		return id;
@@ -50,36 +43,4 @@ public class Farm implements Serializable
 	{
 		this.location = location;
 	}
-
-	public Timestamp getCreatedDate()
-	{
-		return createdDate;
-	}
-
-	public void setCreatedDate(Timestamp createdDate)
-	{
-		this.createdDate = createdDate;
-	}
-
-	public Timestamp getModifiedDate()
-	{
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Timestamp modifiedDate)
-	{
-		this.modifiedDate = modifiedDate;
-	}
-
-	public boolean isActive()
-	{
-		return active;
-	}
-
-	public void setActive(boolean active)
-	{
-		this.active = active;
-	}
-	
-	
 }
