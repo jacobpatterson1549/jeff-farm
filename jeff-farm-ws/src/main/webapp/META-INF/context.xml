@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/jeff-farm-ws">
-
-	<Resource name="jdbc/jeff-farm"
-			  auth="Container"
-			  type="javax.sql.DataSource"
-			  maxTotal="100"
-			  maxIdle="30"
-			  maxWaitMillis="10000"
-			  username="fred"
-			  password="flintstone"
-			  driverClassName="com.mysql.cj.jdbc.Driver"
-			  url="jdbc:mysql://localhost:3306/JEFF_FARM_DB"/>
+  <Resource auth="Container" driverClassName="com.mysql.cj.jdbc.Driver" maxIdle="30" maxTotal="100" maxWaitMillis="10000" name="jdbc/jeff-farm-data-source" password="flintstone" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/JEFF_FARM_DB" username="fred"/>
 </Context>

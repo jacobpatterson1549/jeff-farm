@@ -18,6 +18,7 @@ public class FarmDao implements BaseDao<Farm>
 	@Inject
 	public FarmDao(DataSource dataSource)
 	{
+//		this.jdbcTemplate = null;
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 

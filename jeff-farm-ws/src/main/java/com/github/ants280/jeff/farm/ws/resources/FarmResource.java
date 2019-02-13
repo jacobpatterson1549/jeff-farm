@@ -3,7 +3,6 @@ package com.github.ants280.jeff.farm.ws.resources;
 import com.github.ants280.jeff.farm.ws.dao.FarmDao;
 import com.github.ants280.jeff.farm.ws.model.Farm;
 import java.util.List;
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -17,7 +16,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 // http://localhost:8080/jeff-farm-ws/farm
-@Resource
 @Path("farm")
 public class FarmResource
 {

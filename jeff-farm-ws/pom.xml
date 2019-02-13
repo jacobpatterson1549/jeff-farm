@@ -144,20 +144,6 @@
 			<artifactId>jersey-hk2</artifactId>
 		</dependency>
 		<dependency>
-			<!--ServletContextListener-->
-			<!-- TOOD: is this needed with spring? -->
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>8.0</version>
-		</dependency>
-		<dependency>
-			<!--ServletContextListener-->
-			<!-- TOOD: is this needed with spring? -->
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.1</version>
-		</dependency>
-		<dependency>
 			<!--data access-->
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
