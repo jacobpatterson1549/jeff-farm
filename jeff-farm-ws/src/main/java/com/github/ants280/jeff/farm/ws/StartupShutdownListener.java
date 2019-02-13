@@ -9,23 +9,23 @@ import javax.servlet.ServletContextListener;
 public class StartupShutdownListener implements ServletContextListener
 {
 	private static EntityManagerFactory entityManagerFactory;
-	private static EntityManager entityManager;
 	
 	@Override
 	public void contextInitialized(ServletContextEvent sce)
 	{
+		this.closeEntityManagerFactory();
 		entityManagerFactory
 				= Persistence.createEntityManagerFactory("jeff-farm-persistence-unit");
-		entityManager = entityManagerFactory.createEntityManager();
 	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce)
 	{
-		if (entityManager != null && entityManager.isOpen())
-		{
-			entityManager.close();
-		}
+		this.closeEntityManagerFactory();
+	}
+
+	private void closeEntityManagerFactory()
+	{
 		if (entityManagerFactory != null && entityManagerFactory.isOpen())
 		{
 			entityManagerFactory.close();
@@ -35,6 +35,6 @@ public class StartupShutdownListener implements ServletContextListener
 	// TODO: I don't like how this is static.
 	public static EntityManager getEntityManager()
 	{
-		return entityManager;
+		return entityManagerFactory.createEntityManager();
 	}
 }
