@@ -22,7 +22,8 @@ public class InjectionBinder extends AbstractBinder
 	{
 		try
 		{
-			// https://stackoverflow.com/questions/18910010/replacing-jndi-lookup-with-resource-annotation
+			// https://tomcat.apache.org/tomcat-8.0-doc/jndi-resources-howto.html#JDBC_Data_Sources
+			// https://stackoverflow.com/questions/23393913/how-can-i-make-resource-annotation-work-with-tomcat
 			Context initCtx = new InitialContext();
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");
 			return (DataSource) envCtx.lookup("jdbc/jeff-farm-data-source");
