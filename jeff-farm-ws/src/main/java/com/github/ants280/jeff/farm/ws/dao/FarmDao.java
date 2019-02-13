@@ -1,116 +1,75 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
-import com.github.ants280.jeff.farm.ws.StartupShutdownListener;
-import com.github.ants280.jeff.farm.ws.entity.Farm;
+import com.github.ants280.jeff.farm.ws.model.Farm;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.ParameterMode;
-import javax.persistence.StoredProcedureQuery;
+import javax.inject.Inject;
+import javax.sql.DataSource;
 import org.jvnet.hk2.annotations.Service;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 @Service
 public class FarmDao implements BaseDao<Farm>
 {
+	private final JdbcTemplate jdbcTemplate;
+
+	@Inject
+	public FarmDao(DataSource dataSource)
+	{
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+
 	@Override
 	public int create(Farm farm)
 	{
-		EntityManager entityManager = StartupShutdownListener.getEntityManager();
-		try
-		{
-			StoredProcedureQuery query = entityManager.createStoredProcedureQuery("createFarm")
-					.registerStoredProcedureParameter("farmName", String.class, ParameterMode.IN)
-					.registerStoredProcedureParameter("farmLocation", String.class, ParameterMode.IN)
-					.registerStoredProcedureParameter("farmID", Integer.class, ParameterMode.OUT)
-					.setParameter("farmName", farm.getName())
-					.setParameter("farmLocation", farm.getLocation());
-			boolean resultSetReturned = query.execute();
-			assert !resultSetReturned;
+		SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
+				.addValue("farmName", farm.getName())
+				.addValue("farmLocation", farm.getLocation());
 
-			Object outputParameterValue = query.getOutputParameterValue("farmID");
-
-			return (Integer) outputParameterValue;
-		}
-		finally
-		{
-			entityManager.close();
-		}
+		return new NamedParameterJdbcTemplate(jdbcTemplate)
+				.queryForObject(
+						"call createFarm",
+						sqlParameterSource,
+						Integer.class);
 	}
 
 	@Override
 	public List<Farm> read()
 	{
-		EntityManager entityManager = StartupShutdownListener.getEntityManager();
-		try
-		{
-			StoredProcedureQuery query = entityManager.createStoredProcedureQuery("readFarms", Farm.class);
-			boolean resultSetReturned = query.execute();
-			assert resultSetReturned;
-
-			List resultList = query.getResultList();
-			assert !query.hasMoreResults();
-
-			return (List<Farm>) resultList;
-		}
-		finally
-		{
-			entityManager.close();
-		}
+		return jdbcTemplate.query(
+				"call readFarms",
+				new Farm.ResultSetExtractor());
 	}
 
 	@Override
 	public void update(Farm farm)
 	{
-		EntityManager entityManager = StartupShutdownListener.getEntityManager();
-		EntityTransaction transaction = null;
-		try
-		{
-			StoredProcedureQuery query = entityManager.createStoredProcedureQuery("updateFarm")
-					.registerStoredProcedureParameter("farmID", Integer.class, ParameterMode.IN)
-					.registerStoredProcedureParameter("farmName", String.class, ParameterMode.IN)
-					.registerStoredProcedureParameter("farmLocation", String.class, ParameterMode.IN)
-					.setParameter("farmID", farm.getId())
-					.setParameter("farmName", farm.getName())
-					.setParameter("farmLocation", farm.getLocation());
-			transaction = entityManager.getTransaction();
-			transaction.begin();
-			int executeUpdate = query.executeUpdate();
-			transaction.commit();
-			assert executeUpdate == 1;
-		}
-		finally
-		{
-			if (transaction != null && transaction.isActive())
-			{
-				transaction.rollback();
-			}
-			entityManager.close();
-		}
+		SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
+				.addValue("farmID", farm.getId())
+				.addValue("farmName", farm.getName())
+				.addValue("farmLocation", farm.getLocation());
+
+		int rowsUpdatedCount = new NamedParameterJdbcTemplate(jdbcTemplate)
+				.update(
+						"call updateFarm",
+						sqlParameterSource);
+
+		assert rowsUpdatedCount == 1;
 	}
 
 	@Override
 	public void delete(int id)
 	{
-		EntityManager entityManager = StartupShutdownListener.getEntityManager();
-		EntityTransaction transaction = null;
-		try
-		{
-			StoredProcedureQuery query = entityManager.createStoredProcedureQuery("deleteFarm")
-					.registerStoredProcedureParameter("farmID", Integer.class, ParameterMode.IN)
-					.setParameter("farmID", id);
-			transaction = entityManager.getTransaction();
-			transaction.begin();
-			int executeUpdate = query.executeUpdate();
-			transaction.commit();
-			assert executeUpdate == 1;
-		}
-		finally
-		{
-			if (transaction != null && transaction.isActive())
-			{
-				transaction.rollback();
-			}
-			entityManager.close();
-		}
+		SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
+				.addValue("farmID", id);
+
+		int rowsUpdatedCount = new NamedParameterJdbcTemplate(jdbcTemplate)
+				.update(
+						"call deleteFarm",
+						sqlParameterSource);
+
+		assert rowsUpdatedCount == 1;
 	}
 }

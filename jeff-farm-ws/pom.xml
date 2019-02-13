@@ -145,9 +145,17 @@
 		</dependency>
 		<dependency>
 			<!--ServletContextListener-->
+			<!-- TOOD: is this needed with spring? -->
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 			<version>8.0</version>
+		</dependency>
+		<dependency>
+			<!--ServletContextListener-->
+			<!-- TOOD: is this needed with spring? -->
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
 		</dependency>
 		<dependency>
 			<!--data access-->
@@ -157,9 +165,9 @@
 		</dependency>
 		<dependency>
 			<!--data access-->
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.4.1.Final</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>5.1.4.RELEASE</version>
 		</dependency>
 	</dependencies>
 </project>

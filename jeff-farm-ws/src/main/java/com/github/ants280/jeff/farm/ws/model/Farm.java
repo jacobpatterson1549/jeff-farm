@@ -1,13 +1,12 @@
-package com.github.ants280.jeff.farm.ws.entity;
+package com.github.ants280.jeff.farm.ws.model;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.springframework.jdbc.core.RowMapper;
 
-@Entity
 public class Farm implements Serializable
 {
-	@Id
 	private int id;
 	
 	private String name;
@@ -42,5 +41,18 @@ public class Farm implements Serializable
 	public void setLocation(String location)
 	{
 		this.location = location;
+	}
+	
+	public static class ResultSetExtractor implements RowMapper<Farm>
+	{
+		@Override
+		public Farm mapRow(ResultSet rs, int i) throws SQLException
+		{
+			Farm farm = new Farm();
+			farm.setId(rs.getInt("farmID"));
+			farm.setName(rs.getString("farmName"));
+			farm.setLocation(rs.getString("farmLocation"));
+			return farm;
+		}
 	}
 }

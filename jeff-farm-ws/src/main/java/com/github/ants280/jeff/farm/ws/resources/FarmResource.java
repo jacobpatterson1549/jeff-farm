@@ -1,7 +1,7 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
 import com.github.ants280.jeff.farm.ws.dao.FarmDao;
-import com.github.ants280.jeff.farm.ws.entity.Farm;
+import com.github.ants280.jeff.farm.ws.model.Farm;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -43,7 +43,7 @@ public class FarmResource
 	public Response getFarms()
 	{
 		List<Farm> farms = farmDao.read();
-		
+
 		return Response.ok(farms).build();
 	}
 
