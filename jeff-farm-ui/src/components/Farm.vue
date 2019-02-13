@@ -15,28 +15,49 @@
         <tr>
           <th>Name</th>
           <th>Location</th>
+          <th>Update</th>
           <th>Delete?</th>
         </tr>
         <tr v-for="item in itemList" :key="item.id">
           <td>{{ item.name }}</td>
           <td>{{ item.location }}</td>
           <td>
-            <!-- <p>:(</p> -->
+            <button v-on:click="openUpdateTab(item)">Update</button>
+          </td>
+          <td>
             <button v-on:click="deleteItem(item)">Delete</button>
           </td>
         </tr>
       </table>
     </div>
 
-    <div v-show="selectedTab === 'Create'">
-      <form @submit="onSubmit">
+    <!-- TODO: This is similar to the delete form.  It would be nice to share code -->
+    <div v-show="selectedTab === 'Update'">
+      <form @submit.prevent="updateItem">
         <p>
           <label for="farmName">Name</label>
-          <input v-model="farmName" required />
+          <input name="farmName" v-model="farm.name" required />
         </p>
         <p>
           <label for="farmLocation">Location</label>
-          <input v-model="farmLocation" />
+          <input name="farmLocation" v-model="farm.location" />
+        </p>
+        <p>
+          <button v-on:click="selectedTab = 'List'">Cancel</button>
+          <input type="submit" value="Update" />
+        </p>
+      </form>
+    </div>
+
+    <div v-show="selectedTab === 'Create'">
+      <form @submit.prevent="postItem">
+        <p>
+          <label for="farmName">Name</label>
+          <input name="farmName" v-model="farm.name" required />
+        </p>
+        <p>
+          <label for="farmLocation">Location</label>
+          <input name="farmLocation" v-model="farm.location" />
         </p>
         <p>
           <input type="submit" value="Submit" />
@@ -58,8 +79,11 @@ export default {
     return {
       tabs: ["List", "Create"],
       selectedTab: "List",
-      farmName: null,
-      farmLocation: null,
+      farm: {
+        id: -1,
+        name: null,
+        location: null
+      },
       itemList: []
     };
   },
@@ -72,15 +96,26 @@ export default {
         // TODO: else show error
       });
     },
-    onSubmit() {
-      return axios
-        .post("farm", { name: this.farmName, location: this.farmLocation })
-        .then(response => {
-          if (response.status === 200) {
-            return this.getTable().then((this.selectedTab = "List"));
-          }
-          // TODO: else show error
-        });
+    postItem() {
+      return axios.post("farm", this.farm).then(response => {
+        if (response.status === 200) {
+          return this.getTable().then((this.selectedTab = "List"));
+        }
+        // TODO: else show error
+      });
+    },
+    openUpdateTab(farm) {
+      this.selectedTab = "Update";
+      this.farm = farm;
+    },
+    updateItem() {
+      axios.put("farm", this.farm).then(response => {
+        if (response.status === 200) {
+          // TODO: Maybe have confirmation that update is successful?
+          return this.getTable().then((this.selectedTab = "List"));
+        }
+        // TODO: else show error
+      });
     },
     deleteItem(farm) {
       if (confirm("Delete " + farm.name + "?")) {

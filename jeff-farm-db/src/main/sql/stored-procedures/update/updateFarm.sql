@@ -8,7 +8,7 @@ CREATE PROCEDURE updateFarm (
 	IN farmLocation VARCHAR(255))
 
 	BEGIN
-		UPDATE FARMS
+		UPDATE farms
 		SET name = farmName,
 			location = farmLocation
 		WHERE ID = farmID;
