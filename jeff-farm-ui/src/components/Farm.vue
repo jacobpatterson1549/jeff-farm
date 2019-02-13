@@ -97,6 +97,7 @@ export default {
       });
     },
     postItem() {
+      this.farm.id = -1;
       return axios.post("farm", this.farm).then(response => {
         if (response.status === 200) {
           return this.getTable().then((this.selectedTab = "List"));

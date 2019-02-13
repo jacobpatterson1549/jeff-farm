@@ -27,7 +27,7 @@ public class FarmDao implements BaseDao<Farm>
 			boolean resultSetReturned = query.execute();
 			assert !resultSetReturned;
 
-			Object outputParameterValue = query.getOutputParameterValue("farmId");
+			Object outputParameterValue = query.getOutputParameterValue("farmID");
 
 			return (Integer) outputParameterValue;
 		}
