@@ -151,13 +151,21 @@ th,
 td {
   border: 1px solid black;
 } */
+table {
+  display: inline-block;
+}
 tr:nth-child(even) {
   background-color: #aaaaaa;
 }
 .tab {
   background-color: #aaaaaa;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 .activeTab {
   border: 1px solid black;
+}
+label {
+  margin-right: 1em;
 }
 </style>
