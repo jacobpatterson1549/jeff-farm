@@ -1,14 +1,17 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.model.Farm;
+import java.sql.Types;
 import java.util.List;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import org.jvnet.hk2.annotations.Service;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 @Service
 public class FarmDao implements BaseDao<Farm>
@@ -18,7 +21,6 @@ public class FarmDao implements BaseDao<Farm>
 	@Inject
 	public FarmDao(DataSource dataSource)
 	{
-//		this.jdbcTemplate = null;
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
@@ -28,12 +30,15 @@ public class FarmDao implements BaseDao<Farm>
 		SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
 				.addValue("farmName", farm.getName())
 				.addValue("farmLocation", farm.getLocation());
-
-		return new NamedParameterJdbcTemplate(jdbcTemplate)
-				.queryForObject(
-						"call createFarm",
-						sqlParameterSource,
-						Integer.class);
+		
+		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+				.withProcedureName("createFarm")
+				.declareParameters(new SqlParameter("farmName", Types.VARCHAR))
+				.declareParameters(new SqlParameter("farmLocation", Types.VARCHAR))
+				.declareParameters(new SqlOutParameter("farmID", Types.INTEGER));
+		
+		return (int) simpleJdbcCall.execute(sqlParameterSource)
+				.get("farmID");
 	}
 
 	@Override
@@ -52,12 +57,13 @@ public class FarmDao implements BaseDao<Farm>
 				.addValue("farmName", farm.getName())
 				.addValue("farmLocation", farm.getLocation());
 
-		int rowsUpdatedCount = new NamedParameterJdbcTemplate(jdbcTemplate)
-				.update(
-						"call updateFarm",
-						sqlParameterSource);
-
-		assert rowsUpdatedCount == 1;
+		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+				.withProcedureName("updateFarm")
+				.declareParameters(new SqlParameter("farmID", Types.INTEGER))
+				.declareParameters(new SqlParameter("farmName", Types.VARCHAR))
+				.declareParameters(new SqlParameter("farmLocation", Types.VARCHAR));
+		
+		simpleJdbcCall.execute(sqlParameterSource);
 	}
 
 	@Override
@@ -66,11 +72,10 @@ public class FarmDao implements BaseDao<Farm>
 		SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
 				.addValue("farmID", id);
 
-		int rowsUpdatedCount = new NamedParameterJdbcTemplate(jdbcTemplate)
-				.update(
-						"call deleteFarm",
-						sqlParameterSource);
-
-		assert rowsUpdatedCount == 1;
+		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+				.withProcedureName("deleteFarm")
+				.declareParameters(new SqlParameter("farmID", Types.INTEGER));
+		
+		simpleJdbcCall.execute(sqlParameterSource);
 	}
 }
