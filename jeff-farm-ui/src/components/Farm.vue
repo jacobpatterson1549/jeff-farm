@@ -6,7 +6,7 @@
       :class="{ activeTab: selectedTab === tab }"
       v-for="(tab, index) in tabs"
       :key="index"
-      @click="selectedTab = tab"
+      @click="handleTabClick(tab)"
       >{{ tab }}</span
     >
 
@@ -79,15 +79,18 @@ export default {
     return {
       tabs: ["List", "Create"],
       selectedTab: "List",
-      farm: {
-        id: -1,
-        name: null,
-        location: null
-      },
+      farm: this.createEmptyFarm(),
       itemList: []
     };
   },
   methods: {
+    createEmptyFarm() {
+      return {
+        id: -1,
+        name: null,
+        location: null
+      };
+    },
     getTable() {
       return axios.get("farm").then(response => {
         if (response.status === 200) {
@@ -95,6 +98,12 @@ export default {
         }
         // TODO: else show error
       });
+    },
+    handleTabClick(tab) {
+      if (this.selectedTab != tab && tab == "Create") {
+        this.farm = this.createEmptyFarm();
+      }
+      this.selectedTab = tab;
     },
     postItem() {
       this.farm.id = -1;
