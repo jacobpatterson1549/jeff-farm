@@ -3,7 +3,11 @@ package com.github.ants280.jeff.farm.ws.resources;
 import com.github.ants280.jeff.farm.ws.dao.FarmDao;
 import com.github.ants280.jeff.farm.ws.model.Farm;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -12,6 +16,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -19,12 +24,29 @@ import javax.ws.rs.core.Response;
 @Path("farm")
 public class FarmResource
 {
+//	@Resource(lookup = "jeff-farm-data-source")
+	@Resource(lookup = "jdbc/jeff-farm-data-source")
+//	@Resource(lookup = "java:comp/env/jdbc/jeff-farm-data-source")
+	private DataSource dataSource;
+
 	private final FarmDao farmDao;
 
 	@Inject
 	public FarmResource(FarmDao farmDao)
 	{
 		this.farmDao = farmDao;
+	}
+
+	@GET
+	@Path("hello")
+	public String hello(@QueryParam("name") String name) throws Exception
+	{
+		Context initCtx = new InitialContext();
+		Context envCtx = (Context) initCtx.lookup("java:comp/env");
+		DataSource ds = (DataSource) envCtx.lookup("jdbc/jeff-farm-data-source");
+		DataSource ds2 = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/jeff-farm-data-source");
+		System.out.println(dataSource);
+		return String.format("Hello, %s!", name);
 	}
 
 	@POST

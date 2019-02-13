@@ -49,9 +49,9 @@ public class Farm implements Serializable
 		public Farm mapRow(ResultSet rs, int i) throws SQLException
 		{
 			Farm farm = new Farm();
-			farm.setId(rs.getInt("farmID"));
-			farm.setName(rs.getString("farmName"));
-			farm.setLocation(rs.getString("farmLocation"));
+			farm.setId(rs.getInt("ID"));
+			farm.setName(rs.getString("name"));
+			farm.setLocation(rs.getString("location"));
 			return farm;
 		}
 	}
