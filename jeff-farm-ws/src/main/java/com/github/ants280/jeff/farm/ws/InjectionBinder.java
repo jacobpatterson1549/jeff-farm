@@ -11,9 +11,6 @@ import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 public class InjectionBinder extends AbstractBinder
 {
-//	@Resource(lookup = "jdbc/jeff-farm")
-//	private DataSource dataSource;
-
 	@Override
 	protected void configure()
 	{
@@ -25,6 +22,7 @@ public class InjectionBinder extends AbstractBinder
 	{
 		try
 		{
+			// https://stackoverflow.com/questions/18910010/replacing-jndi-lookup-with-resource-annotation
 			Context initCtx = new InitialContext();
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");
 			return (DataSource) envCtx.lookup("jdbc/jeff-farm-data-source");
