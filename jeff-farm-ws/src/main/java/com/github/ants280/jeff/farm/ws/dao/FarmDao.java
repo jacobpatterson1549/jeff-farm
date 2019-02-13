@@ -69,6 +69,7 @@ public class FarmDao implements BaseDao<Farm>
 				.setParameter("farmID", farm.getId())
 				.setParameter("farmName", farm.getName())
 				.setParameter("farmLocation", farm.getLocation());
+		// TODO: transaction needed
 		int executeUpdate = query.executeUpdate();
 		assert executeUpdate == 1;
 	}
@@ -78,6 +79,7 @@ public class FarmDao implements BaseDao<Farm>
 	{
 		StoredProcedureQuery query = deleteStoredProcedure
 				.setParameter("farmID", id);
+		// TODO: transaction needed
 		int executeUpdate = query.executeUpdate();
 		assert executeUpdate == 1;
 	}
