@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2>{{ msg }}</h2>
+
     <span
       class="tab"
       :class="{ activeTab: selectedTab === tab }"
@@ -31,9 +32,10 @@
       </table>
     </div>
 
-    <!-- TODO: This is similar to the delete form.  It would be nice to share code -->
-    <div v-show="selectedTab === 'Update'">
-      <form @submit.prevent="updateItem">
+    <div v-show="selectedTab === 'Update' || selectedTab === 'Create'">
+      <form
+        @submit.prevent="selectedTab === 'Update' ? updateItem() : postItem()"
+      >
         <p>
           <label for="farmName">Name</label>
           <input name="farmName" v-model="farm.name" required />
@@ -43,24 +45,16 @@
           <input name="farmLocation" v-model="farm.location" />
         </p>
         <p>
-          <button v-on:click="selectedTab = 'List'">Cancel</button>
-          <input type="submit" value="Update" />
-        </p>
-      </form>
-    </div>
-
-    <div v-show="selectedTab === 'Create'">
-      <form @submit.prevent="postItem">
-        <p>
-          <label for="farmName">Name</label>
-          <input name="farmName" v-model="farm.name" required />
-        </p>
-        <p>
-          <label for="farmLocation">Location</label>
-          <input name="farmLocation" v-model="farm.location" />
-        </p>
-        <p>
-          <input type="submit" value="Submit" />
+          <button
+            v-on:click="selectedTab = 'List'"
+            v-show="selectedTab === 'Update'"
+          >
+            Cancel
+          </button>
+          <input
+            type="submit"
+            :value="selectedTab === 'Update' ? 'Update' : 'Submit'"
+          />
         </p>
       </form>
     </div>
