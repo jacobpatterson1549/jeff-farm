@@ -12,7 +12,6 @@ public class ApplicationConfig extends Application
 	{
 		Set<Class<?>> resources = new java.util.HashSet<>();
 		// TODO: figure out how to automatically add everything in the resources package
-		resources.add(com.github.ants280.jeff.farm.ws.resources.HelloResource.class);
 		resources.add(com.github.ants280.jeff.farm.ws.resources.FarmResource.class);
 		return resources;
 	}
