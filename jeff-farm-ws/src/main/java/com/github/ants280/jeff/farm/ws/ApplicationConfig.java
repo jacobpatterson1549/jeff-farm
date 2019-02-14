@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws;
 
+import com.github.ants280.jeff.farm.ws.resources.*;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -11,8 +12,7 @@ public class ApplicationConfig extends Application
 	public Set<Class<?>> getClasses()
 	{
 		Set<Class<?>> resources = new java.util.HashSet<>();
-		// TODO: figure out how to automatically add everything in the resources package
-		resources.add(com.github.ants280.jeff.farm.ws.resources.FarmResource.class);
+		resources.add(FarmResource.class);
 		return resources;
 	}
 
