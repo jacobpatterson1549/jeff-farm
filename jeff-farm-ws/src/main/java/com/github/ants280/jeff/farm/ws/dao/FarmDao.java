@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 @Service
-public class FarmDao implements BaseDao<Farm>
+public class FarmDao implements CrudDao<Farm>
 {
 	private final JdbcTemplate jdbcTemplate;
 	// TODO: Move this to BaseDao (and make abstract)

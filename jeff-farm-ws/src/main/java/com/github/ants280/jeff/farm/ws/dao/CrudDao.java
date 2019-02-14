@@ -4,7 +4,7 @@ import java.util.List;
 import org.jvnet.hk2.annotations.Contract;
 
 @Contract
-public interface BaseDao<T>
+public interface CrudDao<T>
 {
 	public int create(T entity);
 	
