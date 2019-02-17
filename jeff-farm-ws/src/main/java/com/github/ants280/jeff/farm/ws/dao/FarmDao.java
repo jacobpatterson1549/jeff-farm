@@ -22,18 +22,18 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 	public int create(Farm farm)
 	{
 		return this.executeCreate(
-				"createFarm",
+				"create_farm",
 				Arrays.asList(
-						new Parameter("farmName", farm.getName(), Types.VARCHAR),
-						new Parameter("farmLocation", farm.getLocation(), Types.VARCHAR)),
-				"farmID");
+						new Parameter(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
+						new Parameter(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)),
+				Farm.ID_COLUMN);
 	}
 
 	@Override
 	public List<Farm> read()
 	{
 		return this.executeRead(
-				"readFarms",
+				"read_farms",
 				Collections.emptyList(),
 				new Farm.ResultSetExtractor());
 	}
@@ -42,19 +42,19 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 	public void update(Farm farm)
 	{
 		this.executeUpdate(
-				"updateFarm",
+				"update_farm",
 				Arrays.asList(
-						new Parameter("farmID", farm.getId(), Types.INTEGER),
-						new Parameter("farmName", farm.getName(), Types.VARCHAR),
-						new Parameter("farmLocation", farm.getLocation(), Types.VARCHAR)));
+						new Parameter(Farm.ID_COLUMN, farm.getId(), Types.INTEGER),
+						new Parameter(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
+						new Parameter(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)));
 	}
 
 	@Override
 	public void delete(int id)
 	{
 		this.executeUpdate(
-				"deleteFarm",
+				"delete_farm",
 				Collections.singletonList(
-						new Parameter("farmID", id, Types.INTEGER)));
+						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)));
 	}
 }

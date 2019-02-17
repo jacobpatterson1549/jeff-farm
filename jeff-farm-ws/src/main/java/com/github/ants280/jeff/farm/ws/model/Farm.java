@@ -7,10 +7,11 @@ import org.springframework.jdbc.core.RowMapper;
 
 public class Farm implements Serializable
 {
+	public static final String ID_COLUMN = "id";
+	public static final String NAME_COLUMN = "name";
+	public static final String LOCATION_COLUMN = "location";
 	private int id;
-	
 	private String name;
-	
 	private String location;
 	
 	public int getId()
@@ -49,7 +50,7 @@ public class Farm implements Serializable
 		public Farm mapRow(ResultSet rs, int i) throws SQLException
 		{
 			Farm farm = new Farm();
-			farm.setId(rs.getInt("ID"));
+			farm.setId(rs.getInt("id"));
 			farm.setName(rs.getString("name"));
 			farm.setLocation(rs.getString("location"));
 			return farm;
