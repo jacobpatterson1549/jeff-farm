@@ -20,7 +20,7 @@ export class FarmsComponent implements OnInit {
     this.getFarms();
   }
 
-  handleTabClick(tab) {
+  handleTabClick(tab: string) {
     console.log(tab + ' tab clicked.');
   }
 
@@ -29,11 +29,11 @@ export class FarmsComponent implements OnInit {
       .subscribe(farms => this.farms = farms);
   }
 
-  openUpdateTab(farm) {
-    console.log("TODO: Update farm " + farm);
+  openUpdateTab(farm: Farm) {
+    console.log("TODO: Update farm " + JSON.stringify(farm));
   }
 
-  deleteFarm(farm) {
-    console.log("TODO: Delete farm " + farm);
+  deleteFarm(farm: Farm) {
+    console.log("TODO: Delete farm " + JSON.stringify(farm));
   }
 }
