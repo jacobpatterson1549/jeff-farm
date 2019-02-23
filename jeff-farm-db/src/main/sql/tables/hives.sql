@@ -4,9 +4,15 @@
 CREATE TABLE IF NOT EXISTS hives
 (
 	id INT PRIMARY KEY AUTO_INCREMENT,
+<<<<<<< HEAD
 	farm_id INT REFERENCES farms (id),
 	name VARCHAR(255) NOT NULL,
 	created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+=======
+    farm_id INT,
+    name VARCHAR(255) NOT NULL,
+    created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+>>>>>>> angular-ui
 	modified_date DATETIME ON UPDATE CURRENT_TIMESTAMP,
 	active BIT DEFAULT 1
 );

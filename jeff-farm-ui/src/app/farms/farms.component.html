@@ -1,0 +1,43 @@
+<!-- <span class="tab" ng-class="{ activeTab: selectedTab === tab }" *ngFor="let tab of tabs"
+  (click)="handleTabClick(tab)">{{ tab }}</span> -->
+
+<!-- <div *ngShow="selectedTab === 'List'"> -->
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Location</th>
+    <th>Update</th>
+    <th>Delete?</th>
+  </tr>
+  <tr *ngFor="let farm of farms">
+    <td>{{ farm.name }}</td>
+    <td>{{ farm.location }}</td>
+    <td>
+      <button (click)="openUpdateTab(farm)">Update</button>
+    </td>
+    <td>
+      <button (click)="deleteFarm(farm)">Delete</button>
+    </td>
+  </tr>
+</table>
+<!-- </div> -->
+<!-- 
+<div v-show="selectedTab === 'Update' || selectedTab === 'Create'">
+  <p>TODO: Show form for {{selectedTab}} </p>
+   <form @submit.prevent="selectedTab === 'Update' ? updateItem() : postItem()">
+    <p>
+      <label for="farmName">Name</label>
+      <input name="farmName" v-model="farm.name" required />
+    </p>
+    <p>
+      <label for="farmLocation">Location</label>
+      <input name="farmLocation" v-model="farm.location" />
+    </p>
+    <p>
+      <button v-on:click="selectedTab = 'List'" v-show="selectedTab === 'Update'">
+        Cancel
+      </button>
+      <input type="submit" :value="selectedTab === 'Update' ? 'Update' : 'Submit'" />
+    </p>
+  </form>
+</div> -->
