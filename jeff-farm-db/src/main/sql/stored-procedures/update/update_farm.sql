@@ -8,10 +8,10 @@ CREATE PROCEDURE update_farm (
 	IN location VARCHAR(255))
 
 	BEGIN
-		UPDATE farms
-		SET name = name,
-			location = location
-		WHERE id = id;
+		UPDATE farms AS f
+		SET f.name = name,
+			f.location = location
+		WHERE f.id = id;
 	END//
 
 -- DELIMITER ;
