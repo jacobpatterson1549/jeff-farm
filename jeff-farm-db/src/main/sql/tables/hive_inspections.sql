@@ -4,8 +4,8 @@
 CREATE TABLE IF NOT EXISTS hive_inspections
 (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    hive_id INT,
-    queen_seen BIT(1),
+	hive_id INT,
+	queen_seen BIT(1),
 	eggs_seen BIT(1),
 	laying_pattern_stars INT,
 	temperament_stars INT,
