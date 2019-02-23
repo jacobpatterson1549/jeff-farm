@@ -50,9 +50,9 @@ public class Farm implements Serializable
 		public Farm mapRow(ResultSet rs, int i) throws SQLException
 		{
 			Farm farm = new Farm();
-			farm.setId(rs.getInt("id"));
-			farm.setName(rs.getString("name"));
-			farm.setLocation(rs.getString("location"));
+			farm.setId(rs.getInt(ID_COLUMN));
+			farm.setName(rs.getString(NAME_COLUMN));
+			farm.setLocation(rs.getString(LOCATION_COLUMN));
 			return farm;
 		}
 	}
