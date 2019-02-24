@@ -1,6 +1,7 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.dao.StoredProcedureDao.Parameter;
+import com.github.ants280.jeff.farm.ws.model.Farm;
 import com.github.ants280.jeff.farm.ws.model.Hive;
 import java.sql.Types;
 import java.util.Arrays;
@@ -31,7 +32,21 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 	}
 
 	@Override
-	public List<Hive> read()
+	public Farm read(int id)
+	{
+		List<Farm> farms = this.executeRead(
+				"read_farms",
+				Collections.emptyList(),
+				new Farm.ResultSetExtractor());
+		
+		return farms.stream()
+				.filter(farm -> farm.getId() == id)
+				.findFirst()
+				.orElse(null);
+	}
+	
+	@Override
+	public List<Hive> readList(int parentId)
 	{
 		return this.executeRead(
 				"read_hives",

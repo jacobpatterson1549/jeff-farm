@@ -8,7 +8,9 @@ public interface CrudDao<T>
 {
 	public int create(T entity);
 
-	public List<T> read();
+	public T read(int id);
+	
+	public List<T> readList(int parentId);
 
 	public void update(T entity);
 
