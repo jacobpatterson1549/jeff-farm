@@ -92,7 +92,7 @@ public class StoredProcedureDao
 						parameter.getSqlType()))
 						.toArray(SqlParameter[]::new))
 				.declareParameters(RETURN_UPDATE_COUNT_SQL_PARAMETER);
-		
+
 		assert outParameterName == null ^ rowMapper == null;
 		if (outParameterName != null)
 		{

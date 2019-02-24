@@ -43,7 +43,7 @@ public class Hive implements Serializable
 	{
 		this.name = name;
 	}
-	
+
 	public static class ResultSetExtractor implements RowMapper<Hive>
 	{
 		@Override

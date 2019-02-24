@@ -15,7 +15,7 @@ import org.jvnet.hk2.annotations.Service;
 public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<HiveInspection>
 {
 	private final HiveDao hiveDao; // TODO: should not be needed.
-	
+
 	@Inject
 	public HiveInspectionDao(DataSource dataSource, HiveDao hiveDao)
 	{
@@ -31,7 +31,7 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 				.filter(hive2 -> hive2.getId() == hiveInspection.getHiveId())
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("No Hive found for id #" + hiveInspection.getHiveId()));
-		
+
 		return this.executeCreate(
 				"create_hive_inspection",
 				Arrays.asList(
@@ -71,7 +71,7 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 				.filter(hive2 -> hive2.getId() == hiveInspection.getHiveId())
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("No Hive found for id #" + hiveInspection.getHiveId()));
-		
+
 		this.executeUpdate(
 				"update_hive_inspection",
 				Arrays.asList(
@@ -107,7 +107,7 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 				.filter(hive2 -> hive2.getId() == hiveInspection.getHiveId())
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("No Hive found for id #" + hiveInspection.getHiveId()));
-		
+
 		this.executeUpdate(
 				"delete_hive_inspection",
 				Arrays.asList(

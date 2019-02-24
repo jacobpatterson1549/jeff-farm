@@ -15,7 +15,7 @@ import org.jvnet.hk2.annotations.Service;
 public class QueenBeeDao extends StoredProcedureDao implements CrudDao<QueenBee>
 {
 	private final HiveDao hiveDao; // TODO: should not be needed.
-	
+
 	@Inject
 	public QueenBeeDao(DataSource dataSource, HiveDao hiveDao)
 	{
@@ -31,7 +31,7 @@ public class QueenBeeDao extends StoredProcedureDao implements CrudDao<QueenBee>
 				.filter(hive2 -> hive2.getId() == queenBee.getHiveId())
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("No Hive found for id #" + queenBee.getHiveId()));
-		
+
 		return this.executeCreate(
 				"create_queen_bee",
 				Arrays.asList(
@@ -58,7 +58,7 @@ public class QueenBeeDao extends StoredProcedureDao implements CrudDao<QueenBee>
 				.filter(hive2 -> hive2.getId() == queenBee.getHiveId())
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("No Hive found for id #" + queenBee.getHiveId()));
-		
+
 		this.executeUpdate(
 				"update_queen_bee",
 				Arrays.asList(
@@ -81,7 +81,7 @@ public class QueenBeeDao extends StoredProcedureDao implements CrudDao<QueenBee>
 				.filter(hive2 -> hive2.getId() == queenBee.getHiveId())
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("No Hive found for id #" + queenBee.getHiveId()));
-		
+
 		this.executeUpdate(
 				"delete_queen_bee",
 				Arrays.asList(

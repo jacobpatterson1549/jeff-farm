@@ -9,7 +9,7 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("/resources")
 public class ApplicationConfig extends Application
 {
-	@Override 
+	@Override
 	public Set<Class<?>> getClasses()
 	{
 		Set<Class<?>> resources = new HashSet<>();

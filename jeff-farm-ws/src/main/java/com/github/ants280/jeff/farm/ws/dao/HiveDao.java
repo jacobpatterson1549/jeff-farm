@@ -60,7 +60,7 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 				.mapToInt(Hive::getFarmId)
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("No farm found for hive #" + id));
-		
+
 		this.executeUpdate(
 				"delete_hive",
 				Arrays.asList(
