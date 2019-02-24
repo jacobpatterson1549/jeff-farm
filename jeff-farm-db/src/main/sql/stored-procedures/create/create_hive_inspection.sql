@@ -51,7 +51,7 @@ CREATE PROCEDURE update_hive_inspection (
 			, wind_speed_mph
 		FROM hives AS h
 		WHERE h.id = hive_id
-			AND h.farm_id = farm_id;
+			AND h.active = 1;
 
 		SET id = LAST_INSERT_ID();
 	END//
