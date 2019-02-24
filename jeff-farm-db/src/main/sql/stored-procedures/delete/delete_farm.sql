@@ -8,7 +8,8 @@ CREATE PROCEDURE delete_farm (
 	BEGIN
 		UPDATE farms AS f
 		SET f.active = 0
-		WHERE f.id = id;
+		WHERE f.id = id
+			AND f.active = 1;
 	END//
 
 -- DELIMITER ;

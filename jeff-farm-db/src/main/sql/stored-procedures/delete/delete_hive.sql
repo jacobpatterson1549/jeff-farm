@@ -10,7 +10,7 @@ CREATE PROCEDURE delete_hive (
 		UPDATE hives AS h
 		SET h.active = 0
 		WHERE h.id = id
-			AND h.farm_id = farm_id;
+			AND h.active = 1;
 	END//
 
 -- DELIMITER ;
