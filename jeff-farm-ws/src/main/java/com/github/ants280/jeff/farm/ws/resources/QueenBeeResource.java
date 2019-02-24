@@ -15,7 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/farm/{farmId}/hive/{hiveId}/queenBee")
+@Path("/farms/{farmId}/hives/{hiveId}/queenBees")
 public class QueenBeeResource
 {
 	private final QueenBeeDao queenBeeDao;

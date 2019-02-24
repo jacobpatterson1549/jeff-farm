@@ -15,7 +15,7 @@ const httpOptions = {
 })
 export class FarmService {
 
-  private farmsUrl = 'http://localhost:8080/jeff-farm-ws/farm';
+  private farmsUrl = 'http://localhost:8080/jeff-farm-ws/farms';
 
   constructor(private http: HttpClient) { }
 
