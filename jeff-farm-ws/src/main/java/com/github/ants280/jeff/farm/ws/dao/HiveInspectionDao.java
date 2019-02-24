@@ -27,8 +27,8 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 				"create_hive_inspection",
 				Arrays.asList(
 						new Parameter(HiveInspection.HIVE_ID_COLUMN, hiveInspection.getHiveId(), Types.INTEGER),
-						new Parameter(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.isQueenSeen(), Types.BIT), // todo: rename to getQueenSeen
-						new Parameter(HiveInspection.EGGS_SEEN_COLUMN, hiveInspection.isEggsSeen(), Types.BIT),
+						new Parameter(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.getQueenSeen(), Types.BIT),
+						new Parameter(HiveInspection.EGGS_SEEN_COLUMN, hiveInspection.getEggsSeen(), Types.BIT),
 						new Parameter(HiveInspection.LAYING_PATTERN_STARS_COLUMN, hiveInspection.getLayingPatternStars(), Types.INTEGER),
 						new Parameter(HiveInspection.TEMPERAMENT_STARS_COLUMN, hiveInspection.getTemperamentStars(), Types.INTEGER),
 						new Parameter(HiveInspection.QUEEN_CELLS_COLUMN, hiveInspection.getQueenCells(), Types.INTEGER),
@@ -72,8 +72,8 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 				Arrays.asList(
 						new Parameter(HiveInspection.ID_COLUMN, hiveInspection.getId(), Types.INTEGER),
 						new Parameter(HiveInspection.HIVE_ID_COLUMN, hiveInspection.getHiveId(), Types.INTEGER),
-						new Parameter(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.isQueenSeen(), Types.BIT), // todo: rename to getQueenSeen
-						new Parameter(HiveInspection.EGGS_SEEN_COLUMN, hiveInspection.isEggsSeen(), Types.BIT),
+						new Parameter(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.getQueenSeen(), Types.BIT),
+						new Parameter(HiveInspection.EGGS_SEEN_COLUMN, hiveInspection.getEggsSeen(), Types.BIT),
 						new Parameter(HiveInspection.LAYING_PATTERN_STARS_COLUMN, hiveInspection.getLayingPatternStars(), Types.INTEGER),
 						new Parameter(HiveInspection.TEMPERAMENT_STARS_COLUMN, hiveInspection.getTemperamentStars(), Types.INTEGER),
 						new Parameter(HiveInspection.QUEEN_CELLS_COLUMN, hiveInspection.getQueenCells(), Types.INTEGER),

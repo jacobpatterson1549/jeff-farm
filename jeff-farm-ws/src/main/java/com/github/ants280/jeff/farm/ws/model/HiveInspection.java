@@ -60,7 +60,7 @@ public class HiveInspection implements Serializable
 		this.hiveId = hiveId;
 	}
 
-	public boolean isQueenSeen()
+	public boolean getQueenSeen()
 	{
 		return queenSeen;
 	}
@@ -70,7 +70,7 @@ public class HiveInspection implements Serializable
 		this.queenSeen = queenSeen;
 	}
 
-	public boolean isEggsSeen()
+	public boolean getEggsSeen()
 	{
 		return eggsSeen;
 	}
