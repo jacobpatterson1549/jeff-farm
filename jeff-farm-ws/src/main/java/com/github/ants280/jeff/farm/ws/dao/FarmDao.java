@@ -1,6 +1,8 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.model.Farm;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,6 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import org.jvnet.hk2.annotations.Service;
+import org.springframework.jdbc.core.RowMapper;
 
 @Service
 public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
@@ -36,7 +39,7 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 				"read_farm",
 				Collections.singletonList(
 						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)),
-				new Farm.ResultSetExtractor());
+				new ResultSetExtractor());
 	}
 
 	@Override
@@ -45,7 +48,7 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 		return this.executeReadList(
 				"read_farms",
 				Collections.emptyList(),
-				new Farm.ResultSetExtractor());
+				new ResultSetExtractor());
 	}
 
 	@Override
@@ -66,5 +69,18 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 				"delete_farm",
 				Collections.singletonList(
 						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)));
+	}
+	
+	public static class ResultSetExtractor implements RowMapper<Farm>
+	{
+		@Override
+		public Farm mapRow(ResultSet rs, int i) throws SQLException
+		{
+			Farm farm = new Farm();
+			farm.setId(rs.getInt(Farm.ID_COLUMN));
+			farm.setName(rs.getString(Farm.NAME_COLUMN));
+			farm.setLocation(rs.getString(Farm.LOCATION_COLUMN));
+			return farm;
+		}
 	}
 }

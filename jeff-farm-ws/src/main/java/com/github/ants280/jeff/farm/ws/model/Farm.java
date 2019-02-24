@@ -1,11 +1,6 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-import java.io.Serializable;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import org.springframework.jdbc.core.RowMapper;
-
-public class Farm implements Serializable
+public class Farm
 {
 	public static final String ID_COLUMN = "id";
 	public static final String NAME_COLUMN = "name";
@@ -42,18 +37,5 @@ public class Farm implements Serializable
 	public void setLocation(String location)
 	{
 		this.location = location;
-	}
-
-	public static class ResultSetExtractor implements RowMapper<Farm>
-	{
-		@Override
-		public Farm mapRow(ResultSet rs, int i) throws SQLException
-		{
-			Farm farm = new Farm();
-			farm.setId(rs.getInt(ID_COLUMN));
-			farm.setName(rs.getString(NAME_COLUMN));
-			farm.setLocation(rs.getString(LOCATION_COLUMN));
-			return farm;
-		}
 	}
 }

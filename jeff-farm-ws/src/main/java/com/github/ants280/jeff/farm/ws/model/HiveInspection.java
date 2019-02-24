@@ -1,11 +1,6 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-import java.io.Serializable;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import org.springframework.jdbc.core.RowMapper;
-
-public class HiveInspection implements Serializable
+public class HiveInspection
 {
 	public static final String ID_COLUMN = "id";
 	public static final String HIVE_ID_COLUMN = "hive_id";
@@ -198,31 +193,5 @@ public class HiveInspection implements Serializable
 	public void setWindSpeedMph(int windSpeedMph)
 	{
 		this.windSpeedMph = windSpeedMph;
-	}
-
-	public static class ResultSetExtractor implements RowMapper<HiveInspection>
-	{
-		@Override
-		public HiveInspection mapRow(ResultSet rs, int i) throws SQLException
-		{
-			HiveInspection hiveInspection = new HiveInspection();
-			hiveInspection.setId(rs.getInt(ID_COLUMN));
-			hiveInspection.setHiveId(rs.getInt(HIVE_ID_COLUMN));
-			hiveInspection.setQueenSeen(rs.getBoolean(QUEEN_SEEN_COLUMN));
-			hiveInspection.setEggsSeen(rs.getBoolean(EGGS_SEEN_COLUMN));
-			hiveInspection.setLayingPatternStars(rs.getInt(LAYING_PATTERN_STARS_COLUMN));
-			hiveInspection.setTemperamentStars(rs.getInt(TEMPERAMENT_STARS_COLUMN));
-			hiveInspection.setQueenCells(rs.getInt(QUEEN_CELLS_COLUMN));
-			hiveInspection.setSupersedureCells(rs.getInt(SUPERSEDURE_CELLS_COLUMN));
-			hiveInspection.setSwarmCells(rs.getInt(SWARM_CELLS_COLUMN));
-			hiveInspection.setCombBuildingStars(rs.getInt(COMB_BUILDING_STARS_COLUMN));
-			hiveInspection.setFramesSealedBrood(rs.getInt(FRAMES_SEALED_BROOD_COLUMN));
-			hiveInspection.setFramesOpenBrood(rs.getInt(FRAMES_OPEN_BROOD_COLUMN));
-			hiveInspection.setFramesHoney(rs.getInt(FRAMES_HONEY_COLUMN));
-			hiveInspection.setWeather(rs.getString(WEATHER_COLUMN));
-			hiveInspection.setTemperatureF(rs.getInt(TEMPERATURE_F_COLUMN));
-			hiveInspection.setWindSpeedMph(rs.getInt(WIND_SPEED_MPH_COLUMN));
-			return hiveInspection;
-		}
 	}
 }

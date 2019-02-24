@@ -2,6 +2,8 @@ package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.dao.StoredProcedureDao.Parameter;
 import com.github.ants280.jeff.farm.ws.model.Hive;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,6 +11,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import org.jvnet.hk2.annotations.Service;
+import org.springframework.jdbc.core.RowMapper;
 
 @Service
 public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
@@ -37,7 +40,7 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 				"read_hive",
 				Collections.singletonList(
 						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)),
-				new Hive.ResultSetExtractor());
+				new ResultSetExtractor());
 	}
 	
 	@Override
@@ -47,7 +50,7 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 				"read_hives",
 				Collections.singletonList(
 						new Parameter(Hive.FARM_ID_COLUMN, parentId, Types.INTEGER)),
-				new Hive.ResultSetExtractor());
+				new ResultSetExtractor());
 	}
 
 	@Override
@@ -68,5 +71,18 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 				"delete_hive",
 				Collections.singletonList(
 						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)));
+	}
+	
+	private static class ResultSetExtractor implements RowMapper<Hive>
+	{
+		@Override
+		public Hive mapRow(ResultSet rs, int i) throws SQLException
+		{
+			Hive hive = new Hive();
+			hive.setId(rs.getInt(Hive.ID_COLUMN));
+			hive.setFarmId(rs.getInt(Hive.FARM_ID_COLUMN));
+			hive.setName(rs.getString(Hive.NAME_COLUMN));
+			return hive;
+		}
 	}
 }
