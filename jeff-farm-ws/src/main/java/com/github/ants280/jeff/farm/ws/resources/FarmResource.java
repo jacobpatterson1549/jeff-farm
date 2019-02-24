@@ -15,7 +15,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-// http://localhost:8080/jeff-farm-ws/farm
 @Path("/farm")
 public class FarmResource
 {
