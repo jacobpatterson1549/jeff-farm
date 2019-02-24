@@ -40,7 +40,7 @@ public class StoredProcedureDao
 
 		if ((int) outputParams.get(RETURN_UPDATE_COUNT) != 1)
 		{
-			// TODO: rollback update transaction
+			// TODO: rollback transaction
 			throw new StoredProcedureException(String.format(
 					"Did not update expected number of rows (1).  "
 							+ "Updated %s rows",
@@ -130,25 +130,22 @@ public class StoredProcedureDao
 						.toArray(SqlParameter[]::new))
 				.declareParameters(RETURN_UPDATE_COUNT_SQL_PARAMETER);
 
-		if (outParameterName != null && rowMapper == null)
+		if (outParameterName != null && rowMapper != null)
+		{
+			throw new StoredProcedureException(
+					"Can get output params or a ResultSet.  Cannot get both.");
+		}
+		else if (outParameterName != null)
 		{
 			simpleJdbcCall.declareParameters(new SqlOutParameter(
 					outParameterName,
 					Types.INTEGER));
 		}
-		else if (outParameterName == null && rowMapper != null)
+		else if (rowMapper != null)
 		{
 			simpleJdbcCall.returningResultSet(
 					STORED_PROCEDURE_NAME,
 					rowMapper);
-		}
-		else
-		{
-			throw new StoredProcedureException(String.format(
-					"Must get output params or a ResultSet.  Cannot get %s.",
-					((outParameterName == null && rowMapper == null)
-							? "none"
-							: "both")));
 		}
 		
 		return simpleJdbcCall.execute(sqlParameterSource);
