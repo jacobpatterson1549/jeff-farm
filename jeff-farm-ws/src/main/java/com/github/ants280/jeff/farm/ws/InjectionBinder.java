@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws;
 
+import com.github.ants280.jeff.farm.ws.dao.ConnectionDao;
 import com.github.ants280.jeff.farm.ws.dao.FarmDao;
 import com.github.ants280.jeff.farm.ws.dao.HiveDao;
 import com.github.ants280.jeff.farm.ws.dao.HiveInspectionDao;
@@ -18,6 +19,7 @@ public class InjectionBinder extends AbstractBinder
 	protected void configure()
 	{
 		bind(getDataSource()).to(DataSource.class);
+		bindAsContract(ConnectionDao.class);
 		bindAsContract(FarmDao.class);
 		bindAsContract(HiveDao.class);
 		bindAsContract(QueenBeeDao.class);
