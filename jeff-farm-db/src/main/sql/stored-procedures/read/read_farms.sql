@@ -6,7 +6,7 @@ CREATE PROCEDURE read_farms ()
 
 	BEGIN
 		SELECT f.id, f.name, f.location
-		FROM f.farms
+		FROM farms AS f
 		WHERE f.active = 1;
 	END//
 
