@@ -11,7 +11,8 @@ CREATE PROCEDURE update_farm (
 		UPDATE farms AS f
 		SET f.name = name,
 			f.location = location
-		WHERE f.id = id;
+		WHERE f.id = id
+			AND f.active = 1;
 	END//
 
 -- DELIMITER ;
