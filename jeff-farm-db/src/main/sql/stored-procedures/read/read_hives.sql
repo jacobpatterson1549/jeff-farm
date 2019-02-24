@@ -8,8 +8,8 @@ CREATE PROCEDURE read_hives (
 	BEGIN
 		SELECT h.id, h.name
 		FROM hives AS h
-		WHERE h.active = 1
-			AND h.farm_id = farm_id;
+		WHERE h.farm_id = farm_id
+			AND h.active = 1;
 	END//
 
 -- DELIMITER ;

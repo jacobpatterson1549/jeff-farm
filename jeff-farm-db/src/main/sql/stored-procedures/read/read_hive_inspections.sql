@@ -3,8 +3,7 @@
 DROP PROCEDURE IF EXISTS read_hive_inspections//
 
 CREATE PROCEDURE read_hive_inspections (
-	IN hive_id INT,
-	IN farm_id INT)
+	IN hive_id INT)
 
 	BEGIN
 		SELECT hi.hive_id
@@ -23,9 +22,8 @@ CREATE PROCEDURE read_hive_inspections (
 			, hi.wind_speed_mph
 		FROM hive_inspections AS hi
 		JOIN hives AS h ON h.id = hi.hive_id
-		WHERE hi.active = 1
-			AND h.id = hive_id
-			AND h.farm_id = farm_id;
+		WHERE h.id = hive_id
+			AND hi.active = 1;
 	END//
 
 -- DELIMITER ;
