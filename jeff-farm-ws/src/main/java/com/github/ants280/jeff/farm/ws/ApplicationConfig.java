@@ -14,6 +14,9 @@ public class ApplicationConfig extends Application
 	{
 		Set<Class<?>> resources = new HashSet<>();
 		resources.add(FarmResource.class);
+		resources.add(HiveResource.class);
+		resources.add(QueenBeeResource.class);
+		resources.add(HiveInspectionResource.class);
 		return resources;
 	}
 

@@ -1,7 +1,7 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
-import com.github.ants280.jeff.farm.ws.dao.FarmDao;
-import com.github.ants280.jeff.farm.ws.model.Farm;
+import com.github.ants280.jeff.farm.ws.dao.HiveDao;
+import com.github.ants280.jeff.farm.ws.model.Hive;
 import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -15,23 +15,22 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-// http://localhost:8080/jeff-farm-ws/farm
-@Path("/farm")
-public class FarmResource
+@Path("/farm/{farmId}/hive")
+public class HiveResource
 {
-	private final FarmDao farmDao;
+	private final HiveDao hiveDao;
 
 	@Inject
-	public FarmResource(FarmDao farmDao)
+	public HiveResource(HiveDao hiveDao)
 	{
-		this.farmDao = farmDao;
+		this.hiveDao = hiveDao;
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createFarm(Farm farm)
+	public Response createHive(Hive hive)
 	{
-		farmDao.create(farm);
+		hiveDao.create(hive);
 
 		return Response.ok().build();
 	}
@@ -39,27 +38,27 @@ public class FarmResource
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
-	public Response getFarm(@PathParam("id") int id)
+	public Response getHive(@PathParam("id") int id)
 	{
-		Farm farm = farmDao.read(id);
+		Hive hive = hiveDao.read(id);
 
-		return Response.ok(farm).build();
+		return Response.ok(hive).build();
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFarmsList()
+	public Response getHivesList(@PathParam("farmId") int farmId)
 	{
-		List<Farm> farms = farmDao.readList(-1); // TODO limit this by permissions
+		List<Hive> hives = hiveDao.readList(farmId);
 
-		return Response.ok(farms).build();
+		return Response.ok(hives).build();
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateFarm(Farm farm)
+	public Response updateHive(Hive hive)
 	{
-		farmDao.update(farm);
+		hiveDao.update(hive);
 
 		return Response.ok().build();
 	}
@@ -67,9 +66,9 @@ public class FarmResource
 	@DELETE
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteFarm(@PathParam("id") int id)
+	public Response deleteHive(@PathParam("id") int id)
 	{
-		farmDao.delete(id);
+		hiveDao.delete(id);
 
 		return Response.ok().build();
 	}
