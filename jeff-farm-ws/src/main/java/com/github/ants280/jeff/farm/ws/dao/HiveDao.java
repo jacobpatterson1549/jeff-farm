@@ -1,7 +1,6 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.dao.StoredProcedureDao.Parameter;
-import com.github.ants280.jeff.farm.ws.model.Farm;
 import com.github.ants280.jeff.farm.ws.model.Hive;
 import java.sql.Types;
 import java.util.Arrays;
@@ -32,25 +31,22 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 	}
 
 	@Override
-	public Farm read(int id)
+	public Hive read(int id)
 	{
-		List<Farm> farms = this.executeRead(
-				"read_farms",
-				Collections.emptyList(),
-				new Farm.ResultSetExtractor());
-		
-		return farms.stream()
-				.filter(farm -> farm.getId() == id)
-				.findFirst()
-				.orElse(null);
+		return this.executeRead(
+				"read_hive",
+				Collections.singletonList(
+						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)),
+				new Hive.ResultSetExtractor());
 	}
 	
 	@Override
 	public List<Hive> readList(int parentId)
 	{
-		return this.executeRead(
+		return this.executeReadList(
 				"read_hives",
-				Collections.emptyList(),
+				Collections.singletonList(
+						new Parameter(Hive.FARM_ID_COLUMN, parentId, Types.INTEGER)),
 				new Hive.ResultSetExtractor());
 	}
 
@@ -68,18 +64,9 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 	@Override
 	public void delete(int id)
 	{
-		// TODO: this retrieval should not be needed with a proper filter.
-		List<Hive> hives = this.read();
-		int farmId = hives.stream()
-				.filter(hive -> hive.getId() == id)
-				.mapToInt(Hive::getFarmId)
-				.findFirst()
-				.orElseThrow(() -> new AssertionError("No farm found for hive #" + id));
-
 		this.executeUpdate(
 				"delete_hive",
-				Arrays.asList(
-						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER),
-						new Parameter(Hive.FARM_ID_COLUMN, farmId, Types.INTEGER)));
+				Collections.singletonList(
+						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)));
 	}
 }

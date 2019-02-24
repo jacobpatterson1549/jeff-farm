@@ -38,9 +38,19 @@ public class FarmResource
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFarms()
+	@Path("{id}")
+	public Response getFarm(@PathParam("id") int id)
 	{
-		List<Farm> farms = farmDao.read();
+		Farm farm = farmDao.read(id);
+
+		return Response.ok(farm).build();
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getFarmsList()
+	{
+		List<Farm> farms = farmDao.readList(-1); // TODO limit this by permissions
 
 		return Response.ok(farms).build();
 	}
@@ -57,9 +67,9 @@ public class FarmResource
 	@DELETE
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteFarm(@PathParam("id") int farmId)
+	public Response deleteFarm(@PathParam("id") int id)
 	{
-		farmDao.delete(farmId);
+		farmDao.delete(id);
 
 		return Response.ok().build();
 	}

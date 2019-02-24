@@ -32,18 +32,17 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 	@Override
 	public Farm read(int id)
 	{
-		List<Farm> farms = this.readList(// TODO: write procs to select only what is needed
-		
-		return farms.stream()
-				.filter(farm -> farm.getId() == id)
-				.findFirst()
-				.orElse(null);
+		return this.executeRead(
+				"read_farm",
+				Collections.singletonList(
+						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)),
+				new Farm.ResultSetExtractor());
 	}
 
 	@Override
 	public List<Farm> readList(int parentId)
 	{
-		return this.executeRead(
+		return this.executeReadList(
 				"read_farms",
 				Collections.emptyList(),
 				new Farm.ResultSetExtractor());

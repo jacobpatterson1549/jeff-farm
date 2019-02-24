@@ -38,26 +38,58 @@ public class StoredProcedureDao
 				null,
 				null);
 
-		assert (int) outputParams.get(RETURN_UPDATE_COUNT) == 1;
+		if ((int) outputParams.get(RETURN_UPDATE_COUNT) != 1)
+		{
+			// TODO: rollback update transaction
+			throw new StoredProcedureException(String.format(
+					"Did not update expected number of rows (1).  "
+							+ "Updated %s rows",
+					outputParams.get(RETURN_UPDATE_COUNT)));
+		}
 	}
 
 	public int executeCreate(
 			String storedProcedureName,
 			Collection<Parameter> inParameters,
-			String outParameterName)
+			String outParameterIdName)
 	{
 		Map<String, Object> outputParams = this.execute(
 				inParameters,
 				storedProcedureName,
-				outParameterName,
+				outParameterIdName,
 				null);
 
-		assert (int) outputParams.get(RETURN_UPDATE_COUNT) == 1;
+		if ((int) outputParams.get(RETURN_UPDATE_COUNT) != 1)
+		{
+			throw new StoredProcedureException(String.format(
+					"Did create item.  Created %s items.",
+					outputParams.get(RETURN_UPDATE_COUNT)));
+		}
 
-		return (int) outputParams.get(outParameterName);
+		return (int) outputParams.get(outParameterIdName);
 	}
 
-	public <T> List<T> executeRead(
+	public <T> T executeRead(
+			String storedProcedureName,
+			Collection<Parameter> inParameters,
+			RowMapper<T> rowMapper)
+	{
+		List<T> items = this.executeReadList(
+				storedProcedureName,
+				inParameters,
+				rowMapper);
+		
+		if (items.size() != 1)
+		{
+			throw new StoredProcedureException(String.format(
+					"Expected to get 1 item.  Got %d.",
+					items.size()));
+		}
+		
+		return items.get(0);
+	}
+	
+	public <T> List<T> executeReadList(
 			String storedProcedureName,
 			Collection<Parameter> inParameters,
 			RowMapper<T> rowMapper)
@@ -68,7 +100,12 @@ public class StoredProcedureDao
 				null,
 				rowMapper);
 
-		assert (int) outputParams.get(RETURN_UPDATE_COUNT) == 0;
+		if ((int) outputParams.get(RETURN_UPDATE_COUNT) != 0)
+		{
+			throw new StoredProcedureException(String.format(
+					"Updated %s rows during a read.  Should not have.",
+					outputParams.get(RETURN_UPDATE_COUNT)));
+		}
 
 		return (List<T>) outputParams.get(STORED_PROCEDURE_NAME);
 	}
@@ -93,20 +130,27 @@ public class StoredProcedureDao
 						.toArray(SqlParameter[]::new))
 				.declareParameters(RETURN_UPDATE_COUNT_SQL_PARAMETER);
 
-		assert outParameterName == null ^ rowMapper == null;
-		if (outParameterName != null)
+		if (outParameterName != null && rowMapper == null)
 		{
 			simpleJdbcCall.declareParameters(new SqlOutParameter(
 					outParameterName,
 					Types.INTEGER));
 		}
-		if (rowMapper != null)
+		else if (outParameterName == null && rowMapper != null)
 		{
 			simpleJdbcCall.returningResultSet(
 					STORED_PROCEDURE_NAME,
 					rowMapper);
 		}
-
+		else
+		{
+			throw new StoredProcedureException(String.format(
+					"Must get output params or a ResultSet.  Cannot get %s.",
+					((outParameterName == null && rowMapper == null)
+							? "none"
+							: "both")));
+		}
+		
 		return simpleJdbcCall.execute(sqlParameterSource);
 	}
 

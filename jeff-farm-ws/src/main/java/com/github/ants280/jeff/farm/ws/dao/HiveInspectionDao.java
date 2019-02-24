@@ -14,29 +14,19 @@ import org.jvnet.hk2.annotations.Service;
 @Service
 public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<HiveInspection>
 {
-	private final HiveDao hiveDao; // TODO: should not be needed.
-
 	@Inject
-	public HiveInspectionDao(DataSource dataSource, HiveDao hiveDao)
+	public HiveInspectionDao(DataSource dataSource)
 	{
 		super(dataSource);
-		this.hiveDao = hiveDao;
 	}
 
 	@Override
 	public int create(HiveInspection hiveInspection)
 	{
-		List<Hive> hives = hiveDao.read();
-		Hive hive = hives.stream()
-				.filter(hive2 -> hive2.getId() == hiveInspection.getHiveId())
-				.findFirst()
-				.orElseThrow(() -> new AssertionError("No Hive found for id #" + hiveInspection.getHiveId()));
-
 		return this.executeCreate(
 				"create_hive_inspection",
 				Arrays.asList(
 						new Parameter(HiveInspection.HIVE_ID_COLUMN, hiveInspection.getHiveId(), Types.INTEGER),
-						new Parameter(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
 						new Parameter(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.isQueenSeen(), Types.BIT), // todo: rename to getQueenSeen
 						new Parameter(HiveInspection.EGGS_SEEN_COLUMN, hiveInspection.isEggsSeen(), Types.BIT),
 						new Parameter(HiveInspection.LAYING_PATTERN_STARS_COLUMN, hiveInspection.getLayingPatternStars(), Types.INTEGER),
@@ -53,31 +43,35 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 						new Parameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph(), Types.INTEGER)),
 				HiveInspection.ID_COLUMN);
 	}
-
+	
 	@Override
-	public List<HiveInspection> read()
+	public HiveInspection read(int id)
 	{
 		return this.executeRead(
+				"read_hive_inspection",
+				Collections.singletonList(
+						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)),
+				new HiveInspection.ResultSetExtractor());
+	}
+
+	@Override
+	public List<HiveInspection> readList(int parentId)
+	{
+		return this.executeReadList(
 				"read_hive_inspections",
-				Collections.emptyList(),
+				Collections.singletonList(
+						new Parameter(HiveInspection.HIVE_ID_COLUMN, parentId, Types.INTEGER)),
 				new HiveInspection.ResultSetExtractor());
 	}
 
 	@Override
 	public void update(HiveInspection hiveInspection)
 	{
-		List<Hive> hives = hiveDao.read();
-		Hive hive = hives.stream()
-				.filter(hive2 -> hive2.getId() == hiveInspection.getHiveId())
-				.findFirst()
-				.orElseThrow(() -> new AssertionError("No Hive found for id #" + hiveInspection.getHiveId()));
-
 		this.executeUpdate(
 				"update_hive_inspection",
 				Arrays.asList(
 						new Parameter(HiveInspection.ID_COLUMN, hiveInspection.getId(), Types.INTEGER),
 						new Parameter(HiveInspection.HIVE_ID_COLUMN, hiveInspection.getHiveId(), Types.INTEGER),
-						new Parameter(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
 						new Parameter(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.isQueenSeen(), Types.BIT), // todo: rename to getQueenSeen
 						new Parameter(HiveInspection.EGGS_SEEN_COLUMN, hiveInspection.isEggsSeen(), Types.BIT),
 						new Parameter(HiveInspection.LAYING_PATTERN_STARS_COLUMN, hiveInspection.getLayingPatternStars(), Types.INTEGER),
@@ -97,22 +91,9 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 	@Override
 	public void delete(int id)
 	{
-		List<HiveInspection> hiveInspections = this.read();
-		HiveInspection hiveInspection = hiveInspections.stream()
-				.filter(hiveInspection2 -> hiveInspection2.getId() == id)
-				.findFirst()
-				.orElseThrow(() -> new AssertionError("No HiveInspection found for hiveInspection #" + id));
-		List<Hive> hives = hiveDao.read();
-		Hive hive = hives.stream()
-				.filter(hive2 -> hive2.getId() == hiveInspection.getHiveId())
-				.findFirst()
-				.orElseThrow(() -> new AssertionError("No Hive found for id #" + hiveInspection.getHiveId()));
-
 		this.executeUpdate(
 				"delete_hive_inspection",
-				Arrays.asList(
-						new Parameter(HiveInspection.ID_COLUMN, id, Types.INTEGER),
-						new Parameter(HiveInspection.HIVE_ID_COLUMN, hiveInspection.getHiveId(), Types.INTEGER),
-						new Parameter(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER)));
+				Collections.singletonList(
+						new Parameter(HiveInspection.ID_COLUMN, id, Types.INTEGER)));
 	}
 }

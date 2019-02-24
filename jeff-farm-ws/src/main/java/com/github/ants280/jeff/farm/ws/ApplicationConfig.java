@@ -14,7 +14,6 @@ public class ApplicationConfig extends Application
 	{
 		Set<Class<?>> resources = new HashSet<>();
 		resources.add(FarmResource.class);
-		resources.add(HiveResource.class);
 		return resources;
 	}
 
