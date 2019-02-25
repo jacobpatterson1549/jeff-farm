@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Farm } from '../classes/farm';
-import { FarmService } from '../farm.service';
+import { FarmService } from '../services/farm.service';
 
 @Component({
   selector: 'app-farms',
@@ -25,7 +25,7 @@ export class FarmsComponent implements OnInit {
   }
 
   getFarms(): void {
-    this.farmService.getFarms()
+    this.farmService.getList()
       .subscribe(farms => this.farms = farms);
   }
 
