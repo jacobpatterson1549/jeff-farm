@@ -5,7 +5,7 @@ import { FormType } from '../classes/form.type';
 
 @Component({
   selector: 'app-list-farms',
-  template: '<app-crud-read [crudService]="farmService" [itemNames]="itemNames"></app-crud-read>'
+  template: '<app-crud-list [crudService]="farmService" [itemNames]="itemNames"></app-crud-list>'
 })
 export class FarmsListComponent implements OnInit {
 

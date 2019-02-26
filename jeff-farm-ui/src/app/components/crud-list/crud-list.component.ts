@@ -3,11 +3,11 @@ import { CrudItem } from 'src/app/classes/crud.item';
 import { CrudService } from 'src/app/services/crud.service';
 
 @Component({
-  selector: 'app-crud-read',
-  templateUrl: './crud-read.component.html',
-  styleUrls: ['./crud-read.component.css']
+  selector: 'app-crud-list',
+  templateUrl: './crud-list.component.html',
+  styleUrls: ['./crud-list.component.css']
 })
-export class CrudReadComponent<T extends CrudItem> implements OnInit {
+export class CrudListComponent<T extends CrudItem> implements OnInit {
 
   @Input() crudService: CrudService<T>;
   @Input() itemNames: string[];

@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
-import { CrudReadComponent } from './components/crud-read/crud-read.component';
+import { CrudListComponent } from './components/crud-list/crud-list.component';
 import { CrudFormComponent } from './components/crud-form/crud-form.component';
 import { FarmsListComponent, FarmsCreateComponent, FarmsUpdateComponent } from './components/farms.component';
 
@@ -14,7 +14,7 @@ import { FarmsListComponent, FarmsCreateComponent, FarmsUpdateComponent } from '
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    CrudReadComponent,
+    CrudListComponent,
     CrudFormComponent,
     FarmsListComponent,
     FarmsCreateComponent,
