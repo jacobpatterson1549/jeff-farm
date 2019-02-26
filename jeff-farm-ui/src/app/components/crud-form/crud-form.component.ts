@@ -47,7 +47,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
 
     if (this.formType == FormType.Create) {
       this.crudService.create(this.crudItem)
-        .subscribe(result => { location.replace('../..') });
+        .subscribe(result => { location.replace('..') });
     }
     if (this.formType == FormType.Update) {
       this.crudService.update(this.crudItem)
