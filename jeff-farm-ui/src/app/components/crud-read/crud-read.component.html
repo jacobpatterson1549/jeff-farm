@@ -1,0 +1,16 @@
+<table>
+  <tr>
+    <th *ngFor="let itemName of itemNames">{{itemName | titlecase}}</th>
+    <th>Update</th>
+    <th>Delete?</th>
+  </tr>
+  <tr *ngFor="let item of items">
+    <td *ngFor="let itemName of itemNames">{{item[itemName]}}</td>
+    <td>
+      <button (click)="updateItem(item)">Update</button>
+    </td>
+    <td>
+      <button (click)="deleteItem(item)">Delete</button>
+    </td>
+  </tr>
+</table>
