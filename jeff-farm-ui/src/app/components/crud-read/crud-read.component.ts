@@ -24,10 +24,6 @@ export class CrudReadComponent<T extends CrudItem> implements OnInit {
       .subscribe(items => { this.items = items });
   }
 
-  updateItem(item: T) {
-    console.log("TODO: Update farm " + JSON.stringify(item));
-  }
-
   deleteItem(item: T) {
     if (window.confirm('Really Delete?')) {
       this.crudService.delete(item)

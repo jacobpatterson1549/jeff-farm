@@ -1,13 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { FarmsComponent } from './components/farms.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
+import { FarmsListComponent, FarmsCreateComponent, FarmsUpdateComponent } from './components/farms.component';
 
 const routes: Routes = [
   {
     path: 'farms',
-    component: FarmsComponent
+    component: FarmsListComponent
+  },
+  {
+    path: 'farms/create',
+    component: FarmsCreateComponent
+  },
+  {
+    path: 'farms/:id/update',
+    component: FarmsUpdateComponent
   },
   {
     path: '',

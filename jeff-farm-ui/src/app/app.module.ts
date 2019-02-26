@@ -1,24 +1,30 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './components/page-not-found.component';
 import { CrudReadComponent } from './components/crud-read/crud-read.component';
-import { FarmsComponent } from './components/farms.component';
+import { CrudFormComponent } from './components/crud-form/crud-form.component';
+import { FarmsListComponent, FarmsCreateComponent, FarmsUpdateComponent } from './components/farms.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
     CrudReadComponent,
-    FarmsComponent,
+    CrudFormComponent,
+    FarmsListComponent,
+    FarmsCreateComponent,
+    FarmsUpdateComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
