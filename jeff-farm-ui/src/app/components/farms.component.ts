@@ -43,6 +43,5 @@ export class FarmsUpdateComponent implements OnInit {
     
   constructor(private farmService: FarmService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 }
