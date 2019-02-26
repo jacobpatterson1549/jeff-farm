@@ -29,6 +29,9 @@ export class CrudReadComponent<T extends CrudItem> implements OnInit {
   }
 
   deleteItem(item: T) {
-    console.log("TODO: Delete item " + JSON.stringify(item));
+    if (window.confirm('Really Delete?')) {
+      this.crudService.delete(item)
+        .subscribe(response => { this.getItems() });
+    }
   }
 }
