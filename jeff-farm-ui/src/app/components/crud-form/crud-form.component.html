@@ -1,15 +1,8 @@
-<p>
-  crud-form works!  FormType = {{formType}}
-</p>
-<table>
-  <tr>
-      <th>name</th>
-      <th>type</th>
-      <th>value</th>
-  </tr>
-  <tr *ngFor="let formItem of formItems">
-    <td>{{formItem.name}}</td>
-    <td>{{formItem.type}}</td>
-    <td>{{formItem.value}}</td>
-  </tr>
-</table>
+<form #crudForm="ngForm">
+  <div *ngFor="let formItem of formItems">
+    <label [for]="formItem.name">{{formItem.name | titlecase}}</label>
+    <!-- TODO: input for type of formItem -->
+    <input [name]="formItem.name" type="text" required [(ngModel)]="formItem.value">    
+  </div>
+  <button type="submit" (click)="submitForm()">{{submitValue}}</button>
+</form>

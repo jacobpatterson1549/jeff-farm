@@ -1,7 +1,7 @@
 export class FormItem {
-    private name: string;
-    private type: FormItemType;
-    private value: string;
+    public name: string;
+    public type: FormItemType;
+    public value: string;
 
     constructor(name: string, type: FormItemType, value?: string) {
         this.name = name;

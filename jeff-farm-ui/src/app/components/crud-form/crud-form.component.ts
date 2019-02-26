@@ -1,12 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Location } from '@angular/common';
 
 import { CrudItem } from 'src/app/classes/crud.item';
 import { CrudService } from 'src/app/services/crud.service';
 import { FormType } from 'src/app/classes/form.type';
 import { FormItem } from 'src/app/classes/form.item';
-import { Farm } from 'src/app/classes/farm';
 
 @Component({
   selector: 'app-crud-form',
@@ -19,10 +18,14 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   @Input() formType: FormType;
   @Input() formItems: FormItem[];
   @Input() crudItem: T
+  submitValue: string;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit() {
+
+    this.submitValue = (this.formType === FormType.Update) ? 'Update' : 'Submit';
+
     if (this.formType == FormType.Create) {
       this.formItems = this.crudItem.getFormItems();
     }
@@ -32,7 +35,23 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
         .subscribe((data: CrudItem) => {
           this.crudItem = Object.assign(this.crudItem, data)
           this.formItems = this.crudItem.getFormItems();
-          });
+        });
+    }
+  }
+
+  submitForm() {
+
+    for (let formItem of this.formItems) {
+      this.crudItem[formItem.name] = formItem.value;
+    }
+
+    if (this.formType == FormType.Create) {
+      this.crudService.create(this.crudItem)
+        .subscribe(result => { location.replace('../..') });
+    }
+    if (this.formType == FormType.Update) {
+      this.crudService.update(this.crudItem)
+        .subscribe(result => { location.replace('../..') });
     }
   }
 }
