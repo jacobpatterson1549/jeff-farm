@@ -21,16 +21,7 @@ export class CrudReadComponent<T extends CrudItem> implements OnInit {
 
   getItems(): void {
     this.crudService.getList()
-      .subscribe(items => 
-        {
-            this.items = items
-            for (let item of items) {
-              for (let itemName of this.itemNames) {
-                let value = item[itemName];
-                console.log(value);
-              }
-            }
-        });
+      .subscribe(items => { this.items = items });
   }
 
   updateItem(item: T) {
