@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { CrudItem } from '../classes/crud.item';
+import { Farm } from '../classes/farm';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -20,9 +21,10 @@ export abstract class CrudService<T extends CrudItem> {
       .pipe(catchError(this.handleError('create')));
   }
 
-  get(): Observable<T[]> {
-    return this.http.get<T[]>(this.baseUrl, httpOptions)
-      .pipe(catchError(this.handleError('get', [])));
+  get(id: string): Observable<Farm> {
+    const url = `${this.baseUrl}/${id}`;
+    return this.http.get<T>(url, httpOptions)
+      .pipe(catchError(this.handleError(`get/${id}`, null)));
   }
 
   getList(): Observable<T[]> {
@@ -37,9 +39,9 @@ export abstract class CrudService<T extends CrudItem> {
 
   delete(t: T | number): Observable<any> {
     const id = typeof t === 'number' ? t : t.id;
-    const url = this.baseUrl + '/' + id;
+    const url = `${this.baseUrl}/${id}`;
     return this.http.delete(url, httpOptions)
-      .pipe(catchError(this.handleError('delete')));
+      .pipe(catchError(this.handleError(`delete/${id}`)));
   }
 
   // copied from heroes tutorial
