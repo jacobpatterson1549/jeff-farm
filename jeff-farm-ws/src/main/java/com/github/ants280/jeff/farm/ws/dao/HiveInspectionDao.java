@@ -1,7 +1,5 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
-import com.github.ants280.jeff.farm.ws.dao.StoredProcedureDao.Parameter;
-import com.github.ants280.jeff.farm.ws.model.Hive;
 import com.github.ants280.jeff.farm.ws.model.HiveInspection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,14 +44,14 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 						new Parameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph(), Types.INTEGER)),
 				HiveInspection.ID_COLUMN);
 	}
-	
+
 	@Override
 	public HiveInspection read(int id)
 	{
 		return this.executeRead(
 				"read_hive_inspection",
 				Collections.singletonList(
-						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)),
+						new Parameter(HiveInspection.ID_COLUMN, id, Types.INTEGER)),
 				new ResultSetExtractor());
 	}
 
@@ -99,30 +97,31 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 				Collections.singletonList(
 						new Parameter(HiveInspection.ID_COLUMN, id, Types.INTEGER)));
 	}
-	
+
 	private static class ResultSetExtractor implements RowMapper<HiveInspection>
 	{
 		@Override
 		public HiveInspection mapRow(ResultSet rs, int i) throws SQLException
 		{
-			HiveInspection hiveInspection = new HiveInspection();
-			hiveInspection.setId(rs.getInt(HiveInspection.ID_COLUMN));
-			hiveInspection.setHiveId(rs.getInt(HiveInspection.HIVE_ID_COLUMN));
-			hiveInspection.setQueenSeen(rs.getBoolean(HiveInspection.QUEEN_SEEN_COLUMN));
-			hiveInspection.setEggsSeen(rs.getBoolean(HiveInspection.EGGS_SEEN_COLUMN));
-			hiveInspection.setLayingPatternStars(rs.getInt(HiveInspection.LAYING_PATTERN_STARS_COLUMN));
-			hiveInspection.setTemperamentStars(rs.getInt(HiveInspection.TEMPERAMENT_STARS_COLUMN));
-			hiveInspection.setQueenCells(rs.getInt(HiveInspection.QUEEN_CELLS_COLUMN));
-			hiveInspection.setSupersedureCells(rs.getInt(HiveInspection.SUPERSEDURE_CELLS_COLUMN));
-			hiveInspection.setSwarmCells(rs.getInt(HiveInspection.SWARM_CELLS_COLUMN));
-			hiveInspection.setCombBuildingStars(rs.getInt(HiveInspection.COMB_BUILDING_STARS_COLUMN));
-			hiveInspection.setFramesSealedBrood(rs.getInt(HiveInspection.FRAMES_SEALED_BROOD_COLUMN));
-			hiveInspection.setFramesOpenBrood(rs.getInt(HiveInspection.FRAMES_OPEN_BROOD_COLUMN));
-			hiveInspection.setFramesHoney(rs.getInt(HiveInspection.FRAMES_HONEY_COLUMN));
-			hiveInspection.setWeather(rs.getString(HiveInspection.WEATHER_COLUMN));
-			hiveInspection.setTemperatureF(rs.getInt(HiveInspection.TEMPERATURE_F_COLUMN));
-			hiveInspection.setWindSpeedMph(rs.getInt(HiveInspection.WIND_SPEED_MPH_COLUMN));
-			return hiveInspection;
+			return new HiveInspection(
+					rs.getInt(HiveInspection.ID_COLUMN),
+					rs.getInt(HiveInspection.HIVE_ID_COLUMN),
+					rs.getBoolean(HiveInspection.QUEEN_SEEN_COLUMN),
+					rs.getBoolean(HiveInspection.EGGS_SEEN_COLUMN),
+					rs.getInt(HiveInspection.LAYING_PATTERN_STARS_COLUMN),
+					rs.getInt(HiveInspection.TEMPERAMENT_STARS_COLUMN),
+					rs.getInt(HiveInspection.QUEEN_CELLS_COLUMN),
+					rs.getInt(HiveInspection.SUPERSEDURE_CELLS_COLUMN),
+					rs.getInt(HiveInspection.SWARM_CELLS_COLUMN),
+					rs.getInt(HiveInspection.COMB_BUILDING_STARS_COLUMN),
+					rs.getInt(HiveInspection.FRAMES_SEALED_BROOD_COLUMN),
+					rs.getInt(HiveInspection.FRAMES_OPEN_BROOD_COLUMN),
+					rs.getInt(HiveInspection.FRAMES_HONEY_COLUMN),
+					rs.getString(HiveInspection.WEATHER_COLUMN),
+					rs.getInt(HiveInspection.TEMPERATURE_F_COLUMN),
+					rs.getInt(HiveInspection.WIND_SPEED_MPH_COLUMN),
+					rs.getTimestamp(HiveInspection.CREATED_DATE_COLUMN),
+					rs.getTimestamp(HiveInspection.MODIFIED_DATE_COLUMN));
 		}
 	}
 }

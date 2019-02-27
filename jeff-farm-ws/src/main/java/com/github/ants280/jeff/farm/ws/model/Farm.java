@@ -1,22 +1,24 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-public class Farm
+import java.sql.Timestamp;
+
+public class Farm extends CrudItem
 {
-	public static final String ID_COLUMN = "id";
 	public static final String NAME_COLUMN = "name";
 	public static final String LOCATION_COLUMN = "location";
-	private int id;
-	private String name;
-	private String location;
+	private final String name;
+	private final String location;
 
-	public int getId()
+	public Farm(
+			int id,
+			String name,
+			String location,
+			Timestamp createdDate,
+			Timestamp modifiedDate)
 	{
-		return id;
-	}
-
-	public void setId(int id)
-	{
-		this.id = id;
+		super(id, createdDate, modifiedDate);
+		this.name = name;
+		this.location = location;
 	}
 
 	public String getName()
@@ -24,18 +26,8 @@ public class Farm
 		return name;
 	}
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
 	public String getLocation()
 	{
 		return location;
-	}
-
-	public void setLocation(String location)
-	{
-		this.location = location;
 	}
 }

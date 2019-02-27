@@ -1,6 +1,5 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
-import com.github.ants280.jeff.farm.ws.dao.StoredProcedureDao.Parameter;
 import com.github.ants280.jeff.farm.ws.model.Hive;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,7 +41,7 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)),
 				new ResultSetExtractor());
 	}
-	
+
 	@Override
 	public List<Hive> readList(int parentId)
 	{
@@ -72,17 +71,18 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 				Collections.singletonList(
 						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)));
 	}
-	
+
 	private static class ResultSetExtractor implements RowMapper<Hive>
 	{
 		@Override
 		public Hive mapRow(ResultSet rs, int i) throws SQLException
 		{
-			Hive hive = new Hive();
-			hive.setId(rs.getInt(Hive.ID_COLUMN));
-			hive.setFarmId(rs.getInt(Hive.FARM_ID_COLUMN));
-			hive.setName(rs.getString(Hive.NAME_COLUMN));
-			return hive;
+			return new Hive(
+					rs.getInt(Hive.ID_COLUMN),
+					rs.getInt(Hive.FARM_ID_COLUMN),
+					rs.getString(Hive.NAME_COLUMN),
+					rs.getTimestamp(Hive.CREATED_DATE_COLUMN),
+					rs.getTimestamp(Hive.MODIFIED_DATE_COLUMN));
 		}
 	}
 }

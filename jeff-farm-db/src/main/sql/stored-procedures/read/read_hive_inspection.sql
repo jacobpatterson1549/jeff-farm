@@ -20,6 +20,8 @@ CREATE PROCEDURE read_hive_inspection (
 			, hi.weather
 			, hi.temperature_f
 			, hi.wind_speed_mph
+			, hi.created_date
+			, hi.modified_date
 		FROM hive_inspections AS hi
 		WHERE hi.id = id
 			AND hi.active = 1;

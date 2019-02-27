@@ -1,22 +1,24 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-public class Hive
+import java.sql.Timestamp;
+
+public class Hive extends CrudItem
 {
-	public static final String ID_COLUMN = "id";
 	public static final String FARM_ID_COLUMN = "farm_id";
 	public static final String NAME_COLUMN = "name";
-	private int id;
-	private int farmId;
-	private String name;
+	private final int farmId;
+	private final String name;
 
-	public int getId()
+	public Hive(
+			int id,
+			int farmId,
+			String name,
+			Timestamp createdDate,
+			Timestamp modifiedDate)
 	{
-		return id;
-	}
-
-	public void setId(int id)
-	{
-		this.id = id;
+		super(id, createdDate, modifiedDate);
+		this.farmId = farmId;
+		this.name = name;
 	}
 
 	public int getFarmId()
@@ -24,18 +26,8 @@ public class Hive
 		return farmId;
 	}
 
-	public void setFarmId(int farmId)
-	{
-		this.farmId = farmId;
-	}
-
 	public String getName()
 	{
 		return name;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
 	}
 }

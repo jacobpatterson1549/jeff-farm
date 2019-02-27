@@ -70,17 +70,18 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 				Collections.singletonList(
 						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)));
 	}
-	
+
 	public static class ResultSetExtractor implements RowMapper<Farm>
 	{
 		@Override
 		public Farm mapRow(ResultSet rs, int i) throws SQLException
 		{
-			Farm farm = new Farm();
-			farm.setId(rs.getInt(Farm.ID_COLUMN));
-			farm.setName(rs.getString(Farm.NAME_COLUMN));
-			farm.setLocation(rs.getString(Farm.LOCATION_COLUMN));
-			return farm;
+			return new Farm(
+					rs.getInt(Farm.ID_COLUMN),
+					rs.getString(Farm.NAME_COLUMN),
+					rs.getString(Farm.LOCATION_COLUMN),
+					rs.getTimestamp(Farm.CREATED_DATE_COLUMN),
+					rs.getTimestamp(Farm.MODIFIED_DATE_COLUMN));
 		}
 	}
 }

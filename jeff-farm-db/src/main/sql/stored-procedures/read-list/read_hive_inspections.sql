@@ -20,6 +20,8 @@ CREATE PROCEDURE read_hive_inspections (
 			, hi.weather
 			, hi.temperature_f
 			, hi.wind_speed_mph
+			, hi.created_date
+			, hi.modified_date
 		FROM hive_inspections AS hi
 		JOIN hives AS h ON h.id = hi.hive_id
 		WHERE h.id = hive_id

@@ -1,6 +1,5 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
-import com.github.ants280.jeff.farm.ws.dao.StoredProcedureDao.Parameter;
 import com.github.ants280.jeff.farm.ws.model.QueenBee;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +31,7 @@ public class QueenBeeDao extends StoredProcedureDao implements CrudDao<QueenBee>
 						new Parameter(QueenBee.MARK_COLOR_COLUMN, queenBee.getMarkColor(), Types.VARCHAR)),
 				QueenBee.ID_COLUMN);
 	}
-	
+
 	@Override
 	public QueenBee read(int id)
 	{
@@ -72,17 +71,18 @@ public class QueenBeeDao extends StoredProcedureDao implements CrudDao<QueenBee>
 				Collections.singletonList(
 						new Parameter(QueenBee.ID_COLUMN, id, Types.INTEGER)));
 	}
-	
+
 	private static class ResultSetExtractor implements RowMapper<QueenBee>
 	{
 		@Override
 		public QueenBee mapRow(ResultSet rs, int i) throws SQLException
 		{
-			QueenBee queenBee = new QueenBee();
-			queenBee.setId(rs.getInt(QueenBee.ID_COLUMN));
-			queenBee.setHiveId(rs.getInt(QueenBee.HIVE_ID_COLUMN));
-			queenBee.setMarkColor(rs.getString(QueenBee.MARK_COLOR_COLUMN));
-			return queenBee;
+			return new QueenBee(
+					rs.getInt(QueenBee.ID_COLUMN),
+					rs.getInt(QueenBee.HIVE_ID_COLUMN),
+					rs.getString(QueenBee.MARK_COLOR_COLUMN),
+					rs.getTimestamp(QueenBee.CREATED_DATE_COLUMN),
+					rs.getTimestamp(QueenBee.MODIFIED_DATE_COLUMN));
 		}
 	}
 }
