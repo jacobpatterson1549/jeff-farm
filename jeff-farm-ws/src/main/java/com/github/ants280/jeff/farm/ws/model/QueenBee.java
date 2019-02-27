@@ -20,6 +20,12 @@ public class QueenBee extends CrudItem
 		this.hiveId = hiveId;
 		this.markColor = markColor;
 	}
+	
+	@Override
+	public String getDisplayValue()
+	{
+		return markColor;
+	}
 
 	public int getHiveId()
 	{

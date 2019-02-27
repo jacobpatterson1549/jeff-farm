@@ -1,9 +1,12 @@
 package com.github.ants280.jeff.farm.ws.model;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public abstract class CrudItem
 {
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 	public static final String ID_COLUMN = "id";
 	public static final String CREATED_DATE_COLUMN = "created_date";
 	public static final String MODIFIED_DATE_COLUMN = "modified_date";
@@ -18,18 +21,20 @@ public abstract class CrudItem
 		this.modifiedDate = modifiedDate;
 	}
 
+	public abstract String getDisplayValue();
+
 	public int getId()
 	{
 		return id;
 	}
 
-	public Timestamp getCreatedDate()
+	public String getCreatedDate()
 	{
-		return createdDate;
+		return DATE_FORMAT.format(createdDate);
 	}
 
-	public Timestamp getModifiedDate()
+	public String getModifiedDate()
 	{
-		return modifiedDate;
+		return DATE_FORMAT.format(modifiedDate);
 	}
 }

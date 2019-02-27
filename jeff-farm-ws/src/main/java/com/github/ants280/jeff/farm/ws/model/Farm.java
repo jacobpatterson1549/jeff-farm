@@ -20,6 +20,12 @@ public class Farm extends CrudItem
 		this.name = name;
 		this.location = location;
 	}
+	
+	@Override
+	public String getDisplayValue()
+	{
+		return name;
+	}
 
 	public String getName()
 	{

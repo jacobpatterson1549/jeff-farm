@@ -20,6 +20,12 @@ public class Hive extends CrudItem
 		this.farmId = farmId;
 		this.name = name;
 	}
+	
+	@Override
+	public String getDisplayValue()
+	{
+		return name;
+	}
 
 	public int getFarmId()
 	{

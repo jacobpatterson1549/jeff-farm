@@ -74,6 +74,12 @@ public class HiveInspection extends CrudItem
 		this.temperatureF = temperatureF;
 		this.windSpeedMph = windSpeedMph;
 	}
+	
+	@Override
+	public String getDisplayValue()
+	{
+		return this.getCreatedDate();
+	}
 
 	public int getHiveId()
 	{
