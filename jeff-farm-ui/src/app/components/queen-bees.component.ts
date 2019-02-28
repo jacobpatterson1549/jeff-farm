@@ -36,7 +36,7 @@ export class QueenBeesViewComponent {
 export class QueenBeesCreateComponent {
 
   formType = FormType.Create;
-  crudItem: QueenBee = new QueenBee();
+  crudItem: QueenBee = new QueenBee(this.queenBeeService.getHiveId());
   
   constructor(private queenBeeService: QueenBeesService) { }
 }
@@ -49,7 +49,7 @@ export class QueenBeesCreateComponent {
 export class QueenBeesUpdateComponent {
 
   formType = FormType.Update;
-  crudItem: QueenBee = new QueenBee();
+  crudItem: QueenBee = new QueenBee(this.queenBeeService.getHiveId());
     
   constructor(private queenBeeService: QueenBeesService) { }
 }

@@ -37,7 +37,7 @@ export class HivesViewComponent {
 export class HivesCreateComponent {
 
   formType = FormType.Create;
-  crudItem: Hive = new Hive();
+  crudItem: Hive = new Hive(this.hivesService.getFarmId());
   
   constructor(private hivesService: HivesService) { }
 }
@@ -49,7 +49,7 @@ export class HivesCreateComponent {
 export class HivesUpdateComponent {
 
   formType = FormType.Update;
-  crudItem: Hive = new Hive(); // TODO: this should not be supplied here.
+  crudItem: Hive = new Hive(this.hivesService.getFarmId());
     
   constructor(private hivesService: HivesService) { }
 }

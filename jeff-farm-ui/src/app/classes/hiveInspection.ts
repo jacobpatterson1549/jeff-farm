@@ -37,8 +37,9 @@ export class HiveInspection extends CrudItem {
     private temperatureF: number;
     private windSpeedMph: number;
 
-    constructor() {
+    constructor(hiveId: number) {
         super();
+        this.hiveId = hiveId;
     }
 
     getFormItems(): FormItem[] {

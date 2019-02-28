@@ -36,7 +36,7 @@ export class HiveInspectionsViewComponent {
 export class HiveInspectionsCreateComponent {
 
   formType = FormType.Create;
-  crudItem: HiveInspection = new HiveInspection();
+  crudItem: HiveInspection = new HiveInspection(this.hiveInspectionsService.getHiveId());
   
   constructor(private hiveInspectionsService: HiveInspectionsService) { }
 }
@@ -49,7 +49,7 @@ export class HiveInspectionsCreateComponent {
 export class HiveInspectionsUpdateComponent {
 
   formType = FormType.Update;
-  crudItem: HiveInspection = new HiveInspection();
+  crudItem: HiveInspection = new HiveInspection(this.hiveInspectionsService.getHiveId());
     
   constructor(private hiveInspectionsService: HiveInspectionsService) { }
 }

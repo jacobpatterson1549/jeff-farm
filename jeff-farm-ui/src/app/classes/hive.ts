@@ -9,8 +9,9 @@ export class Hive extends CrudItem {
     public farmId: number;
     public name: string;
 
-    constructor() {
+    constructor(farmId: number) {
         super();
+        this.farmId = farmId;
     }
 
     getFormItems(): FormItem[] {

@@ -9,8 +9,9 @@ export class QueenBee extends CrudItem {
     public hiveId: number;
     public markColor: string;
 
-    constructor() {
+    constructor(hiveId: number) {
         super();
+        this.hiveId = hiveId;
     }
 
     getFormItems(): FormItem[] {
