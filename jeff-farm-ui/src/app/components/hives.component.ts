@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { HivesService } from '../services/hives.service';
 import { FormType } from '../classes/form.type';
-import { HiveInspection } from '../classes/hiveInspection';
+import { Hive } from '../classes/hive';
 
 @Component({
   providers: [HivesService],
@@ -23,7 +23,7 @@ export class HivesListComponent {
 })
 export class HivesViewComponent {
 
-  itemNames: string[] = HiveInspection.ITEM_NAMES;
+  itemNames: string[] = Hive.ITEM_NAMES;
   children: ['hives'];
   
   constructor(private hivesService: HivesService) { }
@@ -37,7 +37,7 @@ export class HivesViewComponent {
 export class HivesCreateComponent {
 
   formType = FormType.Create;
-  crudItem: HiveInspection = new HiveInspection();
+  crudItem: Hive = new Hive();
   
   constructor(private hivesService: HivesService) { }
 }
@@ -49,7 +49,7 @@ export class HivesCreateComponent {
 export class HivesUpdateComponent {
 
   formType = FormType.Update;
-  crudItem: HiveInspection = new HiveInspection();
+  crudItem: Hive = new Hive();
     
   constructor(private hivesService: HivesService) { }
 }
