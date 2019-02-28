@@ -18,15 +18,15 @@ const routes: Routes = [
   { path: 'farms/:farm_id/hives/:id', component: HivesViewComponent },
   { path: 'farms/:farm_id/hives/:id/update', component: HivesUpdateComponent },
 
-  { path: 'farms/:farm_id/hives/:id/queenBees', component: QueenBeesListComponent },
-  { path: 'farms/:farm_id/hives/:id/queenBees/create', component: QueenBeesCreateComponent },
-  { path: 'farms/:farm_id/hives/:id/queenBees/:id', component: QueenBeesViewComponent },
-  { path: 'farms/:farm_id/hives/:id/queenBees/:id/update', component: QueenBeesUpdateComponent },
+  { path: 'farms/:farm_id/hives/:hive_id/queenBees', component: QueenBeesListComponent },
+  { path: 'farms/:farm_id/hives/:hive_id/queenBees/create', component: QueenBeesCreateComponent },
+  { path: 'farms/:farm_id/hives/:hive_id/queenBees/:id', component: QueenBeesViewComponent },
+  { path: 'farms/:farm_id/hives/:hive_id/queenBees/:id/update', component: QueenBeesUpdateComponent },
 
-  { path: 'farms/:farm_id/hives/:id/hiveInspections', component: HiveInspectionsListComponent },
-  { path: 'farms/:farm_id/hives/:id/hiveInspections/create', component: HiveInspectionsCreateComponent },
-  { path: 'farms/:farm_id/hives/:id/hiveInspections/:id', component: HiveInspectionsViewComponent },
-  { path: 'farms/:farm_id/hives/:id/hiveInspections/:id/update', component: HiveInspectionsUpdateComponent },
+  { path: 'farms/:farm_id/hives/:hive_id/hiveInspections', component: HiveInspectionsListComponent },
+  { path: 'farms/:farm_id/hives/:hive_id/hiveInspections/create', component: HiveInspectionsCreateComponent },
+  { path: 'farms/:farm_id/hives/:hive_id/hiveInspections/:id', component: HiveInspectionsViewComponent },
+  { path: 'farms/:farm_id/hives/:hive_id/hiveInspections/:id/update', component: HiveInspectionsUpdateComponent },
 
   { path: '', redirectTo: '/farms', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
