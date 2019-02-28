@@ -101,7 +101,6 @@ public class FarmTest
 	private static ObjectMapper createObjectMapper()
 	{
 		ObjectMapper objectMapper = new ObjectMapper();
-//		objectMapper.enableDefaultTyping();
 		objectMapper.registerModule(new ParameterNamesModule(JsonCreator.Mode.PROPERTIES));
 		return objectMapper;
 	}
