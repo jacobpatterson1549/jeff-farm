@@ -1,6 +1,9 @@
 <button routerLink="create">Create new Item</button>
-<ul *ngIf="items">
-  <li *ngFor="let item of items">
-    <a routerLink="{{item.id}}">{{item[displayField]}}</a>
-  </li>
-</ul>
+<div *ngIf="items">
+  <ul>
+    <li *ngFor="let item of items">
+      <a routerLink="{{item.id}}">{{item[displayField]}}</a>
+    </li>
+  </ul>
+  <p *ngIf="items.length == 0">No items</p>
+</div>
