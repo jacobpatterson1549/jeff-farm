@@ -3,13 +3,23 @@ import { Component, OnInit } from '@angular/core';
 import { FarmService } from '../services/farm.service';
 import { FormType } from '../classes/form.type';
 import { Farm } from '../classes/farm';
-import { FormItem } from '../classes/form.item';
 
 @Component({
   selector: 'app-list-farms',
-  template: '<app-crud-list [crudService]="farmService" [itemNames]="itemNames"></app-crud-list>'
+  template: '<app-crud-list [crudService]="farmService"></app-crud-list>'
 })
 export class FarmsListComponent implements OnInit {
+  
+  constructor(private farmService: FarmService) { }
+
+  ngOnInit() { }
+}
+
+@Component({
+  selector: 'app-farms-view',
+  template: '<app-crud-view [crudService]="farmService" [itemNames]="itemNames"></app-crud-view>'
+})
+export class FarmsViewComponent implements OnInit {
 
   itemNames = Farm.ITEM_NAMES;
   

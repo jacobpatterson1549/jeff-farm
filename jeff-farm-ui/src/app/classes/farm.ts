@@ -10,7 +10,7 @@ export class Farm extends CrudItem {
     public location: string;
 
     constructor() {
-        super(-1);
+        super();
     }
 
     getFormItems(): FormItem[] {

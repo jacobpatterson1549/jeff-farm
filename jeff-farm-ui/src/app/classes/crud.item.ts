@@ -2,7 +2,10 @@ import { FormItem } from './form.item';
 
 export abstract class CrudItem {
 
-    constructor(public id: number) { }
+    public id: number;
+    public displayValue: string
+    
+    constructor() { }
 
     abstract getFormItems(): FormItem[];
 }

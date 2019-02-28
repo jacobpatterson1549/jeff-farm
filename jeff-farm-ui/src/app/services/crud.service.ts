@@ -20,7 +20,7 @@ export abstract class CrudService<T extends CrudItem> {
       .pipe(catchError(this.handleError('create')));
   }
 
-  get(id: string): Observable<T> {
+  get(id: number): Observable<T> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.get<T>(url, httpOptions)
       .pipe(catchError(this.handleError(`get/${id}`, null)));

@@ -1,17 +1,6 @@
 <button routerLink="create">Create new Item</button>
-<table>
-  <tr>
-    <th *ngFor="let itemName of itemNames">{{itemName | titlecase}}</th>
-    <th>Update</th>
-    <th>Delete?</th>
-  </tr>
-  <tr *ngFor="let item of items">
-    <td *ngFor="let itemName of itemNames">{{item[itemName]}}</td>
-    <td>
-      <a routerLink="{{item.id}}/update">Update</a>
-    </td>
-    <td>
-      <a routerLink="" (click)="deleteItem(item)">Delete</a>
-    </td>
-  </tr>
-</table>
+<ul>
+  <li *ngFor="let item of items">
+    <a routerLink="{{item.id}}">{{item.displayValue}}</a>
+  </li>
+</ul>

@@ -2,10 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { CrudItem } from 'src/app/classes/crud.item';
-import { CrudService } from 'src/app/services/crud.service';
-import { FormType } from 'src/app/classes/form.type';
-import { FormItem } from 'src/app/classes/form.item';
+import { CrudItem } from '../../classes/crud.item';
+import { CrudService } from '../../services/crud.service';
+import { FormType } from '../../classes/form.type';
+import { FormItem } from '../../classes/form.item';
 
 @Component({
   selector: 'app-crud-form',
@@ -20,7 +20,9 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   @Input() crudItem: T
   submitValue: string;
 
-  constructor(private route: ActivatedRoute, private location: Location) { }
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location) { }
 
   ngOnInit() {
 
@@ -30,7 +32,8 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
       this.formItems = this.crudItem.getFormItems();
     }
     if (this.formType == FormType.Update) {
-      const id = this.route.snapshot.paramMap.get('id');
+      const idParam: string = this.route.snapshot.paramMap.get('id');
+      const id : number = parseInt(idParam);
       this.crudService.get(id)
         .subscribe((data: CrudItem) => {
           this.crudItem = Object.assign(this.crudItem, data)
@@ -51,7 +54,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
     }
     if (this.formType == FormType.Update) {
       this.crudService.update(this.crudItem)
-        .subscribe(result => { location.replace('../..') });
+        .subscribe(result => { location.replace('..') });
     }
   }
 }

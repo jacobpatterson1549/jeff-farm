@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CrudItem } from 'src/app/classes/crud.item';
-import { CrudService } from 'src/app/services/crud.service';
+import { CrudItem } from '../../classes/crud.item';
+import { CrudService } from '../../services/crud.service';
 
 @Component({
   selector: 'app-crud-list',
@@ -22,12 +22,5 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
   getItems(): void {
     this.crudService.getList()
       .subscribe(items => { this.items = items });
-  }
-
-  deleteItem(item: T) {
-    if (window.confirm('Really Delete?')) {
-      this.crudService.delete(item)
-        .subscribe(response => { this.getItems() });
-    }
   }
 }

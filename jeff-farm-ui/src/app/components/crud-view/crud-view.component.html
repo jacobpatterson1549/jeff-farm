@@ -1,0 +1,10 @@
+ <div *ngIf="item">
+  <table>
+    <tr *ngFor="let itemName of itemNames">
+      <td>{{itemName}}</td>
+      <td>{{item[itemName]}}</td>
+    </tr>
+  </table>
+  <a routerLink="update">Update</a>
+  <a routerLink="" (click)="deleteItem()">Delete</a>
+</div>
