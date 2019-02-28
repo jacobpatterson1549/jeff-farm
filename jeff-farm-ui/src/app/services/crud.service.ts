@@ -1,4 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -11,7 +12,7 @@ const httpOptions = {
 
 export abstract class CrudService<T extends CrudItem> {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   abstract getBaseUrl(): string;
 
@@ -24,10 +25,10 @@ export abstract class CrudService<T extends CrudItem> {
       .pipe(catchError(this.handleError('create')));
   }
 
-  get(id: number): Observable<T> {
-    const url = `${this.genBaseUrl()}/${id}`;
+  get(): Observable<T> {
+    const url = `${this.genBaseUrl()}/${this.getId()}`;
     return this.http.get<T>(url, httpOptions)
-      .pipe(catchError(this.handleError(`get/${id}`, null)));
+      .pipe(catchError(this.handleError(`get/${this.getId()}`, null)));
   }
 
   getList(): Observable<T[]> {
@@ -40,11 +41,10 @@ export abstract class CrudService<T extends CrudItem> {
       .pipe(catchError(this.handleError('update')));
   }
 
-  delete(t: T | number): Observable<any> {
-    const id = typeof t === 'number' ? t : t.id;
-    const url = `${this.genBaseUrl()}/${id}`;
+  delete(): Observable<any> {
+    const url = `${this.genBaseUrl()}/${this.getId()}`;
     return this.http.delete(url, httpOptions)
-      .pipe(catchError(this.handleError(`delete/${id}`)));
+      .pipe(catchError(this.handleError(`delete/${this.getId()}`)));
   }
 
   // copied from heroes tutorial
@@ -55,5 +55,14 @@ export abstract class CrudService<T extends CrudItem> {
 
       return of(result as T);
     };
+  }
+
+  protected getRouteParam(name: string) : number {
+    const id: string = this.route.snapshot.paramMap.get(name);
+    return parseInt(id);
+  }
+
+  getId(): number {
+    return this.getRouteParam('id');
   }
 }

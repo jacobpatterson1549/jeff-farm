@@ -12,14 +12,18 @@ export class HivesService extends CrudService<Hive> {
 
   constructor(
     private httpClient: HttpClient,
-    private route: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute) {
       
-    super(httpClient);
+    super(httpClient, activatedRoute);
   }
 
   getBaseUrl(): string {
 
-    const farmId: string = this.route.snapshot.paramMap.get('farm_id');
-    return `farms/${farmId}/hives`;
+    return `farms/${this.getFarmId()}/hives`;
+  }
+
+  getFarmId(): number {
+
+    return this.getRouteParam('farm_id');
   }
 }

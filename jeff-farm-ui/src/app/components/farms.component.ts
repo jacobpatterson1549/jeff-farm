@@ -5,6 +5,7 @@ import { FormType } from '../classes/form.type';
 import { Farm } from '../classes/farm';
 
 @Component({
+  providers: [FarmsService],
   selector: 'app-list-farms',
   template: '<app-crud-list [crudService]="farmService" [displayField]="displayField"></app-crud-list>'
 })
@@ -16,6 +17,7 @@ export class FarmsListComponent {
 }
 
 @Component({
+  providers: [FarmsService],
   selector: 'app-farms-view',
   template: '<app-crud-view [crudService]="farmService" [itemNames]="itemNames" [children]="children"></app-crud-view>'
 })
@@ -28,6 +30,7 @@ export class FarmsViewComponent {
 }
 
 @Component({
+  providers: [FarmsService],
   selector: 'app-farms-create',
   template: '<app-crud-form [crudService]="farmService" [formType]="formType" [crudItem]="crudItem"></app-crud-form>'
 })
@@ -40,6 +43,7 @@ export class FarmsCreateComponent {
 }
 
 @Component({
+  providers: [FarmsService],
   selector: 'app-farms-update',
   template: '<app-crud-form [crudService]="farmService" [formType]="formType" [crudItem]="crudItem"></app-crud-form>'
 })

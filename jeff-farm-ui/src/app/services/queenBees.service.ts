@@ -12,15 +12,23 @@ export class QueenBeesService extends CrudService<QueenBee> {
 
   constructor(
     private httpClient: HttpClient,
-    private route: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute) {
 
-    super(httpClient);
+    super(httpClient, activatedRoute);
   }
   
   getBaseUrl(): string {
 
-    const farmId: string = this.route.snapshot.paramMap.get('farm_id');
-    const hiveId: string = this.route.snapshot.paramMap.get('hive_id');
-    return `farms/${farmId}/hives/${hiveId}/queenBees`;
+    return `farms/${this.getFarmId()}/hives/${this.getHiveId()}/queenBees`;
+  }
+
+  getFarmId(): number {
+
+    return this.getRouteParam('farm_id');
+  }
+
+  getHiveId(): number {
+
+    return this.getRouteParam('hive_id');
   }
 }

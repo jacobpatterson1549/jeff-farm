@@ -31,9 +31,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
       this.formItems = this.crudItem.getFormItems();
     }
     if (this.formType == FormType.Update) {
-      const idParam: string = this.route.snapshot.paramMap.get('id');
-      const id: number = parseInt(idParam);
-      this.crudService.get(id)
+      this.crudService.get()
         .subscribe((data: CrudItem) => {
           this.crudItem = Object.assign(this.crudItem, data)
           this.formItems = this.crudItem.getFormItems();

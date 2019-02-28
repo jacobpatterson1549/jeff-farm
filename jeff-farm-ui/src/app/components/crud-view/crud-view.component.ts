@@ -21,17 +21,13 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    const idParam: string = this.route.snapshot.paramMap.get('id');
-    const id: number = parseInt(idParam);
-    this.crudService.get(id)
+    this.crudService.get()
       .subscribe(item => { this.item = item });
   }
 
   deleteItem() {
     if (window.confirm('Really Delete?')) {
-      const idParam: string = this.route.snapshot.paramMap.get('id');
-      const id: number = parseInt(idParam);
-      this.crudService.delete(id)
+      this.crudService.delete()
         .subscribe(result => { this.router.navigate([".."], { relativeTo: this.route }) });
     }
   }

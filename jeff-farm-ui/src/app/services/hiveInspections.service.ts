@@ -12,15 +12,23 @@ export class HiveInspectionsService extends CrudService<HiveInspection> {
 
   constructor(
     private httpClient: HttpClient,
-    private route: ActivatedRoute) {
-      
-    super(httpClient);
-  }
+    private activatedRoute: ActivatedRoute) {
 
+    super(httpClient, activatedRoute);
+  }
+  
   getBaseUrl(): string {
 
-    const farmId: string = this.route.snapshot.paramMap.get('farm_id');
-    const hiveId: string = this.route.snapshot.paramMap.get('hive_id');
-    return `farms/${farmId}/hives/${hiveId}/hiveInspections`;
+    return `farms/${this.getFarmId()}/hives/${this.getHiveId()}/hiveInspections`;
+  }
+
+  getFarmId(): number {
+
+    return this.getRouteParam('farm_id');
+  }
+
+  getHiveId(): number {
+
+    return this.getRouteParam('hive_id');
   }
 }
