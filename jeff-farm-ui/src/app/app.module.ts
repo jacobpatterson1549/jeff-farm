@@ -10,6 +10,9 @@ import { CrudListComponent } from './components/crud-list/crud-list.component';
 import { CrudViewComponent } from './components/crud-view/crud-view.component';
 import { CrudFormComponent } from './components/crud-form/crud-form.component';
 import { FarmsListComponent, FarmsViewComponent, FarmsCreateComponent, FarmsUpdateComponent } from './components/farms.component';
+import { HivesListComponent, HivesViewComponent, HivesCreateComponent, HivesUpdateComponent } from './components/hives.component';
+import { QueenBeesListComponent, QueenBeesViewComponent, QueenBeesCreateComponent, QueenBeesUpdateComponent } from './components/queen-bees.component';
+import { HiveInspectionsListComponent, HiveInspectionsViewComponent, HiveInspectionsCreateComponent, HiveInspectionsUpdateComponent } from './components/hive-inspections.component';
 
 @NgModule({
   declarations: [
@@ -18,10 +21,10 @@ import { FarmsListComponent, FarmsViewComponent, FarmsCreateComponent, FarmsUpda
     CrudListComponent,
     CrudViewComponent,
     CrudFormComponent,
-    FarmsListComponent,
-    FarmsViewComponent,
-    FarmsCreateComponent,
-    FarmsUpdateComponent,
+    FarmsListComponent, FarmsViewComponent, FarmsCreateComponent, FarmsUpdateComponent,
+    HivesListComponent, HivesViewComponent, HivesCreateComponent, HivesUpdateComponent,
+    QueenBeesListComponent, QueenBeesViewComponent, QueenBeesCreateComponent, QueenBeesUpdateComponent,
+    HiveInspectionsListComponent, HiveInspectionsViewComponent, HiveInspectionsCreateComponent, HiveInspectionsUpdateComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,7 +7,7 @@ import { CrudService } from './crud.service';
 @Injectable({
   providedIn: 'root'
 })
-export class FarmService extends CrudService<Farm> {
+export class FarmsService extends CrudService<Farm> {
 
   constructor(private httpClient: HttpClient) {
     super(httpClient, 'farms');

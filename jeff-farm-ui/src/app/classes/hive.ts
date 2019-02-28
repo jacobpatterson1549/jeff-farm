@@ -1,13 +1,13 @@
 import { CrudItem } from './crud.item';
 import { FormItem, FormItemType,  } from './form.item';
 
-export class Farm extends CrudItem {
+export class Hive extends CrudItem {
 
-    public static readonly ITEM_NAMES = ['name', 'location'].concat(CrudItem.ITEM_NAMES);
+    public static readonly ITEM_NAMES = ['name'].concat(CrudItem.ITEM_NAMES);
 
-    public id: number;// TODO: is this needed?
+    public id: number;
+    public farmId: number;
     public name: string;
-    public location: string;
 
     constructor() {
         super();
@@ -16,7 +16,6 @@ export class Farm extends CrudItem {
     getFormItems(): FormItem[] {
         return [
             new FormItem('name', FormItemType.String, this.name),
-            new FormItem('location', FormItemType.String, this.location),
         ]
     }
 }

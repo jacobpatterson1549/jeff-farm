@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { FarmService } from '../services/farm.service';
+import { FarmsService } from '../services/farms.service';
 import { FormType } from '../classes/form.type';
 import { Farm } from '../classes/farm';
 
@@ -12,7 +12,7 @@ export class FarmsListComponent {
 
   displayField: string = 'name';
   
-  constructor(private farmService: FarmService) { }
+  constructor(private farmService: FarmsService) { }
 }
 
 @Component({
@@ -23,7 +23,7 @@ export class FarmsViewComponent {
 
   itemNames: string[] = Farm.ITEM_NAMES;
   
-  constructor(private farmService: FarmService) { }
+  constructor(private farmService: FarmsService) { }
 }
 
 @Component({
@@ -35,7 +35,7 @@ export class FarmsCreateComponent {
   formType = FormType.Create;
   crudItem: Farm = new Farm();
   
-  constructor(private farmService: FarmService) { }
+  constructor(private farmService: FarmsService) { }
 }
 
 @Component({
@@ -47,5 +47,5 @@ export class FarmsUpdateComponent {
   formType = FormType.Update;
   crudItem: Farm = new Farm();
     
-  constructor(private farmService: FarmService) { }
+  constructor(private farmService: FarmsService) { }
 }
