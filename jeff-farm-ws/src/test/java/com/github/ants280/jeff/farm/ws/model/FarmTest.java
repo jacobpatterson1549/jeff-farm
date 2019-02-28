@@ -1,13 +1,11 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import static com.github.ants280.jeff.farm.ws.JsonProvider.OBJECT_MAPPER;
 
 public class FarmTest
 {
@@ -54,9 +52,8 @@ public class FarmTest
 		Timestamp modifiedDate = createdDate;
 		Farm farm1 = new Farm(id, name, location, createdDate, modifiedDate);
 //		Farm farm1 = new Farm(id, name, location, createdDate.toString(), modifiedDate.toString());
-		ObjectMapper objectMapper = createObjectMapper();
 		
-		String serializedFarm = objectMapper.writeValueAsString(farm1);
+		String serializedFarm = OBJECT_MAPPER.writeValueAsString(farm1);
 
 		assertEquals(true, serializedFarm.contains("id"));
 		assertEquals(true, serializedFarm.contains("name"));
@@ -71,8 +68,7 @@ public class FarmTest
 	{
 		String serializedFarm = "{\"id\":2,\"name\":\"name2\",\"location\":\"location2\"}";
 
-		ObjectMapper objectMapper = createObjectMapper();
-		Farm farm2 = objectMapper.readValue(serializedFarm, Farm.class);
+		Farm farm2 = OBJECT_MAPPER.readValue(serializedFarm, Farm.class);
 
 		assertEquals(2, farm2.getId());
 		assertEquals("name2", farm2.getName());
@@ -87,8 +83,7 @@ public class FarmTest
 	{
 		String serializedFarm = "{\"id\":3,\"createdDate\":\"2019-02-27T14:52:27-0800\",\"modifiedDate\":\"2019-02-27T14:52:27-0800\",\"name\":\"name3\",\"location\":\"location3\",\"displayValue\":\"name3\"}";
 
-		ObjectMapper objectMapper = createObjectMapper();
-		Farm farm2 = objectMapper.readValue(serializedFarm, Farm.class);
+		Farm farm2 = OBJECT_MAPPER.readValue(serializedFarm, Farm.class);
 
 		assertEquals(3, farm2.getId());
 		assertEquals("name3", farm2.getName());
@@ -96,12 +91,5 @@ public class FarmTest
 		assertEquals(null, farm2.getCreatedDate());
 		assertEquals(null, farm2.getModifiedDate());
 		assertEquals("name3", farm2.getDisplayValue());
-	}
-	
-	private static ObjectMapper createObjectMapper()
-	{
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.registerModule(new ParameterNamesModule(JsonCreator.Mode.PROPERTIES));
-		return objectMapper;
 	}
 }

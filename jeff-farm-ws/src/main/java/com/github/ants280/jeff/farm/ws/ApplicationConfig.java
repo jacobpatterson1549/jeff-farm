@@ -26,6 +26,7 @@ public class ApplicationConfig extends Application
 	{
 		Set<Object> singletons = new HashSet<>();
 		singletons.add(new InjectionBinder());
+		singletons.add(new JsonProvider());
 		return singletons;
 	}
 }
