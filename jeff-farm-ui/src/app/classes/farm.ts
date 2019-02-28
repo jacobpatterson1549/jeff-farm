@@ -3,7 +3,7 @@ import { FormItem, FormItemType,  } from './form.item';
 
 export class Farm extends CrudItem {
 
-    public static readonly ITEM_NAMES = ['name', 'location'];
+    public static readonly ITEM_NAMES = ['name', 'location'].concat(CrudItem.ITEM_NAMES);
 
     public id: number;
     public name: string;
