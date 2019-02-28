@@ -11,7 +11,9 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
 
   @Input() crudService: CrudService<T>;
   @Input() itemNames: string[];
+  @Input() displayField: string;
   items: T[];
+
 
   constructor() { }
 

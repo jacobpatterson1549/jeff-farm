@@ -10,17 +10,6 @@ import org.junit.Test;
 public class FarmTest
 {
 	@Test
-	public void testGetDisplayValue()
-	{
-		String name = "cool farm";
-		Farm farm = new Farm(-1, name, null, null, null);
-
-		String displayValue = farm.getDisplayValue();
-
-		assertEquals(name, displayValue);
-	}
-
-	@Test
 	public void testGetName()
 	{
 		String name = "boring farm";
@@ -59,7 +48,6 @@ public class FarmTest
 		assertEquals(true, serializedFarm.contains("location"));
 		assertEquals(true, serializedFarm.contains("createdDate"));
 		assertEquals(true, serializedFarm.contains("modifiedDate"));
-		assertEquals(true, serializedFarm.contains("displayValue"));
 	}
 
 	@Test
@@ -74,13 +62,12 @@ public class FarmTest
 		assertEquals("location2", farm2.getLocation());
 		assertEquals(null, farm2.getCreatedDate());
 		assertEquals(null, farm2.getModifiedDate());
-		assertEquals("name2", farm2.getDisplayValue());
 	}
 
 	@Test
 	public void testDeserialize_full() throws IOException
 	{
-		String serializedFarm = "{\"id\":3,\"createdDate\":\"2019-02-27T14:52:27-0800\",\"modifiedDate\":\"2019-02-27T14:52:27-0800\",\"name\":\"name3\",\"location\":\"location3\",\"displayValue\":\"SHOULD_BE_OVERWRITTEN_BY_GETTER\"}";
+		String serializedFarm = "{\"id\":3,\"createdDate\":\"2019-02-27T14:52:27-0800\",\"modifiedDate\":\"2019-02-27T14:52:27-0800\",\"name\":\"name3\",\"location\":\"location3\"}";
 
 		Farm farm2 = OBJECT_MAPPER.readValue(serializedFarm, Farm.class);
 
@@ -89,6 +76,5 @@ public class FarmTest
 		assertEquals("location3", farm2.getLocation());
 		assertEquals(null, farm2.getCreatedDate());
 		assertEquals(null, farm2.getModifiedDate());
-		assertEquals("name3", farm2.getDisplayValue());
 	}
 }

@@ -22,9 +22,6 @@ public abstract class CrudItem
 		this.createdDate = createdDate;
 		this.modifiedDate = modifiedDate;
 	}
-
-	@JsonProperty(access = Access.READ_ONLY)
-	public abstract String getDisplayValue();
 	
 	public int getId()
 	{

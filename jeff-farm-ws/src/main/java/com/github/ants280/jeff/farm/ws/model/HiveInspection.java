@@ -73,12 +73,6 @@ public class HiveInspection extends CrudItem
 		this.windSpeedMph = windSpeedMph;
 	}
 
-	@Override
-	public String getDisplayValue()
-	{
-		return this.getCreatedDate();
-	}
-
 	public int getHiveId()
 	{
 		return hiveId;

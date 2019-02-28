@@ -6,9 +6,11 @@ import { Farm } from '../classes/farm';
 
 @Component({
   selector: 'app-list-farms',
-  template: '<app-crud-list [crudService]="farmService"></app-crud-list>'
+  template: '<app-crud-list [crudService]="farmService" [displayField]="displayField"></app-crud-list>'
 })
 export class FarmsListComponent implements OnInit {
+
+  displayField: string = 'name';
   
   constructor(private farmService: FarmService) { }
 
@@ -21,7 +23,7 @@ export class FarmsListComponent implements OnInit {
 })
 export class FarmsViewComponent implements OnInit {
 
-  itemNames = Farm.ITEM_NAMES;
+  itemNames: string[] = Farm.ITEM_NAMES;
   
   constructor(private farmService: FarmService) { }
 
