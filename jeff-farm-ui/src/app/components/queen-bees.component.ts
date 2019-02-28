@@ -11,7 +11,7 @@ import { QueenBee } from '../classes/queenBee';
 })
 export class QueenBeesListComponent {
 
-  displayField: string = 'mark_color';
+  displayField: string = 'markColor';
   
   constructor(private queenBeeService: QueenBeesService) { }
 }
