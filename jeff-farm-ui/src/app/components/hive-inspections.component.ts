@@ -6,7 +6,7 @@ import { HiveInspection } from '../classes/hiveInspection';
 
 @Component({
   providers: [HiveInspectionsService],
-  selector: 'app-list-hiveInspections',
+  selector: 'app-hiveInspections-list',
   template: '<app-crud-list [crudService]="hiveInspectionsService" [displayField]="displayField"></app-crud-list>'
 })
 export class HiveInspectionsListComponent {

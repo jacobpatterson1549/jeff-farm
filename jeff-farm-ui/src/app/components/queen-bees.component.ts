@@ -6,7 +6,7 @@ import { QueenBee } from '../classes/queenBee';
 
 @Component({
   providers: [QueenBeesService],
-  selector: 'app-list-queenBees',
+  selector: 'app-queenBees-list',
   template: '<app-crud-list [crudService]="queenBeeService" [displayField]="displayField"></app-crud-list>'
 })
 export class QueenBeesListComponent {

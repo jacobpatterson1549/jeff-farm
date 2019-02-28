@@ -6,7 +6,7 @@ import { Hive } from '../classes/hive';
 
 @Component({
   providers: [HivesService],
-  selector: 'app-list-farms',
+  selector: 'app-hives-list',
   template: '<app-crud-list [crudService]="hivesService" [displayField]="displayField"></app-crud-list>'
 })
 export class HivesListComponent {
@@ -18,7 +18,7 @@ export class HivesListComponent {
 
 @Component({
   providers: [HivesService],
-  selector: 'app-farms-view',
+  selector: 'app-hives-view',
   template: '<app-crud-view [crudService]="hivesService" [itemNames]="itemNames" [children]="children"></app-crud-view>'
 })
 export class HivesViewComponent {
@@ -31,7 +31,7 @@ export class HivesViewComponent {
 
 @Component({
   providers: [HivesService],
-  selector: 'app-farms-create',
+  selector: 'app-hives-create',
   template: '<app-crud-form [crudService]="hivesService" [formType]="formType" [crudItem]="crudItem"></app-crud-form>'
 })
 export class HivesCreateComponent {
@@ -43,7 +43,8 @@ export class HivesCreateComponent {
 }
 
 @Component({
-  selector: 'app-farms-update',
+  providers: [HivesService],
+  selector: 'app-hives-update',
   template: '<app-crud-form [crudService]="hivesService" [formType]="formType" [crudItem]="crudItem"></app-crud-form>'
 })
 export class HivesUpdateComponent {

@@ -6,7 +6,7 @@ import { Farm } from '../classes/farm';
 
 @Component({
   providers: [FarmsService],
-  selector: 'app-list-farms',
+  selector: 'app-farms-list',
   template: '<app-crud-list [crudService]="farmService" [displayField]="displayField"></app-crud-list>'
 })
 export class FarmsListComponent {
