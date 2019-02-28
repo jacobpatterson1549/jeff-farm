@@ -9,7 +9,7 @@ CREATE PROCEDURE update_queen_bee (
 
 	BEGIN
 		UPDATE queen_bees AS qb
-		JOIN hives AS h ON h.id = hi.hive_id
+		JOIN hives AS h ON h.id = qb.hive_id
 		SET qb.mark_color = mark_color
 		WHERE qb.id = id
 			AND qb.active = 1

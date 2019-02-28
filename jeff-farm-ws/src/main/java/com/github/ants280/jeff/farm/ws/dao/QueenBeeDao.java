@@ -36,7 +36,7 @@ public class QueenBeeDao extends StoredProcedureDao implements CrudDao<QueenBee>
 	public QueenBee read(int id)
 	{
 		return this.executeRead(
-				"read_hive_inspection",
+				"read_queen_bee",
 				Collections.singletonList(
 						new Parameter(QueenBee.ID_COLUMN, id, Types.INTEGER)),
 				new ResultSetExtractor());
