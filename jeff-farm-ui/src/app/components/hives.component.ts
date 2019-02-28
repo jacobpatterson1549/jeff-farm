@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { HivesService } from '../services/hives.service';
 import { FormType } from '../classes/form.type';
 import { Hive } from '../classes/hive';
+import { HiveInspection } from '../classes/hiveInspection';
 
 @Component({
   providers: [HivesService],
@@ -11,7 +12,7 @@ import { Hive } from '../classes/hive';
 })
 export class HivesListComponent {
 
-  displayField: string = 'createdDate';
+  displayField: string = 'name';
   
   constructor(private hivesService: HivesService) { }
 }
@@ -24,7 +25,7 @@ export class HivesListComponent {
 export class HivesViewComponent {
 
   itemNames: string[] = Hive.ITEM_NAMES;
-  children: ['hives'];
+  children: string[] = ['queenBees', 'hiveInspections'];
   
   constructor(private hivesService: HivesService) { }
 }

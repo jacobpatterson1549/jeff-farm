@@ -11,7 +11,7 @@ import { HiveInspection } from '../classes/hiveInspection';
 })
 export class HiveInspectionsListComponent {
 
-  displayField: string = 'name';
+  displayField: string = 'createdDate';
   
   constructor(private hiveInspectionsService: HiveInspectionsService) { }
 }
