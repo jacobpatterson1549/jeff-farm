@@ -17,11 +17,12 @@ export class HivesListComponent {
 
 @Component({
   selector: 'app-farms-view',
-  template: '<app-crud-view [crudService]="hivesService" [itemNames]="itemNames"></app-crud-view>'
+  template: '<app-crud-view [crudService]="hivesService" [itemNames]="itemNames" [children]="children"></app-crud-view>'
 })
 export class HivesViewComponent {
 
   itemNames: string[] = HiveInspection.ITEM_NAMES;
+  children: ['hives'];
   
   constructor(private hivesService: HivesService) { }
 }

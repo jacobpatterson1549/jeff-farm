@@ -17,11 +17,12 @@ export class FarmsListComponent {
 
 @Component({
   selector: 'app-farms-view',
-  template: '<app-crud-view [crudService]="farmService" [itemNames]="itemNames"></app-crud-view>'
+  template: '<app-crud-view [crudService]="farmService" [itemNames]="itemNames" [children]="children"></app-crud-view>'
 })
 export class FarmsViewComponent {
 
   itemNames: string[] = Farm.ITEM_NAMES;
+  children: string[] = ['hives'];
   
   constructor(private farmService: FarmsService) { }
 }

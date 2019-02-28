@@ -7,4 +7,11 @@
   </table>
   <a routerLink="update">Update</a>
   <a routerLink="" (click)="deleteItem()">Delete</a>
+  <div *ngIf="children">
+    <ul>
+      <li *ngFor="let child of children">
+        <a routerLink="{{child}}">{{child | titlecase}}</a>
+      </li>
+    </ul>
+  </div>
 </div>
