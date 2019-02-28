@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Farm } from '../classes/farm';
 import { CrudService } from './crud.service';
@@ -10,6 +10,12 @@ import { CrudService } from './crud.service';
 export class FarmsService extends CrudService<Farm> {
 
   constructor(private httpClient: HttpClient) {
-    super(httpClient, 'farms');
-   }
+
+    super(httpClient);
+  }
+
+  getBaseUrl(): string {
+    
+    return 'farms';
+  }
 }

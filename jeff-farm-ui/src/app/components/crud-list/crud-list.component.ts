@@ -14,7 +14,6 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
   @Input() displayField: string;
   items: T[];
 
-
   constructor() { }
 
   ngOnInit() {

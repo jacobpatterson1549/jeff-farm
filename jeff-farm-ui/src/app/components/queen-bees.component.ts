@@ -5,6 +5,7 @@ import { FormType } from '../classes/form.type';
 import { QueenBee } from '../classes/queenBee';
 
 @Component({
+  providers: [QueenBeesService],
   selector: 'app-list-queenBees',
   template: '<app-crud-list [crudService]="queenBeeService" [displayField]="displayField"></app-crud-list>'
 })
@@ -16,6 +17,7 @@ export class QueenBeesListComponent {
 }
 
 @Component({
+  providers: [QueenBeesService],
   selector: 'app-queenBees-view',
   template: '<app-crud-view [crudService]="queenBeeService" [itemNames]="itemNames"></app-crud-view>'
 })
@@ -27,6 +29,7 @@ export class QueenBeesViewComponent {
 }
 
 @Component({
+  providers: [QueenBeesService],
   selector: 'app-queenBees-create',
   template: '<app-crud-form [crudService]="queenBeeService" [formType]="formType" [crudItem]="crudItem"></app-crud-form>'
 })
@@ -39,6 +42,7 @@ export class QueenBeesCreateComponent {
 }
 
 @Component({
+  providers: [QueenBeesService],
   selector: 'app-queenBees-update',
   template: '<app-crud-form [crudService]="queenBeeService" [formType]="formType" [crudItem]="crudItem"></app-crud-form>'
 })

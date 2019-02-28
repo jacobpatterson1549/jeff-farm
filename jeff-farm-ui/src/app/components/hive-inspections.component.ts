@@ -5,6 +5,7 @@ import { FormType } from '../classes/form.type';
 import { HiveInspection } from '../classes/hiveInspection';
 
 @Component({
+  providers: [HiveInspectionsService],
   selector: 'app-list-hiveInspections',
   template: '<app-crud-list [crudService]="hiveInspectionsService" [displayField]="displayField"></app-crud-list>'
 })
@@ -16,6 +17,7 @@ export class HiveInspectionsListComponent {
 }
 
 @Component({
+  providers: [HiveInspectionsService],
   selector: 'app-hiveInspections-view',
   template: '<app-crud-view [crudService]="hiveInspectionsService" [itemNames]="itemNames"></app-crud-view>'
 })
@@ -27,6 +29,7 @@ export class HiveInspectionsViewComponent {
 }
 
 @Component({
+  providers: [HiveInspectionsService],
   selector: 'app-hiveInspections-create',
   template: '<app-crud-form [crudService]="hiveInspectionsService" [formType]="formType" [crudItem]="crudItem"></app-crud-form>'
 })
@@ -39,6 +42,7 @@ export class HiveInspectionsCreateComponent {
 }
 
 @Component({
+  providers: [HiveInspectionsService],
   selector: 'app-hiveInspections-update',
   template: '<app-crud-form [crudService]="hiveInspectionsService" [formType]="formType" [crudItem]="crudItem"></app-crud-form>'
 })
