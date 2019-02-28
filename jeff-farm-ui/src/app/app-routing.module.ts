@@ -10,12 +10,12 @@ const routes: Routes = [
     component: FarmsListComponent
   },
   {
-    path: 'farms/:id',
-    component: FarmsViewComponent
-  },
-  {
     path: 'farms/create',
     component: FarmsCreateComponent
+  },
+  {
+    path: 'farms/:id',
+    component: FarmsViewComponent
   },
   {
     path: 'farms/:id/update',
