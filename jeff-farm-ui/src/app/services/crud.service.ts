@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { CrudItem } from '../classes/crud.item';
-import { Farm } from '../classes/farm';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,7 +20,7 @@ export abstract class CrudService<T extends CrudItem> {
       .pipe(catchError(this.handleError('create')));
   }
 
-  get(id: string): Observable<Farm> {
+  get(id: string): Observable<T> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.get<T>(url, httpOptions)
       .pipe(catchError(this.handleError(`get/${id}`, null)));
