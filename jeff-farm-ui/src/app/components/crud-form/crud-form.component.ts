@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { CrudItem } from '../../classes/crud.item';
 import { CrudService } from '../../services/crud.service';
@@ -22,7 +21,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location) { }
+    private router: Router) { }
 
   ngOnInit() {
 
@@ -50,11 +49,11 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
 
     if (this.formType == FormType.Create) {
       this.crudService.create(this.crudItem)
-        .subscribe(result => { location.replace('..') });
+      .subscribe(result => { this.router.navigate([".."], { relativeTo: this.route }) });
     }
     if (this.formType == FormType.Update) {
       this.crudService.update(this.crudItem)
-        .subscribe(result => { location.replace('..') });
+        .subscribe(result => { this.router.navigate([".."], { relativeTo: this.route }) });
     }
   }
 }

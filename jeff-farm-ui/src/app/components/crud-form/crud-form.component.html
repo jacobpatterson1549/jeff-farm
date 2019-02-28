@@ -1,5 +1,5 @@
 <!-- <form (ngSubmit)="submitForm()" #crudForm="ngForm"> -->
-<form #crudForm="ngForm">
+<form #crudForm="ngForm" *ngIf="formItems">
   <div *ngFor="let formItem of formItems">
     <label [for]="formItem.name">{{formItem.name | titlecase}}</label>
     <!-- TODO: input for type of formItem -->

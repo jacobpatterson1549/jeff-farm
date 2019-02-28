@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { CrudItem } from '../../classes/crud.item';
@@ -18,10 +18,10 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location) { }
+    private router: Router) { }
 
 
-    ngOnInit() {
+  ngOnInit() {
     const idParam: string = this.route.snapshot.paramMap.get('id');
     const id : number = parseInt(idParam);
     this.crudService.get(id)
@@ -35,7 +35,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
       const idParam: string = this.route.snapshot.paramMap.get('id');
       const id : number = parseInt(idParam);
       this.crudService.delete(id)
-      .subscribe(result => { location.replace('..') });
+        .subscribe(result => { this.router.navigate([".."], { relativeTo: this.route }) });
     }
   }
 }

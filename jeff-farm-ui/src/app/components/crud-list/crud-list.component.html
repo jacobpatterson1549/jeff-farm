@@ -1,5 +1,5 @@
 <button routerLink="create">Create new Item</button>
-<ul>
+<ul *ngIf="items">
   <li *ngFor="let item of items">
     <a routerLink="{{item.id}}">{{item.displayValue}}</a>
   </li>
