@@ -55,9 +55,7 @@ public class HiveInspection extends CrudItem
 			Timestamp createdDate,
 			Timestamp modifiedDate)
 	{
-		super(id,
-				createdDate,
-				modifiedDate);
+		super(id, createdDate, modifiedDate);
 		this.hiveId = hiveId;
 		this.queenSeen = queenSeen;
 		this.eggsSeen = eggsSeen;
@@ -74,7 +72,7 @@ public class HiveInspection extends CrudItem
 		this.temperatureF = temperatureF;
 		this.windSpeedMph = windSpeedMph;
 	}
-	
+
 	@Override
 	public String getDisplayValue()
 	{
@@ -155,4 +153,6 @@ public class HiveInspection extends CrudItem
 	{
 		return windSpeedMph;
 	}
+	
+	
 }

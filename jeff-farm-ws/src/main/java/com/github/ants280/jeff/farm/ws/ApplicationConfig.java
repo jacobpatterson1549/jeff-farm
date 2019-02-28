@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 @ApplicationPath("/resources")
 public class ApplicationConfig extends Application
@@ -13,6 +14,7 @@ public class ApplicationConfig extends Application
 	public Set<Class<?>> getClasses()
 	{
 		Set<Class<?>> resources = new HashSet<>();
+		resources.add(JacksonFeature.class);
 		resources.add(RootResource.class);
 		resources.add(FarmResource.class);
 		resources.add(HiveResource.class);
