@@ -1,11 +1,11 @@
 package com.github.ants280.jeff.farm.ws.model;
 
+import static com.github.ants280.jeff.farm.ws.JsonProvider.OBJECT_MAPPER;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import static com.github.ants280.jeff.farm.ws.JsonProvider.OBJECT_MAPPER;
 
 public class FarmTest
 {
@@ -51,7 +51,6 @@ public class FarmTest
 		Timestamp createdDate = Timestamp.valueOf(LocalDateTime.now());
 		Timestamp modifiedDate = createdDate;
 		Farm farm1 = new Farm(id, name, location, createdDate, modifiedDate);
-//		Farm farm1 = new Farm(id, name, location, createdDate.toString(), modifiedDate.toString());
 		
 		String serializedFarm = OBJECT_MAPPER.writeValueAsString(farm1);
 
@@ -81,7 +80,7 @@ public class FarmTest
 	@Test
 	public void testDeserialize_full() throws IOException
 	{
-		String serializedFarm = "{\"id\":3,\"createdDate\":\"2019-02-27T14:52:27-0800\",\"modifiedDate\":\"2019-02-27T14:52:27-0800\",\"name\":\"name3\",\"location\":\"location3\",\"displayValue\":\"name3\"}";
+		String serializedFarm = "{\"id\":3,\"createdDate\":\"2019-02-27T14:52:27-0800\",\"modifiedDate\":\"2019-02-27T14:52:27-0800\",\"name\":\"name3\",\"location\":\"location3\",\"displayValue\":\"SHOULD_BE_OVERWRITTEN_BY_GETTER\"}";
 
 		Farm farm2 = OBJECT_MAPPER.readValue(serializedFarm, Farm.class);
 
