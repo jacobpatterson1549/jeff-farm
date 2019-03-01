@@ -16,4 +16,5 @@ export enum FormItemType {
     Boolean,
     Integer,
     Stars,
+    Color,
 }

@@ -46,7 +46,6 @@
 								<!--Order of files matters for foreign key constraints.-->
 								<srcFile>${project.basedir}/src/main/sql/tables/farms.sql</srcFile>
 								<srcFile>${project.basedir}/src/main/sql/tables/hives.sql</srcFile>
-								<srcFile>${project.basedir}/src/main/sql/tables/queen_bees.sql</srcFile>
 								<srcFile>${project.basedir}/src/main/sql/tables/hive_inspections.sql</srcFile>
 							</srcFiles>
 						</configuration>

@@ -28,7 +28,8 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 				"create_hive",
 				Arrays.asList(
 						new Parameter(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
-						new Parameter(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR)),
+						new Parameter(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
+						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.BIT)),
 				Hive.ID_COLUMN);
 	}
 
@@ -60,7 +61,8 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 				Arrays.asList(
 						new Parameter(Hive.ID_COLUMN, hive.getId(), Types.INTEGER),
 						new Parameter(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
-						new Parameter(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR)));
+						new Parameter(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
+						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.BIT)));
 	}
 
 	@Override
@@ -81,6 +83,7 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 					rs.getInt(Hive.ID_COLUMN),
 					rs.getInt(Hive.FARM_ID_COLUMN),
 					rs.getString(Hive.NAME_COLUMN),
+					rs.getInt(Hive.QUEEN_COLOR_COLUMN),
 					rs.getTimestamp(Hive.CREATED_DATE_COLUMN),
 					rs.getTimestamp(Hive.MODIFIED_DATE_COLUMN));
 		}
