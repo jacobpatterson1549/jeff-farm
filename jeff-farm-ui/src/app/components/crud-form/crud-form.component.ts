@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CrudItem } from '../../classes/crud.item';
 import { CrudService } from '../../services/crud.service';
 import { FormType } from '../../classes/form.type';
-import { FormItem } from '../../classes/form.item';
+import { FormItem, FormItemType } from '../../classes/form.item';
 
 @Component({
   selector: 'app-crud-form',
@@ -18,6 +18,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   @Input() formItems: FormItem[];
   @Input() crudItem: T
   submitValue: string;
+  formItemType = FormItemType; // used for the ngSwitch in the template
 
   constructor(
     private route: ActivatedRoute,
