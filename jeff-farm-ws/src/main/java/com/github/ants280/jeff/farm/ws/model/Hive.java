@@ -46,11 +46,11 @@ public class Hive extends CrudItem
 
 	private static int createHexColor(String queenColor)
 	{
-		if (queenColor == null || !queenColor.matches("^#?[0-9a-fA-F]{6}$"))
+		if (queenColor == null || !queenColor.matches("^#[0-9a-fA-F]{6}$"))
 		{
 			throw new IllegalArgumentException("Invalid color: " + queenColor);
 		}
-		return Integer.parseInt(queenColor.replaceAll("^#", ""), 16);
+		return Integer.parseInt(queenColor.substring(1), 16);
 	}
 
 	public int getFarmId()
@@ -71,6 +71,6 @@ public class Hive extends CrudItem
 
 	public String getQueenColor()
 	{
-		return String.format("%06x", queenColor);
+		return String.format("#%06x", queenColor);
 	}
 }

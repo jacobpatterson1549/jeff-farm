@@ -20,39 +20,38 @@ public class HiveTest
 		assertEquals(farmId, hive.getFarmId());
 		assertEquals(name, hive.getName());
 		assertEquals(16711680, queenColor); // sanity
-		assertEquals("ff0000", hive.getQueenColor()); // [special string conversion for ui]
+		assertEquals("#ff0000", hive.getQueenColor()); // [special string conversion for ui]
 	}
 	
 	@Test
 	public void testDeserialize_minimal() throws IOException
 	{
-		String serializedFarm = "{\"id\":2,\"farmId\":3,\"name\":\"name2\",\"queenColor\":\"ff0000\"}";
+		String serializedFarm = "{\"id\":2,\"farmId\":3,\"name\":\"name2\",\"queenColor\":\"#ff0000\"}";
 
 		Hive hive = OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
 		assertEquals(2, hive.getId());
 		assertEquals(3, hive.getFarmId());
 		assertEquals("name2", hive.getName());
-		assertEquals("ff0000", hive.getQueenColor());
+		assertEquals("#ff0000", hive.getQueenColor());
 		assertEquals(null, hive.getCreatedDate());
 		assertEquals(null, hive.getModifiedDate());
 	}
 	
-	@Test
-	public void testDeserialize_colorWithPoundSign() throws IOException
+	@Test(expected = Exception.class)
+	public void testDeserialize_colorWithoutPoundSign() throws IOException
 	{
-		// The ui will send this back:
-		String serializedFarm = "{\"queenColor\":\"#00ff00\"}"; // green
+		String serializedFarm = "{\"queenColor\":\"00ff00\"}";
 
-		Hive hive = OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
+		OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
-		assertEquals("00ff00", hive.getQueenColor());
+		assertEquals("expected to fail", true, false);
 	}
 	
 	@Test(expected = Exception.class)
 	public void testDeserialize_invalidColor_large() throws IOException
 	{
-		String serializedFarm = "{\"queenColor\":\"1000000\"}";
+		String serializedFarm = "{\"queenColor\":\"#1000000\"}";
 
 		OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
@@ -62,7 +61,7 @@ public class HiveTest
 	@Test(expected = Exception.class)
 	public void testDeserialize_invalidColor_small() throws IOException
 	{
-		String serializedFarm = "{\"queenColor\":\"fff\"}";
+		String serializedFarm = "{\"queenColor\":\"#fff\"}";
 
 		OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
@@ -72,7 +71,7 @@ public class HiveTest
 	@Test(expected = Exception.class)
 	public void testDeserialize_invalidColor_badHex() throws IOException
 	{
-		String serializedFarm = "{\"queenColor\":\"alfred\"}";
+		String serializedFarm = "{\"queenColor\":\"#alfred\"}";
 
 		OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
@@ -82,7 +81,7 @@ public class HiveTest
 	@Test
 	public void testDeserialize_UPPERCASE_ok() throws IOException
 	{
-		String serializedFarm = "{\"queenColor\":\"FF0000\"}";
+		String serializedFarm = "{\"queenColor\":\"#FF0000\"}";
 
 		Hive hive = OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
