@@ -20,7 +20,6 @@ export class HiveInspection extends CrudItem {
         'windSpeedMph',
     ].concat(CrudItem.ITEM_NAMES);
 
-    public id: number;
     private hiveId: number;
     private queenSeen: boolean;
     private eggsSeen: boolean;

@@ -5,7 +5,6 @@ export class Farm extends CrudItem {
 
     public static readonly ITEM_NAMES = ['name', 'location'].concat(CrudItem.ITEM_NAMES);
 
-    public id: number;// TODO: is this needed?
     public name: string;
     public location: string;
 

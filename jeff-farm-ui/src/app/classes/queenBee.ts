@@ -5,7 +5,6 @@ export class QueenBee extends CrudItem {
 
     public static readonly ITEM_NAMES = ['markColor'].concat(CrudItem.ITEM_NAMES);
 
-    public id: number;
     public hiveId: number;
     public markColor: string;
 
