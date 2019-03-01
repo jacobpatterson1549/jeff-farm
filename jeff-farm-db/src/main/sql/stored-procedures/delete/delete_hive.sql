@@ -3,8 +3,7 @@
 DROP PROCEDURE IF EXISTS delete_hive//
 
 CREATE PROCEDURE delete_hive (
-	IN id INT,
-	IN farm_id INT)
+	IN id INT)
 
 	BEGIN
 		UPDATE hives AS h

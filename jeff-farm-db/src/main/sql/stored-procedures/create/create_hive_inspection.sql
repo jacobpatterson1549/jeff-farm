@@ -1,8 +1,8 @@
 -- DELIMITER //
 
-DROP PROCEDURE IF EXISTS update_hive_inspection//
+DROP PROCEDURE IF EXISTS create_hive_inspection//
 
-CREATE PROCEDURE update_hive_inspection (
+CREATE PROCEDURE create_hive_inspection (
 	IN hive_id INT,
 	IN queen_seen BIT(1),
 	IN eggs_seen BIT(1),
@@ -24,8 +24,9 @@ CREATE PROCEDURE update_hive_inspection (
 		INSERT INTO hive_inspections (hive_id
 			, queen_seen
 			, eggs_seen
-			, laying_pattern_starts
+			, laying_pattern_stars
 			, temperament_stars
+			, queen_cells
 			, supersedure_cells
 			, swarm_cells
 			, comb_building_stars
@@ -38,8 +39,9 @@ CREATE PROCEDURE update_hive_inspection (
 		SELECT hive_id
 			, queen_seen
 			, eggs_seen
-			, laying_pattern_starts
+			, laying_pattern_stars
 			, temperament_stars
+			, queen_cells
 			, supersedure_cells
 			, swarm_cells
 			, comb_building_stars

@@ -31,7 +31,7 @@ CREATE PROCEDURE update_hive_inspection (
 			, hi.swarm_cells = swarm_cells
 			, hi.comb_building_stars = comb_building_stars
 			, hi.frames_sealed_brood = frames_sealed_brood
-			, hi.frames_open_bood = frames_open_brood
+			, hi.frames_open_brood = frames_open_brood
 			, hi.frames_honey = frames_honey
 			, hi.weather = weather
 			, hi.temperature_f = temperature_f

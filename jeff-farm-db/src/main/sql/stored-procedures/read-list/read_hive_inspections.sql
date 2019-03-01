@@ -6,11 +6,13 @@ CREATE PROCEDURE read_hive_inspections (
 	IN hive_id INT)
 
 	BEGIN
-		SELECT hi.hive_id
+		SELECT hi.id 
+			, hi.hive_id
 			, hi.queen_seen
 			, hi.eggs_seen
 			, hi.laying_pattern_stars
 			, hi.temperament_stars
+			, hi.queen_cells
 			, hi.supersedure_cells
 			, hi.swarm_cells
 			, hi.comb_building_stars
