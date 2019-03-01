@@ -147,6 +147,4 @@ public class HiveInspection extends CrudItem
 	{
 		return windSpeedMph;
 	}
-	
-	
 }
