@@ -25,7 +25,7 @@ export class HivesListComponent {
 export class HivesViewComponent {
 
   itemNames: string[] = Hive.ITEM_NAMES;
-  children: string[] = ['queenBees', 'hiveInspections'];
+  children: string[] = ['hiveInspections'];
   
   constructor(private hivesService: HivesService) { }
 }
