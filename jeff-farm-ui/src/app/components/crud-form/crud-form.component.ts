@@ -5,6 +5,7 @@ import { CrudItem } from '../../classes/crud.item';
 import { CrudService } from '../../services/crud.service';
 import { FormType } from '../../classes/form.type';
 import { FormItem, FormItemType } from '../../classes/form.item';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-crud-form',
@@ -46,13 +47,13 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
       this.crudItem[formItem.name] = formItem.value;
     }
 
+    let result: Observable<T> = null;
     if (this.formType == FormType.Create) {
-      this.crudService.create(this.crudItem)
-      .subscribe(result => { this.router.navigate([".."], { relativeTo: this.route }) });
+      result = this.crudService.create(this.crudItem);
     }
     if (this.formType == FormType.Update) {
-      this.crudService.update(this.crudItem)
-        .subscribe(result => { this.router.navigate([".."], { relativeTo: this.route }) });
+      result = this.crudService.update(this.crudItem);
     }
+    result.subscribe(result => { this.router.navigate([".."], { relativeTo: this.route }) });
   }
 }
