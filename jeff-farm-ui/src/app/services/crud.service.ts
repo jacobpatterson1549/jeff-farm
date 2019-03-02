@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { CrudItem } from '../classes/crud.item';
@@ -22,39 +22,35 @@ export abstract class CrudService<T extends CrudItem> {
 
   create(t: T): Observable<any> {
     return this.http.post(this.genBaseUrl(), t, httpOptions)
-      .pipe(catchError(this.handleError('create')));
+      .pipe(catchError(this.handleError));
   }
 
   get(): Observable<T> {
     const url = `${this.genBaseUrl()}/${this.getId()}`;
     return this.http.get<T>(url, httpOptions)
-      .pipe(catchError(this.handleError(`get/${this.getId()}`, null)));
+      .pipe(catchError(this.handleError));
   }
 
   getList(): Observable<T[]> {
     return this.http.get<T[]>(this.genBaseUrl(), httpOptions)
-      .pipe(catchError(this.handleError('getList', [])));
+      .pipe(catchError(this.handleError));
   }
 
   update(t: T): Observable<any> {
     return this.http.put(this.genBaseUrl(), t, httpOptions)
-      .pipe(catchError(this.handleError('update')));
+      .pipe(catchError(this.handleError));
   }
 
   delete(): Observable<any> {
     const url = `${this.genBaseUrl()}/${this.getId()}`;
     return this.http.delete(url, httpOptions)
-      .pipe(catchError(this.handleError(`delete/${this.getId()}`)));
+      .pipe(catchError(this.handleError));
   }
 
-  // copied from heroes tutorial
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      console.error(error);
-
-      return of(result as T);
-    };
+  private handleError(error: HttpErrorResponse) {
+    console.error(error);
+    alert(error.message);
+    return throwError('error');
   }
 
   protected getRouteParam(name: string) : number {
