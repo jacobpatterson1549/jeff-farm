@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { HivesService } from '../services/hives.service';
 import { FormType } from '../classes/form.type';
 import { Hive } from '../classes/hive';
-import { HiveInspection } from '../classes/hiveInspection';
 
 @Component({
   providers: [HivesService],
