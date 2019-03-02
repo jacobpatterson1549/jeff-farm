@@ -72,32 +72,4 @@ public class FarmTest
 		assertEquals(true, serializedFarm.contains("createdDate"));
 		assertEquals(true, serializedFarm.contains("modifiedDate"));
 	}
-
-	@Test
-	public void testDeserialize_minimal() throws IOException
-	{
-		String serializedFarm = "{\"id\":2,\"name\":\"name2\",\"location\":\"location2\"}";
-
-		Farm farm2 = OBJECT_MAPPER.readValue(serializedFarm, Farm.class);
-
-		assertEquals(2, farm2.getId());
-		assertEquals("name2", farm2.getName());
-		assertEquals("location2", farm2.getLocation());
-		assertEquals(null, farm2.getCreatedDate());
-		assertEquals(null, farm2.getModifiedDate());
-	}
-
-	@Test
-	public void testDeserialize_full() throws IOException
-	{
-		String serializedFarm = "{\"id\":3,\"createdDate\":\"2019-02-27T14:52:27-0800\",\"modifiedDate\":\"2019-02-27T14:52:27-0800\",\"name\":\"name3\",\"location\":\"location3\"}";
-
-		Farm farm2 = OBJECT_MAPPER.readValue(serializedFarm, Farm.class);
-
-		assertEquals(3, farm2.getId());
-		assertEquals("name3", farm2.getName());
-		assertEquals("location3", farm2.getLocation());
-		assertEquals(null, farm2.getCreatedDate());
-		assertEquals(null, farm2.getModifiedDate());
-	}
 }
