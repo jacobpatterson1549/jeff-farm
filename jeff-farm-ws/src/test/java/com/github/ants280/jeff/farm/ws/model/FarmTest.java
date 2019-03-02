@@ -3,8 +3,9 @@ package com.github.ants280.jeff.farm.ws.model;
 import static com.github.ants280.jeff.farm.ws.JsonProvider.OBJECT_MAPPER;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
 
 public class FarmTest
@@ -32,12 +33,34 @@ public class FarmTest
 	}
 
 	@Test
+	public void testGetCreatedDate()
+	{
+		Timestamp createdDate = Timestamp.from(Instant.now());
+		Farm farm = new Farm(-1, null, null, createdDate, null);
+
+		String createdDate1 = farm.getCreatedDate();
+
+		assertNotEquals(null, createdDate1); // NOT-EQUALS
+	}
+
+	@Test
+	public void testGetModifiedDate()
+	{
+		Timestamp modifiedDate = Timestamp.from(Instant.now());
+		Farm farm = new Farm(-1, null, null, null, modifiedDate);
+
+		String modifiedDate1 = farm.getModifiedDate();
+
+		assertNotEquals(null, modifiedDate1); // NOT-EQUALS
+	}
+
+	@Test
 	public void testSerialize() throws IOException
 	{
 		int id = 1;
 		String name = "name1";
 		String location = "location1";
-		Timestamp createdDate = Timestamp.valueOf(LocalDateTime.now());
+		Timestamp createdDate = Timestamp.from(Instant.now());
 		Timestamp modifiedDate = createdDate;
 		Farm farm1 = new Farm(id, name, location, createdDate, modifiedDate);
 		
