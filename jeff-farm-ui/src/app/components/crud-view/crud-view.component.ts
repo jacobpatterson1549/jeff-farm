@@ -15,6 +15,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   @Input() itemNames: string[];
   @Input() children: string[];
   item: T;
+  canDelete: string = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,6 +24,9 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   ngOnInit() {
     this.crudService.get()
       .subscribe(item => { this.item = item });
+    
+    this.crudService.canDelete()
+      .subscribe(canDelete => { this.canDelete = canDelete ? "." : null });
   }
 
   deleteItem() {

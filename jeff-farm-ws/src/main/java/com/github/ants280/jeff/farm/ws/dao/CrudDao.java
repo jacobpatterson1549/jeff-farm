@@ -15,4 +15,6 @@ public interface CrudDao<T>
 	public void update(T entity);
 
 	public void delete(int id);
+	
+	public boolean canDelete(int id);
 }

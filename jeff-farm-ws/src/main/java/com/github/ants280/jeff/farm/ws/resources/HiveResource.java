@@ -72,4 +72,14 @@ public class HiveResource
 
 		return Response.ok().build();
 	}
+	
+	@GET
+	@Path("{id}/canDelete")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response canDeleteHive(@PathParam("id") int id)
+	{
+		boolean canDelete = hiveDao.canDelete(id);
+
+		return Response.ok(canDelete).build();
+	}
 }

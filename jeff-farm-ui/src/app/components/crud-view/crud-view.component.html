@@ -6,7 +6,7 @@
     </tr>
   </table>
   <a routerLink="update">Update</a>
-  <a routerLink="." (click)="deleteItem()">Delete</a>
+  <a [routerLink]="canDelete" (click)="deleteItem()">Delete</a>
   <div *ngIf="children">
     <ul>
       <li *ngFor="let child of children">

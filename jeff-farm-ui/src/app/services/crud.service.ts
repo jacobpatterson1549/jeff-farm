@@ -47,6 +47,12 @@ export abstract class CrudService<T extends CrudItem> {
       .pipe(catchError(this.handleError));
   }
 
+  canDelete(): Observable<boolean> {
+    const url = `${this.genBaseUrl()}/${this.getId()}/canDelete`;
+    return this.http.get<boolean>(url, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     console.error(error);
     alert(error.message);

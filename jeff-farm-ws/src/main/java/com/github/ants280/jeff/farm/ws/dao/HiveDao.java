@@ -73,6 +73,15 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 				Collections.singletonList(
 						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)));
 	}
+	
+	@Override
+	public boolean canDelete(int id)
+	{
+		return this.executeReadBoolean("can_delete_hive",
+				Collections.singletonList(
+						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)),
+				Hive.CAN_DELETE_ITEM);
+	}
 
 	private static class ResultSetExtractor implements RowMapper<Hive>
 	{

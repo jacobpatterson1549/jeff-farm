@@ -62,13 +62,36 @@ public class StoredProcedureDao
 		if ((int) outputParams.get(RETURN_UPDATE_COUNT) != 1)
 		{
 			throw new StoredProcedureException(String.format(
-					"Did create item.  Created %s items.",
+					"Did not create 1 item.  Created %s items.",
 					outputParams.get(RETURN_UPDATE_COUNT)));
 		}
 
 		return (int) outputParams.get(outParameterIdName);
 	}
 
+	public boolean executeReadBoolean(
+			String storedProcedureName,
+			Collection<Parameter> inParameters,
+			String outParameterIdName)
+	{
+		Map<String, Object> outputParams = this.execute(
+				inParameters,
+				storedProcedureName,
+				outParameterIdName,
+				null);
+
+		if ((int) outputParams.get(RETURN_UPDATE_COUNT) != 1)
+		{
+			throw new StoredProcedureException(String.format(
+					"Only expected one row.  Got %d",
+					outputParams.get(RETURN_UPDATE_COUNT)));
+		}
+
+		// See https://docs.oracle.com/javase/8/docs/api/java/sql/ResultSet.html#getBoolean-java.lang.String-
+		// Mysql returns a Long, so casting to number.
+		return ((Number) outputParams.get(outParameterIdName)).intValue() != 0;
+	}
+	
 	public <T> T executeRead(
 			String storedProcedureName,
 			Collection<Parameter> inParameters,

@@ -17,6 +17,7 @@ public abstract class CrudItem
 	public static final String ID_COLUMN = "id";
 	public static final String CREATED_DATE_COLUMN = "created_date";
 	public static final String MODIFIED_DATE_COLUMN = "modified_date";
+	public static final String CAN_DELETE_ITEM = "can_delete";
 	private final int id;
 	private final String createdDate;
 	private final String modifiedDate;

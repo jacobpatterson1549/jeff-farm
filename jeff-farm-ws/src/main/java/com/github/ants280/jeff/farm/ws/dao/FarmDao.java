@@ -70,6 +70,15 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 				Collections.singletonList(
 						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)));
 	}
+	
+	@Override
+	public boolean canDelete(int id)
+	{
+		return this.executeReadBoolean("can_delete_farm",
+				Collections.singletonList(
+						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)),
+				Farm.CAN_DELETE_ITEM);
+	}
 
 	public static class ResultSetExtractor implements RowMapper<Farm>
 	{

@@ -72,4 +72,14 @@ public class HiveInspectionResource
 
 		return Response.ok().build();
 	}
+	
+	@GET
+	@Path("{id}/canDelete")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response canDeleteHiveInspection(@PathParam("id") int id)
+	{
+		boolean canDelete = hiveInspectionDao.canDelete(id);
+
+		return Response.ok(canDelete).build();
+	}
 }

@@ -97,6 +97,12 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 				Collections.singletonList(
 						new Parameter(HiveInspection.ID_COLUMN, id, Types.INTEGER)));
 	}
+	
+	@Override
+	public boolean canDelete(int id)
+	{
+		return true;
+	}
 
 	private static class ResultSetExtractor implements RowMapper<HiveInspection>
 	{
