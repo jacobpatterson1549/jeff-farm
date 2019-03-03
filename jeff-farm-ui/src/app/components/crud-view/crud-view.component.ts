@@ -20,9 +20,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   canDelete: boolean = false;
 
   constructor(
-    private navigationComponent: NavigationComponent,
-    private route: ActivatedRoute,
-    private router: Router) { }
+    private navigationComponent: NavigationComponent) { }
 
   ngOnInit() {
     this.crudService.get()

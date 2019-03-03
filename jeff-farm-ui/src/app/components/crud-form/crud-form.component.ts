@@ -23,9 +23,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   formItemType = FormItemType; // used for the ngSwitch in the template
 
   constructor(
-    private navigationComponent: NavigationComponent,
-    private route: ActivatedRoute,
-    private router: Router) { }
+    private navigationComponent: NavigationComponent) { }
 
   ngOnInit() {
 
