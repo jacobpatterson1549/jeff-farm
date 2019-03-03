@@ -5,8 +5,8 @@
       <td>{{item[itemName]}}</td>
     </tr>
   </table>
-  <a routerLink="update">Update</a>
-  <a [routerLink]="canDelete" (click)="deleteItem()">Delete</a>
+  <button routerLink="update" [disabled]="!item">Update</button>
+  <button [disabled]="canDelete" (click)="deleteItem()">Delete</button>
   <div *ngIf="children">
     <ul>
       <li *ngFor="let child of children">
