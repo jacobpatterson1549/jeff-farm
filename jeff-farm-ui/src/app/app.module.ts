@@ -12,6 +12,7 @@ import { CrudFormComponent } from './components/crud-form/crud-form.component';
 import { FarmsListComponent, FarmsViewComponent, FarmsCreateComponent, FarmsUpdateComponent } from './components/farms.component';
 import { HivesListComponent, HivesViewComponent, HivesCreateComponent, HivesUpdateComponent } from './components/hives.component';
 import { HiveInspectionsListComponent, HiveInspectionsViewComponent, HiveInspectionsCreateComponent, HiveInspectionsUpdateComponent } from './components/hive-inspections.component';
+import { NavigationComponent } from './components/navigation.component';
 
 const routes: Routes = [
   { path: 'farms', component: FarmsListComponent },
@@ -43,6 +44,7 @@ const routes: Routes = [
     FarmsListComponent, FarmsViewComponent, FarmsCreateComponent, FarmsUpdateComponent,
     HivesListComponent, HivesViewComponent, HivesCreateComponent, HivesUpdateComponent,
     HiveInspectionsListComponent, HiveInspectionsViewComponent, HiveInspectionsCreateComponent, HiveInspectionsUpdateComponent,
+    NavigationComponent,
   ],
   imports: [
     BrowserModule,

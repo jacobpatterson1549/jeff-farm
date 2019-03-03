@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { CrudItem } from '../../classes/crud.item';
 import { CrudService } from '../../services/crud.service';
 import { FormType } from '../../classes/form.type';
 import { FormItem, FormItemType } from '../../classes/form.item';
-import { Observable } from 'rxjs';
+import { NavigationComponent } from '../navigation.component';
 
 @Component({
   selector: 'app-crud-form',
@@ -22,6 +23,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   formItemType = FormItemType; // used for the ngSwitch in the template
 
   constructor(
+    private navigationComponent: NavigationComponent,
     private route: ActivatedRoute,
     private router: Router) { }
 
@@ -54,6 +56,6 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
     if (this.formType == FormType.Update) {
       result = this.crudService.update(this.crudItem);
     }
-    result.subscribe(result => { this.router.navigate([".."], { relativeTo: this.route }) });
+    result.subscribe(result => this.navigationComponent.goBack() );
   }
 }
