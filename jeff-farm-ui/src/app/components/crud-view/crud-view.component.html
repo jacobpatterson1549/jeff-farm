@@ -6,7 +6,7 @@
     </tr>
   </table>
   <button routerLink="update" [disabled]="!item">Update</button>
-  <button [disabled]="canDelete" (click)="deleteItem()">Delete</button>
+  <button [disabled]="!canDelete" (click)="deleteItem()">Delete</button>
   <div *ngIf="children">
     <ul>
       <li *ngFor="let child of children">

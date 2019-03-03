@@ -15,7 +15,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   @Input() itemNames: string[];
   @Input() children: string[];
   item: T;
-  canDelete: boolean = null;
+  canDelete: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
