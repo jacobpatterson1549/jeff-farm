@@ -21,7 +21,7 @@ export abstract class CrudService<T extends CrudItem> {
   }
 
   create(t: T): Observable<any> {
-    return this.http.post(this.genBaseUrl(), t, httpOptions)
+    return this.http.post<Object>(this.genBaseUrl(), t, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
@@ -36,12 +36,12 @@ export abstract class CrudService<T extends CrudItem> {
       .pipe(catchError(this.handleError));
   }
 
-  update(t: T): Observable<any> {
+  update(t: T): Observable<Object> {
     return this.http.put(this.genBaseUrl(), t, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  delete(): Observable<any> {
+  delete(): Observable<Object> {
     const url = `${this.genBaseUrl()}/${this.getId()}`;
     return this.http.delete(url, httpOptions)
       .pipe(catchError(this.handleError));
