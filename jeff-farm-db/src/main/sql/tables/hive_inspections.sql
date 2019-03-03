@@ -21,5 +21,8 @@ CREATE TABLE IF NOT EXISTS hive_inspections
 	wind_speed_mph INT,
 	created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 	modified_date DATETIME ON UPDATE CURRENT_TIMESTAMP,
-	active BIT DEFAULT 1
+	active BIT DEFAULT 1,
+
+	FOREIGN KEY (hive_id)
+		REFERENCES hives (hive_id)
 );
