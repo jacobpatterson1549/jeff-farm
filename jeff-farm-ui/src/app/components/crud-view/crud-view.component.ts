@@ -26,10 +26,10 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
 
   ngOnInit() {
     this.crudService.get()
-      .subscribe(item => { this.item = item });
+      .subscribe(item => this.item = item);
     
     this.crudService.canDelete()
-      .subscribe(canDelete => { this.canDelete = canDelete });
+      .subscribe(canDelete => this.canDelete = canDelete);
   }
 
   deleteItem() {
