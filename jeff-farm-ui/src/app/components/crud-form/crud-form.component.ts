@@ -47,7 +47,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
       this.crudItem[formItem.name] = formItem.value;
     }
 
-    let result: Observable<T> = null;
+    let result: Observable<Object> = null;
     if (this.formType == FormType.Create) {
       result = this.crudService.create(this.crudItem);
     }
