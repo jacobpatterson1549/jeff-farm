@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { CrudItem } from '../../classes/crud.item';
@@ -9,6 +8,7 @@ import { FormItem, FormItemType } from '../../classes/form.item';
 import { NavigationComponent } from '../navigation.component';
 
 @Component({
+  providers: [NavigationComponent],
   selector: 'app-crud-form',
   templateUrl: './crud-form.component.html',
   styleUrls: ['./crud-form.component.css']

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 
 import { CrudItem } from '../../classes/crud.item';
 import { CrudService } from '../../services/crud.service';
