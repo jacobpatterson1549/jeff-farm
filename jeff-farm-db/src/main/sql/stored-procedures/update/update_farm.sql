@@ -8,6 +8,7 @@ CREATE PROCEDURE update_farm (
 	IN location VARCHAR(255))
 
 	BEGIN
+-- TODO: only make updates if name/location changed! (same for hives, hiveInspections)
 		UPDATE farms AS f
 		SET f.name = name,
 			f.location = location
