@@ -51,6 +51,20 @@
 						</configuration>
 					</execution>
 					<execution>
+						<id>[re]add-audit</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<delimiter>$$$</delimiter>
+							<autocommit>true</autocommit>
+							<fileset>
+								<basedir>${project.basedir}/src/main/sql/audit-trigger-tables/</basedir>
+							</fileset>
+						</configuration>
+					</execution>
+					<execution>
 						<id>[re]add-stored-procedures</id>
 						<phase>process-test-resources</phase>
 						<goals>
