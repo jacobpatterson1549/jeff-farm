@@ -6,10 +6,9 @@ CREATE PROCEDURE delete_hive (
 	IN id INT)
 
 	BEGIN
-		UPDATE hives AS h
-		SET h.active = 0
-		WHERE h.id = id
-			AND h.active = 1;
+		DELETE h
+		FROM hives AS h
+		WHERE h.id = id;
 	END$$
 
 -- DELIMITER ;

@@ -13,8 +13,7 @@ CREATE PROCEDURE read_hives (
 			, h.created_date
 			, h.modified_date
 		FROM hives AS h
-		WHERE h.farm_id = farm_id
-			AND h.active = 1;
+		WHERE h.farm_id = farm_id;
 	END$$
 
 -- DELIMITER ;

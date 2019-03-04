@@ -9,8 +9,7 @@ CREATE PROCEDURE can_delete_farm (
 	BEGIN
 		SELECT CASE WHEN COUNT(*) = 0 THEN 1 ELSE 0 END INTO can_delete
 		FROM hives AS h
-		WHERE h.farm_id = id
-			AND h.active = 1;
+		WHERE h.farm_id = id;
 	END$$
 
 -- DELIMITER ;

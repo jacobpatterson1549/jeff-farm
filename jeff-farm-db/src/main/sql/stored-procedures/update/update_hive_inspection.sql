@@ -37,7 +37,6 @@ CREATE PROCEDURE update_hive_inspection (
 			, hi.temperature_f = temperature_f
 			, hi.wind_speed_mph = wind_speed_mph
 		WHERE hi.id = id
-			AND hi.active = 1
 			AND h.id = hive_id;
 	END$$
 

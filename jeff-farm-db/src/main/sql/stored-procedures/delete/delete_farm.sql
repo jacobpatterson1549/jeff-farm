@@ -6,10 +6,9 @@ CREATE PROCEDURE delete_farm (
 	IN id INT)
 
 	BEGIN
-		UPDATE farms AS f
-		SET f.active = 0
-		WHERE f.id = id
-			AND f.active = 1;
+		DELETE f
+		FROM farms AS f
+		WHERE f.id = id;
 	END$$
 
 -- DELIMITER ;

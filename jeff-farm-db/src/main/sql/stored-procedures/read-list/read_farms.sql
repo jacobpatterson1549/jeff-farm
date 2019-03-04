@@ -6,8 +6,7 @@ CREATE PROCEDURE read_farms ()
 
 	BEGIN
 		SELECT f.id, f.name, f.location, f.created_date, f.modified_date
-		FROM farms AS f
-		WHERE f.active = 1;
+		FROM farms AS f;
 	END$$
 
 -- DELIMITER ;

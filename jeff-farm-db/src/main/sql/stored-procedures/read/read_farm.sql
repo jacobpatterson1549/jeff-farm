@@ -8,8 +8,7 @@ CREATE PROCEDURE read_farm (
 	BEGIN
 		SELECT f.id, f.name, f.location, f.created_date, f.modified_date
 		FROM farms AS f
-		WHERE f.id = id
-			AND f.active = 1;
+		WHERE f.id = id;
 	END$$
 
 -- DELIMITER ;

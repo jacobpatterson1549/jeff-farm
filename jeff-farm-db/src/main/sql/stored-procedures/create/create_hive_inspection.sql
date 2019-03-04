@@ -52,8 +52,7 @@ CREATE PROCEDURE create_hive_inspection (
 			, temperature_f
 			, wind_speed_mph
 		FROM hives AS h
-		WHERE h.id = hive_id
-			AND h.active = 1;
+		WHERE h.id = hive_id;
 
 		SET id = LAST_INSERT_ID();
 	END$$

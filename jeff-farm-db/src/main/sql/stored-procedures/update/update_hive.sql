@@ -11,8 +11,7 @@ CREATE PROCEDURE update_hive (
 		UPDATE hives AS h
 		SET h.name = name
 			, h.queen_color = queen_color
-		WHERE h.id = id
-			AND h.active = 1;
+		WHERE h.id = id;
 	END$$
 
 -- DELIMITER ;

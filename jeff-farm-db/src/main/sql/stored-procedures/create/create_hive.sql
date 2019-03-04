@@ -12,8 +12,7 @@ CREATE PROCEDURE create_hive (
 		INSERT INTO hives (farm_id, name, queen_color)
 		SELECT farm_id, name, queen_color
 		FROM farms AS f
-		WHERE f.id = farm_id
-			AND f.active = 1;
+		WHERE f.id = farm_id;
 
 		SET id = LAST_INSERT_ID();
 	END$$

@@ -9,8 +9,7 @@ CREATE PROCEDURE can_delete_hive (
 	BEGIN
 		SELECT CASE WHEN COUNT(*) = 0 THEN 1 ELSE 0 END INTO can_delete
 		FROM hive_inspections AS hi
-		WHERE hi.hive_id = id
-			AND hi.active = 1;
+		WHERE hi.hive_id = id;
 	END$$
 
 -- DELIMITER ;
