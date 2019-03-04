@@ -1,7 +1,7 @@
 --DELIMITER $$
 
--- DROP TABLE farms_audit;
--- SELECT  * FROM farms_audit LIMIT 0;
+-- DROP TABLE farms_audit$$
+-- SELECT  * FROM farms_audit LIMIT 0$$
 
 CREATE TABLE IF NOT EXISTS farms_audit
 (
