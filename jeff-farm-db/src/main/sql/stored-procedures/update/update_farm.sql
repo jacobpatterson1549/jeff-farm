@@ -1,6 +1,6 @@
--- DELIMITER //
+-- DELIMITER $$
 
-DROP PROCEDURE IF EXISTS update_farm//
+DROP PROCEDURE IF EXISTS update_farm$$
 
 CREATE PROCEDURE update_farm (
 	IN id INT,
@@ -13,6 +13,6 @@ CREATE PROCEDURE update_farm (
 			f.location = location
 		WHERE f.id = id
 			AND f.active = 1;
-	END//
+	END$$
 
 -- DELIMITER ;

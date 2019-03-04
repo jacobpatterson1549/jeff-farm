@@ -1,6 +1,6 @@
--- DELIMITER //
+-- DELIMITER $$
 
-DROP PROCEDURE IF EXISTS create_hive_inspection//
+DROP PROCEDURE IF EXISTS create_hive_inspection$$
 
 CREATE PROCEDURE create_hive_inspection (
 	IN hive_id INT,
@@ -56,6 +56,6 @@ CREATE PROCEDURE create_hive_inspection (
 			AND h.active = 1;
 
 		SET id = LAST_INSERT_ID();
-	END//
+	END$$
 
 -- DELIMITER ;

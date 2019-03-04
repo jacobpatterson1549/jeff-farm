@@ -1,6 +1,6 @@
--- DELIMITER //
+-- DELIMITER $$
 
-DROP PROCEDURE IF EXISTS update_hive//
+DROP PROCEDURE IF EXISTS update_hive$$
 
 CREATE PROCEDURE update_hive (
 	IN id INT,
@@ -13,6 +13,6 @@ CREATE PROCEDURE update_hive (
 			, h.queen_color = queen_color
 		WHERE h.id = id
 			AND h.active = 1;
-	END//
+	END$$
 
 -- DELIMITER ;

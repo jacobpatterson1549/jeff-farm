@@ -57,7 +57,7 @@
 							<goal>execute</goal>
 						</goals>
 						<configuration>
-							<delimiter>//</delimiter>
+							<delimiter>$$$</delimiter>
 							<autocommit>true</autocommit>
 							<fileset>
 								<basedir>${project.basedir}/src/main/sql/stored-procedures/</basedir>

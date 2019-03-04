@@ -1,6 +1,6 @@
--- DELIMITER //
+-- DELIMITER $$
 
-DROP PROCEDURE IF EXISTS create_farm//
+DROP PROCEDURE IF EXISTS create_farm$$
 
 CREATE PROCEDURE create_farm (
 	IN name VARCHAR(255),
@@ -12,6 +12,6 @@ CREATE PROCEDURE create_farm (
 		VALUES (name, location);
 
 		SET id = LAST_INSERT_ID();
-	END//
+	END$$
 
 -- DELIMITER ;

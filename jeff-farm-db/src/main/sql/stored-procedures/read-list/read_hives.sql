@@ -1,6 +1,6 @@
---DELIMITER //
+--DELIMITER $$
 
-DROP PROCEDURE IF EXISTS read_hives//
+DROP PROCEDURE IF EXISTS read_hives$$
 
 CREATE PROCEDURE read_hives (
 	IN farm_id INT)
@@ -15,6 +15,6 @@ CREATE PROCEDURE read_hives (
 		FROM hives AS h
 		WHERE h.farm_id = farm_id
 			AND h.active = 1;
-	END//
+	END$$
 
 -- DELIMITER ;

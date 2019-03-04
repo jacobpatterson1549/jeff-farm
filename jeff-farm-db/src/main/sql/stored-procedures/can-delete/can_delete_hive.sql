@@ -1,6 +1,6 @@
--- DELIMITER //
+-- DELIMITER $$
 
-DROP PROCEDURE IF EXISTS can_delete_hive//
+DROP PROCEDURE IF EXISTS can_delete_hive$$
 
 CREATE PROCEDURE can_delete_hive (
 	IN id INT,
@@ -11,6 +11,6 @@ CREATE PROCEDURE can_delete_hive (
 		FROM hive_inspections AS hi
 		WHERE hi.hive_id = id
 			AND hi.active = 1;
-	END//
+	END$$
 
 -- DELIMITER ;

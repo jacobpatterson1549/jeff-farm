@@ -1,6 +1,6 @@
--- DELIMITER //
+-- DELIMITER $$
 
-DROP PROCEDURE IF EXISTS delete_hive//
+DROP PROCEDURE IF EXISTS delete_hive$$
 
 CREATE PROCEDURE delete_hive (
 	IN id INT)
@@ -10,6 +10,6 @@ CREATE PROCEDURE delete_hive (
 		SET h.active = 0
 		WHERE h.id = id
 			AND h.active = 1;
-	END//
+	END$$
 
 -- DELIMITER ;

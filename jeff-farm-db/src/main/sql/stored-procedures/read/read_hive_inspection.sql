@@ -1,6 +1,6 @@
---DELIMITER //
+--DELIMITER $$
 
-DROP PROCEDURE IF EXISTS read_hive_inspection//
+DROP PROCEDURE IF EXISTS read_hive_inspection$$
 
 CREATE PROCEDURE read_hive_inspection (
 	IN id INT)
@@ -27,6 +27,6 @@ CREATE PROCEDURE read_hive_inspection (
 		FROM hive_inspections AS hi
 		WHERE hi.id = id
 			AND hi.active = 1;
-	END//
+	END$$
 
 -- DELIMITER ;
