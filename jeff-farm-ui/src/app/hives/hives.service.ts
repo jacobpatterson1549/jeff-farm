@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
-import { Hive } from '../classes/hive';
-import { CrudService } from './crud.service';
+import { CrudService } from '../crud/crud.service';
+import { Hive } from './hive';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,14 @@ export class HivesService extends CrudService<Hive> {
     private activatedRoute: ActivatedRoute) {
       
     super(httpClient, activatedRoute);
+  }
+
+  createCrudItem(): Hive {
+    return new Hive(this.getFarmId());
+  }
+
+  getChildNames(): string[] {
+    return ['HiveInspections'];
   }
 
   getBaseUrl(): string {

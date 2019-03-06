@@ -1,9 +1,7 @@
-import { CrudItem } from './crud.item';
-import { FormItem, FormItemType,  } from './form.item';
+import { CrudItem } from '../crud/crud.item';
+import { FormItem, FormItemType } from '../crud/form.item';
 
 export class Hive extends CrudItem {
-
-    public static readonly ITEM_NAMES = ['name','queenColor'].concat(CrudItem.ITEM_NAMES);
 
     public farmId: number;
     public name: string;
@@ -19,5 +17,9 @@ export class Hive extends CrudItem {
             new FormItem('name', FormItemType.String, this.name),
             new FormItem('queenColor', FormItemType.Color, this.queenColor),
         ]
+    }
+
+    getDisplayValue(): string {
+        return this.name;
     }
 }

@@ -1,20 +1,18 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CrudItem } from '../../classes/crud.item';
-import { CrudService } from '../../services/crud.service';
+
+import { CrudService } from '../crud.service';
+import { CrudItem } from '../crud.item';
 
 @Component({
-  selector: 'app-crud-list',
+  selector: 'crud-list',
   templateUrl: './crud-list.component.html',
   styleUrls: ['./crud-list.component.css']
 })
 export class CrudListComponent<T extends CrudItem> implements OnInit {
 
-  @Input() crudService: CrudService<T>;
-  @Input() itemNames: string[];
-  @Input() displayField: string;
-  items: T[];
+  crudItems: T[];
 
-  constructor() { }
+  constructor(private crudService: CrudService<T>) { }
 
   ngOnInit() {
     this.getItems();
@@ -22,6 +20,8 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
 
   getItems(): void {
     this.crudService.getList()
-      .subscribe(items => { this.items = items });
+      .subscribe(items => {
+         this.crudItems = items
+        });
   }
 }

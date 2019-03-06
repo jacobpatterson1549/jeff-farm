@@ -1,24 +1,7 @@
-import { CrudItem } from './crud.item';
-import { FormItem, FormItemType,  } from './form.item';
+import { CrudItem } from '../crud/crud.item';
+import { FormItem, FormItemType } from '../crud/form.item';
 
 export class HiveInspection extends CrudItem {
-
-    public static readonly ITEM_NAMES = [
-        'queenSeen',
-        'eggsSeen',
-        'layingPatternStars',
-        'temperamentStars',
-        'queenCells',
-        'supersedureCells',
-        'swarmCells',
-        'combBuildingStars',
-        'framesSealedBrood',
-        'framesOpenBrood',
-        'framesHoney',
-        'weather',
-        'temperatureF',
-        'windSpeedMph',
-    ].concat(CrudItem.ITEM_NAMES);
 
     private hiveId: number;
     private queenSeen: boolean;
@@ -58,5 +41,9 @@ export class HiveInspection extends CrudItem {
             new FormItem('temperatureF', FormItemType.Integer, this.temperatureF),
             new FormItem('windSpeedMph', FormItemType.Integer, this.windSpeedMph),
         ]
+    }
+
+    getDisplayValue(): string {
+        return this.createdDate;
     }
 }

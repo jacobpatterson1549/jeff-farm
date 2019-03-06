@@ -1,36 +1,50 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { CrudItem } from '../../classes/crud.item';
-import { CrudService } from '../../services/crud.service';
-import { FormType } from '../../classes/form.type';
-import { FormItem, FormItemType } from '../../classes/form.item';
-import { NavigationComponent } from '../navigation.component';
+import { CrudService } from '../crud.service';
+import { NavigationService } from '../../navigation.service';
+
+import { CrudItem } from '../crud.item';
+import { FormType } from '../form.type';
+import { FormItem, FormItemType } from '../form.item';
 
 @Component({
-  providers: [NavigationComponent],
-  selector: 'app-crud-form',
+  selector: 'crud-form',
   templateUrl: './crud-form.component.html',
   styleUrls: ['./crud-form.component.css']
 })
 export class CrudFormComponent<T extends CrudItem> implements OnInit {
 
-  @Input() crudService: CrudService<T>;
-  @Input() formType: FormType;
-  @Input() formItems: FormItem[];
-  @Input() crudItem: T
+  crudItem: T
+  formType: FormType;
+  formItems: FormItem[];
   submitValue: string;
   formItemType = FormItemType; // used for the ngSwitch in the template
 
   constructor(
-    private navigationComponent: NavigationComponent) { }
+    private crudService: CrudService<T>,
+    private navigationService: NavigationService) { }
 
   ngOnInit() {
+
+    const urlParts: string[] = this.navigationService.getUrl().split('/');
+    const endPath: string = urlParts[urlParts.length - 1];
+    switch (endPath) {
+      case 'create' :
+        this.formType = FormType.Create;
+        break;
+      case 'update' :
+        this.formType = FormType.Update;
+        break;
+      default:
+        throw new Error(`Unknown endPath: ${endPath}.  Could not set FormType`);
+    }
 
     this.submitValue = (this.formType === FormType.Update) ? 'Update' : 'Submit';
 
     if (this.formType == FormType.Create) {
       this.formItems = this.crudItem.getFormItems();
+      this.crudItem = this.crudService.createCrudItem();
     }
     if (this.formType == FormType.Update) {
       this.crudService.get()
@@ -39,6 +53,8 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
           this.formItems = this.crudItem.getFormItems();
         });
     }
+
+    this.formItems = this.crudItem.getFormItems();
   }
 
   submitForm() {
@@ -54,6 +70,6 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
     if (this.formType == FormType.Update) {
       result = this.crudService.update(this.crudItem);
     }
-    result.subscribe(result => this.navigationComponent.goBack() );
+    result.subscribe(result => this.navigationService.goBack() );
   }
 }

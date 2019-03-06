@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
-import { HiveInspection } from '../classes/hiveInspection';
-import { CrudService } from './crud.service';
+import { CrudService } from '../crud/crud.service';
+import { HiveInspection } from './hiveInspection';
+import { HiveInspectionsModule } from './hiveInspections.module';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: HiveInspectionsModule
 })
 export class HiveInspectionsService extends CrudService<HiveInspection> {
 
@@ -15,6 +16,14 @@ export class HiveInspectionsService extends CrudService<HiveInspection> {
     private activatedRoute: ActivatedRoute) {
 
     super(httpClient, activatedRoute);
+  }
+
+  createCrudItem(): HiveInspection {
+    return new HiveInspection(this.getHiveId());
+  }
+
+  getChildNames(): string[] {
+    return [];
   }
   
   getBaseUrl(): string {

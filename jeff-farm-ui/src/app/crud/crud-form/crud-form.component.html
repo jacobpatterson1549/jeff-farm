@@ -1,0 +1,42 @@
+<div *ngIf="formType">
+  <!-- <form (ngSubmit)="submitForm()" #crudForm="ngForm"> -->
+  <form #crudForm="ngForm" *ngIf="formItems">
+    <div *ngFor="let formItem of formItems">
+      <label [for]="formItem.name">{{formItem.name | titlecase}}</label>
+
+      <div [ngSwitch]="formItem.type">
+
+        <div *ngSwitchCase="formItemType.String">
+          <input [name]="formItem.name" type="text" required [(ngModel)]="formItem.value">
+        </div>    
+        
+        <div *ngSwitchCase="formItemType.Boolean">
+          <input [name]="formItem.name" type="checkbox" required [(ngModel)]="formItem.value">
+        </div>
+
+        <div *ngSwitchCase="formItemType.Integer">
+          <input [name]="formItem.name" type="number" required [(ngModel)]="formItem.value">
+        </div>
+
+        <!-- TODO: make/utilize fancy star picker directive -->
+        <div *ngSwitchCase="formItemType.Stars">
+          <input [name]="formItem.name" type="number" min="1" max="5" required [(ngModel)]="formItem.value">
+        </div>
+
+        <div *ngSwitchCase="formItemType.Color">
+          <input [name]="formItem.name" type="color" required [(ngModel)]="formItem.value">
+        </div>
+
+        <div *ngSwitchDefault>
+          <span>[Unknown editor type]</span>
+        </div>
+
+      </div>
+
+      <!-- <div [hidden]="location.valid">INVALID</div> -->
+      <!-- <input [id]="formItem.name" type="text" required>     -->
+    </div>
+    <button type="submit" (click)="submitForm()">{{submitValue}}</button>
+    <!-- <input type="submit" [disabled]="!crudForm.valid" [value]="submitValue"> --> <!-- TODO: fix validation -->
+  </form>
+</div>

@@ -1,9 +1,7 @@
-import { CrudItem } from './crud.item';
-import { FormItem, FormItemType,  } from './form.item';
+import { CrudItem } from '../crud/crud.item';
+import { FormItem, FormItemType } from '../crud/form.item';
 
 export class Farm extends CrudItem {
-
-    public static readonly ITEM_NAMES = ['name', 'location'].concat(CrudItem.ITEM_NAMES);
 
     public name: string;
     public location: string;
@@ -17,5 +15,9 @@ export class Farm extends CrudItem {
             new FormItem('name', FormItemType.String, this.name),
             new FormItem('location', FormItemType.String, this.location),
         ]
+    }
+
+    getDisplayValue(): string {
+        return this.name;
     }
 }

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { CrudItem } from '../classes/crud.item';
+import { CrudItem } from './crud.item';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,6 +13,10 @@ const httpOptions = {
 export abstract class CrudService<T extends CrudItem> {
 
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
+
+  abstract createCrudItem(): T;
+
+  abstract getChildNames(): string[];
 
   abstract getBaseUrl(): string;
 
