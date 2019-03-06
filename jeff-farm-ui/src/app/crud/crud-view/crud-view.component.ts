@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { CrudService } from '../crud.service';
-import { NavigationService } from 'src/app/navigation.service';
+import { NavigationService } from '../../navigation.service';
 
 import { CrudItem } from '../crud.item';
 
