@@ -19,8 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     CrudModule,
     FarmsModule,
-    HivesModule,
-    HiveInspectionsModule,
+    // HivesModule,
+    // HiveInspectionsModule,
     AppRoutingModule,
   ],
   bootstrap: [AppComponent]

@@ -4,11 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { CrudService } from '../crud/crud.service';
 import { HiveInspection } from './hive-inspection';
-import { HiveInspectionsModule } from './hive-inspections.module';
 
-@Injectable({
-  providedIn: HiveInspectionsModule
-})
+@Injectable()
 export class HiveInspectionsService extends CrudService<HiveInspection> {
 
   constructor(

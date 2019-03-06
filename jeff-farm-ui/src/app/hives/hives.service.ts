@@ -5,9 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CrudService } from '../crud/crud.service';
 import { Hive } from './hive';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class HivesService extends CrudService<Hive> {
 
   constructor(

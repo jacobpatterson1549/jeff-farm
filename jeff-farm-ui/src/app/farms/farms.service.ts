@@ -6,9 +6,7 @@ import { CrudService } from '../crud/crud.service';
 import { Farm } from './farm';
 import { FarmsModule } from './farms.module';
 
-@Injectable({
-  providedIn: FarmsModule
-})
+@Injectable()
 export class FarmsService extends CrudService<Farm> {
 
   constructor(
