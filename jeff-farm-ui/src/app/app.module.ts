@@ -7,7 +7,7 @@ import { PageNotFoundComponent } from './page-not-found.component';
 import { CrudModule } from './crud/crud.module';
 import { FarmsModule } from './farms/farms.module';
 import { HivesModule } from './hives/hives.module';
-import { HiveInspectionsModule } from './hiveInspections/hiveInspections.module';
+import { HiveInspectionsModule } from './hive-inspections/hive-inspections.module';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({

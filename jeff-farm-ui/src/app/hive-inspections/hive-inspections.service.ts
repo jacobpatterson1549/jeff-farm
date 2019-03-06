@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { CrudService } from '../crud/crud.service';
-import { HiveInspection } from './hiveInspection';
-import { HiveInspectionsModule } from './hiveInspections.module';
+import { HiveInspection } from './hive-inspection';
+import { HiveInspectionsModule } from './hive-inspections.module';
 
 @Injectable({
   providedIn: HiveInspectionsModule
