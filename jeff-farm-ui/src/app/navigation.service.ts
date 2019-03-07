@@ -19,8 +19,8 @@ export class NavigationService {
     return this.router.url;
   }
 
-  getRouteParam(name: string) : number {
-    const id: string = this.activatedRoute.snapshot.paramMap.get(name);
-    return parseInt(id);
+  getRouteParam(paramName: string) : number {
+    const param: string = this.activatedRoute.snapshot.paramMap.get(paramName);
+    return parseInt(param);
   }
 }
