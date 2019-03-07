@@ -22,6 +22,7 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
     this.crudService.getList()
       .subscribe(items => {
          this.crudItems = items
+          .map(data => Object.assign(this.crudService.createCrudItem(), data));
         });
   }
 }
