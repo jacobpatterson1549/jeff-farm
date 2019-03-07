@@ -1,5 +1,3 @@
-import { CrudModule } from './crud/crud.module';
-
 export const FARMS_ROUTES = [
     {
         path: 'farms',
