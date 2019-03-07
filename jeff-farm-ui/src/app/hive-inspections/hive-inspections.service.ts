@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
 
 import { CrudService } from '../crud/crud.service';
+import { NavigationService } from '../navigation.service';
 import { HiveInspection } from './hive-inspection';
 
 @Injectable()
 export class HiveInspectionsService extends CrudService<HiveInspection> {
 
   constructor(
-    private httpClient: HttpClient,
-    private activatedRoute: ActivatedRoute) {
+    private navigationService1: NavigationService,
+    private httpClient: HttpClient) {
 
-    super(httpClient, activatedRoute);
+    super(
+      navigationService1,
+      httpClient);
   }
 
   createCrudItem(): HiveInspection {
@@ -30,11 +32,11 @@ export class HiveInspectionsService extends CrudService<HiveInspection> {
 
   getFarmId(): number {
 
-    return this.getRouteParam('farm_id');
+    return this.navigationService1.getRouteParam('farm_id');
   }
 
   getHiveId(): number {
 
-    return this.getRouteParam('hive_id');
+    return this.navigationService1.getRouteParam('hive_id');
   }
 }

@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { CrudItem } from './crud.item';
+import { NavigationService } from '../navigation.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,7 +11,9 @@ const httpOptions = {
 
 export abstract class CrudService<T extends CrudItem> {
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(
+    private navigationService: NavigationService,
+    private http: HttpClient) { }
 
   abstract createCrudItem(): T;
 
@@ -78,12 +79,7 @@ export abstract class CrudService<T extends CrudItem> {
     return throwError('error');
   }
 
-  protected getRouteParam(name: string) : number {
-    const id: string = this.route.snapshot.paramMap.get(name);
-    return parseInt(id);
-  }
-
   getId(): number {
-    return this.getRouteParam('id');
+    return this.navigationService.getRouteParam('id');
   }
 }

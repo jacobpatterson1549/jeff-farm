@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 export class NavigationService {
 
   constructor(
-      private router: Router,
-        private activatedRoute: ActivatedRoute) { }
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
   goBack() {
     this.router.navigate([".."], { relativeTo: this.activatedRoute });
@@ -17,5 +17,10 @@ export class NavigationService {
 
   getUrl(): string {
     return this.router.url;
+  }
+
+  getRouteParam(name: string) : number {
+    const id: string = this.activatedRoute.snapshot.paramMap.get(name);
+    return parseInt(id);
   }
 }
