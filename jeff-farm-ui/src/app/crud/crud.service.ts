@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-
-import { Observable, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { CrudItem } from './crud.item';
 
@@ -25,37 +24,52 @@ export abstract class CrudService<T extends CrudItem> {
     return `http://localhost:8080/jeff-farm-ws/${this.getBaseUrl()}`;
   }
 
-  create(t: T): Observable<any> {
+  post(t: T): Observable<any> {
     return this.http.post<Object>(this.genBaseUrl(), t, httpOptions)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(this.handleError),
+        );
   }
 
   get(): Observable<T> {
     const url = `${this.genBaseUrl()}/${this.getId()}`;
     return this.http.get<T>(url, httpOptions)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        map((data: T) => Object.assign(this.createCrudItem(), data)),
+        catchError(this.handleError),
+        );
   }
 
   getList(): Observable<T[]> {
     return this.http.get<T[]>(this.genBaseUrl(), httpOptions)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        map((dataList: T[]) => dataList
+          .map(data => Object.assign(this.createCrudItem(), data))),
+        catchError(this.handleError),
+        );
   }
 
-  update(t: T): Observable<Object> {
+  put(t: T): Observable<Object> {
     return this.http.put(this.genBaseUrl(), t, httpOptions)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(this.handleError),
+        );
   }
 
   delete(): Observable<Object> {
     const url = `${this.genBaseUrl()}/${this.getId()}`;
     return this.http.delete(url, httpOptions)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(this.handleError),
+        );
   }
 
   canDelete(): Observable<boolean> {
     const url = `${this.genBaseUrl()}/${this.getId()}/canDelete`;
     return this.http.get<boolean>(url, httpOptions)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(this.handleError),
+      );
   }
 
   private handleError(error: HttpErrorResponse) {

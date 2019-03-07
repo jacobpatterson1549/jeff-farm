@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 import { CrudService } from '../crud.service';
 import { NavigationService } from '../../navigation.service';
@@ -53,10 +52,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
       return of(this.crudItem = this.crudService.createCrudItem());
     }
     if (this.formType == FormType.Update) {
-      return this.crudService.get()
-        .pipe(
-          tap((data: CrudItem) => this.crudItem = Object.assign(this.crudItem, data))
-        );
+      return this.crudService.get();
     }
   }
 
@@ -65,13 +61,13 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
       this.crudItem[formItem.name] = formItem.value;
     }
 
-    let result: Observable<Object> = null;
+    let result: Observable<any>;
     if (this.formType == FormType.Create) {
-      result = this.crudService.create(this.crudItem);
+      result = this.crudService.post(this.crudItem);
     }
     if (this.formType == FormType.Update) {
-      result = this.crudService.update(this.crudItem);
+      result = this.crudService.put(this.crudItem);
     }
-    result.subscribe(result => this.navigationService.goBack() );
+    result.subscribe(_ => this.navigationService.goBack() );
   }
 }
