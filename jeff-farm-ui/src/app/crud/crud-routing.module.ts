@@ -12,9 +12,9 @@ const crudRoutes: Routes = [
         path: '',
         component: CrudHomeComponent,
         children: [
+            { path: 'create',     component: CrudFormComponent },
             { path: ':id/update', component: CrudFormComponent },
             { path: ':id',        component: CrudViewComponent }, // TODO: Combine the two :id components into a CrudItemComonent (display the displayName of the the fetched crudItem)
-            { path: 'create',     component: CrudFormComponent },
             { path: '',           component: CrudListComponent }
         ],
     }

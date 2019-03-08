@@ -26,10 +26,10 @@ import { HttpClientModule } from '@angular/common/http';
     CrudRoutingModule,
   ],
   exports: [
-    CrudHomeComponent,
-    FormsModule,
     CommonModule,
+    FormsModule,
     HttpClientModule,
+    CrudHomeComponent,
   ]
 })
 export class CrudModule { }

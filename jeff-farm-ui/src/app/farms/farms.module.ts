@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 import { CrudModule } from '../crud/crud.module';
 import { CrudService } from '../crud/crud.service';
 import { FarmsService } from './farms.service';
-import { FARMS_ROUTES } from '../routes';
 
 @NgModule({
   providers: [
@@ -14,8 +14,9 @@ import { FARMS_ROUTES } from '../routes';
     },
   ],
   imports: [
+    CommonModule,
     CrudModule,
-    RouterModule.forChild(FARMS_ROUTES),
-  ]
+    RouterModule.forChild([ { path: '', loadChildren: '../crud/crud.module#CrudModule' } ]),
+  ],
 })
 export class FarmsModule { }

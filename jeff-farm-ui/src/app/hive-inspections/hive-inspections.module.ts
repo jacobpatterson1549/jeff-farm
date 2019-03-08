@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 import { CrudModule } from '../crud/crud.module';
 import { CrudService } from '../crud/crud.service';
 import { HiveInspectionsService } from './hive-inspections.service';
-import { HIVE_INSPECTIONS_ROUTES } from '../routes';
 
 @NgModule({
   providers: [
@@ -14,8 +14,9 @@ import { HIVE_INSPECTIONS_ROUTES } from '../routes';
     },
   ],
   imports: [
+    CommonModule,
     CrudModule,
-    RouterModule.forChild(HIVE_INSPECTIONS_ROUTES),
-  ]
+    RouterModule.forChild([ { path: '', loadChildren: '../crud/crud.module#CrudModule' } ]),
+  ],
 })
 export class HiveInspectionsModule { }

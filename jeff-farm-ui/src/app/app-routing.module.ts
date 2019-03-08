@@ -2,10 +2,21 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { PageNotFoundComponent } from './page-not-found.component';
-import { FARMS_ROUTES } from './routes';
 
 const routes: Routes = [
-  { path: '', redirectTo: FARMS_ROUTES[0].path, pathMatch: 'full' },
+  {
+    path: 'farms/:farm_id/hives/:hive_id/hiveInspections',
+    loadChildren: './hive-inspections/hive-inspections.module#HiveInspectionsModule',
+  },
+  {
+    path: 'farms/:farm_id/hives',
+    loadChildren: './hives/hives.module#HivesModule',
+  },
+  {
+    path: 'farms',
+    loadChildren: './farms/farms.module#FarmsModule',
+  },
+  { path: '', redirectTo: '/farms', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 

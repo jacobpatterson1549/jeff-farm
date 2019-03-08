@@ -74,8 +74,8 @@ export abstract class CrudService<T extends CrudItem> {
   }
 
   private handleError(error: HttpErrorResponse) {
-    console.error(error);
-    alert(error.message);
+    // console.error(error);
+    // alert(error.message);
     return throwError('error');
   }
 
