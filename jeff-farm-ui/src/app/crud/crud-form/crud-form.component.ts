@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { CrudService } from '../crud.service';
 import { NavigationService } from '../../navigation.service';
@@ -57,7 +58,10 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
       return of(this.crudItem = this.crudService.createCrudItem());
     }
     if (this.formType == FormType.Update) {
-      return this.crudService.get();
+      return this.crudService.get()
+        .pipe(
+          tap(crudItem => this.crudItem = crudItem),
+        );
     }
   }
 
