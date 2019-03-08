@@ -6,11 +6,11 @@ import { NavigationService } from '../navigation.service';
 })
 @Component({
   selector: 'app-navigation',
-  template: '<button [disabled]="disabled" (click)="navigtiaonService.goBack()">Back</button>',
+  template: '<button [disabled]="disabled" (click)="navigationService.goBack()">Back</button>',
 })
 export class NavigationComponent {
 
-  disabled: boolean = ['/', '/farms'].indexOf(this.navigtiaonService.getUrl()) >= 0;
+  disabled: boolean = ['/', '/farms'].indexOf(this.navigationService.getUrl()) >= 0;
 
-  constructor(private navigtiaonService: NavigationService) { }
+  constructor(private navigationService: NavigationService) { }
 }
