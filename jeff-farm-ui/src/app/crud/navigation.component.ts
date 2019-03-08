@@ -1,6 +1,4 @@
 import { Component, Injectable } from '@angular/core';
-import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
-import { Observable } from 'rxjs';
 import { NavigationService } from '../navigation.service';
 
 @Injectable({

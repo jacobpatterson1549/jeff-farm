@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { CrudService } from '../crud.service';
 import { CrudItem } from '../crud.item';
@@ -12,7 +13,12 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
 
   crudItems: T[];
 
-  constructor(private crudService: CrudService<T>) { }
+  constructor(
+    private route: ActivatedRoute,
+    private crudService: CrudService<T>) {
+
+    this.crudService.setRoute(this.route);
+   }
 
   ngOnInit() {
     this.getItems();

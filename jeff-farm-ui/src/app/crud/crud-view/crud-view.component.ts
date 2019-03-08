@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { CrudService } from '../crud.service';
 import { NavigationService } from '../../navigation.service';
@@ -16,10 +17,15 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   childNames: string[];
 
   constructor(
-    private crudService: CrudService<T>,
-    private navigationService: NavigationService) { }
+    private route: ActivatedRoute,
+    private navigationService: NavigationService,
+    private crudService: CrudService<T>) {
+  
+    this.crudService.setRoute(this.route);
+  }
 
   ngOnInit() {
+    
     this.childNames = this.crudService.getChildNames();
     
     this.crudService.get()

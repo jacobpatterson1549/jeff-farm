@@ -3,7 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { CrudItem } from './crud.item';
-import { NavigationService } from '../navigation.service';
+import { ActivatedRoute } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -11,8 +11,9 @@ const httpOptions = {
 
 export abstract class CrudService<T extends CrudItem> {
 
+  private route: ActivatedRoute;
+
   constructor(
-    private navigationService: NavigationService,
     private http: HttpClient) { }
 
   abstract createCrudItem(): T;
@@ -20,6 +21,10 @@ export abstract class CrudService<T extends CrudItem> {
   abstract getChildNames(): string[];
 
   abstract getBaseUrl(): string;
+
+  setRoute(route: ActivatedRoute) {
+    this.route = route;
+  }
 
   genBaseUrl(): string {
     return `http://localhost:8080/jeff-farm-ws/${this.getBaseUrl()}`;
@@ -79,7 +84,14 @@ export abstract class CrudService<T extends CrudItem> {
     return throwError('error');
   }
 
+  protected getRouteParam(paramName: string): string {
+    console.log('[crudService] url = ' + this.route.snapshot.url);
+    const param: string = this.route.snapshot.paramMap.get(paramName);
+    return param;
+  }
+
   getId(): number {
-    return this.navigationService.getRouteParam('id');
+    return +this.getRouteParam('id');
+    // return this.navigationService.getRouteParam('id');
   }
 }

@@ -2,19 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { CrudService } from '../crud/crud.service';
-import { NavigationService } from '../navigation.service';
 import { Farm } from './farm';
 
 @Injectable()
 export class FarmsService extends CrudService<Farm> {
 
-  constructor(
-    private navigationService1: NavigationService,
-    private httpClient: HttpClient) {
+  constructor(httpClient: HttpClient) {
 
-    super(
-      navigationService1,
-      httpClient);
+    super(httpClient);
   }
 
   createCrudItem(): Farm {

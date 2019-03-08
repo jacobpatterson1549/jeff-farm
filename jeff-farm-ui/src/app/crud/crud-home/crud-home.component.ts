@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { CrudService } from '../crud.service';
-
 import { CrudItem } from '../crud.item';
 
 @Component({
@@ -12,7 +12,12 @@ export class CrudHomeComponent<T extends CrudItem> implements OnInit {
 
   private crudItemClassName: string;
 
-  constructor(private crudService: CrudService<T>) { }
+  constructor(
+    private route: ActivatedRoute,
+    private crudService: CrudService<T>) {
+
+    this.crudService.setRoute(this.route);
+  }
 
   ngOnInit() {
     this.crudItemClassName = this.crudService.createCrudItem()

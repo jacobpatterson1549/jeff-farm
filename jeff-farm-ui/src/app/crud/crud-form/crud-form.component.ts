@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 import { CrudService } from '../crud.service';
 import { NavigationService } from '../../navigation.service';
@@ -22,8 +23,12 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   formItemType = FormItemType; // used for the ngSwitch in the template
 
   constructor(
+    private route: ActivatedRoute,
     private crudService: CrudService<T>,
-    private navigationService: NavigationService) { }
+    private navigationService: NavigationService) {
+
+      this.crudService.setRoute(this.route);
+    }
 
   ngOnInit() {
     this.initFormType();

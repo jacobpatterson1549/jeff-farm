@@ -2,10 +2,10 @@
   <table>
     <tr *ngFor="let displayFieldName of crudItem.getDisplayFieldNames()">
       <td>{{displayFieldName}}</td>
-      <td>{{crudItem.displayFieldName}}</td>
+      <td>{{crudItem[displayFieldName]}}</td>
     </tr>
   </table>
-  <button routerLink="update" [disabled]="!item">Update</button>
+  <button routerLink="update">Update</button>
   <button #deleteButton [disabled]="!canDelete" (click)="deleteCrudItem()">Delete</button>
   <div [hidden]="!deleteButton.disabled">Cannot delete {{crudItem.getClassName()}} because it has child items</div>
   <div *ngIf="childNames">
