@@ -16,7 +16,7 @@ export class Hive extends CrudItem {
         return [
             new FormItem('name', FormItemType.String, this.name),
             new FormItem('queenColor', FormItemType.Color, this.queenColor),
-        ]
+        ];
     }
 
     getDisplayValue(): string {

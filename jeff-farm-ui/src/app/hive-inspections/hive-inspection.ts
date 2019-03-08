@@ -40,7 +40,7 @@ export class HiveInspection extends CrudItem {
             new FormItem('weather', FormItemType.String, this.weather),
             new FormItem('temperatureF', FormItemType.Integer, this.temperatureF),
             new FormItem('windSpeedMph', FormItemType.Integer, this.windSpeedMph),
-        ]
+        ];
     }
 
     getDisplayValue(): string {

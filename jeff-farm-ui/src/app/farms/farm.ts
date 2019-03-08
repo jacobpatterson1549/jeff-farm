@@ -14,7 +14,7 @@ export class Farm extends CrudItem {
         return [
             new FormItem('name', FormItemType.String, this.name),
             new FormItem('location', FormItemType.String, this.location),
-        ]
+        ];
     }
 
     getDisplayValue(): string {
