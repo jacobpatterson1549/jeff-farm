@@ -85,7 +85,6 @@ export abstract class CrudService<T extends CrudItem> {
   }
 
   protected getRouteParam(paramName: string): string {
-    console.log('[crudService] url = ' + this.route.snapshot.url);
     const param: string = this.route.snapshot.paramMap.get(paramName);
     return param;
   }
