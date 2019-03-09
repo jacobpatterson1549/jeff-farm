@@ -4,14 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found.component';
 
 const routes: Routes = [
-  // {
-  //   path: 'farms/:farm_id/hives/:hive_id/hiveInspections',
-  //   loadChildren: './hive-inspections/hive-inspections.module#HiveInspectionsModule',
-  // },
-  // {
-  //   path: 'farms/:farm_id/hives',
-  //   loadChildren: './hives/hives.module#HivesModule',
-  // },
+  {
+    path: 'farms/:farm_id/hives/:hive_id/hiveInspections',
+    loadChildren: './hive-inspections/hive-inspections.module#HiveInspectionsModule',
+  },
+  {
+    path: 'farms/:farm_id/hives',
+    loadChildren: './hives/hives.module#HivesModule',
+  },
   {
     path: 'farms',
     loadChildren: './farms/farms.module#FarmsModule',
@@ -26,7 +26,7 @@ const routes: Routes = [
       routes,
       {
         enableTracing: false, // true for debugging purposes only
-        paramsInheritanceStrategy: 'always',
+        paramsInheritanceStrategy: 'always', // TODO: Is this needed?
       })
   ],
   exports: [
