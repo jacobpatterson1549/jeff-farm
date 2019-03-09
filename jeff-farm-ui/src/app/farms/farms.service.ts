@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { CrudService } from '../crud/crud.service';
+import { CrudService, CrudChild } from '../crud/crud.service';
 import { Farm } from './farm';
 
 @Injectable()
@@ -16,10 +16,16 @@ export class FarmsService extends CrudService<Farm> {
     return new Farm();
   }
 
-  getChildNames(): string[] {
-    return ['Hives'];
+  getPluralName(): string {
+    return 'Farms';
   }
 
+  getCrudChildren(): CrudChild[] {
+    return [
+      { pluralName: 'Hives', path: 'hives' },
+    ];
+  }
+  
   getBaseUrl(): string {
     return 'farms';
   }

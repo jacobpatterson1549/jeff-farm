@@ -8,11 +8,11 @@
   <button routerLink="update">Update</button>
   <button #deleteButton [disabled]="!canDelete" (click)="deleteCrudItem()">Delete</button>
   <div [hidden]="!deleteButton.disabled">Cannot delete {{crudItem.getClassName()}} because it has child items</div>
-  <div *ngIf="childNames">
+  <div *ngIf="crudChildren">
     <h4>Child items:</h4>
     <ul>
-      <li *ngFor="let childName of childNames">
-        <a routerLink="{{childName}}">{{childName | titlecase}}</a>
+      <li *ngFor="let crudChild of crudChildren">
+        <a routerLink="{{crudChild.path}}">{{crudChild.pluralName}}</a>
       </li>
     </ul>
   </div>

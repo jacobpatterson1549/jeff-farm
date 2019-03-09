@@ -20,7 +20,6 @@ export class CrudHomeComponent<T extends CrudItem> implements OnInit {
   }
 
   ngOnInit() {
-    this.crudItemClassName = this.crudService.createCrudItem()
-      .getClassName();
+    this.crudItemClassName = this.crudService.getPluralName()
   }
 }

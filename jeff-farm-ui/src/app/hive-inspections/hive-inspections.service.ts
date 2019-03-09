@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { CrudService } from '../crud/crud.service';
+import { CrudService, CrudChild } from '../crud/crud.service';
 import { HiveInspection } from './hive-inspection';
 
 @Injectable()
@@ -16,7 +16,11 @@ export class HiveInspectionsService extends CrudService<HiveInspection> {
     return new HiveInspection(this.getHiveId());
   }
 
-  getChildNames(): string[] {
+  getPluralName(): string {
+    return 'Hive Inspections';
+  }
+
+  getCrudChildren(): CrudChild[] {
     return [];
   }
   

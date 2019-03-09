@@ -21,8 +21,4 @@ export abstract class CrudItem {
         .filter(formItemName => !formItemName.endsWith('Id'))
         .concat(['createdDate', 'modifiedDate']);
     }
-
-    getClassName(): string {
-        return this.constructor.name.replace('([A-Z])', ' $1').trim();
-    }
 }

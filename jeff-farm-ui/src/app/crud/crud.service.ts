@@ -9,6 +9,11 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+export interface CrudChild {
+  pluralName: string;
+  path: string;
+}
+
 export abstract class CrudService<T extends CrudItem> {
 
   private route: ActivatedRoute;
@@ -18,7 +23,9 @@ export abstract class CrudService<T extends CrudItem> {
 
   abstract createCrudItem(): T;
 
-  abstract getChildNames(): string[];
+  abstract getPluralName(): string;
+
+  abstract getCrudChildren(): CrudChild[];
 
   abstract getBaseUrl(): string;
 
