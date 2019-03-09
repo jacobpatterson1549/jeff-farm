@@ -11,6 +11,7 @@ import { CrudItem } from '../crud.item';
 })
 export class CrudListComponent<T extends CrudItem> implements OnInit {
 
+  crudItemName: string;
   crudItems: T[];
 
   constructor(
@@ -21,6 +22,8 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
    }
 
   ngOnInit() {
+    this.crudItemName = this.crudService.getSingularName()
+
     this.getItems();
   }
 

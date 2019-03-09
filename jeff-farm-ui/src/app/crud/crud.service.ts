@@ -33,6 +33,11 @@ export abstract class CrudService<T extends CrudItem> {
     this.route = route;
   }
 
+  getSingularName() {
+    const pluralName: string = this.getPluralName();
+    return pluralName.substring(0, pluralName.length - 1);
+  }
+
   genBaseUrl(): string {
     return `http://localhost:8080/jeff-farm-ws/${this.getBaseUrl()}`;
   }

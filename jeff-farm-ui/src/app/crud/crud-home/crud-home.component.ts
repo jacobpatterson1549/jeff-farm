@@ -10,7 +10,7 @@ import { CrudItem } from '../crud.item';
 })
 export class CrudHomeComponent<T extends CrudItem> implements OnInit {
 
-  private crudItemClassName: string;
+  private crudItemName: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,6 +20,6 @@ export class CrudHomeComponent<T extends CrudItem> implements OnInit {
   }
 
   ngOnInit() {
-    this.crudItemClassName = this.crudService.getPluralName()
+    this.crudItemName = this.crudService.getPluralName()
   }
 }

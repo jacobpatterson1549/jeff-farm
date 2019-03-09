@@ -1,4 +1,4 @@
-<button routerLink="create">Create new Item</button>
+<button routerLink="create">Create new {{crudItemName}}</button>
 <div *ngIf="crudItems">
   <ul>
     <li *ngFor="let crudItem of crudItems">
