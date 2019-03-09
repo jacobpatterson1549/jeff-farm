@@ -84,7 +84,7 @@ public class StoredProcedureDao
 		{
 			throw new StoredProcedureException(String.format(
 					"Only expected one row.  Got %d",
-					outputParams.get(RETURN_UPDATE_COUNT)));
+					(int) outputParams.get(RETURN_UPDATE_COUNT)));
 		}
 
 		// See https://docs.oracle.com/javase/8/docs/api/java/sql/ResultSet.html#getBoolean-java.lang.String-
