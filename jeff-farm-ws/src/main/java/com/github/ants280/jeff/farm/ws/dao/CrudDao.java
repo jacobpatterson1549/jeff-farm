@@ -1,10 +1,11 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
+import com.github.ants280.jeff.farm.ws.model.CrudItem;
 import java.util.List;
 import org.jvnet.hk2.annotations.Contract;
 
 @Contract
-public interface CrudDao<T>
+public interface CrudDao<T extends CrudItem>
 {
 	public int create(T entity);
 
