@@ -15,6 +15,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   crudItem: T;
   canDelete: boolean = false;
   crudChildren: CrudChild[];
+  crudItemSingularName: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,6 +28,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   ngOnInit() {
     
     this.crudChildren = this.crudService.getCrudChildren();
+    this.crudItemSingularName = this.crudService.getSingularName();
     
     this.crudService.get()
       .subscribe((crudItem: T) => this.crudItem = crudItem);
