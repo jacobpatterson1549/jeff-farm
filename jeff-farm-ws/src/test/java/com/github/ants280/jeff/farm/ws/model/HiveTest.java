@@ -3,6 +3,7 @@ package com.github.ants280.jeff.farm.ws.model;
 import static com.github.ants280.jeff.farm.ws.JsonProvider.OBJECT_MAPPER;
 import java.io.IOException;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 
 public class HiveTest
@@ -45,7 +46,7 @@ public class HiveTest
 
 		OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
-		assertEquals("expected to fail", true, false);
+		fail("expected to fail");
 	}
 	
 	@Test(expected = Exception.class)
@@ -55,7 +56,7 @@ public class HiveTest
 
 		OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
-		assertEquals("expected to fail", true, false);
+		fail("expected to fail");
 	}
 	
 	@Test(expected = Exception.class)
@@ -65,7 +66,7 @@ public class HiveTest
 
 		OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
-		assertEquals("expected to fail", true, false);
+		fail("expected to fail");
 	}
 	
 	@Test(expected = Exception.class)
@@ -75,7 +76,7 @@ public class HiveTest
 
 		OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
-		assertEquals("expected to fail", true, false);
+		fail("expected to fail");
 	}
 	
 	@Test
