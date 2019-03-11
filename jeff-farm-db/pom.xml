@@ -41,6 +41,7 @@
 							<goal>execute</goal>
 						</goals>
 						<configuration>
+							<delimiter>$$$</delimiter>
 							<autocommit>true</autocommit>
 							<srcFiles>
 								<!--Order of files matters for foreign key constraints.-->
@@ -64,7 +65,7 @@
 							</fileset>
 						</configuration>
 					</execution>
-					<execution>
+<!--					<execution>
 						<id>[re]add-stored-procedures</id>
 						<phase>process-test-resources</phase>
 						<goals>
@@ -77,7 +78,7 @@
 								<basedir>${project.basedir}/src/main/sql/stored-procedures/</basedir>
 							</fileset>
 						</configuration>
-					</execution>
+					</execution>-->
 				</executions>
 			</plugin>
 		</plugins>

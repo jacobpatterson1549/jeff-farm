@@ -7,12 +7,12 @@
     <packaging>pom</packaging>
     <modules>
         <module>jeff-farm-ws</module>
-        <module>jeff-farm-db</module>
-        <!--<module>jeff-farm-db</module>--> <!-- build manually to set up db -->
+        <module>jeff-farm-db</module> <!-- TODO: move into jefff-farm-ws as plugin -->
   </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
+		<!--		
 		<jdbc.driver.group.id>mysql</jdbc.driver.group.id>
 		<jdbc.driver.artifact.id>mysql-connector-java</jdbc.driver.artifact.id>
 		<jdbc.driver.version>8.0.13</jdbc.driver.version>
@@ -22,15 +22,16 @@
 		<jdbc.database>JEFF_FARM_DB</jdbc.database>
 		<jdbc.username>fred</jdbc.username>
 		<jdbc.password>flintstone</jdbc.password>
-<!--		<jdbc.driver.groupId>postgresql</jdbc.driver.groupId>
-		<jdbc.driver.artifactId>postgresql</jdbc.driver.artifactId>
-		<jdbc.driver.version>9.1-901-1.jdbc4</jdbc.driver.version>
-		<jdbc.driver.className>org.postgresql.Driver</jdbc.driver.className>
+		-->
+		<jdbc.driver.group.id>postgresql</jdbc.driver.group.id>
+		<jdbc.driver.artifact.id>postgresql</jdbc.driver.artifact.id>
+		<jdbc.driver.version>9.1-901.jdbc4</jdbc.driver.version>
+		<jdbc.driver.class.name>org.postgresql.Driver</jdbc.driver.class.name>
 		<jdbc.host>localhost</jdbc.host>
 		<jdbc.port>5432</jdbc.port>
 		<jdbc.database>jeff_farm_db</jdbc.database>
 		<jdbc.username>farmer</jdbc.username>
-		<jdbc.password>flint5+0N3</jdbc.password>-->
+		<jdbc.password>flint5+0N3</jdbc.password>
 		<jdbc.url>jdbc:${jdbc.driver.group.id}://${jdbc.host}:${jdbc.port}/${jdbc.database}?serverTimezone=UTC</jdbc.url>
 		
 		<resource.data.source.name>jdbc/jeff-farm-data-source</resource.data.source.name>

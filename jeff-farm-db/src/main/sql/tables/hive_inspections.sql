@@ -3,7 +3,7 @@
 
 CREATE TABLE IF NOT EXISTS hive_inspections
 (
-	id INT PRIMARY KEY AUTO_INCREMENT,
+	id SERIAL PRIMARY KEY,
 	hive_id INT REFERENCES hives (id),
 	queen_seen BIT(1),
 	eggs_seen BIT(1),
@@ -19,9 +19,27 @@ CREATE TABLE IF NOT EXISTS hive_inspections
 	weather VARCHAR(255),
 	temperature_f INT,
 	wind_speed_mph INT,
-	created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-	modified_date DATETIME ON UPDATE CURRENT_TIMESTAMP,
+	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
 	FOREIGN KEY (hive_id)
 		REFERENCES hives (id)
 );
+
+CREATE OR REPLACE FUNCTION hive_inspection_update_modified_date_function()
+RETURNS TRIGGER AS
+$hive_inspections$
+	BEGIN
+		NEW.modified_date = NOW();
+		RETURN NEW;
+	END;
+$hive_inspections$
+LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS hive_inspection_modified_date_trigger
+	ON hive_inspections;
+CREATE TRIGGER hive_inspection_modified_date_trigger
+	AFTER UPDATE
+	ON hive_inspections
+	FOR EACH ROW
+	EXECUTE PROCEDURE hive_inspection_update_modified_date_function();

@@ -1,79 +1,74 @@
---DELIMITER $$
-
--- DROP TABLE hives_audit$$
--- SELECT  * FROM hives_audit LIMIT 0$$
-
+-- DROP TABLE hives_audit;
+-- SELECT  * FROM hives_audit LIMIT 0;
+-- 
 CREATE TABLE IF NOT EXISTS hives_audit
 (
-	audit_id INT PRIMARY KEY AUTO_INCREMENT,
+	audit_id SERIAL PRIMARY KEY,
 	action_type CHAR(1) NOT NULL, -- i (insert), b (before update), a (after update), d (delete)
--- 	userId INT,
-	action_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+	action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	id INT,
-	farm_id INT,
 	name VARCHAR(255),
 	queen_color BIT(24)
-)$$
+);
 
-DROP PROCEDURE IF EXISTS hive_changed_function$$
-CREATE PROCEDURE hive_changed_function (
-	IN action_type CHAR(1),
-	IN id INT,
-	IN farm_id INT,
-	IN name VARCHAR(255),
-	IN queen_color BIT(24))
 
+CREATE OR REPLACE FUNCTION hive_inserted_function()
+RETURNS TRIGGER AS
+$hives_audit$
 	BEGIN
-		INSERT INTO hives_audit (action_type, id, farm_id, name, queen_color)
-		VALUES (action_type, id, farm_id, name, queen_color);
-	END$$
+		INSERT INTO hives_audit (action_type, id, name, queen_color)
+			VALUES ('i', NEW.id, NEW.name, NEW.queen_color);
+		RETURN NEW;
+	END;
+$hives_audit$
+LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS hive_inserted_trigger$$
+DROP TRIGGER IF EXISTS hive_inserted_trigger
+	ON hives;
 CREATE TRIGGER hive_inserted_trigger
 	AFTER INSERT
 	ON hives
 	FOR EACH ROW
-	BEGIN
-		CALL hive_changed_function(
-			'i',
-			NEW.id,
-			NEW.farm_id,
-			NEW.name,
-			NEW.queen_color);
-	END$$
+	EXECUTE PROCEDURE hive_inserted_function();
 
-DROP TRIGGER IF EXISTS hive_updated_trigger$$
+
+CREATE OR REPLACE FUNCTION hive_updated_function()
+RETURNS TRIGGER AS
+$hives_audit$
+	BEGIN
+		INSERT INTO hives_audit (action_type, id, name, queen_color)
+			VALUES ('b', OLD.id, OLD.name, OLD.queen_color);
+		INSERT INTO hives_audit (action_type, id, name, queen_color)
+			VALUES ('a', NEW.id, NEW.name, NEW.queen_color);
+		RETURN NEW;
+	END;
+$hives_audit$
+LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS hive_updated_trigger
+	ON hives;
 CREATE TRIGGER hive_updated_trigger
 	AFTER UPDATE
 	ON hives
 	FOR EACH ROW
-	BEGIN
-		CALL hive_changed_function(
-			'b',
-			OLD.id,
-			OLD.farm_id,
-			OLD.name,
-			OLD.queen_color);
-		CALL hive_changed_function(
-			'a',
-			NEW.id,
-			NEW.farm_id,
-			NEW.name,
-			NEW.queen_color);
-	END$$
+	EXECUTE PROCEDURE hive_updated_function();
 
-DROP TRIGGER IF EXISTS hive_deleted_trigger$$
+
+CREATE OR REPLACE FUNCTION hive_deleted_function()
+RETURNS TRIGGER AS
+$hives_audit$
+	BEGIN
+		INSERT INTO hives_audit (action_type, id, name, queen_color)
+			VALUES ('d', OLD.id, OLD.name, OLD.queen_color);
+		RETURN NEW;
+	END;
+$hives_audit$
+LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS hive_deleted_trigger
+	ON hives;
 CREATE TRIGGER hive_deleted_trigger
 	AFTER DELETE
 	ON hives
 	FOR EACH ROW
-	BEGIN
-		CALL hive_changed_function(
-			'd',
-			OLD.id,
-			OLD.farm_id,
-			OLD.name,
-			OLD.queen_color);
-	END$$
-
--- DELIMITER ;
+	EXECUTE PROCEDURE hive_deleted_function();
