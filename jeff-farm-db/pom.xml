@@ -21,13 +21,13 @@
 				<version>1.5</version>
 				<dependencies>
 					<dependency>
-						<groupId>mysql</groupId>
-						<artifactId>mysql-connector-java</artifactId>
-						<version>${mysql.version}</version>
+						<groupId>${jdbc.driver.group.id}</groupId>
+						<artifactId>${jdbc.driver.artifact.id}</artifactId>
+						<version>${jdbc.driver.version}</version>
 					</dependency>
 				</dependencies>
 				<configuration>
-					<driver>${jdbc.driverClassName}</driver>
+					<driver>${jdbc.driver.class.name}</driver>
 					<url>${jdbc.url}</url>
 					<username>${jdbc.username}</username>
 					<password>${jdbc.password}</password>

@@ -36,9 +36,9 @@
 	</filter-mapping>
 
 	<resource-ref>
-		<res-ref-name>jdbc/jeff-farm-data-source</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
+		<res-ref-name>${resource.data.source.name}</res-ref-name>
+		<res-type>${resource.data.source.type}</res-type>
+		<res-auth>${resource.data.source.auth}</res-auth>
 	</resource-ref>
 
 </web-app>
