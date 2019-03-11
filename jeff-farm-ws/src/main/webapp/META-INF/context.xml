@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/jeff-farm-ws">
 
-	<Resource name="jdbc/jeff-farm-data-source"
-			  auth="Container"
-			  type="javax.sql.DataSource"
-			  maxTotal="100"
-			  maxIdle="30"
-			  maxWaitMillis="10000"
-			  username="fred"
-			  password="flintstone"
-			  driverClassName="com.mysql.cj.jdbc.Driver"
-			  url="jdbc:mysql://localhost:3306/JEFF_FARM_DB"/>
+    <Resource name="${resource.data.source.name}"
+	          auth="${resource.data.source.auth}"
+	          type="${resource.data.source.type}"
+	          maxTotal="100"
+	          maxIdle="30"
+	          maxWaitMillis="10000"
+	          username="${jdbc.username}"
+	          password="${jdbc.password}"
+	          driverClassName="${jdbc.driver.class.name}"
+	          url="${jdbc.url}"/>
 
 </Context>

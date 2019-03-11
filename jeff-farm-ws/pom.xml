@@ -97,6 +97,18 @@
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 						</manifest>
 					</archive>
+					<webResources>
+						<resource>
+							<directory>${project.basedir}/src/main/webapp/META-INF</directory>
+							<filtering>true</filtering>
+							<targetPath>META-INF</targetPath>
+						</resource>
+						<resource>
+							<directory>${project.basedir}/src/main/webapp/WEB-INF</directory>
+							<filtering>true</filtering>
+							<targetPath>WEB-INF</targetPath>
+						</resource>
+					</webResources>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -155,9 +167,9 @@
 		</dependency>
 		<dependency>
 			<!--data access-->
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.version}</version>
+			<groupId>${jdbc.driver.group.id}</groupId>
+			<artifactId>${jdbc.driver.artifact.id}</artifactId>
+			<version>${jdbc.driver.version}</version>
 		</dependency>
 		<dependency>
 			<!--data access-->
