@@ -25,8 +25,7 @@ CREATE PROCEDURE read_hive_inspections (
 			, hi.created_date
 			, hi.modified_date
 		FROM hive_inspections AS hi
-		JOIN hives AS h ON h.id = hi.hive_id
-		WHERE h.id = hive_id;
+		WHERE hi.hive_id = hive_id;
 	END$$
 
 -- DELIMITER ;
