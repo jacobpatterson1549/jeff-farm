@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { CrudService, CrudChild } from '../crud.service';
-import { NavigationService } from '../../navigation.service';
 import { CrudItem } from '../crud.item';
 
 @Component({
@@ -18,12 +17,9 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   crudItemSingularName: string;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
-    private navigationService: NavigationService,
-    private crudService: CrudService<T>) {
-  
-    this.crudService.setRoute(this.route);
-  }
+    private crudService: CrudService<T>) { }
 
   ngOnInit() {
     
@@ -40,7 +36,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   deleteCrudItem() {
     if (window.confirm('Really Delete?')) {
       this.crudService.delete()
-        .subscribe(_ => this.navigationService.goBack() );
+        .subscribe(_ => this.router.navigate([".."], { relativeTo: this.route }) );
     }
   }
 }

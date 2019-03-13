@@ -1,16 +1,21 @@
-import { Component, Injectable } from '@angular/core';
-import { NavigationService } from '../navigation.service';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
-@Injectable({
-  providedIn: 'root'
-})
 @Component({
   selector: 'app-navigation',
-  template: '<button [disabled]="disabled" (click)="navigationService.goBack()">Back</button>',
+  template: '<button [disabled]="!canGoUp()" (click)="goUp()">Back</button>',
 })
 export class NavigationComponent {
 
-  disabled: boolean = ['/', '/farms'].indexOf(this.navigationService.getUrl()) >= 0;
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute) { }
 
-  constructor(private navigationService: NavigationService) { }
+  canGoUp() {
+    return ['/', '/farms'].indexOf(this.router.url) < 0;
+  }
+
+  goUp() {
+    this.router.navigate(["../"], { relativeTo: this.route.parent });
+  }
 }
