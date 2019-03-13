@@ -16,6 +16,7 @@
 	<build>
 		<plugins>
 			<plugin>
+				<!--mvn sql:execute-->
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>sql-maven-plugin</artifactId>
 				<version>1.5</version>
@@ -32,53 +33,21 @@
 					<username>${jdbc.username}</username>
 					<password>${jdbc.password}</password>
 					<settingsKey>sensibleKey</settingsKey>
+					<delimiter>$$$</delimiter>
+					<autocommit>true</autocommit>
+					<srcFiles>
+						<!--Order of files matters for foreign key constraints.-->
+						<srcFile>${project.basedir}/src/main/sql/tables/farms.sql</srcFile>
+						<srcFile>${project.basedir}/src/main/sql/tables/hives.sql</srcFile>
+						<srcFile>${project.basedir}/src/main/sql/tables/hive_inspections.sql</srcFile>
+					</srcFiles>
+					<fileset>
+						<basedir>${project.basedir}/src/main/sql/audit-trigger-tables/</basedir>
+					</fileset>
+					<fileset>
+						<basedir>${project.basedir}/src/main/sql/stored-procedures/</basedir>
+					</fileset>
 				</configuration>
-				<executions>
-					<execution>
-						<id>create-tables</id>
-						<phase>process-test-resources</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<autocommit>true</autocommit>
-							<srcFiles>
-								<!--Order of files matters for foreign key constraints.-->
-								<srcFile>${project.basedir}/src/main/sql/tables/farms.sql</srcFile>
-								<srcFile>${project.basedir}/src/main/sql/tables/hives.sql</srcFile>
-								<srcFile>${project.basedir}/src/main/sql/tables/hive_inspections.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-					<execution>
-						<id>[re]add-audit</id>
-						<phase>process-test-resources</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<delimiter>$$$</delimiter>
-							<autocommit>true</autocommit>
-							<fileset>
-								<basedir>${project.basedir}/src/main/sql/audit-trigger-tables/</basedir>
-							</fileset>
-						</configuration>
-					</execution>
-					<execution>
-						<id>[re]add-stored-procedures</id>
-						<phase>process-test-resources</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<delimiter>$$$</delimiter>
-							<autocommit>true</autocommit>
-							<fileset>
-								<basedir>${project.basedir}/src/main/sql/stored-procedures/</basedir>
-							</fileset>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
