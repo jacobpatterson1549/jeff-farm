@@ -1,8 +1,17 @@
  <div *ngIf="crudItem">
   <table>
-    <tr *ngFor="let displayFieldName of crudItem.getDisplayFieldNames()">
+    <tr *ngFor="let displayFieldName of displayFieldNames">
       <td>{{displayFieldName}}</td>
-      <td>{{crudItem[displayFieldName]}}</td>
+      <td>
+          <div [ngSwitch]="displayFormItemTypes[displayFieldName]">
+            <div *ngSwitchCase="formItemType.Color">
+              <input type="color" disabled=true value="{{crudItem[displayFieldName]}}">
+            </div>
+            <div *ngSwitchDefault>
+              <span>{{crudItem[displayFieldName]}}</span>
+            </div>
+          </div>
+      </td>
     </tr>
   </table>
   <button routerLink="update">Update</button>
