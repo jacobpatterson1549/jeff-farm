@@ -39,7 +39,7 @@ export abstract class CrudService<T extends CrudItem> {
   }
 
   genBaseUrl(): string {
-    return `http://localhost:8080/jeff-farm-ws/api/${this.getBaseUrl()}`;
+    return `http://localhost:8080/jeff-farm-ws/${this.getBaseUrl()}`;
   }
 
   post(t: T): Observable<Number> {
