@@ -16,6 +16,6 @@ export class NavigationComponent {
   }
 
   goUp() {
-    this.router.navigate(["../"], { relativeTo: this.route.parent });
+    this.router.navigate(['../'], { relativeTo: this.route } );
   }
 }
