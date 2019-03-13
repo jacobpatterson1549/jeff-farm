@@ -68,11 +68,11 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
 
     if (this.formType == FormType.Create) {
       this.crudService.post(this.crudItem)
-        .subscribe((id: Number) => this.router.navigate(["../" + id], { relativeTo: this.route }) );
+        .subscribe((id: Number) => this.router.navigate([`../${id}`], { relativeTo: this.route }) );
     }
     if (this.formType == FormType.Update) {
       this.crudService.put(this.crudItem)
-        .subscribe(_ => this.router.navigate([".."], { relativeTo: this.route }) );
+        .subscribe(_ => this.router.navigate(['..'], { relativeTo: this.route }) );
     }
   }
 }

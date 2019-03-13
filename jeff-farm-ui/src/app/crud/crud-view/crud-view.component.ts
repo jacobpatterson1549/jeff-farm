@@ -36,7 +36,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   deleteCrudItem() {
     if (window.confirm('Really Delete?')) {
       this.crudService.delete()
-        .subscribe(_ => this.router.navigate([".."], { relativeTo: this.route.parent }) );
+        .subscribe(_ => this.router.navigate(['..'], { relativeTo: this.route.parent }) );
     }
   }
 }
