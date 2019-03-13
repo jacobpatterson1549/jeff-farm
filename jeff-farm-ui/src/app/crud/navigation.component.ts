@@ -1,7 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute, Router, UrlTree } from '@angular/router';
-import { Location } from '@angular/common';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
