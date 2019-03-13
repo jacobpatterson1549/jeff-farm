@@ -26,7 +26,6 @@ const routes: Routes = [
       routes,
       {
         enableTracing: false, // true for debugging purposes only
-        paramsInheritanceStrategy: 'always', // TODO: Is this needed?
       })
   ],
   exports: [
