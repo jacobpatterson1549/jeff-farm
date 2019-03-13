@@ -42,8 +42,8 @@ export abstract class CrudService<T extends CrudItem> {
     return `http://localhost:8080/jeff-farm-ws/api/${this.getBaseUrl()}`;
   }
 
-  post(t: T): Observable<any> {
-    return this.http.post<Object>(this.genBaseUrl(), t, httpOptions)
+  post(t: T): Observable<Number> {
+    return this.http.post<Number>(this.genBaseUrl(), t, httpOptions)
       .pipe(
         catchError(this.handleError),
         );

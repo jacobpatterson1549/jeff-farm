@@ -66,13 +66,13 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
       this.crudItem[formItem.name] = formItem.value;
     }
 
-    let result: Observable<any>;
     if (this.formType == FormType.Create) {
-      result = this.crudService.post(this.crudItem);
+      this.crudService.post(this.crudItem)
+        .subscribe((id: Number) => this.router.navigate(["../" + id], { relativeTo: this.route }) );
     }
     if (this.formType == FormType.Update) {
-      result = this.crudService.put(this.crudItem);
+      this.crudService.put(this.crudItem)
+        .subscribe(_ => this.router.navigate([".."], { relativeTo: this.route }) );
     }
-    result.subscribe(_ => this.router.navigate([".."], { relativeTo: this.route }) );
   }
 }
