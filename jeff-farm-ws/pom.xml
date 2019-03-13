@@ -1,24 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<artifactId>jeff-farm</artifactId>
-		<groupId>com.github.ants280</groupId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
 	<groupId>com.github.ants280</groupId>
 	<artifactId>jeff-farm-ws</artifactId>
 	<name>jeff-farm-ws</name>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 		<jackson.version>2.9.8</jackson.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<sonar.java.libraries>target/classes</sonar.java.libraries>
-	</properties>
+		
+		<jdbc.driver.name>mysql</jdbc.driver.name>
+		<jdbc.driver.group.id>mysql</jdbc.driver.group.id>
+		<jdbc.driver.artifact.id>mysql-connector-java</jdbc.driver.artifact.id>
+		<jdbc.driver.version>8.0.13</jdbc.driver.version>
+		<jdbc.driver.class.name>com.mysql.cj.jdbc.Driver</jdbc.driver.class.name>
+		<jdbc.host>localhost</jdbc.host>
+		<jdbc.port>3306</jdbc.port>
+		<jdbc.database>JEFF_FARM_DB</jdbc.database>
+		<jdbc.username>fred</jdbc.username>
+		<jdbc.password>flintstone</jdbc.password>
+<!--		<jdbc.driver.name>postgresql</jdbc.driver.name>
+		<jdbc.driver.group.id>org.postgresql</jdbc.driver.group.id>
+		<jdbc.driver.artifactId>postgresql</jdbc.driver.artifactId>
+		<jdbc.driver.version>42.2.5</jdbc.driver.version>
+		<jdbc.driver.className>org.postgresql.Driver</jdbc.driver.className>
+		<jdbc.host>localhost</jdbc.host>
+		<jdbc.port>5432</jdbc.port>
+		<jdbc.database>jeff_farm_db</jdbc.database>
+		<jdbc.username>farmer</jdbc.username>
+		<jdbc.password>flint5+0N3</jdbc.password>-->
+		<jdbc.url>jdbc:${jdbc.driver.name}://${jdbc.host}:${jdbc.port}/${jdbc.database}?serverTimezone=UTC</jdbc.url>
+		
+		<resource.data.source.name>jdbc/jeff-farm-data-source</resource.data.source.name>
+		<resource.data.source.auth>Container</resource.data.source.auth>
+		<resource.data.source.type>javax.sql.DataSource</resource.data.source.type>
+    </properties>
 	<build>
 		<!-- mvn -DremoveSnapshot versions:set && mvn clean package && mvn versions:set -DnextSnapshot=true -->
 		<plugins>
@@ -109,6 +130,40 @@
 							<targetPath>WEB-INF</targetPath>
 						</resource>
 					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- mvn sql:execute -->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.5</version>
+				<dependencies>
+					<dependency>
+						<groupId>${jdbc.driver.group.id}</groupId>
+						<artifactId>${jdbc.driver.artifact.id}</artifactId>
+						<version>${jdbc.driver.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<driver>${jdbc.driver.class.name}</driver>
+					<url>${jdbc.url}</url>
+					<username>${jdbc.username}</username>
+					<password>${jdbc.password}</password>
+					<settingsKey>sensibleKey</settingsKey>
+					<delimiter>$$$</delimiter>
+					<autocommit>true</autocommit>
+					<srcFiles>
+						<!--Order of files matters for foreign key constraints.-->
+						<srcFile>${project.basedir}/src/main/sql/tables/farms.sql</srcFile>
+						<srcFile>${project.basedir}/src/main/sql/tables/hives.sql</srcFile>
+						<srcFile>${project.basedir}/src/main/sql/tables/hive_inspections.sql</srcFile>
+					</srcFiles>
+					<fileset>
+						<basedir>${project.basedir}/src/main/sql/audit-trigger-tables/</basedir>
+					</fileset>
+					<fileset>
+						<basedir>${project.basedir}/src/main/sql/stored-procedures/</basedir>
+					</fileset>
 				</configuration>
 			</plugin>
 			<plugin>
