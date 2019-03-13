@@ -37,7 +37,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
 
         this.displayFormItemTypes = crudItem.getFormItems()
           .filter(formItem => this.displayFieldNames.indexOf(formItem.name) >= 0)
-           .reduce((obj, formItem) => {
+          .reduce((obj, formItem) => {
             obj[formItem.name] = formItem.type;
             return obj;
           }, {});
