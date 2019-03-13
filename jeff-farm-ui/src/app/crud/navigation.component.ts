@@ -25,8 +25,9 @@ export class NavigationComponent {
   }
 
   goUp() {
-    // if the route has the same path as the parents, we must jump up higher.
+    // Navigate relative to the component which houses this component (the parent).
     let parentRoute: ActivatedRoute = this.route;
+    // Do not jump only to the immediate grandparent only to be redirected back to current parent.
     for (var i = 1; i < this.stepsToParent; i++) {
       parentRoute = parentRoute.parent;
     }
