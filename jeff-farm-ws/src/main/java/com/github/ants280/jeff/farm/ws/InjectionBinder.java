@@ -32,7 +32,7 @@ public class InjectionBinder extends AbstractBinder
 			// https://stackoverflow.com/questions/23393913/how-can-i-make-resource-annotation-work-with-tomcat
 			Context initCtx = new InitialContext();
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");
-			return (DataSource) envCtx.lookup("jdbc/jeff-farm-data-source");
+			return (DataSource) envCtx.lookup("jdbc/jeff-farm-data-source"); // also in pom.xml ${resource.data.source.name}
 		}
 		catch (NamingException ex)
 		{

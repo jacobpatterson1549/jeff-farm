@@ -7,7 +7,7 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 		<jackson.version>2.9.8</jackson.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
@@ -24,7 +24,7 @@
 		<jdbc.database>JEFF_FARM_DB</jdbc.database>
 		<jdbc.username>fred</jdbc.username>
 		<jdbc.password>flintstone</jdbc.password>
-<!--		<jdbc.driver.name>postgresql</jdbc.driver.name>
+		<!--		<jdbc.driver.name>postgresql</jdbc.driver.name>
 		<jdbc.driver.group.id>org.postgresql</jdbc.driver.group.id>
 		<jdbc.driver.artifactId>postgresql</jdbc.driver.artifactId>
 		<jdbc.driver.version>42.2.5</jdbc.driver.version>
@@ -36,10 +36,10 @@
 		<jdbc.password>flint5+0N3</jdbc.password>-->
 		<jdbc.url>jdbc:${jdbc.driver.name}://${jdbc.host}:${jdbc.port}/${jdbc.database}?serverTimezone=UTC</jdbc.url>
 		
-		<resource.data.source.name>jdbc/jeff-farm-data-source</resource.data.source.name>
+		<resource.data.source.name>jdbc/jeff-farm-data-source</resource.data.source.name> <!-- also in InjectionBinder.java -->
 		<resource.data.source.auth>Container</resource.data.source.auth>
 		<resource.data.source.type>javax.sql.DataSource</resource.data.source.type>
-    </properties>
+	</properties>
 	<build>
 		<!-- mvn -DremoveSnapshot versions:set && mvn clean package && mvn versions:set -DnextSnapshot=true -->
 		<plugins>
@@ -154,6 +154,9 @@
 					<autocommit>true</autocommit>
 					<srcFiles>
 						<!--Order of files matters for foreign key constraints.-->
+						<srcFile>${project.basedir}/src/main/sql/tables/users.sql</srcFile>
+						<srcFile>${project.basedir}/src/main/sql/tables/roles.sql</srcFile>
+						<srcFile>${project.basedir}/src/main/sql/tables/user_roles.sql</srcFile>
 						<srcFile>${project.basedir}/src/main/sql/tables/farms.sql</srcFile>
 						<srcFile>${project.basedir}/src/main/sql/tables/hives.sql</srcFile>
 						<srcFile>${project.basedir}/src/main/sql/tables/hive_inspections.sql</srcFile>
