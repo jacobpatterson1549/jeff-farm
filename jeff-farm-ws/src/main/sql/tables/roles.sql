@@ -1,0 +1,6 @@
+-- DROP TABLE roles;
+
+CREATE TABLE IF NOT EXISTS roles
+(
+	role_name VARCHAR(20) NOT NULL PRIMARY KEY
+);

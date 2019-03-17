@@ -1,6 +1,5 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<servlet>
-
 		<servlet-name>jeff-farm-ws Jersey Web Application</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		<init-param>
@@ -40,5 +39,25 @@
 		<res-type>${resource.data.source.type}</res-type>
 		<res-auth>${resource.data.source.auth}</res-auth>
 	</resource-ref>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>farms</web-resource-name>
+			<url-pattern>/farms/*</url-pattern>
+<!--			<http-method>POST</http-method>
+			<http-method>GET</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>-->
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>user</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<security-role>
+		<role-name>user</role-name>
+	</security-role>
 
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
 </web-app>

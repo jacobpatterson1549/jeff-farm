@@ -11,5 +11,22 @@
 	          password="${jdbc.password}"
 	          driverClassName="${jdbc.driver.class.name}"
 	          url="${jdbc.url}"/>
-
+	
+	<Realm className="org.apache.catalina.realm.LockOutRealm"
+		   failureCount="5"
+		   lockOutTime="300">
+		<Realm className="org.apache.catalina.realm.JDBCRealm"
+			   debug="99"
+			   driverName="${jdbc.driver.class.name}"
+		       resourceName="${resource.data.source.name}"
+			   connectionURL="${jdbc.url}"
+			   connectionName="${jdbc.username}"
+			   connectionPassword="${jdbc.password}"
+			   userTable="users"
+			   userNameCol="user_name"
+			   userCredCol="user_password"
+			   userRoleTable="user_roles"
+			   roleNameCol="role_name"/>
+	</Realm>
+	
 </Context>
