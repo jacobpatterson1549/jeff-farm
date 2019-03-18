@@ -1,7 +1,6 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.model.User;
-import java.security.Principal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -11,7 +10,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import javax.ws.rs.core.Context;
 import org.springframework.jdbc.core.RowMapper;
@@ -28,11 +26,7 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 	
 	public void login(User user) throws ServletException
 	{
-		Principal userPrincipal1 = httpServletRequest.getUserPrincipal();
 		httpServletRequest.login(user.getUserName(), user.getPassword());
-		Principal userPrincipal2 = httpServletRequest.getUserPrincipal();
-		HttpSession session = httpServletRequest.getSession();
-		System.out.println(session.getId());
 	}
 	
 	public void logout()

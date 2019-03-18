@@ -18,7 +18,6 @@ public class UserTest
 		User user = new User(id, userName, password, firstName, lastName, null, null);
 		
 		String serializedUser = OBJECT_MAPPER.writeValueAsString(user);
-		System.out.println(serializedUser);
 
 		assertEquals(true, serializedUser.contains("id"));
 		assertEquals(true, serializedUser.contains("userName"));
