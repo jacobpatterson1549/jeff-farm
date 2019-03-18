@@ -39,25 +39,26 @@
 		<res-type>${resource.data.source.type}</res-type>
 		<res-auth>${resource.data.source.auth}</res-auth>
 	</resource-ref>
-	
+
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>farms</web-resource-name>
 			<url-pattern>/farms/*</url-pattern>
-<!--			<http-method>POST</http-method>
+			<url-pattern>/user/*</url-pattern>
+			<http-method>POST</http-method>
 			<http-method>GET</http-method>
 			<http-method>PUT</http-method>
-			<http-method>DELETE</http-method>-->
+			<http-method>DELETE</http-method>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>user</role-name>
 		</auth-constraint>
+		<!--		<user-data-constraint>  FOR HTTPS SSL/TLS
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>-->
 	</security-constraint>
 	<security-role>
 		<role-name>user</role-name>
 	</security-role>
 
-	<login-config>
-		<auth-method>BASIC</auth-method>
-	</login-config>
 </web-app>

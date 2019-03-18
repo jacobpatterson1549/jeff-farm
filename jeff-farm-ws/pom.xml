@@ -156,6 +156,7 @@
 						<!--Order of files matters for foreign key constraints.-->
 						<srcFile>${project.basedir}/src/main/sql/tables/users.sql</srcFile>
 						<srcFile>${project.basedir}/src/main/sql/tables/roles.sql</srcFile>
+						<srcFile>${project.basedir}/src/main/sql/tables/tomcat_sessions.sql</srcFile>
 						<srcFile>${project.basedir}/src/main/sql/tables/user_roles.sql</srcFile>
 						<srcFile>${project.basedir}/src/main/sql/tables/farms.sql</srcFile>
 						<srcFile>${project.basedir}/src/main/sql/tables/hives.sql</srcFile>
@@ -213,6 +214,11 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+		</dependency>
 		<dependency>
 			<!--org.glassfish.jersey.servlet.ServletContainer-->
 			<groupId>org.glassfish.jersey.containers</groupId>

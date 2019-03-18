@@ -13,6 +13,8 @@ public class ApplicationConfig extends Application
 	public Set<Class<?>> getClasses()
 	{
 		Set<Class<?>> resources = new HashSet<>();
+		resources.add(LoginResource.class);
+		resources.add(UserResource.class);
 		resources.add(RootResource.class);
 		resources.add(FarmResource.class);
 		resources.add(HiveResource.class);

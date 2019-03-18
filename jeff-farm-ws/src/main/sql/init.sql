@@ -8,3 +8,6 @@ GRANT ALL PRIVILEGES ON JEFF_FARM_DB.* TO 'fred'@'localhost' WITH GRANT OPTION;
 -- wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java_8.0.15-1ubuntu18.04_all.deb
 -- sudo dpkg -i mysql-connector-java_8.0.15-1ubuntu18.04_all.deb || sudo -k
 -- ./asadmin add-library /usr/share/java/mysql-connector-java-8.0.15.jar
+
+-- SETUP:
+INSERT IGNORE INTO roles (role_name) VALUES ('user');

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/jeff-farm-ws">
 
-    <Resource name="${resource.data.source.name}"
-	          auth="${resource.data.source.auth}"
-	          type="${resource.data.source.type}"
-	          maxTotal="100"
-	          maxIdle="30"
-	          maxWaitMillis="10000"
-	          username="${jdbc.username}"
-	          password="${jdbc.password}"
-	          driverClassName="${jdbc.driver.class.name}"
-	          url="${jdbc.url}"/>
+	<Resource name="${resource.data.source.name}"
+		      auth="${resource.data.source.auth}"
+		      type="${resource.data.source.type}"
+		      maxTotal="100"
+		      maxIdle="30"
+		      maxWaitMillis="10000"
+		      username="${jdbc.username}"
+		      password="${jdbc.password}"
+		      driverClassName="${jdbc.driver.class.name}"
+		      url="${jdbc.url}"/>
 	
 	<Realm className="org.apache.catalina.realm.LockOutRealm"
 		   failureCount="5"
@@ -18,7 +18,7 @@
 		<Realm className="org.apache.catalina.realm.JDBCRealm"
 			   debug="99"
 			   driverName="${jdbc.driver.class.name}"
-		       resourceName="${resource.data.source.name}"
+			   resourceName="${resource.data.source.name}"
 			   connectionURL="${jdbc.url}"
 			   connectionName="${jdbc.username}"
 			   connectionPassword="${jdbc.password}"

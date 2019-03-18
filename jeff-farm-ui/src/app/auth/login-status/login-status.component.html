@@ -1,0 +1,5 @@
+<p>
+  <button (click)="viewAccount()" *ngIf="authService.isLoggedIn">View Account</button>
+  <button (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
+  <button routerLink="/login" *ngIf="!authService.isLoggedIn">Login</button>
+</p>

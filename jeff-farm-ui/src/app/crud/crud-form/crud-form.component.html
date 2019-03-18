@@ -9,6 +9,7 @@
           <!-- TODO: make/utilize fancy star picker directive -->
           <input [name]="formItem.name" *ngSwitchCase="formItemType.Stars" type="number" min="1" max="5" required [(ngModel)]="formItem.value">
           <input [name]="formItem.name" *ngSwitchCase="formItemType.Color" type="color" required [(ngModel)]="formItem.value">
+          <!-- TODO: Type password twice! (read documentation)-->
           <span  *ngSwitchDefault>[Unknown editor type]</span>
       </div>
     </div>
