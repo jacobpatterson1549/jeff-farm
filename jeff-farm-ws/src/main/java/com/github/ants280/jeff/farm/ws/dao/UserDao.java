@@ -10,41 +10,50 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import javax.ws.rs.core.Context;
 import org.springframework.jdbc.core.RowMapper;
 
 public class UserDao extends StoredProcedureDao implements CrudDao<User>
 {
-	@Context private HttpServletRequest httpServletRequest;
-	
+	@Context
+	private HttpServletRequest httpServletRequest;
+
 	@Inject
 	public UserDao(DataSource dataSource)
 	{
 		super(dataSource);
 	}
-	
+
 	public void login(User user) throws ServletException
 	{
 		httpServletRequest.login(user.getUserName(), user.getPassword());
+
+		User dbUser = getUser();
+		HttpSession session = httpServletRequest.getSession();
+		session.setAttribute("userId", dbUser.getId());
 	}
-	
+
 	public void logout()
 	{
 		httpServletRequest.getSession().invalidate();
 	}
-	
+
 	public String getContextUserName()
 	{
 		httpServletRequest.getSession().getId();
 		String username = httpServletRequest.getUserPrincipal().getName();
 		return username;
 	}
-	
+
 	public User getUser()
 	{
-		String userName = getContextUserName();
-		
+		return this.getUser(getContextUserName());
+	}
+
+	private User getUser(String userName)
+	{
 		return this.executeRead(
 				"read_user",
 				Collections.singletonList(
@@ -55,29 +64,30 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 	@Override
 	public int create(User user)
 	{
-		String userName = getContextUserName();
-		
 		return this.executeCreate(
 				"create_user",
-				Collections.singletonList(
-						new Parameter<>(User.USER_NAME_COLUMN, userName, Types.VARCHAR)),
+				Arrays.asList(
+						new Parameter<>(User.USER_NAME_COLUMN, user.getUserName(), Types.VARCHAR),
+						new Parameter<>(User.PASSWORD_COLUMN, user.getPassword(), Types.VARCHAR),
+						new Parameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
+						new Parameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)),
 				User.ID_COLUMN);
 	}
-	
+
 	@Override
 	public User read(int id)
 	{
 		User user = this.getUser();
-		
+
 		if (user.getId() != id)
 		{
 			throw new IllegalArgumentException(String.format(
 					"Cannot read user other than your own (id= %d).  "
-							+ "Requested id=%d.",
+					+ "Requested id=%d.",
 					user.getId(),
 					id));
 		}
-		
+
 		return user;
 	}
 
@@ -91,7 +101,7 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 	public void update(User user)
 	{
 		String userName = getContextUserName();
-		
+
 		if (userName == null
 				|| user == null
 				|| userName.equals(user.getUserName()))
@@ -101,17 +111,33 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 					user == null ? "" : user.getUserName(),
 					userName));
 		}
-		
-		this.executeUpdate("update_user", Arrays.asList(
-			new Parameter<>(User.USER_NAME_COLUMN, user.getUserName(), Types.VARCHAR),
-			new Parameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
-			new Parameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)));
+
+		this.executeUpdate(
+				"update_user",
+				Arrays.asList(
+						new Parameter<>(User.USER_NAME_COLUMN, user.getUserName(), Types.VARCHAR),
+						new Parameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
+						new Parameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)));
 	}
 
 	@Override
 	public void delete(int id)
 	{
-		throw new UnsupportedOperationException("Not supported yet."); // TODO: Implement delete(UserId)
+		User user = this.getUser();
+
+		if (user.getId() != id)
+		{
+			throw new IllegalArgumentException(String.format(
+					"Cannot read user other than your own (id= %d).  "
+					+ "Requested id=%d.",
+					user.getId(),
+					id));
+		}
+
+		this.executeUpdate(
+				"delete_user",
+				Collections.singletonList(
+						new Parameter<>(User.ID_COLUMN, user.getId(), Types.INTEGER)));
 	}
 
 	@Override
@@ -119,7 +145,7 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 	{
 		return true;
 	}
-	
+
 	public static class ResultSetExtractor implements RowMapper<User>
 	{
 		@Override
