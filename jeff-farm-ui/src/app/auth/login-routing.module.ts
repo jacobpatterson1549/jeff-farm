@@ -8,7 +8,11 @@ const routes: Routes = [
     {
         path: '',
         children: [
-            { path: 'create', component: CrudFormComponent },
+            {
+                path: 'create',
+                component: CrudFormComponent,
+                data: { redirectToParent: true },
+            },
             { path: '', component: LoginComponent },            
         ],
     }

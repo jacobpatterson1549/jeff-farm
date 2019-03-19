@@ -8,6 +8,7 @@ import { CrudService } from '../crud.service';
 import { CrudItem } from '../crud.item';
 import { FormType } from '../form.type';
 import { FormItem, FormItemType } from '../form.item';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'crud-form',
@@ -108,7 +109,10 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
 
     if (this.formType == FormType.Create) {
       this.crudService.post(this.crudItem)
-        .subscribe((id: Number) => this.router.navigate([`../${id}`], { relativeTo: this.route }) );
+        .subscribe((id: Number) => {
+          const relativeLocation: string = (this.route.data && !this.route.data['redirectToParent']) ? '..' : `../${id}`;
+          this.router.navigate([relativeLocation], { relativeTo: this.route });
+        });
     }
     if (this.formType == FormType.Update) {
       this.crudService.put(this.crudItem)
