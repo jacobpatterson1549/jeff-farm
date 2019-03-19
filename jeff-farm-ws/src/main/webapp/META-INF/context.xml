@@ -2,15 +2,15 @@
 <Context path="/jeff-farm-ws">
 
 	<Resource name="${resource.data.source.name}"
-		      auth="${resource.data.source.auth}"
-		      type="${resource.data.source.type}"
-		      maxTotal="100"
-		      maxIdle="30"
-		      maxWaitMillis="10000"
-		      username="${jdbc.username}"
-		      password="${jdbc.password}"
-		      driverClassName="${jdbc.driver.class.name}"
-		      url="${jdbc.url}"/>
+			  auth="${resource.data.source.auth}"
+			  type="${resource.data.source.type}"
+			  maxTotal="100"
+			  maxIdle="30"
+			  maxWaitMillis="10000"
+			  username="${jdbc.username}"
+			  password="${jdbc.password}"
+			  driverClassName="${jdbc.driver.class.name}"
+			  url="${jdbc.url}"/>
 	
 	<Realm className="org.apache.catalina.realm.LockOutRealm"
 		   failureCount="5"
@@ -28,5 +28,22 @@
 			   userRoleTable="user_roles"
 			   roleNameCol="role_name"/>
 	</Realm>
+
+
+	<Manager className="org.apache.catalina.session.PersistentManager">
+		<Store className="org.apache.catalina.session.JDBCStore"
+			   driverName="${jdbc.driver.class.name}"
+			   resourceName="${resource.data.source.name}"
+			   connectionURL="${jdbc.url}"
+			   connectionName="${jdbc.username}"
+			   connectionPassword="${jdbc.password}"
+			   sessionAppCol="app_name"
+			   sessionDataCol="session_data"
+			   sessionIdCol="session_id"
+			   sessionLastAccessedCol="last_access"
+			   sessionMaxInactiveCol="max_inactive"
+			   sessionTable="tomcat_sessions"
+			   sessionValidCol="valid_session"/>
+	</Manager>
 	
 </Context>
