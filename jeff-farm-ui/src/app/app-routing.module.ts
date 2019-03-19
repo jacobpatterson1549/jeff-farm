@@ -8,7 +8,7 @@ import { LoginComponent } from './auth/login/login.component';
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    loadChildren: './auth/auth.module#AuthModule',
   },
   {
     path: 'user',
@@ -30,7 +30,7 @@ const routes: Routes = [
     loadChildren: './farms/farms.module#FarmsModule',
     canActivate: [AuthGuard],
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/farms', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 

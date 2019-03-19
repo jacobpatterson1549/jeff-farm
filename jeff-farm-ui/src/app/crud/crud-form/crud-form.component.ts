@@ -21,6 +21,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   formItems: FormItem[];
   submitValue: string;
   formItemType = FormItemType; // used for the ngSwitch in the template
+  passwordFormItems: FormItem[];
 
   constructor(
     private router: Router,
@@ -31,7 +32,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
     this.initFormType();
     this.submitValue = (this.formType === FormType.Update) ? 'Update' : 'Submit';
     this.initCrudItem()
-      .subscribe(_ => this.formItems = this.crudItem.getFormItems());
+      .subscribe(_ => this.initFormItems());
   }
 
   private initFormType() {
@@ -59,6 +60,39 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
           tap(crudItem => this.crudItem = crudItem),
         );
     }
+  }
+
+  private initFormItems() {
+    this.formItems = this.crudItem.getFormItems();
+
+    this.passwordFormItems = [];
+    for (var index = 0; index < this.formItems.length; index++) {
+
+      const formItem: FormItem = this.formItems[index];
+
+      if (formItem.type == FormItemType.Password) {
+
+        const formItem2: FormItem = new FormItem(formItem.name + ' (Verify)', formItem.type, formItem.value);
+
+        index++;
+        this.formItems.splice(index, 0, formItem2);
+
+        this.passwordFormItems.push(formItem, formItem2);
+      }
+    }
+  }
+
+  passwordsMatch(): boolean {
+
+    for (var index = 0; index < this.passwordFormItems.length; index += 2) {
+
+      if (this.passwordFormItems[index].value != this.passwordFormItems[index + 1].value) {
+
+        return false;
+      }
+    }
+    
+    return true;
   }
 
   submitForm() {

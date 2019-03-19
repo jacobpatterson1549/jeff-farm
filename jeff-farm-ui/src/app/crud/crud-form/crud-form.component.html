@@ -9,11 +9,12 @@
           <!-- TODO: make/utilize fancy star picker directive -->
           <input [name]="formItem.name" *ngSwitchCase="formItemType.Stars" type="number" min="1" max="5" required [(ngModel)]="formItem.value">
           <input [name]="formItem.name" *ngSwitchCase="formItemType.Color" type="color" required [(ngModel)]="formItem.value">
-          <!-- TODO: Type password twice! (read documentation)-->
+          <input [name]="formItem.name" *ngSwitchCase="formItemType.Password" type="password" required [(ngModel)]="formItem.value">
           <span  *ngSwitchDefault>[Unknown editor type]</span>
       </div>
     </div>
-    <button type="submit">{{submitValue}}</button>
+    <span *ngIf="!passwordsMatch()">Passwords must match</span>
+    <button [disabled]="!passwordsMatch()" type="submit">{{submitValue}}</button>
   </form>
 </div>
 <app-navigation></app-navigation>
