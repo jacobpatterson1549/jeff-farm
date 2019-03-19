@@ -1,6 +1,6 @@
 -- DELIMITER $$
 
-DROP PROCEDURE IF EXISTS delete_user$
+DROP PROCEDURE IF EXISTS delete_user$$
 
 CREATE PROCEDURE delete_user (
 	IN id INT)

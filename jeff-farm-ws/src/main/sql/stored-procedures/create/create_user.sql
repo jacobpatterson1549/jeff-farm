@@ -5,7 +5,7 @@ DROP PROCEDURE IF EXISTS create_user$$
 CREATE PROCEDURE create_user (
 	IN user_name VARCHAR(20),
 	IN first_name VARCHAR(255),
-	IN last_name VARCHAR(255))
+	IN last_name VARCHAR(255),
 	OUT id INT)
 
 	BEGIN
