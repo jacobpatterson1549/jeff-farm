@@ -50,4 +50,14 @@ public class LoginResource
 					.entity(ex.getMessage()).build();
 		}
 	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("create")
+	public Response createUser(User user)
+	{
+		int id = userDao.create(user);
+
+		return Response.ok(id).build();
+	}
 }

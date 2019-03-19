@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -23,15 +22,6 @@ public class UserResource
 	public UserResource(UserDao userDao)
 	{
 		this.userDao = userDao;
-	}
-
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createUser(User user)
-	{
-		int id = userDao.create(user);
-
-		return Response.ok(id).build();
 	}
 
 	@GET
