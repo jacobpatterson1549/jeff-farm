@@ -6,12 +6,12 @@
 
   <div>
     <label for="username">Username</label>
-    <input name="username" type="text" required [(ngModel)]="username">
+    <input name="username" type="text" autocomplete="username" required [(ngModel)]="username">
   </div>
 
   <div>
     <label for="password">Password</label>
-    <input name="password" type="password" autocomplete="password" required [(ngModel)]="password">
+    <input name="password" type="password" autocomplete="current-password" required [(ngModel)]="password">
   </div>
 
   <button type="submit">Submit</button>
