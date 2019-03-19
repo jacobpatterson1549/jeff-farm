@@ -16,7 +16,7 @@ export class User extends CrudItem {
         return [
             new FormItem('userName', FormItemType.String, this.userName),
             new FormItem('password', FormItemType.Password, this.password),
-            new FormItem('lastName', FormItemType.String, this.firstName),
+            new FormItem('firstName', FormItemType.String, this.firstName),
             new FormItem('lastname', FormItemType.String, this.lastName),            
         ];
     }
