@@ -27,12 +27,12 @@ public class LoginResource
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createUser(User user)
+	public Response loginUser(User user)
 	{
 		try
 		{
 			String sessionId = userDao.login(user);
-			sessionId = String.format("\"%s\"", sessionId); // TODO: this is hacky
+			sessionId = String.format("\"%s\"", sessionId); // TODO: hack to convert string to json
 			
 			return Response.ok(sessionId).build();
 		}
