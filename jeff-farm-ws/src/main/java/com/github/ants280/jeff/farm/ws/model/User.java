@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 public class User extends CrudItem
 {
 	public static final String USER_NAME_COLUMN = "user_name";
-	public static final String PASSWORD_COLUMN = "password";
+	public static final String PASSWORD_COLUMN = "user_password";
 	public static final String FIRST_NAME_COLUMN = "first_name";
 	public static final String LAST_NAME_COLUMN = "last_name";
 	private final String userName;

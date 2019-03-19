@@ -91,13 +91,19 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
         return false;
       }
     }
-    
+
     return true;
   }
 
   submitForm() {
     for (let formItem of this.formItems) {
-      this.crudItem[formItem.name] = formItem.value;
+      
+      // exclude added passworditems
+      const passwordFormItemIndex = this.passwordFormItems.indexOf(formItem);
+      if (passwordFormItemIndex < 0 || passwordFormItemIndex % 2 == 0) {
+
+        this.crudItem[formItem.name] = formItem.value;
+      }
     }
 
     if (this.formType == FormType.Create) {
