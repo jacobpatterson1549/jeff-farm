@@ -25,6 +25,8 @@ export class LoginComponent {
 
   submitForm() {
     this.authService.login(this.username, this.password)
-      .subscribe(_ => this.router.navigate(['/farms']));
+      .subscribe(sessionId => {
+         this.router.navigate(['/farms']);
+      });
   }
 }

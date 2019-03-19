@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -25,11 +26,15 @@ public class LoginResource
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response createUser(User user)
 	{
 		try
 		{
-			userDao.login(user);
+			String sessionId = userDao.login(user);
+			sessionId = String.format("\"%s\"", sessionId); // TODO: this is hacky
+			
+			return Response.ok(sessionId).build();
 		}
 		catch (ServletException ex)
 		{
@@ -44,7 +49,5 @@ public class LoginResource
 			return Response.status(Response.Status.BAD_REQUEST)
 					.entity(ex.getMessage()).build();
 		}
-
-		return Response.ok().build();
 	}
 }

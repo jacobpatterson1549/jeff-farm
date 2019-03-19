@@ -26,13 +26,13 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 		super(dataSource);
 	}
 
-	public void login(User user) throws ServletException
+	public String login(User user) throws ServletException
 	{
 		httpServletRequest.login(user.getUserName(), user.getPassword());
 
-		User dbUser = getUser();
 		HttpSession session = httpServletRequest.getSession();
-		session.setAttribute("userId", dbUser.getId());
+		session.setAttribute("userId", this.getUser().getId());
+		return session.getId();
 	}
 
 	public void logout()
