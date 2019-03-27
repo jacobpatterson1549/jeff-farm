@@ -153,10 +153,11 @@
 						<srcFile>${project.basedir}/src/main/sql/tables/hive_inspections.sql</srcFile>
 					</srcFiles>
 					<fileset>
-						<basedir>${project.basedir}/src/main/sql/audit-trigger-tables/</basedir>
-					</fileset>
-					<fileset>
-						<basedir>${project.basedir}/src/main/sql/stored-procedures/</basedir>
+						<basedir>${project.basedir}/src/main/sql</basedir>
+						<includes>
+							<include>audit-trigger-tables/*.sql</include>
+							<include>stored-procedures/**/*.sql</include>
+						</includes>
 					</fileset>
 				</configuration>
 			</plugin>
