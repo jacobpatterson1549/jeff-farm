@@ -22,7 +22,7 @@ export class LoginStatusComponent {
   logout() {
 
     this.authService.logout()
-    this.router.navigate(['/login']);
+    .subscribe(_ => this.router.navigate(['/login']));
   }
 
   isOnLoginPage() {

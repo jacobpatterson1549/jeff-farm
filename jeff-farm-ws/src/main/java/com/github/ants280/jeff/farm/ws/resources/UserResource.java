@@ -68,6 +68,7 @@ public class UserResource
 	public Response canDeleteUser()
 	{
 		userDao.logout();
+
 		return Response.ok().build();
 	}
 }

@@ -40,21 +40,23 @@ export class AuthService {
         );
   }
 
-  logout(): void {
+  logout(): Observable<any> {
 
-    if (!this.isLoggedIn) {
+    if (this.isLoggedIn) {
 
-    this.httpClient.get<any>('http://localhost:8080/jeff-farm-ws/user/logout')
-      .pipe(
-        catchError((error: HttpErrorResponse)  => {
-          return throwError('error');
-        }),
-        tap(result => {
-          this.isLoggedIn = false;
-          this.sessionId = null;
-        })
-      );
-    // TODO: invalidate session [and saved session id]
+      return this.httpClient.get<any>('http://localhost:8080/jeff-farm-ws/user/logout')
+        .pipe(
+          catchError((error: HttpErrorResponse)  => {
+            return throwError('error');
+          }),
+          tap(result => {
+            this.isLoggedIn = false;
+            this.sessionId = null;
+            // TODO: invalidate session [and saved session id]
+          })
+        );
     }
+
+    return of();
   }
 }
