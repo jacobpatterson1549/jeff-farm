@@ -9,15 +9,13 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent {
 
-  private username: string; // TODO: auto-fill if recently logged out (fetch query param in OnInit{})
+  private username: string;
   private password: string;
 
   constructor(
       private authService: AuthService,
       private router: Router) {
 
-    this.username = 'jacob';
-    this.password = 'password1';
     if (authService.isLoggedIn) {
       router.navigate(['/user']);
     }
