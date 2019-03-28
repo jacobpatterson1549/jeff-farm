@@ -22,7 +22,10 @@ export class AuthInterceptor implements HttpInterceptor {
             // const clonedRequest = req.clone({ headers: req.headers.set('Set-Cookie', 'jsessionid=' + this.authService.sessionId) });
             // return next.handle(clonedRequest);
             const authToken = this.authService.sessionId;
-            const authReq = req.clone({ setHeaders: { Authorization: authToken } });
+            // const authReq = req.clone({ setHeaders: { Authorization: authToken } });
+            const authReq = req.clone({ setHeaders: { Authorization: authToken }, withCredentials: true });
+            // const authReq = req.clone({ headers: req.headers.set('Set-Cookie', 'jsessionid=' + authToken) });
+
             return next.handle(authReq);
         }
         else {

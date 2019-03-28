@@ -11,8 +11,12 @@ import { CrudFormComponent } from './crud-form/crud-form.component';
 
 import { CrudRoutingModule } from './crud-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { httpInterceptorProviders } from '../http-interceptors';
 
 @NgModule({
+  providers: [
+    httpInterceptorProviders
+  ],
   declarations: [
     NavigationComponent,
     CrudHomeComponent,
@@ -24,7 +28,6 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule,
     CrudRoutingModule,
   ],
   exports: [
