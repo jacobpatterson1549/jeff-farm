@@ -1,6 +1,7 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.model.User;
+import java.security.Principal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -43,7 +44,8 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 	public String getContextUserName()
 	{
 		httpServletRequest.getSession().getId();
-		String username = httpServletRequest.getUserPrincipal().getName();
+		Principal userPrincipal = httpServletRequest.getUserPrincipal();
+		String username = userPrincipal.getName();
 		return username;
 	}
 
