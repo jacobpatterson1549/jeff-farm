@@ -52,9 +52,8 @@ export class AuthService {
 
   logout(): Observable<any> {
 
-    if (this.isLoggedIn) {
-
-      return this.httpClient.get<any>('http://localhost:8080/jeff-farm-ws/user/logout')
+    return this.isLoggedIn
+      ? this.httpClient.get<any>('http://localhost:8080/jeff-farm-ws/user/logout')
         .pipe(
           catchError((error: HttpErrorResponse)  => {
             return throwError('error');
@@ -65,9 +64,7 @@ export class AuthService {
 
             localStorage.removeItem(this.SESSION_ID_KEY);
           })
-        );
-    }
-
-    return of();
+        )
+      : of();
   }
 }
