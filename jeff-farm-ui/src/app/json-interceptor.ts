@@ -7,10 +7,7 @@ export class JsonInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        const jsonReq = req.clone({ setHeaders: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'http://localhost:8080/jeff-farm-ws',
-         } });
+        const jsonReq = req.clone({ setHeaders: { 'Content-Type': 'application/json' } });
 
         return next.handle(jsonReq);
     }
