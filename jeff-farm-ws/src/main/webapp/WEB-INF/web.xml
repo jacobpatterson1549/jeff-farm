@@ -1,7 +1,7 @@
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+		 version="4.0">
 	<servlet>
 		<servlet-name>jeff-farm-ws Jersey Web Application</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
@@ -24,12 +24,24 @@
 			<param-value>http://localhost:4200</param-value>
 		</init-param>
 		<init-param>
-			<param-name>cors.allowed.headers</param-name> <!-- allowing Access-Control-Allow-Origin-->
-			<param-value>Access-Control-Allow-Origin, Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers</param-value>
+			<param-name>cors.allowed.methods</param-name>
+			<param-value>GET,POST,HEAD,OPTIONS,PUT,DELETE</param-value>
 		</init-param>
 		<init-param>
-			<param-name>cors.allowed.methods</param-name> <!-- allowing PUT, DELETE -->
-			<param-value>GET, POST, PUT, DELETE, OPTIONS, HEAD</param-value>
+			<param-name>cors.allowed.headers</param-name>
+			<param-value>Authorization,Access-Control-Allow-Origin,Access-Control-Allow-Credentials, Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.exposed.headers</param-name>
+			<param-value>Authorization,Access-Control-Allow-Origin,Access-Control-Allow-Credentials</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.support.credentials</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.preflight.maxage</param-name>
+			<param-value>10</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -48,22 +60,19 @@
 			<web-resource-name>farms</web-resource-name>
 			<url-pattern>/farms/*</url-pattern>
 			<url-pattern>/user/*</url-pattern>
-			<http-method>POST</http-method>
+<!--			<http-method>POST</http-method>
 			<http-method>GET</http-method>
 			<http-method>PUT</http-method>
 			<http-method>DELETE</http-method>
 			<http-method>OPTIONS</http-method>
-			<http-method>HEAD</http-method>
+			<http-method>HEAD</http-method>-->
 		</web-resource-collection>
-		<auth-constraint>
+<!--		<auth-constraint>
 			<role-name>user</role-name>
-		</auth-constraint>
-		<!--		<user-data-constraint>  FOR HTTPS SSL/TLS
-			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
-		</user-data-constraint>-->
+		</auth-constraint>-->
 	</security-constraint>
-	<security-role>
+<!--	<security-role>
 		<role-name>user</role-name>
-	</security-role>
+	</security-role>-->
 
 </web-app>

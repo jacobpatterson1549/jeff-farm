@@ -16,7 +16,6 @@
 		   failureCount="5"
 		   lockOutTime="300">
 		<Realm className="org.apache.catalina.realm.JDBCRealm"
-			   debug="99"
 			   driverName="${jdbc.driver.class.name}"
 			   resourceName="${resource.data.source.name}"
 			   connectionURL="${jdbc.url}"
