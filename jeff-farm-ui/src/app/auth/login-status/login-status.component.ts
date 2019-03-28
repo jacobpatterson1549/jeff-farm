@@ -24,4 +24,9 @@ export class LoginStatusComponent {
     this.authService.logout()
     this.router.navigate(['/login']);
   }
+
+  isOnLoginPage() {
+
+    return this.router.url == '/login';
+  }
 }

@@ -16,6 +16,7 @@ export class AuthService {
   // TODO: combine common url with crud service
   loginUrl: string = 'http://localhost:8080/jeff-farm-ws/login';
   isLoggedIn: boolean = false;
+  sessionId: string;
 
   constructor(private httpClient: HttpClient) {
     // TODO: check to see if user is logged in [and set loginUrl]
@@ -32,8 +33,8 @@ export class AuthService {
           return throwError('error');
         }),
         tap((sessionId: string) => {
-          console.log(`sessionId:${sessionId}`);
           this.isLoggedIn = true;
+          this.sessionId = sessionId;
           }), // TODO: ensure logging in with an invalid password does not trigger this
         // TODO: store session id in local storage
         );
@@ -50,6 +51,7 @@ export class AuthService {
         }),
         tap(result => {
           this.isLoggedIn = false;
+          this.sessionId = null;
         })
       );
     // TODO: invalidate session [and saved session id]
