@@ -1,7 +1,7 @@
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { tap, catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { User } from '../user/user';
 
 const httpOptions = {
@@ -17,9 +17,17 @@ export class AuthService {
   loginUrl: string = 'http://localhost:8080/jeff-farm-ws/login';
   isLoggedIn: boolean = false;
   sessionId: string;
+  private readonly SESSION_ID_KEY : string = 'JSESSIONID';
 
   constructor(private httpClient: HttpClient) {
-    // TODO: check to see if user is logged in [and set loginUrl]
+
+    const savedSessionId: string = localStorage.getItem(this.SESSION_ID_KEY);
+
+    if (savedSessionId != null && savedSessionId.length > 0) {
+
+      this.isLoggedIn = true;
+      this.sessionId = savedSessionId;
+    }
   }
 
   login(username: string, password: string): Observable<string> {
@@ -27,6 +35,7 @@ export class AuthService {
     const user: User = new User();
     user.userName = username;
     user.password = password;
+
     return this.httpClient.post<string>(this.loginUrl, user, httpOptions)
       .pipe(
         catchError((error: HttpErrorResponse)  => {
@@ -35,9 +44,10 @@ export class AuthService {
         tap((sessionId: string) => {
           this.isLoggedIn = true;
           this.sessionId = sessionId;
-          }), // TODO: ensure logging in with an invalid password does not trigger this
-        // TODO: store session id in local storage
-        );
+
+          localStorage.setItem(this.SESSION_ID_KEY, sessionId);
+        }),
+      );
   }
 
   logout(): Observable<any> {
@@ -52,7 +62,8 @@ export class AuthService {
           tap(result => {
             this.isLoggedIn = false;
             this.sessionId = null;
-            // TODO: invalidate session [and saved session id]
+
+            localStorage.removeItem(this.SESSION_ID_KEY);
           })
         );
     }
