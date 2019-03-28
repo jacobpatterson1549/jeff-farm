@@ -14,14 +14,12 @@ export class LoginStatusComponent {
 
   viewAccount() {
 
-    // TODO: Get userId (from localstorage?)
-    const id: number = 1;
-    this.router.navigate([`/user/${id}`]);
+    this.router.navigate([`/user`]);
   }
 
   logout() {
 
-    this.authService.logout()
+  this.authService.logout()
     .subscribe(_ => this.router.navigate(['/login']));
   }
 
