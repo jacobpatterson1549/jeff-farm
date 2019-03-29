@@ -28,7 +28,6 @@
 			   roleNameCol="role_name"/>
 	</Realm>
 
-
 	<Manager className="org.apache.catalina.session.PersistentManager">
 		<Store className="org.apache.catalina.session.JDBCStore"
 			   driverName="${jdbc.driver.class.name}"
