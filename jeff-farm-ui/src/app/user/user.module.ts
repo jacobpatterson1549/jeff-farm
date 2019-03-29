@@ -5,7 +5,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { UserService } from './user.service';
 import { CrudModule } from '../crud/crud.module';
 import { CrudService } from '../crud/crud.service';
-import { httpInterceptorProviders } from '../http-interceptors';
+import { GlobalProviders } from '../global-providers';
 
 @NgModule({
   providers: [
@@ -13,7 +13,7 @@ import { httpInterceptorProviders } from '../http-interceptors';
       provide: CrudService,
       useClass: UserService,
     },
-    httpInterceptorProviders
+    GlobalProviders,
   ],
   imports: [
     CommonModule,

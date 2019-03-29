@@ -58,13 +58,15 @@ export class AuthService {
           catchError((error: HttpErrorResponse)  => {
             return throwError('error');
           }),
-          tap(result => {
-            this.isLoggedIn = false;
-            this.sessionId = null;
-
-            localStorage.removeItem(this.SESSION_ID_KEY);
-          })
+          tap(this.clearCredentials)
         )
       : of();
+  }
+
+  clearCredentials() {
+    this.isLoggedIn = false;
+    this.sessionId = null;
+
+    localStorage.removeItem(this.SESSION_ID_KEY);
   }
 }

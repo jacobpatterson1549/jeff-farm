@@ -39,10 +39,7 @@ export abstract class CrudService<T extends CrudItem> {
   }
 
   post(t: T): Observable<Number> {
-    return this.http.post<Number>(this.genBaseUrl(), t)
-      .pipe(
-        catchError(this.handleError),
-        );
+    return this.http.post<Number>(this.genBaseUrl(), t);
   }
 
   get(): Observable<T> {
@@ -50,7 +47,6 @@ export abstract class CrudService<T extends CrudItem> {
     return this.http.get<T>(url)
       .pipe(
         map((data: T) => Object.assign(this.createCrudItem(), data)),
-        catchError(this.handleError),
         );
   }
 
@@ -59,36 +55,21 @@ export abstract class CrudService<T extends CrudItem> {
       .pipe(
         map((dataList: T[]) => dataList
           .map(data => Object.assign(this.createCrudItem(), data))),
-        catchError(this.handleError),
         );
   }
 
   put(t: T): Observable<Object> {
-    return this.http.put(this.genBaseUrl(), t)
-      .pipe(
-        catchError(this.handleError),
-        );
+    return this.http.put(this.genBaseUrl(), t);
   }
 
   delete(): Observable<Object> {
     const url = `${this.genBaseUrl()}/${this.getId()}`;
-    return this.http.delete(url)
-      .pipe(
-        catchError(this.handleError),
-        );
+    return this.http.delete(url);
   }
 
   canDelete(): Observable<boolean> {
     const url = `${this.genBaseUrl()}/${this.getId()}/canDelete`;
-    return this.http.get<boolean>(url)
-      .pipe(
-        catchError(this.handleError),
-      );
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    alert(error.message);
-    return throwError('error');
+    return this.http.get<boolean>(url);
   }
 
   protected getRouteParam(paramName: string): string {

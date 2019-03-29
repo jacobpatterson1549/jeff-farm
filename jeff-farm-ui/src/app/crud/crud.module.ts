@@ -11,11 +11,11 @@ import { CrudFormComponent } from './crud-form/crud-form.component';
 
 import { CrudRoutingModule } from './crud-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { httpInterceptorProviders } from '../http-interceptors';
+import { GlobalProviders } from '../global-providers';
 
 @NgModule({
   providers: [
-    httpInterceptorProviders
+    GlobalProviders,
   ],
   declarations: [
     NavigationComponent,

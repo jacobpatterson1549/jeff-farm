@@ -26,7 +26,7 @@ public class LoginDao
 		
 		User actualUser = userDao.read(user.getUserName());
 
-		HttpSession session = httpServletRequest.getSession();
+		HttpSession session = httpServletRequest.getSession(true);
 		
 		session.setAttribute(USER_ID_SESSION_ATTRIBUTE, actualUser.getId());
 		
@@ -37,12 +37,10 @@ public class LoginDao
 	{
 		HttpSession session = httpServletRequest.getSession(false);
 		
-		if (session == null)
+		if (session != null)
 		{
-			throw new IllegalArgumentException("No Session");
+			session.invalidate();
 		}
-		
-		session.invalidate();
 	}
 	
 	public int getUserId()

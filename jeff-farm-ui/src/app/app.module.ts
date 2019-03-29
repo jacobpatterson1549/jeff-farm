@@ -5,14 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { AuthModule } from './auth/auth.module';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthInterceptor } from './auth/auth-interceptor';
-import { JsonInterceptor } from './json-interceptor';
+import { HttpClientModule } from '@angular/common/http';
+import { GlobalProviders } from './global-providers';
 
 @NgModule({
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: JsonInterceptor, multi: true },
+    GlobalProviders
   ],
   declarations: [
     AppComponent,

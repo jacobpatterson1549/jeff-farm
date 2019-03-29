@@ -34,10 +34,14 @@ public class LoginResource
 	{
 		try
 		{
-			String loginId = loginDao.login(user);
-			loginId = String.format("\"%s\"", loginId); // TODO: hack to convert string to json
+			String sessionId = loginDao.login(user);
 			
-			return Response.ok(loginId).build();
+			return Response
+					.ok(sessionId == null
+							? null
+							// TODO: hack to convert string to json:
+							: String.format("\"%s\"", sessionId))
+					.build();
 		}
 		catch (ServletException ex)
 		{
