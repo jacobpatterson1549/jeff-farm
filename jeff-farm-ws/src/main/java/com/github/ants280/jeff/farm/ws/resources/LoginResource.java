@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
+import com.github.ants280.jeff.farm.ws.dao.LoginDao;
 import com.github.ants280.jeff.farm.ws.dao.UserDao;
 import com.github.ants280.jeff.farm.ws.model.User;
 import java.util.logging.Level;
@@ -16,25 +17,27 @@ import javax.ws.rs.core.Response;
 @Path("/login")
 public class LoginResource
 {
+	private final LoginDao loginDao;
 	private final UserDao userDao;
 
 	@Inject
-	public LoginResource(UserDao userDao)
+	public LoginResource(LoginDao loginDao, UserDao userDao)
 	{
+		this.loginDao = loginDao;
 		this.userDao = userDao;
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response loginUser(User user)
+	public Response login(User user)
 	{
 		try
 		{
-			String sessionId = userDao.login(user);
-			sessionId = String.format("\"%s\"", sessionId); // TODO: hack to convert string to json
+			String loginId = loginDao.login(user);
+			loginId = String.format("\"%s\"", loginId); // TODO: hack to convert string to json
 			
-			return Response.ok(sessionId).build();
+			return Response.ok(loginId).build();
 		}
 		catch (ServletException ex)
 		{
@@ -42,7 +45,7 @@ public class LoginResource
 					.log(
 							Level.SEVERE,
 							String.format(
-									"Could not log in as username = '%s'",
+									"Could not log in as userName = '%s'",
 									user == null ? "" : user.getUserName()),
 							ex);
 			
@@ -57,7 +60,10 @@ public class LoginResource
 	public Response createUser(User user)
 	{
 		int id = userDao.create(user);
+		
+		Logger.getLogger(this.getClass().getName())
+				.log(Level.INFO, "Created User id={0}", id);
 
-		return Response.ok(id).build();
+		return Response.ok().build();
 	}
 }

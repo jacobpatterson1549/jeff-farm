@@ -17,8 +17,8 @@ import { httpInterceptorProviders } from '../http-interceptors';
   ],
   imports: [
     CommonModule,
+    UserRoutingModule,
     CrudModule,
-    UserRoutingModule
   ]
 })
 export class UserModule { }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CrudService, CrudChild } from '../crud/crud.service';
 import { User } from './user';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable()
@@ -31,5 +31,9 @@ export class UserService extends CrudService<User> {
 
   getList(): Observable<User[]> {
     throw new Error('Not Allowed');
+  }
+
+  canDelete(): Observable<boolean> {
+    return of(true);
   }
 }

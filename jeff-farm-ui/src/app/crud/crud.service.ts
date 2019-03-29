@@ -96,8 +96,7 @@ export abstract class CrudService<T extends CrudItem> {
     return param;
   }
 
-  getId(): number {
-    return +this.getRouteParam('id');
-    // return this.navigationService.getRouteParam('id');
+  getId(): string {
+    return this.getRouteParam('id') || '';
   }
 }

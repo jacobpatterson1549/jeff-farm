@@ -3,7 +3,7 @@
 DROP PROCEDURE IF EXISTS update_user$$
 
 CREATE PROCEDURE update_user (
-	IN user_name VARCHAR(20),
+	IN id INT,
 	IN first_name VARCHAR(255),
 	IN last_name VARCHAR(255))
 
@@ -11,7 +11,7 @@ CREATE PROCEDURE update_user (
 		UPDATE users AS u
 		SET u.first_name = first_name,
 			u.last_name = last_name
-		WHERE u.user_name = user_name;
+		WHERE u.id = id;
 	END$$
 
 -- DELIMITER ;

@@ -1,6 +1,6 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
-import com.github.ants280.jeff.farm.ws.dao.UserDao;
+import com.github.ants280.jeff.farm.ws.dao.LoginDao;
 import com.github.ants280.jeff.farm.ws.model.User;
 import javax.servlet.ServletException;
 import javax.ws.rs.core.Response;
@@ -14,12 +14,12 @@ public class LoginResourceTest
 	public void testLoginUser_returnsSessionIdAsJson() throws ServletException
 	{
 		String sessionId = "sessionId";
-		UserDao mockUserDao = Mockito.mock(UserDao.class);
+		LoginDao mockSessionDao = Mockito.mock(LoginDao.class);
 		User mockUser = Mockito.mock(User.class);
-		Mockito.when(mockUserDao.login(mockUser)).thenReturn(sessionId);
-		LoginResource loginResource = new LoginResource(mockUserDao);
+		Mockito.when(mockSessionDao.login(mockUser)).thenReturn(sessionId);
+		LoginResource loginResource = new LoginResource(mockSessionDao, null);
 		
-		Response response = loginResource.loginUser(mockUser);
+		Response response = loginResource.login(mockUser);
 		
 		Object entity = response.getEntity();
 		String expectedEntity = "\"sessionId\"";

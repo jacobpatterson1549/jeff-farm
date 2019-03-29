@@ -1,9 +1,9 @@
 --DELIMITER $$
 
-DROP PROCEDURE IF EXISTS read_user$$
+DROP PROCEDURE IF EXISTS read_user_from_user_name$$
 
-CREATE PROCEDURE read_user (
-	IN id INT)
+CREATE PROCEDURE read_user_from_user_name (
+	IN user_name VARCHAR(20))
 
 	BEGIN
 		SELECT u.id
@@ -13,7 +13,7 @@ CREATE PROCEDURE read_user (
 			, u.created_date
 			, u.modified_date
 		FROM users AS u
-		WHERE u.id = id;
+		WHERE u.user_name = user_name;
 	END$$
 
 -- DELIMITER ;
