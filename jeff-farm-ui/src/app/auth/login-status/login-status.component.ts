@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 
@@ -6,11 +6,20 @@ import { Router } from '@angular/router';
   selector: 'auth-login-status',
   templateUrl: './login-status.component.html',
 })
-export class LoginStatusComponent {
+export class LoginStatusComponent implements OnInit {
+
+  isLoggedIn: boolean = false;
+  isOnLoginPage: boolean = false;
 
   constructor(
     private authService: AuthService,
     private router: Router) { }
+
+  ngOnInit() {
+    
+    this.isLoggedIn = this.authService.isLoggedIn;
+    this.isOnLoginPage = this.router.url == '/login';
+  }
 
   viewAccount() {
 
@@ -21,10 +30,5 @@ export class LoginStatusComponent {
 
   this.authService.logout()
     .subscribe(_ => this.router.navigate(['/login']));
-  }
-
-  isOnLoginPage() {
-
-    return this.router.url == '/login';
   }
 }
