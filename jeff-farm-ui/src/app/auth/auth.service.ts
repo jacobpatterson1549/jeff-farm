@@ -13,8 +13,6 @@ const httpOptions = {
 })
 export class AuthService {
   
-  // TODO: combine common url with crud service
-  loginUrl: string = 'http://localhost:8080/jeff-farm-ws/login';
   isLoggedIn: boolean = false;
   sessionId: string;
   private readonly SESSION_ID_KEY : string = 'JSESSIONID';
@@ -36,7 +34,7 @@ export class AuthService {
     user.userName = username;
     user.password = password;
 
-    return this.httpClient.post<string>(this.loginUrl, user, httpOptions)
+    return this.httpClient.post<string>('login', user, httpOptions)
       .pipe(
         catchError((error: HttpErrorResponse)  => {
           return throwError('error');
@@ -52,13 +50,15 @@ export class AuthService {
 
   logout(): Observable<any> {
 
+    this.clearCredentials(); // clear even if logout fails.
+    
     return this.isLoggedIn
-      ? this.httpClient.get<any>('http://localhost:8080/jeff-farm-ws/user/logout')
+      ? this.httpClient.get<any>('user/logout')
         .pipe(
           catchError((error: HttpErrorResponse)  => {
             return throwError('error');
           }),
-          tap(this.clearCredentials)
+          // tap(this.clearCredentials)
         )
       : of();
   }

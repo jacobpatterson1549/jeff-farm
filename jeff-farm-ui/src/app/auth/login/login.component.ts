@@ -23,8 +23,6 @@ export class LoginComponent {
 
   submitForm() {
     this.authService.login(this.username, this.password)
-      .subscribe(sessionId => {
-         this.router.navigate(['/farms']);
-      });
+      .subscribe(_ => this.router.navigate(['/farms']) );
   }
 }

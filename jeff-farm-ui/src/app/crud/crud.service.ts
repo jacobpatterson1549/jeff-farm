@@ -34,16 +34,12 @@ export abstract class CrudService<T extends CrudItem> {
     return pluralName.substring(0, pluralName.length - 1);
   }
 
-  genBaseUrl(): string {
-    return `http://localhost:8080/jeff-farm-ws/${this.getBaseUrl()}`;
-  }
-
   post(t: T): Observable<Number> {
-    return this.http.post<Number>(this.genBaseUrl(), t);
+    return this.http.post<Number>(this.getBaseUrl(), t);
   }
 
   get(): Observable<T> {
-    const url = `${this.genBaseUrl()}/${this.getId()}`;
+    const url = `${this.getBaseUrl()}/${this.getId()}`;
     return this.http.get<T>(url)
       .pipe(
         map((data: T) => Object.assign(this.createCrudItem(), data)),
@@ -51,7 +47,7 @@ export abstract class CrudService<T extends CrudItem> {
   }
 
   getList(): Observable<T[]> {
-    return this.http.get<T[]>(this.genBaseUrl())
+    return this.http.get<T[]>(this.getBaseUrl())
       .pipe(
         map((dataList: T[]) => dataList
           .map(data => Object.assign(this.createCrudItem(), data))),
@@ -59,16 +55,16 @@ export abstract class CrudService<T extends CrudItem> {
   }
 
   put(t: T): Observable<Object> {
-    return this.http.put(this.genBaseUrl(), t);
+    return this.http.put(this.getBaseUrl(), t);
   }
 
   delete(): Observable<Object> {
-    const url = `${this.genBaseUrl()}/${this.getId()}`;
+    const url = `${this.getBaseUrl()}/${this.getId()}`;
     return this.http.delete(url);
   }
 
   canDelete(): Observable<boolean> {
-    const url = `${this.genBaseUrl()}/${this.getId()}/canDelete`;
+    const url = `${this.getBaseUrl()}/${this.getId()}/canDelete`;
     return this.http.get<boolean>(url);
   }
 
