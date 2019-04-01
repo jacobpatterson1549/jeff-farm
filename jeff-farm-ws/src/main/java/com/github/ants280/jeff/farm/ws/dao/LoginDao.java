@@ -12,7 +12,7 @@ public class LoginDao
 	private static final String USER_ID_SESSION_ATTRIBUTE = "userId";
 	private final UserDao userDao;
 	@Context
-	private HttpServletRequest httpServletRequest;
+	private HttpServletRequest request;
 
 	@Inject
 	public LoginDao(UserDao userDao)
@@ -20,22 +20,26 @@ public class LoginDao
 		this.userDao = userDao;
 	}
 
-	public String login(User user) throws ServletException
+	public void login(User user) throws ServletException
 	{
-		httpServletRequest.login(user.getUserName(), user.getPassword());
-		
-		User actualUser = userDao.read(user.getUserName());
+		HttpSession oldSession = request.getSession(false);
+		if (oldSession != null)
+		{
+			oldSession.invalidate();
+		}
 
-		HttpSession session = httpServletRequest.getSession(true);
+		request.login(user.getUserName(), user.getPassword());
+
+		User actualUser = userDao.read(user.getUserName());
+		
+		HttpSession session = request.getSession(true);
 		
 		session.setAttribute(USER_ID_SESSION_ATTRIBUTE, actualUser.getId());
-		
-		return session.getId();
 	}
 
 	public void logout()
 	{
-		HttpSession session = httpServletRequest.getSession(false);
+		HttpSession session = request.getSession(false);
 		
 		if (session != null)
 		{
@@ -45,7 +49,7 @@ public class LoginDao
 	
 	public int getUserId()
 	{
-		HttpSession session = httpServletRequest.getSession(false);
+		HttpSession session = request.getSession(false);
 		
 		if (session == null)
 		{

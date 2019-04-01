@@ -19,6 +19,8 @@ public class LoginResource
 {
 	private final LoginDao loginDao;
 	private final UserDao userDao;
+//	@Context
+//	private HttpServletResponse response;
 
 	@Inject
 	public LoginResource(LoginDao loginDao, UserDao userDao)
@@ -34,14 +36,9 @@ public class LoginResource
 	{
 		try
 		{
-			String sessionId = loginDao.login(user);
+			loginDao.login(user); // creates JSESSIONID cookie
 			
-			return Response
-					.ok(sessionId == null
-							? null
-							// TODO: hack to convert string to json:
-							: String.format("\"%s\"", sessionId))
-					.build();
+			return Response.ok().build();
 		}
 		catch (ServletException ex)
 		{
