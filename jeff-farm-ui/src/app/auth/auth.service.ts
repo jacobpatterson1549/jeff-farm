@@ -26,6 +26,7 @@ export class AuthService {
       this.isLoggedIn = true;
       this.sessionId = savedSessionId;
     }
+    console.log(`isLoggedId=${this.isLoggedIn}  SessionId=${this.sessionId}`);
   }
 
   login(username: string, password: string): Observable<string> {

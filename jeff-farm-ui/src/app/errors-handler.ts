@@ -11,7 +11,7 @@ export class ErrorsHandler implements ErrorHandler {
     handleError(error: Error): void {
         
         if (error instanceof HttpErrorResponse
-            && error.status in [0, 403]) { // unknown, FORBIDDEN
+            && error.status == 403) { // FORBIDDEN
 
             console.log('redirecting to login');
 
