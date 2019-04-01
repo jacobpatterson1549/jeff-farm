@@ -57,7 +57,7 @@ public class UserResource
 	
 	@GET
 	@Path("logout")
-	public Response canDeleteUser()
+	public Response logout()
 	{
 		loginDao.logout();
 
