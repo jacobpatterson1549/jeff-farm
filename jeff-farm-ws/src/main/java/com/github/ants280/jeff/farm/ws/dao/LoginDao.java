@@ -1,6 +1,8 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.model.User;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +37,9 @@ public class LoginDao
 		HttpSession session = request.getSession(true);
 		
 		session.setAttribute(USER_ID_SESSION_ATTRIBUTE, actualUser.getId());
+		
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.log(Level.INFO, "New sessionId is {0}", session.getId());
 	}
 
 	public void logout()
