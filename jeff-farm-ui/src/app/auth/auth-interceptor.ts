@@ -10,17 +10,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        if (this.authService.isLoggedIn) {
-
-            const authToken: string = this.authService.sessionId;
-            const authReq = req.clone({ setHeaders: { 'Set-Cookie': 'JSESSIONID=' + authToken }, withCredentials: true });
-            // const authReq = req.clone({ setHeaders: { Authorization: authToken }, withCredentials: true });
-            // const authReq = req.clone({ withCredentials: true });
-            return next.handle(authReq);
-        }
-        else {
-
-            return next.handle(req);
-        }
+            return next.handle(req.clone({ withCredentials: true }));
     }
 }
