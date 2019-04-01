@@ -19,8 +19,6 @@ public class LoginResource
 {
 	private final LoginDao loginDao;
 	private final UserDao userDao;
-//	@Context
-//	private HttpServletResponse response;
 
 	@Inject
 	public LoginResource(LoginDao loginDao, UserDao userDao)
