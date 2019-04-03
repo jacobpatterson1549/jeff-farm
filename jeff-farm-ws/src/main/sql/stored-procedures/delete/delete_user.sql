@@ -8,12 +8,12 @@ CREATE PROCEDURE delete_user (
 	BEGIN
 		DELETE ur
 		FROM user_roles AS ur
-		JOIN users AS u ON u.user_name = ur.role_name
+		JOIN users AS u ON u.user_name = ur.user_name
 		WHERE u.id = id;
 
 		DELETE u
 		FROM users AS u
 		WHERE u.id = id;
-	END$$
+END$$
 
 -- DELIMITER ;
