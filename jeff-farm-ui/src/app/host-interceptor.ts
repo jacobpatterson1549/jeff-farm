@@ -2,7 +2,9 @@ import { Injectable } from "@angular/core";
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+  })
 export class HostInterceptor implements HttpInterceptor {
 
     private readonly HOST_URL: string = '/api/';

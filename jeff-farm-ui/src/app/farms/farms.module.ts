@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { CrudModule } from '../crud/crud.module';
 import { CrudService } from '../crud/crud.service';
 import { FarmsService } from './farms.service';
+import { GlobalProviders } from '../global-providers';
 
 @NgModule({
   providers: [
@@ -12,6 +13,7 @@ import { FarmsService } from './farms.service';
       provide: CrudService,
       useClass: FarmsService
     },
+    GlobalProviders
   ],
   imports: [
     CommonModule,

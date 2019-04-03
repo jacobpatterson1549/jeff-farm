@@ -13,9 +13,8 @@
 			  url="jdbc:mysql://localhost:3306/JEFF_FARM_DB?serverTimezone=UTC"/>
 	
 	<Realm className="org.apache.catalina.realm.LockOutRealm"
-	       >
-<!--		   failureCount="5"
-		   lockOutTime="300">-->
+		   failureCount="5"
+		   lockOutTime="300">
 		<Realm className="org.apache.catalina.realm.JDBCRealm"
 		       debug="9"
 			   driverName="com.mysql.cj.jdbc.Driver"

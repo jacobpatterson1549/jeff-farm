@@ -34,9 +34,9 @@ public class LoginResource
 	{
 		try
 		{
-			loginDao.login(user); // creates JSESSIONID cookie
-			
-			return Response.ok().build();
+			String sessionId = loginDao.login(user); // creates JSESSIONID cookie
+
+			return Response.ok('\"' + sessionId + '\"').build();
 		}
 		catch (ServletException ex)
 		{
@@ -47,19 +47,19 @@ public class LoginResource
 									"Could not log in as userName = '%s'",
 									user == null ? "" : user.getUserName()),
 							ex);
-			
+
 			return Response.status(Response.Status.BAD_REQUEST)
 					.entity(ex.getMessage()).build();
 		}
 	}
-	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("create")
 	public Response createUser(User user)
 	{
 		int id = userDao.create(user);
-		
+
 		Logger.getLogger(this.getClass().getName())
 				.log(Level.INFO, "Created User id={0}", id);
 

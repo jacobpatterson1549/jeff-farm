@@ -1,12 +1,8 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../user/user';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +31,7 @@ export class AuthService {
     user.userName = username;
     user.password = password;
 
-    return this.httpClient.post<string>('login', user, httpOptions)
+    return this.httpClient.post<string>('login', user)
       .pipe(
         catchError((error: HttpErrorResponse)  => {
           return throwError('error');
@@ -53,15 +49,7 @@ export class AuthService {
 
     this.clearCredentials(); // clear even if logout fails.
     
-    return this.isLoggedIn
-      ? this.httpClient.get<any>('user/logout')
-        .pipe(
-          catchError((error: HttpErrorResponse)  => {
-            return throwError('error');
-          }),
-          // tap(this.clearCredentials)
-        )
-      : of();
+    return this.httpClient.get<any>('user/logout');
   }
 
   clearCredentials() {

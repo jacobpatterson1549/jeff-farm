@@ -5,21 +5,13 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'auth-login-status',
   templateUrl: './login-status.component.html',
+  styleUrls: ['login-status.component.css']
 })
-export class LoginStatusComponent implements OnInit {
-
-  isLoggedIn: boolean = false;
-  isOnLoginPage: boolean = false;
+export class LoginStatusComponent {
 
   constructor(
     private authService: AuthService,
     private router: Router) { }
-
-  ngOnInit() {
-    
-    this.isLoggedIn = this.authService.isLoggedIn;
-    this.isOnLoginPage = this.router.url == '/login';
-  }
 
   viewAccount() {
 

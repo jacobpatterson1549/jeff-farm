@@ -6,8 +6,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { AuthModule } from './auth/auth.module';
+import { GlobalProviders } from './global-providers';
 
 @NgModule({
+  providers: [
+    GlobalProviders,
+  ],
   declarations: [
     AppComponent,
     PageNotFoundComponent,

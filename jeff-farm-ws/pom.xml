@@ -205,13 +205,13 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
-<!--		<dependency>
-			CorsFilter,AuthenticationBase,RealmBase
+		<dependency>
+			<!--CorsFilter,AuthenticationBase,RealmBase-->
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-catalina</artifactId>
 			<version>9.0.16</version>
 			<scope>provided</scope>
-		</dependency>-->
+		</dependency>
 		<dependency>
 			<!--HttpServletRequest-->
 			<groupId>javax.servlet</groupId>

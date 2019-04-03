@@ -4,7 +4,6 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorHandler } from '@angular/core';
 import { ErrorsHandler } from './errors-handler';
 
-
 export const GlobalProviders = [
     { provide: HTTP_INTERCEPTORS, useClass: HostInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
