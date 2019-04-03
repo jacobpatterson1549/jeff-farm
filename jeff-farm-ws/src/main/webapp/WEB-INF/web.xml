@@ -21,40 +21,15 @@
 		<res-type>${resource.data.source.type}</res-type>
 		<res-auth>${resource.data.source.auth}</res-auth>
 	</resource-ref>
-
-<!--	<security-constraint>
-		<web-resource-collection>
-			<description>Farm pages</description>
-			<web-resource-name>secured-endpoints</web-resource-name>
-			<url-pattern>/farms/*</url-pattern>
-			<url-pattern>/user/*</url-pattern>
-			<http-method>GET</http-method>
-			<http-method>POST</http-method>
-			<http-method>PUT</http-method>
-			<http-method>DELETE</http-method>
-			<http-method>HEAD</http-method>
-			<http-method>OPTIONS</http-method>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>user</role-name>
-		</auth-constraint>
-	</security-constraint>
-	<security-role>
-		<description>Registered user</description>
-		<role-name>user</role-name>
-	</security-role>
-	<login-config>
-		<auth-method>FORM</auth-method>
-		<form-login-config>
-			<form-login-page>/login</form-login-page>
-		</form-login-config>
-	</login-config>-->
-
-	<session-config>
-		<cookie-config>
-			<http-only>true</http-only>
-			<!--<secure>true</secure>-->
-		</cookie-config>
-	</session-config>
+	
+	<filter>
+		<filter-name>AuthFilter</filter-name>
+		<filter-class> com.github.ants280.jeff.farm.ws.AuthFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AuthFilter</filter-name>
+		<url-pattern>/farms/*</url-pattern>
+		<url-pattern>/user/*</url-pattern>
+	</filter-mapping>
 
 </web-app>
