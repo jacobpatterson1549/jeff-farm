@@ -17,7 +17,7 @@ export class FarmsService extends CrudService<Farm> {
   }
 
   getPluralName(): string {
-    return 'Farms';
+    return '/api/Farms';
   }
 
   getCrudChildren(): CrudChild[] {

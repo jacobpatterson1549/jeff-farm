@@ -1,5 +1,5 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../user/user';
@@ -31,7 +31,7 @@ export class AuthService {
     user.userName = username;
     user.password = password;
 
-    return this.httpClient.post<string>('login', user)
+    return this.httpClient.post<string>('/api/login', user)
       .pipe(
         catchError((error: HttpErrorResponse)  => {
           return throwError('error');
@@ -49,7 +49,7 @@ export class AuthService {
 
     this.clearCredentials(); // clear even if logout fails.
     
-    return this.httpClient.get<any>('user/logout');
+    return this.httpClient.get<any>('/api/user/logout');
   }
 
   clearCredentials() {

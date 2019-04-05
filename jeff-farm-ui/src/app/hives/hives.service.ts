@@ -28,7 +28,7 @@ export class HivesService extends CrudService<Hive> {
   
   getBaseUrl(): string {
 
-    return `farms/${this.getFarmId()}/hives`;
+    return `/api/farms/${this.getFarmId()}/hives`;
   }
 
   getFarmId(): number {
