@@ -20,8 +20,10 @@ public class InjectionBinder extends AbstractBinder
 	protected void configure()
 	{
 		bind(getDataSource()).to(DataSource.class);
+		bindAsContract(PasswordGenerator.class);
+//		bind(PasswordGenerator.class).to(PasswordGenerator.class);
 		bindAsContract(ConnectionDao.class);
-		bindAsContract(UserDao.class);
+		bindAsContract(UserDao.class); // has PasswordGenerator
 		bindAsContract(LoginDao.class); // has UserDao
 		bindAsContract(FarmDao.class);
 		bindAsContract(HiveDao.class);

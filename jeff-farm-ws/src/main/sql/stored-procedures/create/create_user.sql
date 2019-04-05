@@ -4,7 +4,7 @@ DROP PROCEDURE IF EXISTS create_user$$
 
 CREATE PROCEDURE create_user (
 	IN user_name VARCHAR(20),
-	IN user_password VARCHAR(20),
+	IN user_password VARCHAR(86),
 	IN first_name VARCHAR(255),
 	IN last_name VARCHAR(255),
 	OUT id INT)

@@ -26,7 +26,12 @@
 			   userNameCol="user_name"
 			   userCredCol="user_password"
 			   userRoleTable="user_roles"
-			   roleNameCol="role_name"/>
+			   roleNameCol="role_name">
+			<CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler"
+				               algorithm="SHA-256"
+				               iterations="1000"
+				               saltLength="8"/>
+		</Realm>
 	</Realm>
 
 	<Manager className="org.apache.catalina.session.PersistentManager">

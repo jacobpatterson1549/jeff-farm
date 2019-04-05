@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
+import com.github.ants280.jeff.farm.ws.PasswordGenerator;
 import com.github.ants280.jeff.farm.ws.model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,23 +13,30 @@ import javax.sql.DataSource;
 import org.jvnet.hk2.annotations.Contract;
 import org.springframework.jdbc.core.RowMapper;
 
-@Contract
+@Contract // TODO: is this needed?
 public class UserDao extends StoredProcedureDao implements CrudDao<User>
 {
+	private final PasswordGenerator passwordGenerator;
+
 	@Inject
-	public UserDao(DataSource dataSource)
+	public UserDao(DataSource dataSource, PasswordGenerator passwordGenerator)
 	{
 		super(dataSource);
+		
+		this.passwordGenerator = passwordGenerator;
 	}
 
 	@Override
 	public int create(User user)
 	{
+		String password
+				= passwordGenerator.getHashedPassword(user.getPassword());
+
 		return this.executeCreate(
 				"create_user",
 				Arrays.asList(
 						new Parameter<>(User.USER_NAME_COLUMN, user.getUserName(), Types.VARCHAR),
-						new Parameter<>(User.PASSWORD_COLUMN, user.getPassword(), Types.VARCHAR),
+						new Parameter<>(User.PASSWORD_COLUMN, password, Types.VARCHAR),
 						new Parameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
 						new Parameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)),
 				User.ID_COLUMN);

@@ -57,7 +57,7 @@ public class LoginDao
 		{
 			throw new IllegalArgumentException("No Session");
 		}
-		
+
 		return (int) session
 				.getAttribute(USER_ID_SESSION_ATTRIBUTE);
 	}
