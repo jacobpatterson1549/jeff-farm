@@ -31,7 +31,7 @@ export class AuthService {
     user.userName = username;
     user.password = password;
 
-    return this.httpClient.post<string>('/api/login', user)
+    return this.httpClient.post<string>('login', user)
       .pipe(
         catchError((error: HttpErrorResponse)  => {
           return throwError('error');
@@ -49,7 +49,7 @@ export class AuthService {
 
     this.clearCredentials(); // clear even if logout fails.
     
-    return this.httpClient.get<any>('/api/user/logout');
+    return this.httpClient.get<any>('user/logout');
   }
 
   clearCredentials() {

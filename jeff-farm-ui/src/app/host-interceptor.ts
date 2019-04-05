@@ -9,8 +9,7 @@ export class HostInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        // const hostReq = req.clone({ url: this.HOST_URL + req.url });
-        // return next.handle(hostReq);
-        return next.handle(req);
+        const hostReq = req.clone({ url: this.HOST_URL + req.url });
+        return next.handle(hostReq);
     }
 }

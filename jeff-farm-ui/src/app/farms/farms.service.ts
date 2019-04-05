@@ -27,6 +27,6 @@ export class FarmsService extends CrudService<Farm> {
   }
   
   getBaseUrl(): string {
-    return '/api/farms';
+    return 'farms';
   }
 }
