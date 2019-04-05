@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,8 +17,8 @@ import { GlobalProviders } from './global-providers';
     PageNotFoundComponent,
   ],
   imports: [
-    HttpClientModule,
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     AuthModule,
   ],
