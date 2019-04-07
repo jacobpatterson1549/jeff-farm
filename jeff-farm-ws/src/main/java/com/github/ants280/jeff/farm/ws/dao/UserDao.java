@@ -70,9 +70,14 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 	@Override
 	public void update(User user)
 	{
+		String password
+				= passwordGenerator.getHashedPassword(user.getPassword());
+		
 		this.executeUpdate(
 				"update_user",
 				Arrays.asList(
+						new Parameter<>(User.ID_COLUMN, user.getId(), Types.INTEGER),
+						new Parameter<>(User.PASSWORD_COLUMN, password, Types.CHAR),
 						new Parameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
 						new Parameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)));
 	}

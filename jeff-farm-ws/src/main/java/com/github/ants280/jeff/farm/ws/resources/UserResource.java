@@ -40,6 +40,7 @@ public class UserResource
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateUser(User user)
 	{
+		// TODO: ensure id is correct
 		userDao.update(user);
 
 		return Response.ok().build();
