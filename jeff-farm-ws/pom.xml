@@ -206,7 +206,7 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
-			<!--CorsFilter,AuthenticationBase,RealmBase-->
+			<!--MessageDigestCredentialHandler,AuthenticatorBase,RealmBase-->
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-catalina</artifactId>
 			<version>9.0.16</version>

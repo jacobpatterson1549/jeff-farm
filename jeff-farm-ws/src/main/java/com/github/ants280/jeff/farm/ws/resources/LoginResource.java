@@ -12,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
 @Path("/login")
@@ -36,7 +37,9 @@ public class LoginResource
 		{
 			String sessionId = loginDao.login(user); // creates JSESSIONID cookie
 
-			return Response.ok('\"' + sessionId + '\"').build();
+			return Response.ok('\"' + sessionId + '\"')
+					.cookie(new NewCookie("JSESSIONID", sessionId)) // TODO: add test to ensure cookie returned (maybe link to cookie name in web.xml)
+					.build();
 		}
 		catch (ServletException ex)
 		{

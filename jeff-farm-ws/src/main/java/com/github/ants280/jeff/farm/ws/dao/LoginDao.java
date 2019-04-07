@@ -27,12 +27,14 @@ public class LoginDao
 		{
 			oldSession.invalidate();
 		}
+		
+		// The session MUST be crated befor the login call.
+		// See org.apache.catalina.authenticator.AuthenticatorBase.register()
+		HttpSession session = request.getSession(true);
 
 		request.login(user.getUserName(), user.getPassword());
 
 		User actualUser = userDao.read(user.getUserName());
-		
-		HttpSession session = request.getSession(true);
 		
 		session.setAttribute(USER_ID_SESSION_ATTRIBUTE, actualUser.getId());
 		
@@ -42,17 +44,17 @@ public class LoginDao
 	public void logout()
 	{
 		HttpSession session = request.getSession(false);
-		
+
 		if (session != null)
 		{
 			session.invalidate();
 		}
 	}
-	
+
 	public int getUserId()
 	{
 		HttpSession session = request.getSession(false);
-		
+
 		if (session == null)
 		{
 			throw new IllegalArgumentException("No Session");
