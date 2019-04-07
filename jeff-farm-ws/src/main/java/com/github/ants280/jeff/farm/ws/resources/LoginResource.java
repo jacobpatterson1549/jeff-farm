@@ -36,9 +36,10 @@ public class LoginResource
 		try
 		{
 			String sessionId = loginDao.login(user); // creates JSESSIONID cookie
+			NewCookie newCookie = new NewCookie("JSESSIONID", sessionId);
 
-			return Response.ok('\"' + sessionId + '\"')
-					.cookie(new NewCookie("JSESSIONID", sessionId)) // TODO: add test to ensure cookie returned (maybe link to cookie name in web.xml)
+			return Response.ok()
+					.cookie(newCookie) // TODO: add test to ensure cookie returned (maybe link to cookie name in web.xml)
 					.build();
 		}
 		catch (ServletException ex)

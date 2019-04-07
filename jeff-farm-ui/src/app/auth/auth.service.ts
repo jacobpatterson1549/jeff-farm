@@ -10,37 +10,33 @@ import { User } from '../user/user';
 export class AuthService {
   
   isLoggedIn: boolean = false;
-  sessionId: string;
-  private readonly SESSION_ID_KEY : string = 'JSESSIONID';
+  private readonly IS_LOGGED_IN_KEY : string = 'isLoggedIn';
 
   constructor(private httpClient: HttpClient) {
 
-    const savedSessionId: string = localStorage.getItem(this.SESSION_ID_KEY);
+    const wasLoggedIn: string = localStorage.getItem(this.IS_LOGGED_IN_KEY);
 
-    if (savedSessionId != null && savedSessionId.length > 0) {
+    if (wasLoggedIn != null && "true" == (wasLoggedIn)) {
 
       this.isLoggedIn = true;
-      this.sessionId = savedSessionId;
     }
-    console.log(`isLoggedId=${this.isLoggedIn}  SessionId=${this.sessionId}`);
   }
 
-  login(username: string, password: string): Observable<string> {
+  login(username: string, password: string): Observable<any> {
 
     const user: User = new User();
     user.userName = username;
     user.password = password;
 
-    return this.httpClient.post<string>('login', user)
+    return this.httpClient.post<any>('login', user)
       .pipe(
         catchError((error: HttpErrorResponse)  => {
           return throwError('error');
         }),
-        tap((sessionId: string) => {
+        tap(_ => {
           this.isLoggedIn = true;
-          this.sessionId = sessionId;
 
-          localStorage.setItem(this.SESSION_ID_KEY, sessionId);
+          localStorage.setItem(this.IS_LOGGED_IN_KEY, "true");
         }),
       );
   }
@@ -54,8 +50,7 @@ export class AuthService {
 
   clearCredentials() {
     this.isLoggedIn = false;
-    this.sessionId = null;
 
-    localStorage.removeItem(this.SESSION_ID_KEY);
+    localStorage.removeItem(this.IS_LOGGED_IN_KEY);
   }
 }

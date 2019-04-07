@@ -41,22 +41,5 @@
 	<security-role>
 		<role-name>user</role-name>
 	</security-role>
-<!--	<login-config>
-		<auth-method>FORM</auth-method>
-		<form-login-config>
-			<form-login-page>login.jsp</form-login-page>
-			<form-error-page>error.jsp</form-error-page>
-		</form-login-config>
-	</login-config>-->
-<!--	<login-config>
-		<auth-method>BASIC</auth-method>
-	</login-config>-->
-	
-<!--	<session-config>
-		<cookie-config>
-			<http-only>true</http-only>
-			<secure>false</secure>
-		</cookie-config>
-	</session-config>-->
 
 </web-app>
