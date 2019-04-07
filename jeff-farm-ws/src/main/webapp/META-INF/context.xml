@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/jeff-farm-ws">
 
-	<Resource name="jdbc/jeff-farm-data-source"
-			  auth="Container"
-			  type="javax.sql.DataSource"
+	<Resource name="${resource.data.source.name}"
+			  auth="${resource.data.source.auth}"
+			  type="${resource.data.source.type}"
 			  maxTotal="100"
 			  maxIdle="30"
 			  maxWaitMillis="10000"
-			  username="fred"
-			  password="flintstone"
-			  driverClassName="com.mysql.cj.jdbc.Driver"
-			  url="jdbc:mysql://localhost:3306/JEFF_FARM_DB?serverTimezone=UTC"/>
+			  username="${jdbc.username}"
+			  password="${jdbc.password}"
+			  driverClassName="${jdbc.driver.class.name}"
+			  url="${jdbc.url}"/>
 	
 	<Realm className="org.apache.catalina.realm.LockOutRealm"
 		   failureCount="5"
 		   lockOutTime="300">
 		<Realm className="org.apache.catalina.realm.JDBCRealm"
-		       debug="9"
-			   driverName="com.mysql.cj.jdbc.Driver"
-			   resourceName="jdbc/jeff-farm-data-source"
-			   connectionURL="jdbc:mysql://localhost:3306/JEFF_FARM_DB?serverTimezone=UTC"
-			   connectionName="fred"
-			   connectionPassword="flintstone"
+			   driverName="${jdbc.driver.class.name}"
+			   resourceName="${resource.data.source.name}"
+			   connectionURL="${jdbc.url}"
+			   connectionName="${jdbc.username}"
+			   connectionPassword="${jdbc.password}"
 			   userTable="users"
 			   userNameCol="user_name"
 			   userCredCol="user_password"
@@ -36,12 +35,11 @@
 
 	<Manager className="org.apache.catalina.session.PersistentManager">
 		<Store className="org.apache.catalina.session.JDBCStore"
-		       debug="9"
-			   driverName="com.mysql.cj.jdbc.Driver"
-			   resourceName="jdbc/jeff-farm-data-source"
-			   connectionURL="jdbc:mysql://localhost:3306/JEFF_FARM_DB?serverTimezone=UTC"
-			   connectionName="fred"
-			   connectionPassword="flintstone"
+			   driverName="${jdbc.driver.class.name}"
+			   resourceName="${resource.data.source.name}"
+			   connectionURL="${jdbc.url}"
+			   connectionName="${jdbc.username}"
+			   connectionPassword="${jdbc.password}"
 			   sessionAppCol="app_name"
 			   sessionDataCol="session_data"
 			   sessionIdCol="session_id"
