@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users
 (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	user_name VARCHAR(20) UNIQUE NOT NULL,
-	user_password CHAR(64) NOT NULL,
+	user_password CHAR(86) NOT NULL,
 	first_name VARCHAR(255),
 	last_name VARCHAR(255),
 	created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
