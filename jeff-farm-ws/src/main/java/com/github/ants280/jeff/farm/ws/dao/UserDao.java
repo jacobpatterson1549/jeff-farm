@@ -36,7 +36,7 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 				"create_user",
 				Arrays.asList(
 						new Parameter<>(User.USER_NAME_COLUMN, user.getUserName(), Types.VARCHAR),
-						new Parameter<>(User.PASSWORD_COLUMN, password, Types.VARCHAR),
+						new Parameter<>(User.PASSWORD_COLUMN, password, Types.CHAR),
 						new Parameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
 						new Parameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)),
 				User.ID_COLUMN);
