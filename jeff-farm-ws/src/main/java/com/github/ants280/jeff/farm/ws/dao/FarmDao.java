@@ -8,9 +8,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.RowMapper;
 
+@Singleton
 public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 {
 	@Inject

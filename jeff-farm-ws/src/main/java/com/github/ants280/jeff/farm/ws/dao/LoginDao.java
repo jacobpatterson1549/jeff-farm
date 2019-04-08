@@ -2,11 +2,13 @@ package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.model.User;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.Context;
 
+@Singleton
 public class LoginDao
 {
 	private static final String USER_ID_SESSION_ATTRIBUTE = "userId";

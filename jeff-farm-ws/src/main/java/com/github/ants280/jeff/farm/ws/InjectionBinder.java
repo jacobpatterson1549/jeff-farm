@@ -8,6 +8,7 @@ import com.github.ants280.jeff.farm.ws.dao.LoginDao;
 import com.github.ants280.jeff.farm.ws.dao.UserDao;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.inject.Singleton;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -20,14 +21,24 @@ public class InjectionBinder extends AbstractBinder
 	protected void configure()
 	{
 		bind(getDataSource()).to(DataSource.class);
-		bindAsContract(PasswordGenerator.class);
-//		bind(PasswordGenerator.class).to(PasswordGenerator.class);
-		bindAsContract(ConnectionDao.class);
-		bindAsContract(UserDao.class); // has PasswordGenerator
-		bindAsContract(LoginDao.class); // has UserDao
-		bindAsContract(FarmDao.class);
-		bindAsContract(HiveDao.class);
-		bindAsContract(HiveInspectionDao.class);
+		bindAsSingleton(PasswordGenerator.class);
+		bindAsSingleton(ConnectionDao.class);
+		bindAsSingleton(UserDao.class); // has PasswordGenerator
+		bindAsSingleton(LoginDao.class); // has UserDao
+		bindAsSingleton(FarmDao.class);
+		bindAsSingleton(HiveDao.class);
+		bindAsSingleton(HiveInspectionDao.class);
+	}
+	
+	private void bindAsSingleton(Class singletonClass)
+	{
+		if (!singletonClass.isAnnotationPresent(Singleton.class))
+		{
+			throw new IllegalArgumentException(
+					singletonClass.getSimpleName() + " must be singleton");
+		}
+		
+		bindAsContract(singletonClass).in(Singleton.class);
 	}
 
 	private DataSource getDataSource()
