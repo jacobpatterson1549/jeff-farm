@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit, Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CrudService, CrudChild } from '../crud/crud.service';
 import { User } from './user';
@@ -6,11 +6,17 @@ import { Observable, of } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable()
-export class UserService extends CrudService<User> {
+export class UserService extends CrudService<User> implements OnInit {
+
+  // private authService: AuthService
 
   constructor(httpClient: HttpClient, private authService: AuthService) {
 
     super(httpClient);
+  }
+
+  ngOnInit(): void {
+    // this.authService = this.injector.get(AuthService);
   }
 
   createCrudItem(): User {
