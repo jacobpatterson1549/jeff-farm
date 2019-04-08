@@ -9,10 +9,8 @@ import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
 import javax.sql.DataSource;
-import org.jvnet.hk2.annotations.Service;
 import org.springframework.jdbc.core.RowMapper;
 
-@Service
 public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 {
 	@Inject
