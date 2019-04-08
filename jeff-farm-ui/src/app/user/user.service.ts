@@ -1,4 +1,4 @@
-import { Injectable, OnInit, Injector } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CrudService, CrudChild } from '../crud/crud.service';
 import { User } from './user';
