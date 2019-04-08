@@ -5,10 +5,8 @@ import java.security.NoSuchAlgorithmException;
 import javax.inject.Singleton;
 import org.apache.catalina.CredentialHandler;
 import org.apache.catalina.realm.MessageDigestCredentialHandler;
-import org.jvnet.hk2.annotations.Contract;
 
 @Singleton
-@Contract
 public class PasswordGenerator
 {
 	private final CredentialHandler credentialHandler;

@@ -10,10 +10,8 @@ import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
 import javax.sql.DataSource;
-import org.jvnet.hk2.annotations.Contract;
 import org.springframework.jdbc.core.RowMapper;
 
-@Contract // TODO: is this needed?
 public class UserDao extends StoredProcedureDao implements CrudDao<User>
 {
 	private final PasswordGenerator passwordGenerator;
