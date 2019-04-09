@@ -4,8 +4,10 @@ import static com.github.ants280.jeff.farm.ws.JsonProvider.OBJECT_MAPPER;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 public class FarmTest
@@ -18,7 +20,7 @@ public class FarmTest
 
 		String name1 = farm.getName();
 
-		assertEquals(name, name1);
+		assertThat(name1, is(name));
 	}
 
 	@Test
@@ -29,7 +31,7 @@ public class FarmTest
 
 		String location1 = farm.getLocation();
 
-		assertEquals(location, location1);
+		assertThat(location1, is(location));
 	}
 
 	@Test
@@ -40,7 +42,7 @@ public class FarmTest
 
 		String createdDate1 = farm.getCreatedDate();
 
-		assertNotEquals(null, createdDate1); // NOT-EQUALS
+		assertThat(createdDate1, is(not(nullValue())));
 	}
 
 	@Test
@@ -51,7 +53,7 @@ public class FarmTest
 
 		String modifiedDate1 = farm.getModifiedDate();
 
-		assertNotEquals(null, modifiedDate1); // NOT-EQUALS
+		assertThat(modifiedDate1, is(not(nullValue()))); // NOT-EQUALS
 	}
 
 	@Test
@@ -66,10 +68,10 @@ public class FarmTest
 		
 		String serializedFarm = OBJECT_MAPPER.writeValueAsString(farm1);
 
-		assertEquals(true, serializedFarm.contains("id"));
-		assertEquals(true, serializedFarm.contains("name"));
-		assertEquals(true, serializedFarm.contains("location"));
-		assertEquals(true, serializedFarm.contains("createdDate"));
-		assertEquals(true, serializedFarm.contains("modifiedDate"));
+		assertThat(serializedFarm.contains("id"), is(true));
+		assertThat(serializedFarm.contains("name"), is(true));
+		assertThat(serializedFarm.contains("location"), is(true));
+		assertThat(serializedFarm.contains("createdDate"), is(true));
+		assertThat(serializedFarm.contains("modifiedDate"), is(true));
 	}
 }

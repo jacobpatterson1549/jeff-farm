@@ -2,7 +2,9 @@ package com.github.ants280.jeff.farm.ws.model;
 
 import static com.github.ants280.jeff.farm.ws.JsonProvider.OBJECT_MAPPER;
 import java.io.IOException;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
@@ -17,11 +19,11 @@ public class HiveTest
 		int queenColor = 0xFF0000; // red
 		Hive hive = new Hive(id, farmId, name, queenColor, null, null);
 		
-		assertEquals(id, hive.getId());
-		assertEquals(farmId, hive.getFarmId());
-		assertEquals(name, hive.getName());
-		assertEquals(16711680, queenColor); // sanity
-		assertEquals("#ff0000", hive.getQueenColor()); // [special string conversion for ui]
+		assertThat(hive.getId(), is(id));
+		assertThat(hive.getFarmId(), is(farmId));
+		assertThat(hive.getName(), is(name));
+		assertThat(queenColor, is(16711680)); // sanity
+		assertThat(hive.getQueenColor(), is("#ff0000")); // [special string conversion for ui]
 	}
 	
 	@Test
@@ -31,12 +33,12 @@ public class HiveTest
 
 		Hive hive = OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
-		assertEquals(2, hive.getId());
-		assertEquals(3, hive.getFarmId());
-		assertEquals("name2", hive.getName());
-		assertEquals("#ff0000", hive.getQueenColor());
-		assertEquals(null, hive.getCreatedDate());
-		assertEquals(null, hive.getModifiedDate());
+		assertThat(hive.getId(), is(2));
+		assertThat(hive.getFarmId(), is(3));
+		assertThat("name2", hive.getName(), is("name2"));
+		assertThat( hive.getQueenColor(), is("#ff0000"));
+		assertThat(hive.getCreatedDate(), is(nullValue()));
+		assertThat(hive.getModifiedDate(), is(nullValue()));
 	}
 	
 	@Test(expected = Exception.class)
@@ -86,7 +88,7 @@ public class HiveTest
 
 		Hive hive = OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
-		assertEquals(0xff0000, hive.getQueenColorInteger());
+		assertThat(hive.getQueenColorInteger(), is(0xff0000));
 	}
 	
 	@Test
@@ -96,6 +98,6 @@ public class HiveTest
 
 		Hive hive = OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
-		assertEquals(0x90FAFA, hive.getQueenColorInteger());
+		assertThat(hive.getQueenColorInteger(), is(0x90FAFA));
 	}
 }

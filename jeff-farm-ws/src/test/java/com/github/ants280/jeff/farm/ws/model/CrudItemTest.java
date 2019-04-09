@@ -4,8 +4,10 @@ import static com.github.ants280.jeff.farm.ws.JsonProvider.OBJECT_MAPPER;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 public class CrudItemTest
@@ -18,7 +20,7 @@ public class CrudItemTest
 
 		int id1 = crudItem.getId();
 
-		assertEquals(id, id1);
+		assertThat(id1, is(id));
 	}
 
 	@Test
@@ -29,7 +31,7 @@ public class CrudItemTest
 
 		String createdDate1 = crudItem.getCreatedDate();
 
-		assertNotEquals(null, createdDate1); // NOT-EQUALS
+		assertThat(createdDate1, is(not(nullValue())));
 	}
 
 	@Test
@@ -40,7 +42,7 @@ public class CrudItemTest
 
 		String modifiedDate1 = crudItem.getModifiedDate();
 
-		assertNotEquals(null, modifiedDate1); // NOT-EQUALS
+		assertThat(modifiedDate1, is(not(nullValue())));
 	}
 
 	@Test
@@ -53,9 +55,9 @@ public class CrudItemTest
 		
 		String serializedCrudItemImpl = OBJECT_MAPPER.writeValueAsString(crudItem1);
 
-		assertEquals(true, serializedCrudItemImpl.contains("id"));
-		assertEquals(true, serializedCrudItemImpl.contains("createdDate"));
-		assertEquals(true, serializedCrudItemImpl.contains("modifiedDate"));
+		assertThat(serializedCrudItemImpl.contains("id"), is(true));
+		assertThat(serializedCrudItemImpl.contains("createdDate"),is(true));
+		assertThat(serializedCrudItemImpl.contains("modifiedDate"), is(true));
 	}
 
 	@Test
@@ -65,9 +67,9 @@ public class CrudItemTest
 
 		CrudItemImpl crudItem2 = OBJECT_MAPPER.readValue(serializedCrudItemImpl, CrudItemImpl.class);
 
-		assertEquals(2, crudItem2.getId());
-		assertEquals(null, crudItem2.getCreatedDate());
-		assertEquals(null, crudItem2.getModifiedDate());
+		assertThat(crudItem2.getId(), is(2));
+		assertThat(crudItem2.getCreatedDate(), is(nullValue()));
+		assertThat(crudItem2.getModifiedDate(), is(nullValue()));
 	}
 
 	@Test
@@ -77,9 +79,9 @@ public class CrudItemTest
 
 		CrudItemImpl crudItem2 = OBJECT_MAPPER.readValue(serializedCrudItemImpl, CrudItemImpl.class);
 
-		assertEquals(3, crudItem2.getId());
-		assertEquals(null, crudItem2.getCreatedDate());
-		assertEquals(null, crudItem2.getModifiedDate());
+		assertThat(crudItem2.getId(), is(3));
+		assertThat(crudItem2.getCreatedDate(), is(nullValue()));
+		assertThat(crudItem2.getModifiedDate(), is(nullValue()));
 	}
 	
 	private static class CrudItemImpl extends CrudItem

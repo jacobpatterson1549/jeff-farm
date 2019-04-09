@@ -2,7 +2,9 @@ package com.github.ants280.jeff.farm.ws.model;
 
 import static com.github.ants280.jeff.farm.ws.JsonProvider.OBJECT_MAPPER;
 import java.io.IOException;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 public class UserTest
@@ -19,11 +21,12 @@ public class UserTest
 		
 		String serializedUser = OBJECT_MAPPER.writeValueAsString(user);
 
-		assertEquals(true, serializedUser.contains("id"));
-		assertEquals(true, serializedUser.contains("userName"));
-		assertEquals("password should not be sent back to the ui", false, serializedUser.contains("password"));
-		assertEquals(true, serializedUser.contains("firstName"));
-		assertEquals(true, serializedUser.contains("lastName"));
+		assertThat(serializedUser.contains("id"), is(true));
+		assertThat(serializedUser.contains("userName"), is(true));
+		assertThat("password should not be sent back to the ui",
+				serializedUser.contains("password"), is(false));
+		assertThat(serializedUser.contains("firstName"), is(true));
+		assertThat(serializedUser.contains("lastName"), is(true));
 	}
 	
 	@Test
@@ -33,11 +36,11 @@ public class UserTest
 
 		User user = OBJECT_MAPPER.readValue(serializedUser, User.class);
 
-		assertEquals(1996, user.getId());
-		assertEquals("no password needs to be provided to update a User", null, user.getPassword());
-		assertEquals("daPrez", user.getUserName());
-		assertEquals("Bob", user.getFirstName());
-		assertEquals("Dole", user.getLastName());
+		assertThat(user.getId(), is(1996));
+		assertThat("no password needs to be provided to update a User", user.getPassword(), is(nullValue()));
+		assertThat(user.getUserName(), is("daPrez"));
+		assertThat(user.getFirstName(), is("Bob"));
+		assertThat(user.getLastName(), is("Dole"));
 	}
 	
 	@Test
@@ -47,6 +50,6 @@ public class UserTest
 
 		User user = OBJECT_MAPPER.readValue(serializedUser, User.class);
 
-		assertEquals("password should be deserialized when a User is created from the ui", "crAAZYkat17", user.getPassword());
+		assertThat("password should be deserialized when a User is created from the ui", user.getPassword(), is("crAAZYkat17"));
 	}
 }
