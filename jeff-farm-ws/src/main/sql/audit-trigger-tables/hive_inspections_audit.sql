@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS hive_inspections_audit
 (
 	audit_id INT PRIMARY KEY AUTO_INCREMENT,
 	action_type CHAR(1) NOT NULL, -- i (insert), b (before update), a (after update), d (delete)
--- 	userId INT,
+	user_id INT NOT NULL,
 	action_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 	id INT,
 	hive_id INT,
@@ -50,6 +50,7 @@ CREATE PROCEDURE hive_inspection_changed_function (
 	BEGIN
 		INSERT INTO hive_inspections_audit (
 			action_type,
+			user_id,
 			id,
 			hive_id,
 			queen_seen,
@@ -68,6 +69,7 @@ CREATE PROCEDURE hive_inspection_changed_function (
 			wind_speed_mph)
 		VALUES (
 			action_type,
+			@user_id,
 			id,
 			hive_id,
 			queen_seen,

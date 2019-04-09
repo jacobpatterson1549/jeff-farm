@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS hives_audit
 (
 	audit_id INT PRIMARY KEY AUTO_INCREMENT,
 	action_type CHAR(1) NOT NULL, -- i (insert), b (before update), a (after update), d (delete)
--- 	userId INT,
+	user_id INT NOT NULL,
 	action_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 	id INT,
 	farm_id INT,
@@ -24,8 +24,19 @@ CREATE PROCEDURE hive_changed_function (
 	IN queen_color BIT(24))
 
 	BEGIN
-		INSERT INTO hives_audit (action_type, id, farm_id, name, queen_color)
-		VALUES (action_type, id, farm_id, name, queen_color);
+		INSERT INTO hives_audit (
+			action_type,
+			user_id,
+			id,
+			farm_id,
+			name,
+			queen_color)
+		VALUES (
+			action_type,
+			id,
+			farm_id,
+			name,
+			queen_color);
 	END$$
 
 DROP TRIGGER IF EXISTS hive_inserted_trigger$$

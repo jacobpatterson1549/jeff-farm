@@ -15,10 +15,13 @@ import org.springframework.jdbc.core.RowMapper;
 @Singleton
 public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 {
+	private final LoginDao loginDao;
+
 	@Inject
-	public HiveDao(DataSource dataSource)
+	public HiveDao(DataSource dataSource, LoginDao loginDao)
 	{
 		super(dataSource);
+		this.loginDao = loginDao;
 	}
 
 	@Override
@@ -30,7 +33,8 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 						new Parameter(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
 						new Parameter(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
 						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.BIT)),
-				Hive.ID_COLUMN);
+				Hive.ID_COLUMN,
+				loginDao.getUserId());
 	}
 
 	@Override
@@ -62,7 +66,8 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 						new Parameter(Hive.ID_COLUMN, hive.getId(), Types.INTEGER),
 						new Parameter(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
 						new Parameter(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
-						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.BIT)));
+						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.BIT)),
+				loginDao.getUserId());
 	}
 
 	@Override
@@ -71,7 +76,8 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 		this.executeUpdate(
 				"delete_hive",
 				Collections.singletonList(
-						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)));
+						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)),
+				loginDao.getUserId());
 	}
 	
 	@Override

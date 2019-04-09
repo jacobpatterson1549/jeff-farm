@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS farms_audit
 (
 	audit_id INT PRIMARY KEY AUTO_INCREMENT,
 	action_type CHAR(1) NOT NULL, -- i (insert), b (before update), a (after update), d (delete)
-	-- userId INT, -- TODO: track which user made the change
+	user_id INT NOT NULL,
 	action_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 	id INT,
 	name VARCHAR(255),
@@ -22,8 +22,18 @@ CREATE PROCEDURE farm_changed_function (
 	IN location VARCHAR(255))
 
 	BEGIN
-		INSERT INTO farms_audit (action_type, id, name, location)
-		VALUES (action_type, id, name, location);
+		INSERT INTO farms_audit (
+			action_type,
+			user_id,
+			id,
+			name,
+			location)
+		VALUES (
+			action_type,
+			@user_id,
+			id,
+			name,
+			location);
 	END$$
 
 DROP TRIGGER IF EXISTS farm_inserted_trigger$$

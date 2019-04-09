@@ -39,7 +39,8 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 						new Parameter<>(User.PASSWORD_COLUMN, password, Types.CHAR),
 						new Parameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
 						new Parameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)),
-				User.ID_COLUMN);
+				User.ID_COLUMN,
+				-1); // (registed users cannot create users)
 	}
 
 	@Override
@@ -79,7 +80,8 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 						new Parameter<>(User.ID_COLUMN, user.getId(), Types.INTEGER),
 						new Parameter<>(User.PASSWORD_COLUMN, password, Types.CHAR),
 						new Parameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
-						new Parameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)));
+						new Parameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)),
+				user.getId());
 	}
 
 	@Override
@@ -88,7 +90,8 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 		this.executeUpdate(
 				"delete_user",
 				Collections.singletonList(
-						new Parameter<>(User.ID_COLUMN, id, Types.INTEGER)));
+						new Parameter<>(User.ID_COLUMN, id, Types.INTEGER)),
+				id);
 	}
 
 	@Override

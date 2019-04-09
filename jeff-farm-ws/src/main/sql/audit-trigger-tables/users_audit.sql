@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users_audit
 (
 	audit_id INT PRIMARY KEY AUTO_INCREMENT,
 	action_type CHAR(1) NOT NULL, -- i (insert), b (before update), a (after update), d (delete)
-	-- userId INT, -- TODO: track which user made the change
+	user_id INT NOT NULL,
 	action_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 	id INT,
 	user_name VARCHAR(20),
@@ -28,6 +28,7 @@ CREATE PROCEDURE user_changed_function (
 	BEGIN
 		INSERT INTO users_audit (
 			action_type,
+			user_id,
 			id,
 			user_name,
 			user_password,
@@ -35,6 +36,7 @@ CREATE PROCEDURE user_changed_function (
 			last_name)
 		VALUES (
 			action_type,
+			@user_id,
 			id,
 			user_name,
 			user_password,

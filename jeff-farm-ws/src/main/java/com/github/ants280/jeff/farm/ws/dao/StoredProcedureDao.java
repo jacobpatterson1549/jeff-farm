@@ -20,6 +20,7 @@ public class StoredProcedureDao
 
 	private static final String STORED_PROCEDURE_NAME = "storedProcedureName";
 	private static final String RETURN_UPDATE_COUNT = "UPDATE_COUNT";
+	private static final String USER_ID = "user_id";
 	private static final SqlParameter RETURN_UPDATE_COUNT_SQL_PARAMETER
 			= new SqlReturnUpdateCount(RETURN_UPDATE_COUNT);
 
@@ -30,8 +31,10 @@ public class StoredProcedureDao
 
 	public void executeUpdate(
 			String storedProcedureName,
-			Collection<Parameter> inParameters)
+			Collection<Parameter> inParameters,
+			int userId)
 	{
+		this.setUserId(userId);
 		Map<String, Object> outputParams = this.execute(
 				inParameters,
 				storedProcedureName,
@@ -43,7 +46,7 @@ public class StoredProcedureDao
 			// TODO: rollback transaction
 			throw new StoredProcedureException(String.format(
 					"Did not update expected number of rows (1).  "
-							+ "Updated %s rows",
+					+ "Updated %s rows",
 					outputParams.get(RETURN_UPDATE_COUNT)));
 		}
 	}
@@ -51,8 +54,10 @@ public class StoredProcedureDao
 	public int executeCreate(
 			String storedProcedureName,
 			Collection<Parameter> inParameters,
-			String outParameterIdName)
+			String outParameterIdName,
+			int userId)
 	{
+		this.setUserId(userId);
 		Map<String, Object> outputParams = this.execute(
 				inParameters,
 				storedProcedureName,
@@ -91,7 +96,7 @@ public class StoredProcedureDao
 		// Mysql returns a Long, so casting to number.
 		return ((Number) outputParams.get(outParameterIdName)).intValue() != 0;
 	}
-	
+
 	public <T> T executeRead(
 			String storedProcedureName,
 			Collection<Parameter> inParameters,
@@ -101,17 +106,17 @@ public class StoredProcedureDao
 				storedProcedureName,
 				inParameters,
 				rowMapper);
-		
+
 		if (items.size() != 1)
 		{
 			throw new StoredProcedureException(String.format(
 					"Expected to get 1 item.  Got %d.",
 					items.size()));
 		}
-		
+
 		return items.get(0);
 	}
-	
+
 	public <T> List<T> executeReadList(
 			String storedProcedureName,
 			Collection<Parameter> inParameters,
@@ -170,8 +175,13 @@ public class StoredProcedureDao
 					STORED_PROCEDURE_NAME,
 					rowMapper);
 		}
-		
+
 		return simpleJdbcCall.execute(sqlParameterSource);
+	}
+
+	private void setUserId(int userId)
+	{
+		jdbcTemplate.execute("SET @user_id = " + userId);
 	}
 
 	public static class Parameter<T>

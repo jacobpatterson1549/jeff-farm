@@ -15,10 +15,13 @@ import org.springframework.jdbc.core.RowMapper;
 @Singleton
 public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<HiveInspection>
 {
+	private final LoginDao loginDao;
+
 	@Inject
-	public HiveInspectionDao(DataSource dataSource)
+	public HiveInspectionDao(DataSource dataSource, LoginDao loginDao)
 	{
 		super(dataSource);
+		this.loginDao = loginDao;
 	}
 
 	@Override
@@ -42,7 +45,8 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 						new Parameter(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather(), Types.VARCHAR),
 						new Parameter(HiveInspection.TEMPERATURE_F_COLUMN, hiveInspection.getTemperatureF(), Types.INTEGER),
 						new Parameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph(), Types.INTEGER)),
-				HiveInspection.ID_COLUMN);
+				HiveInspection.ID_COLUMN,
+				loginDao.getUserId());
 	}
 
 	@Override
@@ -86,7 +90,8 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 						new Parameter(HiveInspection.FRAMES_HONEY_COLUMN, hiveInspection.getFramesHoney(), Types.INTEGER),
 						new Parameter(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather(), Types.VARCHAR),
 						new Parameter(HiveInspection.TEMPERATURE_F_COLUMN, hiveInspection.getTemperatureF(), Types.INTEGER),
-						new Parameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph(), Types.INTEGER)));
+						new Parameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph(), Types.INTEGER)),
+				loginDao.getUserId());
 	}
 
 	@Override
@@ -95,7 +100,8 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 		this.executeUpdate(
 				"delete_hive_inspection",
 				Collections.singletonList(
-						new Parameter(HiveInspection.ID_COLUMN, id, Types.INTEGER)));
+						new Parameter(HiveInspection.ID_COLUMN, id, Types.INTEGER)),
+				loginDao.getUserId());
 	}
 	
 	@Override

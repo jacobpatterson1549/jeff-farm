@@ -15,10 +15,13 @@ import org.springframework.jdbc.core.RowMapper;
 @Singleton
 public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 {
+	private final LoginDao loginDao;
+
 	@Inject
-	public FarmDao(DataSource dataSource)
+	public FarmDao(DataSource dataSource, LoginDao loginDao)
 	{
 		super(dataSource);
+		this.loginDao = loginDao;
 	}
 
 	@Override
@@ -29,7 +32,8 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 				Arrays.asList(
 						new Parameter(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
 						new Parameter(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)),
-				Farm.ID_COLUMN);
+				Farm.ID_COLUMN,
+				loginDao.getUserId());
 	}
 
 	@Override
@@ -59,7 +63,8 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 				Arrays.asList(
 						new Parameter(Farm.ID_COLUMN, farm.getId(), Types.INTEGER),
 						new Parameter(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
-						new Parameter(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)));
+						new Parameter(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)),
+				loginDao.getUserId());
 	}
 
 	@Override
@@ -68,7 +73,8 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 		this.executeUpdate(
 				"delete_farm",
 				Collections.singletonList(
-						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)));
+						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)),
+				loginDao.getUserId());
 	}
 	
 	@Override
