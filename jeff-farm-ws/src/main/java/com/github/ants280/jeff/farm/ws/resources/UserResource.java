@@ -40,7 +40,11 @@ public class UserResource
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateUser(User user)
 	{
-		// TODO: ensure id is correct
+		if (user.getId() != loginDao.getUserId())
+		{
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+
 		userDao.update(user);
 
 		return Response.ok().build();
