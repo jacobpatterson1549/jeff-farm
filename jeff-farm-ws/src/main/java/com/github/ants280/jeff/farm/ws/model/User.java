@@ -1,5 +1,7 @@
 package com.github.ants280.jeff.farm.ws.model;
 
+import javax.json.bind.annotation.JsonbTransient;
+
 public class User extends CrudItem<User>
 {
 	public static final String USER_NAME_COLUMN = "user_name";
@@ -22,6 +24,7 @@ public class User extends CrudItem<User>
 		return this;
 	}
 
+	@JsonbTransient
 	public String getPassword()
 	{
 		return password;
