@@ -39,7 +39,7 @@ public class FarmTest
 	public void testGetCreatedDate()
 	{
 		Timestamp createdDate = Timestamp.from(Instant.now());
-		Farm farm = new Farm().setCreatedDate(createdDate);
+		Farm farm = new Farm().setCreatedTimestamp(createdDate);
 
 		String createdDate1 = farm.getCreatedDate();
 
@@ -50,7 +50,7 @@ public class FarmTest
 	public void testGetModifiedDate()
 	{
 		Timestamp modifiedDate = Timestamp.from(Instant.now());
-		Farm farm = new Farm().setModifiedDate(modifiedDate);
+		Farm farm = new Farm().setModifiedTimestamp(modifiedDate);
 
 		String modifiedDate1 = farm.getModifiedDate();
 
@@ -69,8 +69,8 @@ public class FarmTest
 				.setId(id)
 				.setName(name)
 				.setLocation(location)
-				.setCreatedDate(createdDate)
-				.setModifiedDate(modifiedDate);
+				.setCreatedTimestamp(createdDate)
+				.setModifiedTimestamp(modifiedDate);
 				
 		Jsonb jsonb = JsonbBuilder.create();
 		

@@ -132,8 +132,8 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 					.setWeather(rs.getString(HiveInspection.WEATHER_COLUMN))
 					.setTemperatureF(rs.getInt(HiveInspection.TEMPERATURE_F_COLUMN))
 					.setWindSpeedMph(rs.getInt(HiveInspection.WIND_SPEED_MPH_COLUMN))
-					.setCreatedDate(rs.getTimestamp(HiveInspection.CREATED_DATE_COLUMN))
-					.setModifiedDate(rs.getTimestamp(HiveInspection.MODIFIED_DATE_COLUMN));
+					.setCreatedTimestamp(rs.getTimestamp(HiveInspection.CREATED_DATE_COLUMN))
+					.setModifiedTimestamp(rs.getTimestamp(HiveInspection.MODIFIED_DATE_COLUMN));
 		}
 	}
 }

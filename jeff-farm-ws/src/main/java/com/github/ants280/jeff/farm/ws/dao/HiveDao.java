@@ -99,8 +99,8 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 					.setFarmId(rs.getInt(Hive.FARM_ID_COLUMN))
 					.setName(rs.getString(Hive.NAME_COLUMN))
 					.setQueenColorInteger(rs.getInt(Hive.QUEEN_COLOR_COLUMN))
-					.setCreatedDate(rs.getTimestamp(Hive.CREATED_DATE_COLUMN))
-					.setModifiedDate(rs.getTimestamp(Hive.MODIFIED_DATE_COLUMN));
+					.setCreatedTimestamp(rs.getTimestamp(Hive.CREATED_DATE_COLUMN))
+					.setModifiedTimestamp(rs.getTimestamp(Hive.MODIFIED_DATE_COLUMN));
 		}
 	}
 }

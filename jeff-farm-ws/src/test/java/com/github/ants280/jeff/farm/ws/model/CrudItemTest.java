@@ -37,7 +37,7 @@ public class CrudItemTest
 	public void testGetCreatedDate()
 	{
 		Timestamp createdDate = Timestamp.from(Instant.now());
-		CrudItem crudItem = new CrudItemImpl().setCreatedDate(createdDate);
+		CrudItem crudItem = new CrudItemImpl().setCreatedTimestamp(createdDate);
 
 		String createdDate1 = crudItem.getCreatedDate();
 
@@ -48,7 +48,7 @@ public class CrudItemTest
 	public void testGetModifiedDate()
 	{
 		Timestamp modifiedDate = Timestamp.from(Instant.now());
-		CrudItem crudItem = new CrudItemImpl().setModifiedDate(modifiedDate);
+		CrudItem crudItem = new CrudItemImpl().setModifiedTimestamp(modifiedDate);
 
 		String modifiedDate1 = crudItem.getModifiedDate();
 
@@ -63,8 +63,8 @@ public class CrudItemTest
 		Timestamp modifiedDate = createdDate;
 		CrudItemImpl crudItem1 = new CrudItemImpl()
 				.setId(id)
-				.setCreatedDate(createdDate)
-				.setModifiedDate(modifiedDate);
+				.setCreatedTimestamp(createdDate)
+				.setModifiedTimestamp(modifiedDate);
 		
 		String serializedCrudItemImpl = jsonb.toJson(crudItem1);
 

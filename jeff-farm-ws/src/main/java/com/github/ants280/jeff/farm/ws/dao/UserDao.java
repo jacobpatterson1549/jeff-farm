@@ -110,8 +110,8 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 					.setUserName(rs.getString(User.USER_NAME_COLUMN))
 					.setFirstName(rs.getString(User.FIRST_NAME_COLUMN))
 					.setLastName(rs.getString(User.LAST_NAME_COLUMN))
-					.setCreatedDate(rs.getTimestamp(User.CREATED_DATE_COLUMN))
-					.setModifiedDate(rs.getTimestamp(User.MODIFIED_DATE_COLUMN));
+					.setCreatedTimestamp(rs.getTimestamp(User.CREATED_DATE_COLUMN))
+					.setModifiedTimestamp(rs.getTimestamp(User.MODIFIED_DATE_COLUMN));
 		}
 	}
 }

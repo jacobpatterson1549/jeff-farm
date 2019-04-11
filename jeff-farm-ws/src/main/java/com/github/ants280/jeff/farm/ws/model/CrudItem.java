@@ -45,13 +45,8 @@ public abstract class CrudItem<T extends CrudItem>
 		return createdDate;
 	}
 
-	public T setCreatedDate(String createdDate)
-	{
-		this.createdDate = createdDate;
-		return (T) this;
-	}
-
-	public T setCreatedDate(Timestamp createdDate)
+	@JsonbTransient
+	public T setCreatedTimestamp(Timestamp createdDate)
 	{
 		this.createdDate = getFormatedTimestamp(createdDate);
 		return (T) this;
@@ -62,14 +57,8 @@ public abstract class CrudItem<T extends CrudItem>
 		return modifiedDate;
 	}
 
-	public T setModifiedDate(String modifiedDate)
-	{
-		this.modifiedDate = modifiedDate;
-		return (T) this;
-	}
-
 	@JsonbTransient
-	public T setModifiedDate(Timestamp modifiedDate)
+	public T setModifiedTimestamp(Timestamp modifiedDate)
 	{
 		this.modifiedDate = getFormatedTimestamp(modifiedDate);
 		return (T) this;

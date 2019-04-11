@@ -95,8 +95,8 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 					.setId(rs.getInt(Farm.ID_COLUMN))
 					.setName(rs.getString(Farm.NAME_COLUMN))
 					.setLocation(rs.getString(Farm.LOCATION_COLUMN))
-					.setCreatedDate(rs.getTimestamp(Farm.CREATED_DATE_COLUMN))
-					.setModifiedDate(rs.getTimestamp(Farm.MODIFIED_DATE_COLUMN));
+					.setCreatedTimestamp(rs.getTimestamp(Farm.CREATED_DATE_COLUMN))
+					.setModifiedTimestamp(rs.getTimestamp(Farm.MODIFIED_DATE_COLUMN));
 		}
 	}
 }
