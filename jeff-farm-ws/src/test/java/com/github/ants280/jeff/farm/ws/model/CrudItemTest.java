@@ -26,7 +26,7 @@ public class CrudItemTest
 	public void testGetId()
 	{
 		int id = 8;
-		CrudItem crudItem = new CrudItemImpl(id, null, null);
+		CrudItem crudItem = new CrudItemImpl().setId(id);
 
 		int id1 = crudItem.getId();
 
@@ -37,7 +37,7 @@ public class CrudItemTest
 	public void testGetCreatedDate()
 	{
 		Timestamp createdDate = Timestamp.from(Instant.now());
-		CrudItem crudItem = new CrudItemImpl(-1, createdDate, null);
+		CrudItem crudItem = new CrudItemImpl().setCreatedDate(createdDate);
 
 		String createdDate1 = crudItem.getCreatedDate();
 
@@ -48,7 +48,7 @@ public class CrudItemTest
 	public void testGetModifiedDate()
 	{
 		Timestamp modifiedDate = Timestamp.from(Instant.now());
-		CrudItem crudItem = new CrudItemImpl(-1, null, modifiedDate);
+		CrudItem crudItem = new CrudItemImpl().setModifiedDate(modifiedDate);
 
 		String modifiedDate1 = crudItem.getModifiedDate();
 
@@ -61,7 +61,10 @@ public class CrudItemTest
 		int id = 1;
 		Timestamp createdDate = Timestamp.from(Instant.now());
 		Timestamp modifiedDate = createdDate;
-		CrudItemImpl crudItem1 = new CrudItemImpl(id, createdDate, modifiedDate);
+		CrudItemImpl crudItem1 = new CrudItemImpl()
+				.setId(id)
+				.setCreatedDate(createdDate)
+				.setModifiedDate(modifiedDate);
 		
 		String serializedCrudItemImpl = jsonb.toJson(crudItem1);
 
@@ -94,12 +97,9 @@ public class CrudItemTest
 		assertThat(crudItem2.getModifiedDate(), is(nullValue()));
 	}
 	
-	private static class CrudItemImpl extends CrudItem
+	private static class CrudItemImpl extends CrudItem<CrudItemImpl>
 	{
-		public CrudItemImpl(
-				int id,
-				Timestamp createdDate,
-				Timestamp modifiedDate)
+		public CrudItemImpl()
 		{
 		}
 	}
