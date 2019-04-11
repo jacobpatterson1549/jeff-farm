@@ -33,6 +33,7 @@ CREATE PROCEDURE hive_changed_function (
 			queen_color)
 		VALUES (
 			action_type,
+			@user_id,
 			id,
 			farm_id,
 			name,
