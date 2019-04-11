@@ -36,7 +36,7 @@ public class HiveTest
 		assertThat(hive.getId(), is(id));
 		assertThat(hive.getFarmId(), is(farmId));
 		assertThat(hive.getName(), is(name));
-		assertThat(queenColor, is(16711680)); // sanity
+		assertThat(hive.getQueenColorInteger(), is(queenColor));
 		assertThat(hive.getQueenColor(), is("#ff0000")); // [special string conversion for ui]
 	}
 	
