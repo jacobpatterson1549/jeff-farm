@@ -115,25 +115,25 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 		@Override
 		public HiveInspection mapRow(ResultSet rs, int i) throws SQLException
 		{
-			return new HiveInspection()
-					.setId(rs.getInt(HiveInspection.ID_COLUMN))
-					.setHiveId(rs.getInt(HiveInspection.HIVE_ID_COLUMN))
-					.setQueenSeen(rs.getBoolean(HiveInspection.QUEEN_SEEN_COLUMN))
-					.setEggsSeen(rs.getBoolean(HiveInspection.EGGS_SEEN_COLUMN))
-					.setLayingPatternStars(rs.getInt(HiveInspection.LAYING_PATTERN_STARS_COLUMN))
-					.setTemperamentStars(rs.getInt(HiveInspection.TEMPERAMENT_STARS_COLUMN))
-					.setQueenCells(rs.getInt(HiveInspection.QUEEN_CELLS_COLUMN))
-					.setSupersedureCells(rs.getInt(HiveInspection.SUPERSEDURE_CELLS_COLUMN))
-					.setSwarmCells(rs.getInt(HiveInspection.SWARM_CELLS_COLUMN))
-					.setCombBuildingStars(rs.getInt(HiveInspection.COMB_BUILDING_STARS_COLUMN))
-					.setFramesSealedBrood(rs.getInt(HiveInspection.FRAMES_SEALED_BROOD_COLUMN))
-					.setFramesOpenBrood(rs.getInt(HiveInspection.FRAMES_OPEN_BROOD_COLUMN))
-					.setFramesHoney(rs.getInt(HiveInspection.FRAMES_HONEY_COLUMN))
-					.setWeather(rs.getString(HiveInspection.WEATHER_COLUMN))
-					.setTemperatureF(rs.getInt(HiveInspection.TEMPERATURE_F_COLUMN))
-					.setWindSpeedMph(rs.getInt(HiveInspection.WIND_SPEED_MPH_COLUMN))
-					.setCreatedDate(rs.getTimestamp(HiveInspection.CREATED_DATE_COLUMN))
-					.setModifiedDate(rs.getTimestamp(HiveInspection.MODIFIED_DATE_COLUMN));
+			return new HiveInspection(
+					rs.getInt(HiveInspection.ID_COLUMN),
+					rs.getInt(HiveInspection.HIVE_ID_COLUMN),
+					rs.getBoolean(HiveInspection.QUEEN_SEEN_COLUMN),
+					rs.getBoolean(HiveInspection.EGGS_SEEN_COLUMN),
+					rs.getInt(HiveInspection.LAYING_PATTERN_STARS_COLUMN),
+					rs.getInt(HiveInspection.TEMPERAMENT_STARS_COLUMN),
+					rs.getInt(HiveInspection.QUEEN_CELLS_COLUMN),
+					rs.getInt(HiveInspection.SUPERSEDURE_CELLS_COLUMN),
+					rs.getInt(HiveInspection.SWARM_CELLS_COLUMN),
+					rs.getInt(HiveInspection.COMB_BUILDING_STARS_COLUMN),
+					rs.getInt(HiveInspection.FRAMES_SEALED_BROOD_COLUMN),
+					rs.getInt(HiveInspection.FRAMES_OPEN_BROOD_COLUMN),
+					rs.getInt(HiveInspection.FRAMES_HONEY_COLUMN),
+					rs.getString(HiveInspection.WEATHER_COLUMN),
+					rs.getInt(HiveInspection.TEMPERATURE_F_COLUMN),
+					rs.getInt(HiveInspection.WIND_SPEED_MPH_COLUMN),
+					rs.getTimestamp(HiveInspection.CREATED_DATE_COLUMN),
+					rs.getTimestamp(HiveInspection.MODIFIED_DATE_COLUMN));
 		}
 	}
 }

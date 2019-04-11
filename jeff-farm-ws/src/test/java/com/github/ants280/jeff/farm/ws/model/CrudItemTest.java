@@ -1,27 +1,17 @@
 package com.github.ants280.jeff.farm.ws.model;
 
+import static com.github.ants280.jeff.farm.ws.JsonProvider.OBJECT_MAPPER;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
-import org.junit.Before;
 import org.junit.Test;
 
 public class CrudItemTest
 {
-	private Jsonb jsonb;
-	
-	@Before
-	public void setUp() throws Exception
-	{
-		jsonb = JsonbBuilder.create();
-	}
-	
 	@Test
 	public void testGetId()
 	{
@@ -63,7 +53,7 @@ public class CrudItemTest
 		Timestamp modifiedDate = createdDate;
 		CrudItemImpl crudItem1 = new CrudItemImpl(id, createdDate, modifiedDate);
 		
-		String serializedCrudItemImpl = jsonb.toJson(crudItem1);
+		String serializedCrudItemImpl = OBJECT_MAPPER.writeValueAsString(crudItem1);
 
 		assertThat(serializedCrudItemImpl.contains("id"), is(true));
 		assertThat(serializedCrudItemImpl.contains("createdDate"),is(true));
@@ -75,7 +65,7 @@ public class CrudItemTest
 	{
 		String serializedCrudItemImpl = "{\"id\":2}";
 
-		CrudItemImpl crudItem2 = jsonb.fromJson(serializedCrudItemImpl, CrudItemImpl.class);
+		CrudItemImpl crudItem2 = OBJECT_MAPPER.readValue(serializedCrudItemImpl, CrudItemImpl.class);
 
 		assertThat(crudItem2.getId(), is(2));
 		assertThat(crudItem2.getCreatedDate(), is(nullValue()));
@@ -87,7 +77,7 @@ public class CrudItemTest
 	{
 		String serializedCrudItemImpl = "{\"id\":3,\"createdDate\":\"Friday, March 1, 2019 2:18:33 PM PST\",\"modifiedDate\":\"Saturday, March 2, 2019 8:55:17 AM PST\"}";
 
-		CrudItemImpl crudItem2 = jsonb.fromJson(serializedCrudItemImpl, CrudItemImpl.class);
+		CrudItemImpl crudItem2 = OBJECT_MAPPER.readValue(serializedCrudItemImpl, CrudItemImpl.class);
 
 		assertThat(crudItem2.getId(), is(3));
 		assertThat(crudItem2.getCreatedDate(), is(nullValue()));
@@ -101,6 +91,7 @@ public class CrudItemTest
 				Timestamp createdDate,
 				Timestamp modifiedDate)
 		{
+			super(id, createdDate, modifiedDate);
 		}
 	}
 }

@@ -1,6 +1,8 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-public class HiveInspection extends CrudItem<HiveInspection>
+import java.sql.Timestamp;
+
+public class HiveInspection extends CrudItem
 {
 	public static final String HIVE_ID_COLUMN = "hive_id";
 	public static final String QUEEN_SEEN_COLUMN = "queen_seen";
@@ -17,31 +19,63 @@ public class HiveInspection extends CrudItem<HiveInspection>
 	public static final String WEATHER_COLUMN = "weather";
 	public static final String TEMPERATURE_F_COLUMN = "temperature_f";
 	public static final String WIND_SPEED_MPH_COLUMN = "wind_speed_mph";
-	private int hiveId;
-	private boolean queenSeen;
-	private boolean eggsSeen;
-	private int layingPatternStars;
-	private int temperamentStars;
-	private int queenCells;
-	private int supersedureCells;
-	private int swarmCells;
-	private int combBuildingStars;
-	private int framesSealedBrood;
-	private int framesOpenBrood;
-	private int framesHoney;
-	private String weather;
-	private int temperatureF;
-	private int windSpeedMph;
+	private final int hiveId;
+	private final boolean queenSeen;
+	private final boolean eggsSeen;
+	private final int layingPatternStars;
+	private final int temperamentStars;
+	private final int queenCells;
+	private final int supersedureCells;
+	private final int swarmCells;
+	private final int combBuildingStars;
+	private final int framesSealedBrood;
+	private final int framesOpenBrood;
+	private final int framesHoney;
+	private final String weather;
+	private final int temperatureF;
+	private final int windSpeedMph;
+
+	public HiveInspection(
+			int id,
+			int hiveId,
+			boolean queenSeen,
+			boolean eggsSeen,
+			int layingPatternStars,
+			int temperamentStars,
+			int queenCells,
+			int supersedureCells,
+			int swarmCells,
+			int combBuildingStars,
+			int framesSealedBrood,
+			int framesOpenBrood,
+			int framesHoney,
+			String weather,
+			int temperatureF,
+			int windSpeedMph,
+			Timestamp createdDate,
+			Timestamp modifiedDate)
+	{
+		super(id, createdDate, modifiedDate);
+		this.hiveId = hiveId;
+		this.queenSeen = queenSeen;
+		this.eggsSeen = eggsSeen;
+		this.layingPatternStars = layingPatternStars;
+		this.temperamentStars = temperamentStars;
+		this.queenCells = queenCells;
+		this.supersedureCells = supersedureCells;
+		this.swarmCells = swarmCells;
+		this.combBuildingStars = combBuildingStars;
+		this.framesSealedBrood = framesSealedBrood;
+		this.framesOpenBrood = framesOpenBrood;
+		this.framesHoney = framesHoney;
+		this.weather = weather;
+		this.temperatureF = temperatureF;
+		this.windSpeedMph = windSpeedMph;
+	}
 
 	public int getHiveId()
 	{
 		return hiveId;
-	}
-
-	public HiveInspection setHiveId(int hiveId)
-	{
-		this.hiveId = hiveId;
-		return this;
 	}
 
 	public boolean getQueenSeen()
@@ -49,21 +83,9 @@ public class HiveInspection extends CrudItem<HiveInspection>
 		return queenSeen;
 	}
 
-	public HiveInspection setQueenSeen(boolean queenSeen)
-	{
-		this.queenSeen = queenSeen;
-		return this;
-	}
-
 	public boolean getEggsSeen()
 	{
 		return eggsSeen;
-	}
-
-	public HiveInspection setEggsSeen(boolean eggsSeen)
-	{
-		this.eggsSeen = eggsSeen;
-		return this;
 	}
 
 	public int getLayingPatternStars()
@@ -71,21 +93,9 @@ public class HiveInspection extends CrudItem<HiveInspection>
 		return layingPatternStars;
 	}
 
-	public HiveInspection setLayingPatternStars(int layingPatternStars)
-	{
-		this.layingPatternStars = layingPatternStars;
-		return this;
-	}
-
 	public int getTemperamentStars()
 	{
 		return temperamentStars;
-	}
-
-	public HiveInspection setTemperamentStars(int temperamentStars)
-	{
-		this.temperamentStars = temperamentStars;
-		return this;
 	}
 
 	public int getQueenCells()
@@ -93,21 +103,9 @@ public class HiveInspection extends CrudItem<HiveInspection>
 		return queenCells;
 	}
 
-	public HiveInspection setQueenCells(int queenCells)
-	{
-		this.queenCells = queenCells;
-		return this;
-	}
-
 	public int getSupersedureCells()
 	{
 		return supersedureCells;
-	}
-
-	public HiveInspection setSupersedureCells(int supersedureCells)
-	{
-		this.supersedureCells = supersedureCells;
-		return this;
 	}
 
 	public int getSwarmCells()
@@ -115,21 +113,9 @@ public class HiveInspection extends CrudItem<HiveInspection>
 		return swarmCells;
 	}
 
-	public HiveInspection setSwarmCells(int swarmCells)
-	{
-		this.swarmCells = swarmCells;
-		return this;
-	}
-
 	public int getCombBuildingStars()
 	{
 		return combBuildingStars;
-	}
-
-	public HiveInspection setCombBuildingStars(int combBuildingStars)
-	{
-		this.combBuildingStars = combBuildingStars;
-		return this;
 	}
 
 	public int getFramesSealedBrood()
@@ -137,21 +123,9 @@ public class HiveInspection extends CrudItem<HiveInspection>
 		return framesSealedBrood;
 	}
 
-	public HiveInspection setFramesSealedBrood(int framesSealedBrood)
-	{
-		this.framesSealedBrood = framesSealedBrood;
-		return this;
-	}
-
 	public int getFramesOpenBrood()
 	{
 		return framesOpenBrood;
-	}
-
-	public HiveInspection setFramesOpenBrood(int framesOpenBrood)
-	{
-		this.framesOpenBrood = framesOpenBrood;
-		return this;
 	}
 
 	public int getFramesHoney()
@@ -159,21 +133,9 @@ public class HiveInspection extends CrudItem<HiveInspection>
 		return framesHoney;
 	}
 
-	public HiveInspection setFramesHoney(int framesHoney)
-	{
-		this.framesHoney = framesHoney;
-		return this;
-	}
-
 	public String getWeather()
 	{
 		return weather;
-	}
-
-	public HiveInspection setWeather(String weather)
-	{
-		this.weather = weather;
-		return this;
 	}
 
 	public int getTemperatureF()
@@ -181,20 +143,8 @@ public class HiveInspection extends CrudItem<HiveInspection>
 		return temperatureF;
 	}
 
-	public HiveInspection setTemperatureF(int temperatureF)
-	{
-		this.temperatureF = temperatureF;
-		return this;
-	}
-
 	public int getWindSpeedMph()
 	{
 		return windSpeedMph;
-	}
-
-	public HiveInspection setWindSpeedMph(int windSpeedMph)
-	{
-		this.windSpeedMph = windSpeedMph;
-		return this;
 	}
 }

@@ -1,25 +1,61 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-import javax.json.bind.annotation.JsonbTransient;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.sql.Timestamp;
 
-public class Hive extends CrudItem<Hive>
+public class Hive extends CrudItem
 {
 	public static final String FARM_ID_COLUMN = "farm_id";
 	public static final String NAME_COLUMN = "name";
 	public static final String QUEEN_COLOR_COLUMN = "queen_color";
-	private int farmId;
-	private String name;
-	private String queenColor;
+	private final int farmId;
+	private final String name;
+	private final int queenColor;
+
+	public Hive(
+			int id,
+			int farmId,
+			String name,
+			int queenColor,
+			Timestamp createdDate,
+			Timestamp modifiedDate)
+	{
+		super(id, createdDate, modifiedDate);
+		this.farmId = farmId;
+		this.name = name;
+		this.queenColor = queenColor;
+	}
+	
+	@JsonCreator
+	private Hive(
+			int id,
+			int farmId,
+			String name,
+			String queenColor,
+			Timestamp createdDate,
+			Timestamp modifiedDate)
+	{
+		this(id,
+				farmId,
+				name,
+				createHexColor(queenColor),
+				createdDate,
+				modifiedDate);
+	}
+
+	private static int createHexColor(String queenColor)
+	{
+		if (queenColor == null || !queenColor.matches("^#[0-9a-fA-F]{6}$"))
+		{
+			throw new IllegalArgumentException("Invalid color: " + queenColor);
+		}
+		return Integer.parseInt(queenColor.substring(1), 16);
+	}
 
 	public int getFarmId()
 	{
 		return farmId;
-	}
-
-	public Hive setFarmId(int farmId)
-	{
-		this.farmId = farmId;
-		return this;
 	}
 
 	public String getName()
@@ -27,36 +63,14 @@ public class Hive extends CrudItem<Hive>
 		return name;
 	}
 
-	public Hive setName(String name)
-	{
-		this.name = name;
-		return this;
-	}
-
-	public String getQueenColor()
+	@JsonIgnore // used for dao
+	public int getQueenColorInteger()
 	{
 		return queenColor;
 	}
 
-	@JsonbTransient
-	public int getQueenColorInteger()
+	public String getQueenColor()
 	{
-		return Integer.parseInt(queenColor.substring(1), 16);
-	}
-
-	public Hive setQueenColor(String queenColor)
-	{
-		if (queenColor == null || !queenColor.matches("^#[0-9a-fA-F]{6}$"))
-		{
-			throw new IllegalArgumentException("Invalid color: " + queenColor);
-		}
-		this.queenColor = queenColor;
-		return this;
-	}
-
-	@JsonbTransient
-	public Hive setQueenColorInteger(int queenColor)
-	{
-		return this.setQueenColor(String.format("#%06x", queenColor));
+		return String.format("#%06x", queenColor);
 	}
 }

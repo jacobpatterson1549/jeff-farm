@@ -1,13 +1,14 @@
 package com.github.ants280.jeff.farm.ws.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.TimeZone;
-import javax.json.bind.annotation.JsonbTransient;
 
-public abstract class CrudItem<T extends CrudItem>
+public abstract class CrudItem
 {
 	private static final DateTimeFormatter DATE_FORMAT
 			 = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL)
@@ -18,9 +19,16 @@ public abstract class CrudItem<T extends CrudItem>
 	public static final String MODIFIED_DATE_COLUMN = "modified_date";
 	public static final String USER_ID = "user_id";
 	public static final String CAN_DELETE_ITEM = "can_delete";
-	private int id;
-	private String createdDate;
-	private String modifiedDate;
+	private final int id;
+	private final String createdDate;
+	private final String modifiedDate;
+
+	public CrudItem(int id, Timestamp createdDate, Timestamp modifiedDate)
+	{
+		this.id = id;
+		this.createdDate = getFormatedTimestamp(createdDate);
+		this.modifiedDate = getFormatedTimestamp(modifiedDate);
+	}
 
 	private static String getFormatedTimestamp(Timestamp modifiedDate1)
 	{
@@ -34,44 +42,15 @@ public abstract class CrudItem<T extends CrudItem>
 		return id;
 	}
 
-	public T setId(int id)
-	{
-		this.id = id;
-		return (T) this;
-	}
-
+	@JsonProperty(access = Access.READ_ONLY)
 	public String getCreatedDate()
 	{
 		return createdDate;
 	}
 
-	public T setCreatedDate(String createdDate)
-	{
-		this.createdDate = createdDate;
-		return (T) this;
-	}
-
-	public T setCreatedDate(Timestamp createdDate)
-	{
-		this.createdDate = getFormatedTimestamp(createdDate);
-		return (T) this;
-	}
-
+	@JsonProperty(access = Access.READ_ONLY)
 	public String getModifiedDate()
 	{
 		return modifiedDate;
-	}
-
-	public T setModifiedDate(String modifiedDate)
-	{
-		this.modifiedDate = modifiedDate;
-		return (T) this;
-	}
-
-	@JsonbTransient
-	public T setModifiedDate(Timestamp modifiedDate)
-	{
-		this.modifiedDate = getFormatedTimestamp(modifiedDate);
-		return (T) this;
 	}
 }

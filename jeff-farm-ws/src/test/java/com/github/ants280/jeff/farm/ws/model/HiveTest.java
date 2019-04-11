@@ -1,25 +1,15 @@
 package com.github.ants280.jeff.farm.ws.model;
 
+import static com.github.ants280.jeff.farm.ws.JsonProvider.OBJECT_MAPPER;
 import java.io.IOException;
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import org.junit.Before;
 import org.junit.Test;
 
 public class HiveTest
 {
-	private Jsonb jsonb;
-	
-	@Before
-	public void setUp() throws Exception
-	{
-		jsonb = JsonbBuilder.create();
-	}
-	
 	@Test
 	public void testGetters()
 	{
@@ -27,11 +17,7 @@ public class HiveTest
 		int farmId = 2;
 		String name = "name3";
 		int queenColor = 0xFF0000; // red
-		Hive hive = new Hive()
-				.setId(id)
-				.setFarmId(farmId)
-				.setName(name)
-				.setQueenColorInteger(queenColor);
+		Hive hive = new Hive(id, farmId, name, queenColor, null, null);
 		
 		assertThat(hive.getId(), is(id));
 		assertThat(hive.getFarmId(), is(farmId));
@@ -45,7 +31,7 @@ public class HiveTest
 	{
 		String serializedFarm = "{\"id\":2,\"farmId\":3,\"name\":\"name2\",\"queenColor\":\"#ff0000\"}";
 
-		Hive hive = jsonb.fromJson(serializedFarm, Hive.class);
+		Hive hive = OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
 		assertThat(hive.getId(), is(2));
 		assertThat(hive.getFarmId(), is(3));
@@ -60,7 +46,7 @@ public class HiveTest
 	{
 		String serializedFarm = "{\"queenColor\":\"00ff00\"}";
 
-		jsonb.fromJson(serializedFarm, Hive.class);
+		OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
 		fail("expected to fail");
 	}
@@ -70,7 +56,7 @@ public class HiveTest
 	{
 		String serializedFarm = "{\"queenColor\":\"#1000000\"}";
 
-		jsonb.fromJson(serializedFarm, Hive.class);
+		OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
 		fail("expected to fail");
 	}
@@ -80,7 +66,7 @@ public class HiveTest
 	{
 		String serializedFarm = "{\"queenColor\":\"#fff\"}";
 
-		jsonb.fromJson(serializedFarm, Hive.class);
+		OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
 		fail("expected to fail");
 	}
@@ -90,7 +76,7 @@ public class HiveTest
 	{
 		String serializedFarm = "{\"queenColor\":\"#alfred\"}";
 
-		jsonb.fromJson(serializedFarm, Hive.class);
+		OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
 		fail("expected to fail");
 	}
@@ -100,7 +86,7 @@ public class HiveTest
 	{
 		String serializedFarm = "{\"queenColor\":\"#FF0000\"}";
 
-		Hive hive = jsonb.fromJson(serializedFarm, Hive.class);
+		Hive hive = OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
 		assertThat(hive.getQueenColorInteger(), is(0xff0000));
 	}
@@ -110,7 +96,7 @@ public class HiveTest
 	{
 		String serializedFarm = "{\"queenColor\":\"#90FAfa\"}";
 
-		Hive hive = jsonb.fromJson(serializedFarm, Hive.class);
+		Hive hive = OBJECT_MAPPER.readValue(serializedFarm, Hive.class);
 
 		assertThat(hive.getQueenColorInteger(), is(0x90FAFA));
 	}
