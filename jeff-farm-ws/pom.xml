@@ -218,6 +218,7 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.1</version>
 		</dependency>
+		
 		<dependency>
 			<!--org.glassfish.jersey.servlet.ServletContainer-->
 			<groupId>org.glassfish.jersey.containers</groupId>
@@ -229,6 +230,12 @@
 			<artifactId>jersey-hk2</artifactId>
 		</dependency>
 		<dependency>
+			<!--Jsonb,JsonbBuilder-->
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-binding</artifactId>
+		</dependency>
+		
+		<dependency>
 			<!--data access-->
 			<groupId>${jdbc.driver.group.id}</groupId>
 			<artifactId>${jdbc.driver.artifact.id}</artifactId>
@@ -239,18 +246,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>5.1.4.RELEASE</version>
-		</dependency>
-		<dependency>
-			<!--JacksonJaxbJsonProvider-->
-			<groupId>com.fasterxml.jackson.jaxrs</groupId>
-			<artifactId>jackson-jaxrs-json-provider</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-		<dependency>
-			<!--ParameterNamesModule for ObjectMapper-->
-			<groupId>com.fasterxml.jackson.module</groupId>
-			<artifactId>jackson-module-parameter-names</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
 
 		<dependency>
@@ -267,5 +262,6 @@
 			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 </project>

@@ -1,34 +1,33 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-import java.sql.Timestamp;
-
-public class Farm extends CrudItem
+public class Farm extends CrudItem<Farm>
 {
 	public static final String NAME_COLUMN = "name";
 	public static final String LOCATION_COLUMN = "location";
-	private final String name;
-	private final String location;
-
-	public Farm(
-			int id,
-			String name,
-			String location,
-			Timestamp createdDate,
-			Timestamp modifiedDate)
-	{
-		super(id, createdDate, modifiedDate);
-		this.name = name;
-		this.location = location;
-	}
-	
+	private String name;
+	private String location;
 
 	public String getName()
 	{
 		return name;
 	}
 
+	public Farm setName(String name)
+	{
+		this.name = name;
+		return this;
+	}
+
 	public String getLocation()
 	{
 		return location;
 	}
+
+	public Farm setLocation(String location)
+	{
+		this.location = location;
+		return this;
+	}
+
+	
 }

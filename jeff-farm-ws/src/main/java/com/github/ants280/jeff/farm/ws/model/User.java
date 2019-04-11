@@ -1,53 +1,57 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.sql.Timestamp;
-
-public class User extends CrudItem
+public class User extends CrudItem<User>
 {
 	public static final String USER_NAME_COLUMN = "user_name";
 	public static final String PASSWORD_COLUMN = "user_password";
 	public static final String FIRST_NAME_COLUMN = "first_name";
 	public static final String LAST_NAME_COLUMN = "last_name";
-	private final String userName;
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private final String password;
-	private final String firstName;
-	private final String lastName;
-
-	public User(
-			int id,
-			String userName,
-			String password,
-			String firstName,
-			String lastName,
-			Timestamp createdDate,
-			Timestamp modifiedDate)
-	{
-		super(id, createdDate, modifiedDate);
-		this.userName = userName;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
+	private String userName;
+	private String password;
+	private String firstName;
+	private String lastName;
 
 	public String getUserName()
 	{
 		return userName;
 	}
 
+	public User setUserName(String userName)
+	{
+		this.userName = userName;
+		return this;
+	}
+
 	public String getPassword()
 	{
 		return password;
 	}
-	
+
+	public User setPassword(String password)
+	{
+		this.password = password;
+		return this;
+	}
+
 	public String getFirstName()
 	{
 		return firstName;
 	}
 
+	public User setFirstName(String firstName)
+	{
+		this.firstName = firstName;
+		return this;
+	}
+
 	public String getLastName()
 	{
 		return lastName;
+	}
+
+	public User setLastName(String lastName)
+	{
+		this.lastName = lastName;
+		return this;
 	}
 }

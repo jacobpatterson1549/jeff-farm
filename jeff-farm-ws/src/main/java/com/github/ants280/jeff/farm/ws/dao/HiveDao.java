@@ -94,13 +94,13 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 		@Override
 		public Hive mapRow(ResultSet rs, int i) throws SQLException
 		{
-			return new Hive(
-					rs.getInt(Hive.ID_COLUMN),
-					rs.getInt(Hive.FARM_ID_COLUMN),
-					rs.getString(Hive.NAME_COLUMN),
-					rs.getInt(Hive.QUEEN_COLOR_COLUMN),
-					rs.getTimestamp(Hive.CREATED_DATE_COLUMN),
-					rs.getTimestamp(Hive.MODIFIED_DATE_COLUMN));
+			return new Hive()
+					.setId(rs.getInt(Hive.ID_COLUMN))
+					.setFarmId(rs.getInt(Hive.FARM_ID_COLUMN))
+					.setName(rs.getString(Hive.NAME_COLUMN))
+					.setQueenColorInteger(rs.getInt(Hive.QUEEN_COLOR_COLUMN))
+					.setCreatedDate(rs.getTimestamp(Hive.CREATED_DATE_COLUMN))
+					.setModifiedDate(rs.getTimestamp(Hive.MODIFIED_DATE_COLUMN));
 		}
 	}
 }

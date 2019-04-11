@@ -91,12 +91,12 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 		@Override
 		public Farm mapRow(ResultSet rs, int i) throws SQLException
 		{
-			return new Farm(
-					rs.getInt(Farm.ID_COLUMN),
-					rs.getString(Farm.NAME_COLUMN),
-					rs.getString(Farm.LOCATION_COLUMN),
-					rs.getTimestamp(Farm.CREATED_DATE_COLUMN),
-					rs.getTimestamp(Farm.MODIFIED_DATE_COLUMN));
+			return new Farm()
+					.setId(rs.getInt(Farm.ID_COLUMN))
+					.setName(rs.getString(Farm.NAME_COLUMN))
+					.setLocation(rs.getString(Farm.LOCATION_COLUMN))
+					.setCreatedDate(rs.getTimestamp(Farm.CREATED_DATE_COLUMN))
+					.setModifiedDate(rs.getTimestamp(Farm.MODIFIED_DATE_COLUMN));
 		}
 	}
 }

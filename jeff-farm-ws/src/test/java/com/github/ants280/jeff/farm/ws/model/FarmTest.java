@@ -1,9 +1,10 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-import static com.github.ants280.jeff.farm.ws.JsonProvider.OBJECT_MAPPER;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -16,7 +17,7 @@ public class FarmTest
 	public void testGetName()
 	{
 		String name = "boring farm";
-		Farm farm = new Farm(-1, name, null, null, null);
+		Farm farm = new Farm().setName(name);
 
 		String name1 = farm.getName();
 
@@ -27,7 +28,7 @@ public class FarmTest
 	public void testGetLocation()
 	{
 		String location = "somewhere";
-		Farm farm = new Farm(-1, null, location, null, null);
+		Farm farm = new Farm().setLocation(location);
 
 		String location1 = farm.getLocation();
 
@@ -38,7 +39,7 @@ public class FarmTest
 	public void testGetCreatedDate()
 	{
 		Timestamp createdDate = Timestamp.from(Instant.now());
-		Farm farm = new Farm(-1, null, null, createdDate, null);
+		Farm farm = new Farm().setCreatedDate(createdDate);
 
 		String createdDate1 = farm.getCreatedDate();
 
@@ -49,7 +50,7 @@ public class FarmTest
 	public void testGetModifiedDate()
 	{
 		Timestamp modifiedDate = Timestamp.from(Instant.now());
-		Farm farm = new Farm(-1, null, null, null, modifiedDate);
+		Farm farm = new Farm().setModifiedDate(modifiedDate);
 
 		String modifiedDate1 = farm.getModifiedDate();
 
@@ -64,9 +65,16 @@ public class FarmTest
 		String location = "location1";
 		Timestamp createdDate = Timestamp.from(Instant.now());
 		Timestamp modifiedDate = createdDate;
-		Farm farm1 = new Farm(id, name, location, createdDate, modifiedDate);
+		Farm farm1 = new Farm()
+				.setId(id)
+				.setName(name)
+				.setLocation(location)
+				.setCreatedDate(createdDate)
+				.setModifiedDate(modifiedDate);
+				
+		Jsonb jsonb = JsonbBuilder.create();
 		
-		String serializedFarm = OBJECT_MAPPER.writeValueAsString(farm1);
+		String serializedFarm = jsonb.toJson(farm1);
 
 		assertThat(serializedFarm.contains("id"), is(true));
 		assertThat(serializedFarm.contains("name"), is(true));

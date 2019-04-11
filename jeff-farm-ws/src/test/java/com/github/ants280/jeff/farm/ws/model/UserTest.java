@@ -1,14 +1,24 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-import static com.github.ants280.jeff.farm.ws.JsonProvider.OBJECT_MAPPER;
 import java.io.IOException;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import org.junit.Before;
 import org.junit.Test;
 
 public class UserTest
 {
+	private Jsonb jsonb;
+	
+	@Before
+	public void setUp() throws Exception
+	{
+		jsonb = JsonbBuilder.create();
+	}
+
 	@Test
 	public void testSerialize() throws IOException
 	{
@@ -17,9 +27,14 @@ public class UserTest
 		String password = "crAAZYkat17";
 		String firstName = "Bob";
 		String lastName = "Dole";
-		User user = new User(id, userName, password, firstName, lastName, null, null);
+		User user = new User()
+				.setId(id)
+				.setUserName(userName)
+				.setPassword(password)
+				.setFirstName(firstName)
+				.setLastName(lastName);
 		
-		String serializedUser = OBJECT_MAPPER.writeValueAsString(user);
+		String serializedUser = jsonb.toJson(user);
 
 		assertThat(serializedUser.contains("id"), is(true));
 		assertThat(serializedUser.contains("userName"), is(true));
@@ -34,7 +49,7 @@ public class UserTest
 	{
 		String serializedUser = "{\"id\":1996,\"userName\":\"daPrez\",\"firstName\":\"Bob\",\"lastName\":\"Dole\"}";
 
-		User user = OBJECT_MAPPER.readValue(serializedUser, User.class);
+		User user = jsonb.fromJson(serializedUser, User.class);
 
 		assertThat(user.getId(), is(1996));
 		assertThat("no password needs to be provided to update a User", user.getPassword(), is(nullValue()));
@@ -48,7 +63,7 @@ public class UserTest
 	{
 		String serializedUser = "{\"id\":1996,\"userName\":\"daPrez\",\"password\":\"crAAZYkat17\",\"firstName\":\"Bob\",\"lastName\":\"Dole\"}";
 
-		User user = OBJECT_MAPPER.readValue(serializedUser, User.class);
+		User user = jsonb.fromJson(serializedUser, User.class);
 
 		assertThat("password should be deserialized when a User is created from the ui", user.getPassword(), is("crAAZYkat17"));
 	}

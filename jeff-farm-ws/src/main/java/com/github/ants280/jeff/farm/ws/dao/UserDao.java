@@ -105,14 +105,13 @@ public class UserDao extends StoredProcedureDao implements CrudDao<User>
 		@Override
 		public User mapRow(ResultSet rs, int i) throws SQLException
 		{
-			return new User(
-					rs.getInt(User.ID_COLUMN),
-					rs.getString(User.USER_NAME_COLUMN),
-					null, // password
-					rs.getString(User.FIRST_NAME_COLUMN),
-					rs.getString(User.LAST_NAME_COLUMN),
-					rs.getTimestamp(User.CREATED_DATE_COLUMN),
-					rs.getTimestamp(User.MODIFIED_DATE_COLUMN));
+			return new User()
+					.setId(rs.getInt(User.ID_COLUMN))
+					.setUserName(rs.getString(User.USER_NAME_COLUMN))
+					.setFirstName(rs.getString(User.FIRST_NAME_COLUMN))
+					.setLastName(rs.getString(User.LAST_NAME_COLUMN))
+					.setCreatedDate(rs.getTimestamp(User.CREATED_DATE_COLUMN))
+					.setModifiedDate(rs.getTimestamp(User.MODIFIED_DATE_COLUMN));
 		}
 	}
 }
