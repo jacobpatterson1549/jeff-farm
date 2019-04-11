@@ -97,7 +97,7 @@ public class CrudItemTest
 		assertThat(crudItem2.getModifiedDate(), is(nullValue()));
 	}
 	
-	private static class CrudItemImpl extends CrudItem<CrudItemImpl>
+	public static class CrudItemImpl extends CrudItem<CrudItemImpl>
 	{
 		public CrudItemImpl()
 		{
