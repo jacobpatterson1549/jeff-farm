@@ -49,6 +49,7 @@ $farms_audit$
 	BEGIN
 		INSERT INTO farms_audit (
 				action_type
+				, user_id
 				, id
 				, name
 				, location)
@@ -90,7 +91,7 @@ $farms_audit$
 	BEGIN
 		INSERT INTO farms_audit (
 				action_type
-				, @user_id
+				, user_id
 				, id
 				, name
 				, location)

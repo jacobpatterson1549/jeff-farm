@@ -1,20 +1,14 @@
--- DELIMITER $$
-
-DROP PROCEDURE IF EXISTS create_hive$$
-
-CREATE PROCEDURE create_hive (
+CREATE OR REPLACE FUNCTION create_hive(
 	IN farm_id INT,
 	IN name VARCHAR(255),
-	IN queen_color BIT(24),
-	OUT id INT)
-
-	BEGIN
-		INSERT INTO hives (farm_id, name, queen_color)
+	IN queen_color BIT(24))
+RETURNS INT
+AS
+$body$
+	INSERT INTO hives (farm_id, name, queen_color)
 		SELECT farm_id, name, queen_color
 		FROM farms AS f
-		WHERE f.id = farm_id;
-
-		SET id = LAST_INSERT_ID();
-	END$$
-
--- DELIMITER ;
+		WHERE f.id = farm_id
+		RETURNING id;
+$body$
+LANGUAGE SQL;

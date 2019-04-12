@@ -1,14 +1,9 @@
--- DELIMITER $$
-
-DROP PROCEDURE IF EXISTS delete_farm$$
-
-CREATE PROCEDURE delete_farm (
-	IN id INT)
-
-	BEGIN
-		DELETE f
-		FROM farms AS f
-		WHERE f.id = id;
-	END$$
-
--- DELIMITER ;
+CREATE OR REPLACE FUNCTION delete_farm(IN id INT)
+RETURNS VOID
+AS
+$body$
+	DELETE
+	FROM farms AS f
+	WHERE f.id = id;
+$body$
+LANGUAGE SQL;

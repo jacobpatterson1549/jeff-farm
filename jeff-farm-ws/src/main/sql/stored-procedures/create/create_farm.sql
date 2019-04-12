@@ -1,17 +1,11 @@
--- DELIMITER $$
-
-DROP PROCEDURE IF EXISTS create_farm$$
-
-CREATE PROCEDURE create_farm (
+CREATE OR REPLACE FUNCTION create_farm(
 	IN name VARCHAR(255),
-	IN location VARCHAR(255),
-	OUT id INT)
-
-	BEGIN
-		INSERT INTO farms (name, location)
-		VALUES (name, location);
-
-		SET id = LAST_INSERT_ID();
-	END$$
-
--- DELIMITER ;
+	IN location VARCHAR(255))
+RETURNS INT
+AS
+$body$
+	INSERT INTO farms (name, location)
+	VALUES (name, location)
+	RETURNING id;
+$body$
+LANGUAGE SQL;

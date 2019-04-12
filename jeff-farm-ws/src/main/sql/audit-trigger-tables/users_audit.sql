@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users_audit
 	action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	-- do not audit password
 	first_name VARCHAR(255),
-	last_name VARCHAR(255),
+	last_name VARCHAR(255)
 );
 
 

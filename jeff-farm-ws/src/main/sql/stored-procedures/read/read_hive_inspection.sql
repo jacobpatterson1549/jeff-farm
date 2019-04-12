@@ -1,12 +1,8 @@
---DELIMITER $$
-
-DROP PROCEDURE IF EXISTS read_hive_inspection$$
-
-CREATE PROCEDURE read_hive_inspection (
-	IN id INT)
-
-	BEGIN
-		SELECT hi.id
+CREATE OR REPLACE FUNCTION read_hive_inspection(IN id INT)
+RETURNS SETOF hive_inspections
+AS
+$body$
+	SELECT hi.id
 			, hi.hive_id
 			, hi.queen_seen
 			, hi.eggs_seen
@@ -25,7 +21,6 @@ CREATE PROCEDURE read_hive_inspection (
 			, hi.created_date
 			, hi.modified_date
 		FROM hive_inspections AS hi
-		WHERE hi.id = id;
-	END$$
-
--- DELIMITER ;
+	WHERE hi.id = id;
+$body$
+LANGUAGE SQL;

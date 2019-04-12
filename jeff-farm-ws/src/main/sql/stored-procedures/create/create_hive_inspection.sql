@@ -1,8 +1,4 @@
--- DELIMITER $$
-
-DROP PROCEDURE IF EXISTS create_hive_inspection$$
-
-CREATE PROCEDURE create_hive_inspection (
+CREATE OR REPLACE FUNCTION create_hive_inspection(
 	IN hive_id INT,
 	IN queen_seen BIT(1),
 	IN eggs_seen BIT(1),
@@ -17,11 +13,11 @@ CREATE PROCEDURE create_hive_inspection (
 	IN frames_honey INT,
 	IN weather VARCHAR(255),
 	IN temperature_f INT,
-	IN wind_speed_mph INT,
-	OUT id INT)
-
-	BEGIN
-		INSERT INTO hive_inspections (hive_id
+	IN wind_speed_mph INT)
+RETURNS INT
+AS
+$body$
+	INSERT INTO hive_inspections (hive_id
 			, queen_seen
 			, eggs_seen
 			, laying_pattern_stars
@@ -52,9 +48,7 @@ CREATE PROCEDURE create_hive_inspection (
 			, temperature_f
 			, wind_speed_mph
 		FROM hives AS h
-		WHERE h.id = hive_id;
-
-		SET id = LAST_INSERT_ID();
-	END$$
-
--- DELIMITER ;
+		WHERE h.id = hive_id
+		RETURNING id;
+$body$
+LANGUAGE SQL;

@@ -1,17 +1,13 @@
--- DELIMITER $$
-
-DROP PROCEDURE IF EXISTS update_farm$$
-
-CREATE PROCEDURE update_farm (
+CREATE OR REPLACE FUNCTION update_farm(
 	IN id INT,
 	IN name VARCHAR(255),
 	IN location VARCHAR(255))
-
-	BEGIN
-		UPDATE farms AS f
-		SET f.name = name,
-			f.location = location
+RETURNS VOID
+AS
+$body$
+	UPDATE farms AS f
+		SET name = name,
+			location = location
 		WHERE f.id = id;
-	END$$
-
--- DELIMITER ;
+$body$
+LANGUAGE SQL;

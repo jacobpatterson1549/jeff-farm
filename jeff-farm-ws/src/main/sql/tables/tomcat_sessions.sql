@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS tomcat_sessions
 	max_inactive INT NOT NULL,
 	last_access BIGINT NOT NULL,
 	app_name VARCHAR(255),
-	session_data BLOB,
-	KEY kapp_name(app_name)
+	session_data BYTEA
+
+-- 	KEY kapp_name(app_name)
 );
