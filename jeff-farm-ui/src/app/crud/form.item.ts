@@ -10,11 +10,11 @@ export class FormItem {
     }
 }
 
-// TODO: It would be nice if FormItemType were a member of FormItem.
 export enum FormItemType {
     String,
     Boolean,
     Integer,
     Stars,
     Color,
+    Password,
 }

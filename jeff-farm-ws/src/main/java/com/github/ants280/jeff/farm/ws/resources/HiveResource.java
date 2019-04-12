@@ -30,9 +30,9 @@ public class HiveResource
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createHive(Hive hive)
 	{
-		hiveDao.create(hive);
+		int id = hiveDao.create(hive);
 
-		return Response.ok().build();
+		return Response.ok(id).build();
 	}
 
 	@GET

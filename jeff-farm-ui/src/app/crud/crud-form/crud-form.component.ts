@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { CrudService } from '../crud.service';
-import { NavigationService } from '../../navigation.service';
 
 import { CrudItem } from '../crud.item';
 import { FormType } from '../form.type';
 import { FormItem, FormItemType } from '../form.item';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'crud-form',
@@ -22,24 +22,22 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   formItems: FormItem[];
   submitValue: string;
   formItemType = FormItemType; // used for the ngSwitch in the template
+  passwordFormItems: FormItem[];
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
-    private crudService: CrudService<T>,
-    private navigationService: NavigationService) {
-
-      this.crudService.setRoute(this.route);
-    }
+    private crudService: CrudService<T>) { }
 
   ngOnInit() {
     this.initFormType();
     this.submitValue = (this.formType === FormType.Update) ? 'Update' : 'Submit';
     this.initCrudItem()
-      .subscribe(_ => this.formItems = this.crudItem.getFormItems());
+      .subscribe(_ => this.initFormItems());
   }
 
   private initFormType() {
-    const urlParts: string[] = this.navigationService.getUrl().split('/');
+    const urlParts: string[] = this.router.url.split('/');
     const endPath: string = urlParts[urlParts.length - 1];
     switch (endPath) {
       case 'create':
@@ -65,18 +63,60 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
     }
   }
 
-  submitForm() {
-    for (let formItem of this.formItems) {
-      this.crudItem[formItem.name] = formItem.value;
+  private initFormItems() {
+    this.formItems = this.crudItem.getFormItems();
+
+    this.passwordFormItems = [];
+    for (var index = 0; index < this.formItems.length; index++) {
+
+      const formItem: FormItem = this.formItems[index];
+
+      if (formItem.type == FormItemType.Password) {
+
+        const formItem2: FormItem = new FormItem(formItem.name + ' (Verify)', formItem.type, formItem.value);
+
+        index++;
+        this.formItems.splice(index, 0, formItem2);
+
+        this.passwordFormItems.push(formItem, formItem2);
+      }
+    }
+  }
+
+  passwordsMatch(): boolean {
+
+    for (var index = 0; index < this.passwordFormItems.length; index += 2) {
+
+      if (this.passwordFormItems[index].value != this.passwordFormItems[index + 1].value) {
+
+        return false;
+      }
     }
 
-    let result: Observable<any>;
+    return true;
+  }
+
+  submitForm() {
+    for (let formItem of this.formItems) {
+      
+      // exclude added passworditems
+      const passwordFormItemIndex = this.passwordFormItems.indexOf(formItem);
+      if (passwordFormItemIndex < 0 || passwordFormItemIndex % 2 == 0) {
+
+        this.crudItem[formItem.name] = formItem.value;
+      }
+    }
+
     if (this.formType == FormType.Create) {
-      result = this.crudService.post(this.crudItem);
+      this.crudService.post(this.crudItem)
+        .subscribe((id: Number) => {
+          const relativeLocation: string = (this.route.data && !this.route.data['redirectToParent']) ? '..' : `../${id}`;
+          this.router.navigate([relativeLocation], { relativeTo: this.route });
+        });
     }
     if (this.formType == FormType.Update) {
-      result = this.crudService.put(this.crudItem);
+      this.crudService.put(this.crudItem)
+        .subscribe(_ => this.router.navigate(['..'], { relativeTo: this.route }) );
     }
-    result.subscribe(_ => this.navigationService.goBack() );
   }
 }

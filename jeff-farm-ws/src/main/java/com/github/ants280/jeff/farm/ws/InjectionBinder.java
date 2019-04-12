@@ -4,8 +4,11 @@ import com.github.ants280.jeff.farm.ws.dao.ConnectionDao;
 import com.github.ants280.jeff.farm.ws.dao.FarmDao;
 import com.github.ants280.jeff.farm.ws.dao.HiveDao;
 import com.github.ants280.jeff.farm.ws.dao.HiveInspectionDao;
+import com.github.ants280.jeff.farm.ws.dao.LoginDao;
+import com.github.ants280.jeff.farm.ws.dao.UserDao;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.inject.Singleton;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -18,10 +21,24 @@ public class InjectionBinder extends AbstractBinder
 	protected void configure()
 	{
 		bind(getDataSource()).to(DataSource.class);
-		bindAsContract(ConnectionDao.class);
-		bindAsContract(FarmDao.class);
-		bindAsContract(HiveDao.class);
-		bindAsContract(HiveInspectionDao.class);
+		bindAsSingleton(PasswordGenerator.class);
+		bindAsSingleton(ConnectionDao.class);
+		bindAsSingleton(UserDao.class); // has PasswordGenerator
+		bindAsSingleton(LoginDao.class); // has UserDao
+		bindAsSingleton(FarmDao.class);
+		bindAsSingleton(HiveDao.class);
+		bindAsSingleton(HiveInspectionDao.class);
+	}
+	
+	private void bindAsSingleton(Class singletonClass)
+	{
+		if (!singletonClass.isAnnotationPresent(Singleton.class))
+		{
+			throw new IllegalArgumentException(
+					singletonClass.getSimpleName() + " must be singleton");
+		}
+		
+		bindAsContract(singletonClass).in(Singleton.class);
 	}
 
 	private DataSource getDataSource()
@@ -32,7 +49,7 @@ public class InjectionBinder extends AbstractBinder
 			// https://stackoverflow.com/questions/23393913/how-can-i-make-resource-annotation-work-with-tomcat
 			Context initCtx = new InitialContext();
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");
-			return (DataSource) envCtx.lookup("jdbc/jeff-farm-data-source");
+			return (DataSource) envCtx.lookup("jdbc/jeff-farm-data-source"); // also in pom.xml ${resource.data.source.name}
 		}
 		catch (NamingException ex)
 		{

@@ -8,9 +8,7 @@ import { CrudDetailComponent } from './crud-detail/crud-detail.component';
 import { CrudListComponent } from './crud-list/crud-list.component';
 import { CrudViewComponent } from './crud-view/crud-view.component';
 import { CrudFormComponent } from './crud-form/crud-form.component';
-
 import { CrudRoutingModule } from './crud-routing.module';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,13 +22,11 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule,
     CrudRoutingModule,
   ],
   exports: [
     CommonModule,
     FormsModule,
-    HttpClientModule,
     CrudHomeComponent,
   ]
 })

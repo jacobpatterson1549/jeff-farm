@@ -30,9 +30,9 @@ public class HiveInspectionResource
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createHiveInspection(HiveInspection hiveInspection)
 	{
-		hiveInspectionDao.create(hiveInspection);
+		int id = hiveInspectionDao.create(hiveInspection);
 
-		return Response.ok().build();
+		return Response.ok(id).build();
 	}
 
 	@GET

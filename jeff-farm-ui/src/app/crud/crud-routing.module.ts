@@ -7,8 +7,7 @@ import { CrudFormComponent } from './crud-form/crud-form.component';
 import { CrudViewComponent } from './crud-view/crud-view.component';
 import { CrudDetailComponent } from './crud-detail/crud-detail.component';
 
-
-const crudRoutes: Routes = [
+const routes: Routes = [
     {
         path: '',
         component: CrudHomeComponent,
@@ -29,7 +28,7 @@ const crudRoutes: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forChild(crudRoutes)
+        RouterModule.forChild(routes)
     ],
     exports: [
         RouterModule

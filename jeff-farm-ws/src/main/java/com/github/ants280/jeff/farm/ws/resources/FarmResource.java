@@ -30,9 +30,9 @@ public class FarmResource
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createFarm(Farm farm)
 	{
-		farmDao.create(farm);
+		int id = farmDao.create(farm);
 
-		return Response.ok().build();
+		return Response.ok(id).build();
 	}
 
 	@GET

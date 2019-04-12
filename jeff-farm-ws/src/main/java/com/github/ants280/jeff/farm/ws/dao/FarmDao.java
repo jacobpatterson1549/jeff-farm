@@ -8,17 +8,20 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.sql.DataSource;
-import org.jvnet.hk2.annotations.Service;
 import org.springframework.jdbc.core.RowMapper;
 
-@Service
+@Singleton
 public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 {
+	private final LoginDao loginDao;
+
 	@Inject
-	public FarmDao(DataSource dataSource)
+	public FarmDao(DataSource dataSource, LoginDao loginDao)
 	{
 		super(dataSource);
+		this.loginDao = loginDao;
 	}
 
 	@Override
@@ -29,7 +32,8 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 				Arrays.asList(
 						new Parameter(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
 						new Parameter(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)),
-				Farm.ID_COLUMN);
+				Farm.ID_COLUMN,
+				loginDao.getUserId());
 	}
 
 	@Override
@@ -59,7 +63,8 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 				Arrays.asList(
 						new Parameter(Farm.ID_COLUMN, farm.getId(), Types.INTEGER),
 						new Parameter(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
-						new Parameter(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)));
+						new Parameter(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)),
+				loginDao.getUserId());
 	}
 
 	@Override
@@ -68,7 +73,8 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 		this.executeUpdate(
 				"delete_farm",
 				Collections.singletonList(
-						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)));
+						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)),
+				loginDao.getUserId());
 	}
 	
 	@Override
@@ -85,12 +91,12 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 		@Override
 		public Farm mapRow(ResultSet rs, int i) throws SQLException
 		{
-			return new Farm(
-					rs.getInt(Farm.ID_COLUMN),
-					rs.getString(Farm.NAME_COLUMN),
-					rs.getString(Farm.LOCATION_COLUMN),
-					rs.getTimestamp(Farm.CREATED_DATE_COLUMN),
-					rs.getTimestamp(Farm.MODIFIED_DATE_COLUMN));
+			return new Farm()
+					.setId(rs.getInt(Farm.ID_COLUMN))
+					.setName(rs.getString(Farm.NAME_COLUMN))
+					.setLocation(rs.getString(Farm.LOCATION_COLUMN))
+					.setCreatedTimestamp(rs.getTimestamp(Farm.CREATED_DATE_COLUMN))
+					.setModifiedTimestamp(rs.getTimestamp(Farm.MODIFIED_DATE_COLUMN));
 		}
 	}
 }

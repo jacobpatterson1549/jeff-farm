@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<artifactId>jeff-farm</artifactId>
-		<groupId>com.github.ants280</groupId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
 	<groupId>com.github.ants280</groupId>
 	<artifactId>jeff-farm-ws</artifactId>
 	<name>jeff-farm-ws</name>
@@ -14,10 +9,25 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-		<jackson.version>2.9.8</jackson.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<sonar.java.libraries>target/classes</sonar.java.libraries>
+
+		<jdbc.driver.name>postgresql</jdbc.driver.name>
+		<jdbc.driver.group.id>org.postgresql</jdbc.driver.group.id>
+		<jdbc.driver.artifact.id>postgresql</jdbc.driver.artifact.id>
+		<jdbc.driver.version>42.2.5</jdbc.driver.version>
+		<jdbc.driver.class.name>org.postgresql.Driver</jdbc.driver.class.name>
+		<jdbc.host>localhost</jdbc.host>
+		<jdbc.port>5432</jdbc.port>
+		<jdbc.database>jeff_farm_db</jdbc.database>
+		<jdbc.username>farmer</jdbc.username>
+		<jdbc.password>flint5+0N3</jdbc.password>
+		<jdbc.url>jdbc:${jdbc.driver.name}://${jdbc.host}:${jdbc.port}/${jdbc.database}?serverTimezone=UTC</jdbc.url>
+		
+		<resource.data.source.name>jdbc/jeff-farm-data-source</resource.data.source.name> <!-- also in InjectionBinder.java -->
+		<resource.data.source.auth>Container</resource.data.source.auth>
+		<resource.data.source.type>javax.sql.DataSource</resource.data.source.type>
 	</properties>
 	<build>
 		<!-- mvn -DremoveSnapshot versions:set && mvn clean package && mvn versions:set -DnextSnapshot=true -->
@@ -112,6 +122,45 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<!-- mvn sql:execute -->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.5</version>
+				<dependencies>
+					<dependency>
+						<groupId>${jdbc.driver.group.id}</groupId>
+						<artifactId>${jdbc.driver.artifact.id}</artifactId>
+						<version>${jdbc.driver.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<driver>${jdbc.driver.class.name}</driver>
+					<url>${jdbc.url}</url>
+					<username>${jdbc.username}</username>
+					<password>${jdbc.password}</password>
+					<settingsKey>sensibleKey</settingsKey>
+					<delimiter>$$$</delimiter>
+					<autocommit>true</autocommit>
+					<srcFiles>
+						<!--Order of files matters for foreign key constraints.-->
+						<srcFile>${project.basedir}/src/main/sql/tables/users.sql</srcFile>
+						<srcFile>${project.basedir}/src/main/sql/tables/roles.sql</srcFile>
+						<srcFile>${project.basedir}/src/main/sql/tables/tomcat_sessions.sql</srcFile>
+						<srcFile>${project.basedir}/src/main/sql/tables/user_roles.sql</srcFile>
+						<srcFile>${project.basedir}/src/main/sql/tables/farms.sql</srcFile>
+						<srcFile>${project.basedir}/src/main/sql/tables/hives.sql</srcFile>
+						<srcFile>${project.basedir}/src/main/sql/tables/hive_inspections.sql</srcFile>
+					</srcFiles>
+					<fileset>
+						<basedir>${project.basedir}/src/main/sql</basedir>
+						<includes>
+							<include>audit-trigger-tables/*.sql</include>
+							<include>stored-procedures/**/*.sql</include>
+						</includes>
+					</fileset>
+				</configuration>
+			</plugin>
+			<plugin>
 				<!-- (from super-pom) -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -156,6 +205,20 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
+			<!--MessageDigestCredentialHandler,AuthenticatorBase,RealmBase-->
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>9.0.16</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<!--HttpServletRequest-->
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		
+		<dependency>
 			<!--org.glassfish.jersey.servlet.ServletContainer-->
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet</artifactId>
@@ -165,6 +228,12 @@
 			<groupId>org.glassfish.jersey.inject</groupId>
 			<artifactId>jersey-hk2</artifactId>
 		</dependency>
+		<dependency>
+			<!--Jsonb,JsonbBuilder-->
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-binding</artifactId>
+		</dependency>
+		
 		<dependency>
 			<!--data access-->
 			<groupId>${jdbc.driver.group.id}</groupId>
@@ -177,19 +246,7 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>5.1.4.RELEASE</version>
 		</dependency>
-		<dependency>
-			<!--JacksonJaxbJsonProvider-->
-			<groupId>com.fasterxml.jackson.jaxrs</groupId>
-			<artifactId>jackson-jaxrs-json-provider</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-		<dependency>
-			<!--ParameterNamesModule for ObjectMapper-->
-			<groupId>com.fasterxml.jackson.module</groupId>
-			<artifactId>jackson-module-parameter-names</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-		
+
 		<dependency>
 			<!--test api--> 
 			<groupId>junit</groupId>
@@ -197,5 +254,13 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<!-- object mocking framework -->
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.10.19</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 </project>

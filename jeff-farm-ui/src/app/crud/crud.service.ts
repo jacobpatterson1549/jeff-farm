@@ -1,13 +1,9 @@
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { CrudItem } from './crud.item';
 import { ActivatedRoute } from '@angular/router';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 export interface CrudChild {
   pluralName: string;
@@ -38,71 +34,46 @@ export abstract class CrudService<T extends CrudItem> {
     return pluralName.substring(0, pluralName.length - 1);
   }
 
-  genBaseUrl(): string {
-    return `http://localhost:8080/jeff-farm-ws/${this.getBaseUrl()}`;
-  }
-
-  post(t: T): Observable<any> {
-    return this.http.post<Object>(this.genBaseUrl(), t, httpOptions)
-      .pipe(
-        catchError(this.handleError),
-        );
+  post(t: T): Observable<Number> {
+    return this.http.post<Number>(this.getBaseUrl(), t);
   }
 
   get(): Observable<T> {
-    const url = `${this.genBaseUrl()}/${this.getId()}`;
-    return this.http.get<T>(url, httpOptions)
+    const url = `${this.getBaseUrl()}/${this.getId()}`;
+    return this.http.get<T>(url)
       .pipe(
         map((data: T) => Object.assign(this.createCrudItem(), data)),
-        catchError(this.handleError),
         );
   }
 
   getList(): Observable<T[]> {
-    return this.http.get<T[]>(this.genBaseUrl(), httpOptions)
+    return this.http.get<T[]>(this.getBaseUrl())
       .pipe(
         map((dataList: T[]) => dataList
           .map(data => Object.assign(this.createCrudItem(), data))),
-        catchError(this.handleError),
         );
   }
 
   put(t: T): Observable<Object> {
-    return this.http.put(this.genBaseUrl(), t, httpOptions)
-      .pipe(
-        catchError(this.handleError),
-        );
+    return this.http.put(this.getBaseUrl(), t);
   }
 
   delete(): Observable<Object> {
-    const url = `${this.genBaseUrl()}/${this.getId()}`;
-    return this.http.delete(url, httpOptions)
-      .pipe(
-        catchError(this.handleError),
-        );
+    const url = `${this.getBaseUrl()}/${this.getId()}`;
+    return this.http.delete(url);
   }
 
   canDelete(): Observable<boolean> {
-    const url = `${this.genBaseUrl()}/${this.getId()}/canDelete`;
-    return this.http.get<boolean>(url, httpOptions)
-      .pipe(
-        catchError(this.handleError),
-      );
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    // console.error(error);
-    // alert(error.message);
-    return throwError('error');
+    const url = `${this.getBaseUrl()}/${this.getId()}/canDelete`;
+    return this.http.get<boolean>(url);
   }
 
   protected getRouteParam(paramName: string): string {
-    const param: string = this.route.snapshot.paramMap.get(paramName);
+    const param: string = this.route == null ? null : this.route.snapshot.paramMap.get(paramName);
     return param;
   }
 
-  getId(): number {
-    return +this.getRouteParam('id');
-    // return this.navigationService.getRouteParam('id');
+  getId(): string {
+    return this.getRouteParam('id') || '';
   }
 }

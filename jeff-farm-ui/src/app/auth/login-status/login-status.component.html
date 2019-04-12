@@ -1,0 +1,5 @@
+<nav *ngIf="authService.isLoggedIn">
+  <span *ngIf="user">Logged in as {{user.userName}}</span>
+  <button (click)="viewAccount()" routerLinkActive="active">View Account</button>
+  <button (click)="logout()" routerLinkActive="active">Logout</button>
+</nav>

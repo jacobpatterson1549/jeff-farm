@@ -8,17 +8,20 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.sql.DataSource;
-import org.jvnet.hk2.annotations.Service;
 import org.springframework.jdbc.core.RowMapper;
 
-@Service
+@Singleton
 public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 {
+	private final LoginDao loginDao;
+
 	@Inject
-	public HiveDao(DataSource dataSource)
+	public HiveDao(DataSource dataSource, LoginDao loginDao)
 	{
 		super(dataSource);
+		this.loginDao = loginDao;
 	}
 
 	@Override
@@ -30,7 +33,8 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 						new Parameter(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
 						new Parameter(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
 						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.BIT)),
-				Hive.ID_COLUMN);
+				Hive.ID_COLUMN,
+				loginDao.getUserId());
 	}
 
 	@Override
@@ -62,7 +66,8 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 						new Parameter(Hive.ID_COLUMN, hive.getId(), Types.INTEGER),
 						new Parameter(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
 						new Parameter(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
-						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.BIT)));
+						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.BIT)),
+				loginDao.getUserId());
 	}
 
 	@Override
@@ -71,7 +76,8 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 		this.executeUpdate(
 				"delete_hive",
 				Collections.singletonList(
-						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)));
+						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)),
+				loginDao.getUserId());
 	}
 	
 	@Override
@@ -88,13 +94,13 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 		@Override
 		public Hive mapRow(ResultSet rs, int i) throws SQLException
 		{
-			return new Hive(
-					rs.getInt(Hive.ID_COLUMN),
-					rs.getInt(Hive.FARM_ID_COLUMN),
-					rs.getString(Hive.NAME_COLUMN),
-					rs.getInt(Hive.QUEEN_COLOR_COLUMN),
-					rs.getTimestamp(Hive.CREATED_DATE_COLUMN),
-					rs.getTimestamp(Hive.MODIFIED_DATE_COLUMN));
+			return new Hive()
+					.setId(rs.getInt(Hive.ID_COLUMN))
+					.setFarmId(rs.getInt(Hive.FARM_ID_COLUMN))
+					.setName(rs.getString(Hive.NAME_COLUMN))
+					.setQueenColorInteger(rs.getInt(Hive.QUEEN_COLOR_COLUMN))
+					.setCreatedTimestamp(rs.getTimestamp(Hive.CREATED_DATE_COLUMN))
+					.setModifiedTimestamp(rs.getTimestamp(Hive.MODIFIED_DATE_COLUMN));
 		}
 	}
 }

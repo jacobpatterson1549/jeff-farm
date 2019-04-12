@@ -1,3 +1,19 @@
+.formItem {
+  margin-bottom: .5em;
+  display: block;
+}
+
 label {
+  width: 10em;
+  display: inline-block;
+  text-align: right;
   margin-right: 1em;
+}
+
+div {
+  display: inline;
+}
+
+input.ng-invalid:not(form)  {
+  border: 1px solid red;
 }
