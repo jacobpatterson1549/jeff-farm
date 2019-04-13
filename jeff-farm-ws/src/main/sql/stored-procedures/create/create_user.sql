@@ -6,14 +6,16 @@ CREATE OR REPLACE FUNCTION create_user(
 RETURNS INT
 AS
 $body$
-	INSERT INTO users (user_name, user_password, first_name, last_name)
-	VALUES (user_name, user_password, first_name, last_name);
-
-	INSERT INTO user_roles (user_name, role_name)
-	VALUES (user_name, 'user');
-
-	SELECT u.id
-	FROM users AS u
-	WHERE u.user_name = user_name;
+	WITH new_user AS (
+		INSERT INTO users (user_name, user_password, first_name, last_name)
+		VALUES (user_name, user_password, first_name, last_name)
+		RETURNING id
+	)
+	, new_user_role AS (
+		INSERT INTO user_roles (user_name, role_name)
+		VALUES (user_name, 'user')
+	)
+	SELECT id
+	FROM new_user;
 $body$
 LANGUAGE SQL;
