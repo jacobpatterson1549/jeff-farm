@@ -5,8 +5,10 @@ CREATE TABLE IF NOT EXISTS users_audit
 (
 	audit_id SERIAL PRIMARY KEY,
 	action_type CHAR(1) NOT NULL, -- i (insert), b (before update), a (after update), d (delete)
-	user_id INT NOT NULL,
+	user_id INT NOT NULL, -- the user making the change
 	action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	id INT, -- the id of the user being changed
+	user_name VARCHAR(20),
 	-- do not audit password
 	first_name VARCHAR(255),
 	last_name VARCHAR(255)

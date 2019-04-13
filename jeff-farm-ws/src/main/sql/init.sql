@@ -17,4 +17,4 @@ CREATE USER farmer with PASSWORD 'flint5+0N3';
 -- ./asadmin add-library /usr/share/java/mysql-connector-java-8.0.15.jar
 
 -- SETUP:
-INSERT IGNORE INTO roles (role_name) VALUES ('user');
+INSERT INTO roles (role_name) VALUES ('user');
