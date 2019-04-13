@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION read_hive(IN id INT)
-RETURNS SETOF hives
+RETURNS hives
 AS
 $body$
 	SELECT h.id

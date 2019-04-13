@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION read_user(IN user_name VARCHAR(20))
-RETURNS SETOF users
+RETURNS users
 AS
 $body$
 	SELECT u.id

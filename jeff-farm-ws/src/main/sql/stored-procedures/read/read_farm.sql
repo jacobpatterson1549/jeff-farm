@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION read_farm(IN id INT)
-RETURNS SETOF farms
+RETURNS farms
 AS
 $body$
 	SELECT f.id

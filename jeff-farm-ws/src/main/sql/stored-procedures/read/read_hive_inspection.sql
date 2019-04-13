@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION read_hive_inspection(IN id INT)
-RETURNS SETOF hive_inspections
+RETURNS hive_inspections
 AS
 $body$
 	SELECT hi.id
