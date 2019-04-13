@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION read_users(IN user_name VARCHAR(20))
+CREATE OR REPLACE FUNCTION read_user(IN user_name VARCHAR(20))
 RETURNS SETOF users
 AS
 $body$
