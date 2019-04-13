@@ -25,7 +25,7 @@ $farms_audit$
 			, location)
 		VALUES (
 			'i'
-			, @user_id
+			, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 			, NEW.id
 			, NEW.name
 			, NEW.location);
@@ -55,7 +55,7 @@ $farms_audit$
 				, location)
 			VALUES (
 				'b'
-				, @user_id
+				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, OLD.id
 				, OLD.name
 				, OLD.location);
@@ -67,7 +67,7 @@ $farms_audit$
 				, location)
 			VALUES (
 				'a'
-				, @user_id
+				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, NEW.id
 				, NEW.name
 				, NEW.location);
@@ -97,7 +97,7 @@ $farms_audit$
 				, location)
 			VALUES (
 				'd'
-				, @user_id
+				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, OLD.id
 				, OLD.name
 				, OLD.location);

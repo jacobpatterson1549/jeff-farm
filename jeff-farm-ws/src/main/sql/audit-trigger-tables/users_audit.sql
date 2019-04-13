@@ -26,7 +26,7 @@ $users_audit$
 			, last_name)
 		VALUES (
 			'i'
-			, @user_id
+			, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 			, NEW.id
 			, NEW.user_name
 			, NEW.first_name
@@ -58,7 +58,7 @@ $users_audit$
 			, last_name)
 		VALUES (
 			'b'
-			, @user_id
+			, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 			, OLD.id
 			, OLD.user_name
 			, OLD.first_name
@@ -72,7 +72,7 @@ $users_audit$
 			, last_name)
 		VALUES (
 			'a'
-			, @user_id
+			, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 			, NEW.id
 			, NEW.user_name
 			, NEW.first_name
@@ -104,7 +104,7 @@ $users_audit$
 			, last_name)
 		VALUES (
 			'd'
-			, @user_id
+			, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 			, OLD.id
 			, OLD.user_name
 			, OLD.first_name

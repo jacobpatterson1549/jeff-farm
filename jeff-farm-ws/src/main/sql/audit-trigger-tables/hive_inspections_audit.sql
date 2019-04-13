@@ -52,7 +52,7 @@ $hive_inspections_audit$
 				)
 			VALUES (
 				'i'
-				, @user_id
+				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, NEW.id
 				, NEW.hive_id
 				, NEW.queen_seen
@@ -109,7 +109,7 @@ $hive_inspections_audit$
 				)
 			VALUES (
 				'b'
-				, @user_id
+				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, OLD.id
 				, OLD.hive_id
 				, OLD.queen_seen
@@ -149,7 +149,7 @@ $hive_inspections_audit$
 				)
 			VALUES (
 				'a'
-				, @user_id
+				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, NEW.id
 				, NEW.hive_id
 				, NEW.queen_seen
@@ -207,7 +207,7 @@ $hive_inspections_audit$
 				)
 			VALUES (
 				'd'
-				, @user_id
+				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, OLD. id
 				, OLD.hive_id
 				, OLD.queen_seen

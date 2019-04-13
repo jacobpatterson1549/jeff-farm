@@ -20,7 +20,8 @@ public class StoredProcedureDao
 
 	private static final String STORED_PROCEDURE_NAME = "storedProcedureName";
 	private static final String RETURN_UPDATE_COUNT = "UPDATE_COUNT";
-	private static final String USER_ID = "user_id";
+	// TODO: pull "jeff_farm_db" from ${jdbc.database} maven property
+	private static final String USER_ID = "jeff_farm_db.user_id";
 	private static final SqlParameter RETURN_UPDATE_COUNT_SQL_PARAMETER
 			= new SqlReturnUpdateCount(RETURN_UPDATE_COUNT);
 
@@ -181,7 +182,7 @@ public class StoredProcedureDao
 
 	private void setUserId(int userId)
 	{
-		jdbcTemplate.execute("SET @user_id = " + userId);
+		jdbcTemplate.execute(String.format("SET @%s = %d", USER_ID, userId));
 	}
 
 	public static class Parameter<T>

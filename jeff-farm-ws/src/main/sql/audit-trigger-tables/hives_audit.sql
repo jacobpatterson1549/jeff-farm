@@ -26,7 +26,7 @@ $hives_audit$
 			queen_color)
 		VALUES (
 			action_type,
-			@user_id,
+			CAST(current_setting('jeff_farm_db.user_id') AS INT),
 			NEW.id,
 			NEW.farm_id,
 			NEW. name,
@@ -57,7 +57,7 @@ $hives_audit$
 				, queen_color)
 			VALUES (
 				'b'
-				, @user_id
+				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, OLD.id
 				, OLD.name
 				, OLD.queen_color);
@@ -69,7 +69,7 @@ $hives_audit$
 				, queen_color)
 			VALUES (
 				'a'
-				, @user_id
+				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, NEW.id
 				, NEW.name
 				, NEW.queen_color);
@@ -99,7 +99,7 @@ $hives_audit$
 				, queen_color)
 			VALUES (
 				'd'
-				, @user_id
+				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, OLD.id
 				, OLD.name
 				, OLD.queen_color);
