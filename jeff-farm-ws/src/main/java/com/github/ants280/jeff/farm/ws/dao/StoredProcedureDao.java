@@ -182,7 +182,7 @@ public class StoredProcedureDao
 
 	private void setUserId(int userId)
 	{
-		jdbcTemplate.execute(String.format("SET @%s = %d", USER_ID, userId));
+		jdbcTemplate.execute(String.format("SET %s = %d", USER_ID, userId));
 	}
 
 	public static class Parameter<T>
