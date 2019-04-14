@@ -10,10 +10,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.sql.DataSource;
-import org.springframework.jdbc.core.RowMapper;
 
 @Singleton
-public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<HiveInspection>
+public class HiveInspectionDao extends SqlFunctionDao implements CrudDao<HiveInspection>
 {
 	private final LoginDao loginDao;
 
@@ -56,7 +55,7 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 				"read_hive_inspection",
 				Collections.singletonList(
 						new Parameter(HiveInspection.ID_COLUMN, id, Types.INTEGER)),
-				new ResultSetExtractor());
+				this::mapRow);
 	}
 
 	@Override
@@ -66,7 +65,7 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 				"read_hive_inspections",
 				Collections.singletonList(
 						new Parameter(HiveInspection.HIVE_ID_COLUMN, parentId, Types.INTEGER)),
-				new ResultSetExtractor());
+				this::mapRow);
 	}
 
 	@Override
@@ -110,30 +109,27 @@ public class HiveInspectionDao extends StoredProcedureDao implements CrudDao<Hiv
 		return true;
 	}
 
-	private static class ResultSetExtractor implements RowMapper<HiveInspection>
+	@Override
+	public HiveInspection mapRow(ResultSet rs) throws SQLException
 	{
-		@Override
-		public HiveInspection mapRow(ResultSet rs, int i) throws SQLException
-		{
-			return new HiveInspection()
-					.setId(rs.getInt(HiveInspection.ID_COLUMN))
-					.setHiveId(rs.getInt(HiveInspection.HIVE_ID_COLUMN))
-					.setQueenSeen(rs.getBoolean(HiveInspection.QUEEN_SEEN_COLUMN))
-					.setEggsSeen(rs.getBoolean(HiveInspection.EGGS_SEEN_COLUMN))
-					.setLayingPatternStars(rs.getInt(HiveInspection.LAYING_PATTERN_STARS_COLUMN))
-					.setTemperamentStars(rs.getInt(HiveInspection.TEMPERAMENT_STARS_COLUMN))
-					.setQueenCells(rs.getInt(HiveInspection.QUEEN_CELLS_COLUMN))
-					.setSupersedureCells(rs.getInt(HiveInspection.SUPERSEDURE_CELLS_COLUMN))
-					.setSwarmCells(rs.getInt(HiveInspection.SWARM_CELLS_COLUMN))
-					.setCombBuildingStars(rs.getInt(HiveInspection.COMB_BUILDING_STARS_COLUMN))
-					.setFramesSealedBrood(rs.getInt(HiveInspection.FRAMES_SEALED_BROOD_COLUMN))
-					.setFramesOpenBrood(rs.getInt(HiveInspection.FRAMES_OPEN_BROOD_COLUMN))
-					.setFramesHoney(rs.getInt(HiveInspection.FRAMES_HONEY_COLUMN))
-					.setWeather(rs.getString(HiveInspection.WEATHER_COLUMN))
-					.setTemperatureF(rs.getInt(HiveInspection.TEMPERATURE_F_COLUMN))
-					.setWindSpeedMph(rs.getInt(HiveInspection.WIND_SPEED_MPH_COLUMN))
-					.setCreatedTimestamp(rs.getTimestamp(HiveInspection.CREATED_DATE_COLUMN))
-					.setModifiedTimestamp(rs.getTimestamp(HiveInspection.MODIFIED_DATE_COLUMN));
-		}
+		return new HiveInspection()
+				.setId(rs.getInt(HiveInspection.ID_COLUMN))
+				.setHiveId(rs.getInt(HiveInspection.HIVE_ID_COLUMN))
+				.setQueenSeen(rs.getBoolean(HiveInspection.QUEEN_SEEN_COLUMN))
+				.setEggsSeen(rs.getBoolean(HiveInspection.EGGS_SEEN_COLUMN))
+				.setLayingPatternStars(rs.getInt(HiveInspection.LAYING_PATTERN_STARS_COLUMN))
+				.setTemperamentStars(rs.getInt(HiveInspection.TEMPERAMENT_STARS_COLUMN))
+				.setQueenCells(rs.getInt(HiveInspection.QUEEN_CELLS_COLUMN))
+				.setSupersedureCells(rs.getInt(HiveInspection.SUPERSEDURE_CELLS_COLUMN))
+				.setSwarmCells(rs.getInt(HiveInspection.SWARM_CELLS_COLUMN))
+				.setCombBuildingStars(rs.getInt(HiveInspection.COMB_BUILDING_STARS_COLUMN))
+				.setFramesSealedBrood(rs.getInt(HiveInspection.FRAMES_SEALED_BROOD_COLUMN))
+				.setFramesOpenBrood(rs.getInt(HiveInspection.FRAMES_OPEN_BROOD_COLUMN))
+				.setFramesHoney(rs.getInt(HiveInspection.FRAMES_HONEY_COLUMN))
+				.setWeather(rs.getString(HiveInspection.WEATHER_COLUMN))
+				.setTemperatureF(rs.getInt(HiveInspection.TEMPERATURE_F_COLUMN))
+				.setWindSpeedMph(rs.getInt(HiveInspection.WIND_SPEED_MPH_COLUMN))
+				.setCreatedTimestamp(rs.getTimestamp(HiveInspection.CREATED_DATE_COLUMN))
+				.setModifiedTimestamp(rs.getTimestamp(HiveInspection.MODIFIED_DATE_COLUMN));
 	}
 }

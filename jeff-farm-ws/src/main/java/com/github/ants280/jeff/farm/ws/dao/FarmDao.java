@@ -10,10 +10,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.sql.DataSource;
-import org.springframework.jdbc.core.RowMapper;
 
 @Singleton
-public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
+public class FarmDao extends SqlFunctionDao implements CrudDao<Farm>
 {
 	private final LoginDao loginDao;
 
@@ -43,7 +42,7 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 				"read_farm",
 				Collections.singletonList(
 						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)),
-				new ResultSetExtractor());
+				this::mapRow);
 	}
 
 	@Override
@@ -52,7 +51,7 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 		return this.executeReadList(
 				"read_farms",
 				Collections.emptyList(),
-				new ResultSetExtractor());
+				this::mapRow);
 	}
 
 	@Override
@@ -86,17 +85,14 @@ public class FarmDao extends StoredProcedureDao implements CrudDao<Farm>
 				Farm.CAN_DELETE_ITEM);
 	}
 
-	public static class ResultSetExtractor implements RowMapper<Farm>
+	@Override
+	public Farm mapRow(ResultSet rs) throws SQLException
 	{
-		@Override
-		public Farm mapRow(ResultSet rs, int i) throws SQLException
-		{
-			return new Farm()
-					.setId(rs.getInt(Farm.ID_COLUMN))
-					.setName(rs.getString(Farm.NAME_COLUMN))
-					.setLocation(rs.getString(Farm.LOCATION_COLUMN))
-					.setCreatedTimestamp(rs.getTimestamp(Farm.CREATED_DATE_COLUMN))
-					.setModifiedTimestamp(rs.getTimestamp(Farm.MODIFIED_DATE_COLUMN));
-		}
+		return new Farm()
+				.setId(rs.getInt(Farm.ID_COLUMN))
+				.setName(rs.getString(Farm.NAME_COLUMN))
+				.setLocation(rs.getString(Farm.LOCATION_COLUMN))
+				.setCreatedTimestamp(rs.getTimestamp(Farm.CREATED_DATE_COLUMN))
+				.setModifiedTimestamp(rs.getTimestamp(Farm.MODIFIED_DATE_COLUMN));
 	}
 }

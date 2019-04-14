@@ -10,10 +10,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.sql.DataSource;
-import org.springframework.jdbc.core.RowMapper;
 
 @Singleton
-public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
+public class HiveDao extends SqlFunctionDao implements CrudDao<Hive>
 {
 	private final LoginDao loginDao;
 
@@ -44,7 +43,7 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 				"read_hive",
 				Collections.singletonList(
 						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)),
-				new ResultSetExtractor());
+				this::mapRow);
 	}
 
 	@Override
@@ -54,7 +53,7 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 				"read_hives",
 				Collections.singletonList(
 						new Parameter(Hive.FARM_ID_COLUMN, parentId, Types.INTEGER)),
-				new ResultSetExtractor());
+				this::mapRow);
 	}
 
 	@Override
@@ -89,18 +88,15 @@ public class HiveDao extends StoredProcedureDao implements CrudDao<Hive>
 				Hive.CAN_DELETE_ITEM);
 	}
 
-	private static class ResultSetExtractor implements RowMapper<Hive>
+	@Override
+	public Hive mapRow(ResultSet rs) throws SQLException
 	{
-		@Override
-		public Hive mapRow(ResultSet rs, int i) throws SQLException
-		{
-			return new Hive()
-					.setId(rs.getInt(Hive.ID_COLUMN))
-					.setFarmId(rs.getInt(Hive.FARM_ID_COLUMN))
-					.setName(rs.getString(Hive.NAME_COLUMN))
-					.setQueenColorInteger(rs.getInt(Hive.QUEEN_COLOR_COLUMN))
-					.setCreatedTimestamp(rs.getTimestamp(Hive.CREATED_DATE_COLUMN))
-					.setModifiedTimestamp(rs.getTimestamp(Hive.MODIFIED_DATE_COLUMN));
-		}
+		return new Hive()
+				.setId(rs.getInt(Hive.ID_COLUMN))
+				.setFarmId(rs.getInt(Hive.FARM_ID_COLUMN))
+				.setName(rs.getString(Hive.NAME_COLUMN))
+				.setQueenColorInteger(rs.getInt(Hive.QUEEN_COLOR_COLUMN))
+				.setCreatedTimestamp(rs.getTimestamp(Hive.CREATED_DATE_COLUMN))
+				.setModifiedTimestamp(rs.getTimestamp(Hive.MODIFIED_DATE_COLUMN));
 	}
 }
