@@ -5,24 +5,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import javax.sql.DataSource;
 
 public class SqlFunctionDao
 {
 	private final DataSource dataSource;
-	private static final String STORED_PROCEDURE_NAME = "storedProcedureName";
-	private static final String RETURN_UPDATE_COUNT = "UPDATE_COUNT";
 	// TODO: pull "jeff_farm_db" from ${jdbc.database} maven property
 	private static final String USER_ID = "jeff_farm_db.user_id";
-//	private static final SqlParameter RETURN_UPDATE_COUNT_SQL_PARAMETER
-//			= new SqlReturnUpdateCount(RETURN_UPDATE_COUNT);
 
 	public SqlFunctionDao(DataSource dataSource)
 	{
@@ -270,14 +263,28 @@ public class SqlFunctionDao
 
 	private void setUserId(int userId)
 	{
-		String sql = String.format("SET %s = %d", USER_ID, userId);
 		// TODO: Write function for setting user id
+		String sql = String.format("SET %s = ?", USER_ID);
+
 		try (Connection connection = dataSource.getConnection();
-			Statement statement = connection.createStatement())
+			PreparedStatement preparedStatement = connection.prepareStatement(sql))
 		{
-			boolean execute = statement.execute(sql);
-			//TODO: check this return value.
-			assert execute;
+			preparedStatement.setInt(0, userId);
+
+			boolean resultSetProduced = preparedStatement.execute();
+			assert !resultSetProduced;
+
+			if (preparedStatement.getWarnings() != null)
+			{
+				throw new SqlDaoException(preparedStatement.getWarnings());
+			}
+
+			if ((int) preparedStatement.getUpdateCount() != 1)
+			{
+				throw new SqlDaoException(String.format(
+					"Updated %d rows during SET call.  Should not have.",
+					preparedStatement.getUpdateCount()));
+			}
 		}
 		catch (SQLException ex)
 		{
