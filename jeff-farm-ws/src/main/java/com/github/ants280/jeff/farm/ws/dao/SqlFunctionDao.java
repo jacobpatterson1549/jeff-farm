@@ -111,7 +111,7 @@ public class SqlFunctionDao
 		List<Parameter> inParameters)
 		throws SQLException
 	{
-		int index = 0;
+		int index = 1;
 		for (Parameter parameter : inParameters)
 		{
 			setParameter(preparedStatement, parameter, index++);
@@ -269,7 +269,7 @@ public class SqlFunctionDao
 		try (Connection connection = dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql))
 		{
-			preparedStatement.setInt(0, userId);
+			preparedStatement.setInt(1, userId);
 
 			boolean resultSetProduced = preparedStatement.execute();
 			assert !resultSetProduced;
