@@ -158,7 +158,7 @@ public class SqlFunctionDao
 		String functionName,
 		List<Parameter> inParameters)
 	{
-		return String.format("SELECT %s(%s)",
+		return String.format("SELECT * FROM %s(%s)",
 			functionName,
 			String.join(", ", Collections.nCopies(inParameters.size(), "?")));
 	}
