@@ -205,17 +205,11 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
-			<!--MessageDigestCredentialHandler,AuthenticatorBase,RealmBase-->
+			<!--HttpServletRequest,MessageDigestCredentialHandler,AuthenticatorBase,RealmBase-->
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-catalina</artifactId>
 			<version>9.0.16</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<!--HttpServletRequest-->
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.1</version>
 		</dependency>
 		<dependency>
 			<!--database access-->
