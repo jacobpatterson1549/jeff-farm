@@ -217,6 +217,12 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.1</version>
 		</dependency>
+		<dependency>
+			<!--database access-->
+			<groupId>${jdbc.driver.group.id}</groupId>
+			<artifactId>${jdbc.driver.artifact.id}</artifactId>
+			<version>${jdbc.driver.version}</version>
+		</dependency>
 		
 		<dependency>
 			<!--org.glassfish.jersey.servlet.ServletContainer-->
@@ -234,19 +240,6 @@
 			<artifactId>jersey-media-json-binding</artifactId>
 		</dependency>
 		
-		<dependency>
-			<!--data access-->
-			<groupId>${jdbc.driver.group.id}</groupId>
-			<artifactId>${jdbc.driver.artifact.id}</artifactId>
-			<version>${jdbc.driver.version}</version>
-		</dependency>
-		<dependency>
-			<!--data access-->
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>5.1.4.RELEASE</version>
-		</dependency>
-
 		<dependency>
 			<!--test api--> 
 			<groupId>junit</groupId>
