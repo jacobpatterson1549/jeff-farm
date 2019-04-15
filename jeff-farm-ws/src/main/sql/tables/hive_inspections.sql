@@ -4,8 +4,8 @@
 CREATE TABLE IF NOT EXISTS hive_inspections
 	( id SERIAL PRIMARY KEY
 	, hive_id INT REFERENCES hives (id)
-	, queen_seen BIT(1)
-	, eggs_seen BIT(1)
+	, queen_seen BOOLEAN
+	, eggs_seen BOOLEAN
 	, laying_pattern_stars INT
 	, temperament_stars INT
 	, queen_cells INT

@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS hive_inspections_audit
 	, action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	, id INT
 	, hive_id INT
-	, queen_seen BIT(1)
-	, eggs_seen BIT(1)
+	, queen_seen BOOLEAN
+	, eggs_seen BOOLEAN
 	, laying_pattern_stars INT
 	, temperament_stars INT
 	, queen_cells INT

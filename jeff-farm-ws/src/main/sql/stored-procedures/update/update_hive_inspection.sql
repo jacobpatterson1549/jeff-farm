@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION update_hive_inspection
 	( IN id INT
-	, IN queen_seen BIT(1)
-	, IN eggs_seen BIT(1)
+	, IN queen_seen BOOLEAN
+	, IN eggs_seen BOOLEAN
 	, IN laying_pattern_stars INT
 	, IN temperament_stars INT
 	, IN queen_cells INT
