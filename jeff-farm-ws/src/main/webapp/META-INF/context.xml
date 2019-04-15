@@ -33,20 +33,4 @@
 		</Realm>
 	</Realm>
 
-	<Manager className="org.apache.catalina.session.PersistentManager">
-		<Store className="org.apache.catalina.session.JDBCStore"
-			   driverName="${jdbc.driver.class.name}"
-			   resourceName="${resource.data.source.name}"
-			   connectionURL="${jdbc.url}"
-			   connectionName="${jdbc.username}"
-			   connectionPassword="${jdbc.password}"
-			   sessionAppCol="app_name"
-			   sessionDataCol="session_data"
-			   sessionIdCol="session_id"
-			   sessionLastAccessedCol="last_access"
-			   sessionMaxInactiveCol="max_inactive"
-			   sessionTable="tomcat_sessions"
-			   sessionValidCol="valid_session"/>
-	</Manager>
-
 </Context>

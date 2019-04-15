@@ -28,12 +28,6 @@
 			<web-resource-name>secured-endpoints</web-resource-name>
 			<url-pattern>/farms/*</url-pattern>
 			<url-pattern>/user/*</url-pattern>
-			<http-method>GET</http-method>
-			<http-method>POST</http-method>
-			<http-method>PUT</http-method>
-			<http-method>DELETE</http-method>
-			<http-method>HEAD</http-method>
-			<http-method>OPTIONS</http-method>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>user</role-name>
