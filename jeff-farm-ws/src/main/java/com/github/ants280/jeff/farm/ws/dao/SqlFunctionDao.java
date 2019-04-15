@@ -189,7 +189,6 @@ public class SqlFunctionDao
 				preparedStatement.setString(index, (String) parameter.getValue());
 				break;
 			case Types.INTEGER:
-			case Types.BIT:
 				preparedStatement.setInt(index, (int) parameter.getValue());
 				break;
 			default:

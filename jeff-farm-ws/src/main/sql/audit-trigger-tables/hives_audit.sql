@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS hives_audit
 	, id INT
 	, farm_id INT
 	, name VARCHAR(255)
-	, queen_color BIT(24)
+	, queen_color INT
 	);
 
 

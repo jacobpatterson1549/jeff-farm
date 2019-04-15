@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION create_hive
 	( IN farm_id INT
 	, IN name VARCHAR(255)
-	, IN queen_color BIT(24)
+	, IN queen_color INT
 	, OUT id INT
 	)
 AS

@@ -31,7 +31,7 @@ public class HiveDao extends SqlFunctionDao implements CrudDao<Hive>
 				Arrays.asList(
 						new Parameter(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
 						new Parameter(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
-						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.BIT)),
+						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.INTEGER)),
 				Hive.ID_COLUMN,
 				loginDao.getUserId());
 	}
@@ -65,7 +65,7 @@ public class HiveDao extends SqlFunctionDao implements CrudDao<Hive>
 						new Parameter(Hive.ID_COLUMN, hive.getId(), Types.INTEGER),
 						new Parameter(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
 						new Parameter(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
-						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.BIT)),
+						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.INTEGER)),
 				loginDao.getUserId());
 	}
 

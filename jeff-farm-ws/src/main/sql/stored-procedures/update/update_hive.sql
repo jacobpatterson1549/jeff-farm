@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION update_hive
 	( IN id INT
 	, IN name VARCHAR(255)
-	, IN queen_color BIT(24)
+	, IN queen_color INT
 	)
 RETURNS VOID
 AS
