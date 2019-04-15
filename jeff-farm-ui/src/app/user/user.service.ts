@@ -4,19 +4,15 @@ import { CrudService, CrudChild } from '../crud/crud.service';
 import { User } from './user';
 import { Observable, of } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
-export class UserService extends CrudService<User> implements OnInit {
-
-  // private authService: AuthService
+export class UserService extends CrudService<User> {
 
   constructor(httpClient: HttpClient, private authService: AuthService) {
 
     super(httpClient);
-  }
-
-  ngOnInit(): void {
-    // this.authService = this.injector.get(AuthService);
   }
 
   createCrudItem(): User {
@@ -37,6 +33,11 @@ export class UserService extends CrudService<User> implements OnInit {
 
   getList(): Observable<User[]> {
     throw new Error('Not Allowed');
+  }
+
+  delete(): Observable<Object> {
+
+    return super.delete().pipe(tap(_ => this.authService.logout() ));
   }
 
   canDelete(): Observable<boolean> {
