@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 @Singleton
 public class ConnectionDao
 {
-	private static final String SQL_SELECT_1 = "";
+	private static final String SQL_SELECT_1 = "SELECT 1";
 	private final DataSource dataSource;
 
 	@Inject
