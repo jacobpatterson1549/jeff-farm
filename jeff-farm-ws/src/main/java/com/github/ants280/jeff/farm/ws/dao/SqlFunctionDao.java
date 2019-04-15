@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.sql.DataSource;
 
 public class SqlFunctionDao
@@ -24,237 +24,99 @@ public class SqlFunctionDao
 	}
 
 	public void executeUpdate(
-			String storedProcedureName,
+			String functionName,
 			List<Parameter> inParameters,
 			int userId)
 	{
 		this.setUserId(userId);
 
-		String sql = createFunctionCall(storedProcedureName, inParameters);
-
-		try (Connection connection = dataSource.getConnection();
-			CallableStatement callableStatement = connection.prepareCall(sql))
-		{
-			setParameters(callableStatement, inParameters);
-
-			boolean resultSetProduced = callableStatement.execute();
-			assert !resultSetProduced;
-
-			if (callableStatement.getWarnings() != null)
-			{
-				throw new SqlDaoException(callableStatement.getWarnings());
-			}
-
-			if (callableStatement.getUpdateCount() != 1)
-			{
-				throw new SqlDaoException(String.format(
-					"Did not updated 1 item.  Updated %d items.",
-					callableStatement.getUpdateCount()));
-			}
-		}
-		catch (SQLException ex)
-		{
-			throw new SqlDaoException(ex);
-		}
+		this.executeSingle(
+			functionName,
+			inParameters,
+			resultSet -> (Void) null);
 	}
 
 	public int executeCreate(
-			String storedProcedureName,
+			String functionName,
 			List<Parameter> inParameters,
 			String outParameterName,
 			int userId)
 	{
 		this.setUserId(userId);
 
-		String sql = createFunctionCall(storedProcedureName, inParameters);
-
-		try (Connection connection = dataSource.getConnection();
-			CallableStatement callableStatement = connection.prepareCall(sql))
-		{
-			setParameters(callableStatement, inParameters);
-
-			boolean resultSetProduced = callableStatement.execute();
-			assert !resultSetProduced;
-
-			if (callableStatement.getWarnings() != null)
-			{
-				throw new SqlDaoException(callableStatement.getWarnings());
-			}
-
-			if (callableStatement.getUpdateCount() != 1)
-			{
-				throw new SqlDaoException(String.format(
-					"Did not create 1 item.  Created %s items.",
-					callableStatement.getUpdateCount()));
-			}
-
-			return callableStatement.getInt(outParameterName);
-		}
-		catch (SQLException ex)
-		{
-			throw new SqlDaoException(ex);
-		}
-	}
-
-	private static String createFunctionCall(
-		String functionName,
-		List<Parameter> inParameters)
-	{
-		return String.format("SELECT %s(%s)",
+		return this.executeSingle(
 			functionName,
-			inParameters.stream()
-				.map(parameter -> "?")
-				.collect(Collectors.joining(", ")));
-	}
-
-	private static void setParameters(
-		PreparedStatement preparedStatement,
-		List<Parameter> inParameters)
-		throws SQLException
-	{
-		int index = 1;
-		for (Parameter parameter : inParameters)
-		{
-			setParameter(preparedStatement, parameter, index++);
-		}
-	}
-
-	private static void setParameter(
-		PreparedStatement preparedStatement,
-		Parameter parameter,
-		int index)
-		throws SQLException
-	{
-		// TODO: use map
-		switch (parameter.getSqlType())
-		{
-			case Types.VARCHAR:
-			case Types.CHAR:
-				preparedStatement.setString(index, (String) parameter.getValue());
-				break;
-			case Types.INTEGER:
-			case Types.BIT:
-				preparedStatement.setInt(index, (int) parameter.getValue());
-			default:
-				throw new IllegalArgumentException(
-					"Cannot set parameter of type " + parameter.getSqlType());
-		}
+			inParameters,
+			resultSet -> resultSet.getInt(outParameterName));
 	}
 
 	public boolean executeReadBoolean(
-			String storedProcedureName,
+			String functionName,
 			List<Parameter> inParameters,
 			String outParameterName)
 	{
-		String sql = createFunctionCall(storedProcedureName, inParameters);
-
-		try (Connection connection = dataSource.getConnection();
-			CallableStatement callableStatement = connection.prepareCall(sql))
-		{
-			setParameters(callableStatement, inParameters);
-
-			boolean resultSetProduced = callableStatement.execute();
-			assert !resultSetProduced;
-
-			if (callableStatement.getWarnings() != null)
-			{
-				throw new SqlDaoException(callableStatement.getWarnings());
-			}
-
-			if (callableStatement.getUpdateCount() != 1)
-			{
-				throw new SqlDaoException(String.format(
-					"Only expected one row.  Got %d",
-					callableStatement.getUpdateCount()));
-			}
-
-			return callableStatement.getBoolean(outParameterName);
-		}
-		catch (SQLException ex)
-		{
-			throw new SqlDaoException(ex);
-		}
+		return this.executeSingle(
+			functionName,
+			inParameters,
+			resultSet -> resultSet.getBoolean(outParameterName));
 	}
 
 	public <T> T executeRead(
-			String storedProcedureName,
+			String functionName,
 			List<Parameter> inParameters,
 			RowMapper<T> rowMapper)
 	{
-		String sql = createFunctionCall(storedProcedureName, inParameters);
-
-		try (Connection connection = dataSource.getConnection();
-			CallableStatement callableStatement = connection.prepareCall(sql))
-		{
-			setParameters(callableStatement, inParameters);
-
-			boolean resultSetProduced = callableStatement.execute();
-			assert resultSetProduced;
-
-			if (callableStatement.getWarnings() != null)
-			{
-				throw new SqlDaoException(callableStatement.getWarnings());
-			}
-
-			if (callableStatement.getUpdateCount() != 1)
-			{
-				throw new SqlDaoException(String.format(
-					"Updated %d rows during a read.  Should not have.",
-					callableStatement.getUpdateCount()));
-			}
-
-			ResultSet resultSet = callableStatement.getResultSet();
-			T value = rowMapper.getValue(resultSet);
-
-			assert !resultSet.next();
-			assert !callableStatement.getMoreResults();
-
-			return value;
-		}
-		catch (SQLException ex)
-		{
-			throw new SqlDaoException(ex);
-		}
+		return this.executeSingle(functionName, inParameters, rowMapper);
 	}
 
 	public <T> List<T> executeReadList(
-			String storedProcedureName,
+			String functionName,
 			List<Parameter> inParameters,
 			RowMapper<T> rowMapper)
 	{
-		String sql = createFunctionCall(storedProcedureName, inParameters);
+		return this.execute(functionName, inParameters, rowMapper);
+	}
+
+	private <T> T executeSingle(
+			String functionName,
+			List<Parameter> inParameters,
+			RowMapper<T> rowMapper)
+	{
+		List<T> results = this.execute(functionName, inParameters, rowMapper);
+
+		if (results.size() != 1)
+		{
+			throw new SqlDaoException(String.format(
+				"Expected 1 result.  Get %d.",
+				results.size()));
+		}
+
+		return results.get(0);
+	}
+
+
+	private <T> List<T> execute(
+			String functionName,
+			List<Parameter> inParameters,
+			RowMapper<T> rowMapper)
+	{
+		String sql = createFunctionCall(functionName, inParameters);
 
 		try (Connection connection = dataSource.getConnection();
 			CallableStatement callableStatement = connection.prepareCall(sql))
 		{
 			setParameters(callableStatement, inParameters);
 
-			boolean resultSetProduced = callableStatement.execute();
-			assert resultSetProduced;
+			ResultSet resultSet = callableStatement.executeQuery();
 
-			if (callableStatement.getWarnings() != null)
+			// TODO: stream
+			List<T> results = new ArrayList<>();
+			while (resultSet.next())
 			{
-				throw new SqlDaoException(callableStatement.getWarnings());
+				results.add(rowMapper.getValue(resultSet));
 			}
 
-			if (callableStatement.getUpdateCount() != 1)
-			{
-				throw new SqlDaoException(String.format(
-					"Updated %d rows during a read.  Should not have.",
-					callableStatement.getUpdateCount()));
-			}
-
-			ResultSet resultSet = callableStatement.getResultSet();
-			List<T> values = new ArrayList<>();
-			do
-			{
-				values.add(rowMapper.getValue(resultSet));
-			}
-			while(resultSet.next());
-
-			assert !callableStatement.getMoreResults();
-
-			return values;
+			return results;
 		}
 		catch (SQLException ex)
 		{
@@ -289,6 +151,49 @@ public class SqlFunctionDao
 		catch (SQLException ex)
 		{
 			throw new SqlDaoException(ex);
+		}
+	}
+
+	private static String createFunctionCall(
+		String functionName,
+		List<Parameter> inParameters)
+	{
+		return String.format("SELECT %s(%s)",
+			functionName,
+			String.join(", ", Collections.nCopies(inParameters.size(), "?")));
+	}
+
+	private static void setParameters(
+		PreparedStatement preparedStatement,
+		List<Parameter> inParameters)
+		throws SQLException
+	{
+		int index = 1;
+		for (Parameter parameter : inParameters)
+		{
+			setParameter(preparedStatement, parameter, index++);
+		}
+	}
+
+	private static void setParameter(
+		PreparedStatement preparedStatement,
+		Parameter parameter,
+		int index)
+		throws SQLException
+	{
+		// TODO: use map
+		switch (parameter.getSqlType())
+		{
+			case Types.VARCHAR:
+			case Types.CHAR:
+				preparedStatement.setString(index, (String) parameter.getValue());
+				break;
+			case Types.INTEGER:
+			case Types.BIT:
+				preparedStatement.setInt(index, (int) parameter.getValue());
+			default:
+				throw new IllegalArgumentException(
+					"Cannot set parameter of type " + parameter.getSqlType());
 		}
 	}
 

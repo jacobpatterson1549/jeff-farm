@@ -13,8 +13,8 @@ CREATE OR REPLACE FUNCTION create_hive_inspection(
 	IN frames_honey INT,
 	IN weather VARCHAR(255),
 	IN temperature_f INT,
-	IN wind_speed_mph INT)
-RETURNS INT
+	IN wind_speed_mph INT,
+	OUT id INT)
 AS
 $body$
 	INSERT INTO hive_inspections (hive_id

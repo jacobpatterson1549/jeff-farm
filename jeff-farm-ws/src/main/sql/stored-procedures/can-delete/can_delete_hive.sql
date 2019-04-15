@@ -3,7 +3,7 @@ CREATE OR REPLACE FUNCTION can_delete_hive(
     OUT can_delete BOOLEAN)
 AS
 $body$
-	SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END AS can_delete
+	SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END
 		FROM hive_inspections AS hi
 		WHERE hi.hive_id = id;
 $body$

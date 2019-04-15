@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS hives_audit
 	user_id INT NOT NULL,
 	action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	id INT,
+	farm_id INT,
 	name VARCHAR(255),
 	queen_color BIT(24)
 );
@@ -25,7 +26,7 @@ $hives_audit$
 			name,
 			queen_color)
 		VALUES (
-			action_type,
+			'i',
 			CAST(current_setting('jeff_farm_db.user_id') AS INT),
 			NEW.id,
 			NEW.farm_id,

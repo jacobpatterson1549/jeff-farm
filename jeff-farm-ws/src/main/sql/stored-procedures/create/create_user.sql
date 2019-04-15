@@ -2,8 +2,8 @@ CREATE OR REPLACE FUNCTION create_user(
 	IN user_name VARCHAR(20),
 	IN user_password VARCHAR(86),
 	IN first_name VARCHAR(255),
-	IN last_name VARCHAR(255))
-RETURNS INT
+	IN last_name VARCHAR(255),
+	OUT id INT)
 AS
 $body$
 	WITH new_user AS (
