@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/user/user';
 import { UserService } from 'src/app/user/user.service';
@@ -20,7 +20,7 @@ export class LoginStatusComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    // const userService: UserService = this.injector.get(UserService);
+    
     this.userService.get()
       .subscribe(user => {
         this.user = user

@@ -9,6 +9,7 @@ import { CrudListComponent } from './crud-list/crud-list.component';
 import { CrudViewComponent } from './crud-view/crud-view.component';
 import { CrudFormComponent } from './crud-form/crud-form.component';
 import { CrudRoutingModule } from './crud-routing.module';
+import { LoginStatusModule } from '../login-status/login-status.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { CrudRoutingModule } from './crud-routing.module';
     CommonModule,
     FormsModule,
     CrudRoutingModule,
+    LoginStatusModule,
   ],
   exports: [
     CommonModule,
