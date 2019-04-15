@@ -5,10 +5,16 @@ CREATE OR REPLACE FUNCTION create_hive(
 	OUT id INT)
 AS
 $body$
-	INSERT INTO hives (farm_id, name, queen_color)
-		SELECT farm_id, name, queen_color
+	INSERT INTO hives (
+			farm_id
+			, name
+			, queen_color)
+		SELECT
+			create_hive.farm_id
+			, create_hive.name
+			, create_hive.queen_color
 		FROM farms AS f
-		WHERE f.id = farm_id
+		WHERE f.id = create_hive.farm_id
 		RETURNING id;
 $body$
 LANGUAGE SQL;

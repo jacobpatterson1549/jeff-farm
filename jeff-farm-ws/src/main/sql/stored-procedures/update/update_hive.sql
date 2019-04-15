@@ -6,8 +6,8 @@ RETURNS VOID
 AS
 $body$
 	UPDATE hives AS h
-		SET name = name
-			, queen_color = queen_color
-		WHERE h.id = id;
+		SET name = update_hive.name
+			, queen_color = update_hive.queen_color
+		WHERE h.id = update_hive.id;
 $body$
 LANGUAGE SQL;

@@ -7,9 +7,9 @@ RETURNS VOID
 AS
 $body$
 	UPDATE users AS u
-		SET user_password = user_password,
-			first_name = first_name,
-			last_name = last_name
+		SET user_password = update_user.user_password,
+			first_name = update_user.first_name,
+			last_name = update_user.last_name
 		WHERE u.id = id;
 $body$
 LANGUAGE SQL;

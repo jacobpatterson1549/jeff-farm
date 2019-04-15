@@ -5,6 +5,6 @@ AS
 $body$
 	SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END AS can_delete
 		FROM hives AS h
-		WHERE h.farm_id = id;
+		WHERE h.farm_id = can_delete_farm.id;
 $body$
 LANGUAGE SQL;

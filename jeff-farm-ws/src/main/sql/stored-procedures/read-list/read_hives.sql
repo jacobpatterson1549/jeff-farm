@@ -9,6 +9,6 @@ $body$
 			, h.created_date
 			, h.modified_date
 		FROM hives AS h
-	WHERE h.farm_id = farm_id;
+	WHERE h.farm_id = read_hives.farm_id;
 $body$
 LANGUAGE SQL;

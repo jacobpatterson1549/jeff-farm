@@ -8,6 +8,6 @@ $body$
 		, f.created_date
 		, f.modified_date
 	FROM farms AS f
-	WHERE f.id = id;
+	WHERE f.id = read_farm.id;
 $body$
 LANGUAGE SQL;

@@ -10,6 +10,6 @@ $body$
 		, u.created_date
 		, u.modified_date
 	FROM users AS u
-	WHERE u.id = id;
+	WHERE u.id = read_user.id;
 $body$
 LANGUAGE SQL;

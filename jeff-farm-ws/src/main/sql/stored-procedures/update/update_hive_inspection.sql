@@ -18,19 +18,19 @@ RETURNS VOID
 AS
 $body$
 	UPDATE hive_inspections AS hi
-		SET queen_seen = queen_seen
-			, eggs_seen = eggs_seen
-			, laying_pattern_stars = laying_pattern_stars
-			, temperament_stars = temperament_stars
-			, supersedure_cells = supersedure_cells
-			, swarm_cells = swarm_cells
-			, comb_building_stars = comb_building_stars
-			, frames_sealed_brood = frames_sealed_brood
-			, frames_open_brood = frames_open_brood
-			, frames_honey = frames_honey
-			, weather = weather
-			, temperature_f = temperature_f
-			, wind_speed_mph = wind_speed_mph
-		WHERE hi.id = id;
+		SET queen_seen = update_hive_inspection.queen_seen
+			, eggs_seen = update_hive_inspection.eggs_seen
+			, laying_pattern_stars = update_hive_inspection.laying_pattern_stars
+			, temperament_stars = update_hive_inspection.temperament_stars
+			, supersedure_cells = update_hive_inspection.supersedure_cells
+			, swarm_cells = update_hive_inspection.swarm_cells
+			, comb_building_stars = update_hive_inspection.comb_building_stars
+			, frames_sealed_brood = update_hive_inspection.frames_sealed_brood
+			, frames_open_brood = update_hive_inspection.frames_open_brood
+			, frames_honey = update_hive_inspection.frames_honey
+			, weather = update_hive_inspection.weather
+			, temperature_f = update_hive_inspection.temperature_f
+			, wind_speed_mph = update_hive_inspection.wind_speed_mph
+		WHERE hi.id = update_hive_inspection.id;
 $body$
 LANGUAGE SQL;

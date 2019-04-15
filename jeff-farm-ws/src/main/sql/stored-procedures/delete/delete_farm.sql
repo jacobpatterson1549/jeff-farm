@@ -4,6 +4,6 @@ AS
 $body$
 	DELETE
 	FROM farms AS f
-	WHERE f.id = id;
+	WHERE f.id = delete_farm.id;
 $body$
 LANGUAGE SQL;

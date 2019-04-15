@@ -6,8 +6,8 @@ RETURNS VOID
 AS
 $body$
 	UPDATE farms AS f
-		SET name = name,
-			location = location
-		WHERE f.id = id;
+		SET name = update_farm.name,
+			location = update_farm.location
+		WHERE f.id = update_farm.id;
 $body$
 LANGUAGE SQL;

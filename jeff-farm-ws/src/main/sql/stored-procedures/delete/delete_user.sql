@@ -9,6 +9,6 @@ $body$
 
 	DELETE
 	FROM users AS u
-	WHERE u.id = id;
+	WHERE u.id = delete_user.id;
 $body$
 LANGUAGE SQL;

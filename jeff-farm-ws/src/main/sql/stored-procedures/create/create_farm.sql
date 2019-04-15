@@ -4,8 +4,12 @@ CREATE OR REPLACE FUNCTION create_farm(
 	OUT id INT)
 AS
 $body$
-	INSERT INTO farms (name, location)
-	VALUES (name, location)
+	INSERT INTO farms (
+		name
+		, location)
+	VALUES (
+		create_farm.name
+		, create_farm.location)
 	RETURNING id;
 $body$
 LANGUAGE SQL;

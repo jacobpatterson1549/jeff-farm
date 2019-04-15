@@ -7,13 +7,25 @@ CREATE OR REPLACE FUNCTION create_user(
 AS
 $body$
 	WITH new_user AS (
-		INSERT INTO users (user_name, user_password, first_name, last_name)
-		VALUES (user_name, user_password, first_name, last_name)
+		INSERT INTO users (
+			user_name
+			, user_password
+			, first_name
+			, last_name)
+		VALUES (
+			user_name
+			, create_user.user_password
+			, create_user.first_name
+			, create_user.last_name)
 		RETURNING id
 	)
 	, new_user_role AS (
-		INSERT INTO user_roles (user_name, role_name)
-		VALUES (user_name, 'user')
+		INSERT INTO user_roles (
+			user_name
+			, role_name)
+		VALUES (
+			create_user.user_name
+			, 'user')
 	)
 	SELECT id
 	FROM new_user;

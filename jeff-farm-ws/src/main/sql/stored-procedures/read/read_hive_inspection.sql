@@ -21,6 +21,6 @@ $body$
 			, hi.created_date
 			, hi.modified_date
 		FROM hive_inspections AS hi
-	WHERE hi.id = id;
+	WHERE hi.id = read_hive_inspection.id;
 $body$
 LANGUAGE SQL;

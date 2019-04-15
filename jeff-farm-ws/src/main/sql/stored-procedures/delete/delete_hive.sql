@@ -4,6 +4,6 @@ AS
 $body$
 	DELETE
 	FROM hives AS h
-	WHERE h.id = id;
+	WHERE h.id = delete_hive.id;
 $body$
 LANGUAGE SQL;
