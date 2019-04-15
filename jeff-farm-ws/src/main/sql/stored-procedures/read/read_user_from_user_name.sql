@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION read_user_from_user_name
 	( IN user_name VARCHAR(20)
+	, OUT users
 	)
-RETURNS users
 AS
 $body$
 	SELECT

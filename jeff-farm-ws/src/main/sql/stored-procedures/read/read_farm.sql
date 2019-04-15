@@ -1,4 +1,7 @@
-CREATE OR REPLACE FUNCTION read_farm(IN id INT)
+CREATE OR REPLACE FUNCTION read_farm
+	( IN id INT
+	, OUT farms
+	)
 RETURNS farms
 AS
 $body$

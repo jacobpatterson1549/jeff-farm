@@ -1,5 +1,7 @@
-CREATE OR REPLACE FUNCTION read_hive(IN id INT)
-RETURNS hives
+CREATE OR REPLACE FUNCTION read_hive
+	( IN id INT
+	, OUT hives
+	)
 AS
 $body$
 	SELECT

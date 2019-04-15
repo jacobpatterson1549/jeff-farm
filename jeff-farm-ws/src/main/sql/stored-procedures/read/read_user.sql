@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION read_user
 	( IN id INT
+	, OUT users
 	)
-RETURNS users
 AS
 $body$
 	SELECT
