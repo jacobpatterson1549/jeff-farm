@@ -90,6 +90,7 @@ $hive_inspections_audit$
 		INSERT INTO hive_inspections_audit
 				( action_type
 				, user_id
+				, id
 				, hive_id
 				, queen_seen
 				, eggs_seen
