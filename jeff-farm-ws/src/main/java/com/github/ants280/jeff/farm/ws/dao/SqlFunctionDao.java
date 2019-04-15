@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class SqlFunctionDao
 				throw new SqlDaoException(callableStatement.getWarnings());
 			}
 
-			if ((int) callableStatement.getUpdateCount() != 1)
+			if (callableStatement.getUpdateCount() != 1)
 			{
 				throw new SqlDaoException(String.format(
 					"Did not updated 1 item.  Updated %d items.",
@@ -80,7 +81,7 @@ public class SqlFunctionDao
 				throw new SqlDaoException(callableStatement.getWarnings());
 			}
 
-			if ((int) callableStatement.getUpdateCount() != 1)
+			if (callableStatement.getUpdateCount() != 1)
 			{
 				throw new SqlDaoException(String.format(
 					"Did not create 1 item.  Created %s items.",
@@ -160,7 +161,7 @@ public class SqlFunctionDao
 				throw new SqlDaoException(callableStatement.getWarnings());
 			}
 
-			if ((int) callableStatement.getUpdateCount() != 1)
+			if (callableStatement.getUpdateCount() != 1)
 			{
 				throw new SqlDaoException(String.format(
 					"Only expected one row.  Got %d",
@@ -195,7 +196,7 @@ public class SqlFunctionDao
 				throw new SqlDaoException(callableStatement.getWarnings());
 			}
 
-			if ((int) callableStatement.getUpdateCount() != 1)
+			if (callableStatement.getUpdateCount() != 1)
 			{
 				throw new SqlDaoException(String.format(
 					"Updated %d rows during a read.  Should not have.",
@@ -236,7 +237,7 @@ public class SqlFunctionDao
 				throw new SqlDaoException(callableStatement.getWarnings());
 			}
 
-			if ((int) callableStatement.getUpdateCount() != 1)
+			if (callableStatement.getUpdateCount() != 1)
 			{
 				throw new SqlDaoException(String.format(
 					"Updated %d rows during a read.  Should not have.",
@@ -264,26 +265,25 @@ public class SqlFunctionDao
 	private void setUserId(int userId)
 	{
 		// TODO: Write function for setting user id
-		String sql = String.format("SET %s = ?", USER_ID);
+		// TODO: Could this lead to sql injection?
+		String sql = String.format("SET %s = %d", USER_ID, userId);
 
 		try (Connection connection = dataSource.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(sql))
+			Statement statement = connection.createStatement())
 		{
-			preparedStatement.setInt(1, userId);
-
-			boolean resultSetProduced = preparedStatement.execute();
+			boolean resultSetProduced = statement.execute(sql);
 			assert !resultSetProduced;
 
-			if (preparedStatement.getWarnings() != null)
+			if (statement.getWarnings() != null)
 			{
-				throw new SqlDaoException(preparedStatement.getWarnings());
+				throw new SqlDaoException(statement.getWarnings());
 			}
 
-			if ((int) preparedStatement.getUpdateCount() != 1)
+			if (statement.getUpdateCount() != 0)
 			{
 				throw new SqlDaoException(String.format(
 					"Updated %d rows during SET call.  Should not have.",
-					preparedStatement.getUpdateCount()));
+					statement.getUpdateCount()));
 			}
 		}
 		catch (SQLException ex)
