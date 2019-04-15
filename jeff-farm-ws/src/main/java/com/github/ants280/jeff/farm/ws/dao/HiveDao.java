@@ -63,7 +63,6 @@ public class HiveDao extends SqlFunctionDao implements CrudDao<Hive>
 				"update_hive",
 				Arrays.asList(
 						new Parameter(Hive.ID_COLUMN, hive.getId(), Types.INTEGER),
-						new Parameter(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
 						new Parameter(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
 						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.INTEGER)),
 				loginDao.getUserId());
