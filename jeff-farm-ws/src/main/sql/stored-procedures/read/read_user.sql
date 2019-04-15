@@ -1,8 +1,11 @@
-CREATE OR REPLACE FUNCTION read_user(IN id INT)
+CREATE OR REPLACE FUNCTION read_user
+	( IN id INT
+	)
 RETURNS users
 AS
 $body$
-	SELECT u.id
+	SELECT
+		  u.id
 		, u.user_name
 		, NULL -- password
 		, u.first_name

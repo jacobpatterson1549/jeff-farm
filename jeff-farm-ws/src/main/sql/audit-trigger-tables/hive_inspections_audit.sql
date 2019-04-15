@@ -2,36 +2,35 @@
 -- SELECT  * FROM hive_inspections_audit LIMIT 0;
 -- 
 CREATE TABLE IF NOT EXISTS hive_inspections_audit
-(
-	audit_id SERIAL PRIMARY KEY,
-	action_type CHAR(1) NOT NULL, -- i (insert), b (before update), a (after update), d (delete)
-	user_id INT NOT NULL,
-	action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	id INT,
-	hive_id INT,
-	queen_seen BIT(1),
-	eggs_seen BIT(1),
-	laying_pattern_stars INT,
-	temperament_stars INT,
-	queen_cells INT,
-	supersedure_cells INT,
-	swarm_cells INT,
-	comb_building_stars INT,
-	frames_sealed_brood INT,
-	frames_open_brood INT,
-	frames_honey INT,
-	weather VARCHAR(255),
-	temperature_f INT,
-	wind_speed_mph INT
-);
+	( audit_id SERIAL PRIMARY KEY
+	, action_type CHAR(1) NOT NULL -- i (insert), b (before update), a (after update), d (delete)
+	, user_id INT NOT NULL
+	, action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	, id INT
+	, hive_id INT
+	, queen_seen BIT(1)
+	, eggs_seen BIT(1)
+	, laying_pattern_stars INT
+	, temperament_stars INT
+	, queen_cells INT
+	, supersedure_cells INT
+	, swarm_cells INT
+	, comb_building_stars INT
+	, frames_sealed_brood INT
+	, frames_open_brood INT
+	, frames_honey INT
+	, weather VARCHAR(255)
+	, temperature_f INT
+	, wind_speed_mph INT
+	);
 
 
 CREATE OR REPLACE FUNCTION hive_inspection_inserted_function()
 RETURNS TRIGGER AS
 $hive_inspections_audit$
 	BEGIN
-		INSERT INTO hive_inspections_audit (
-				action_type
+		INSERT INTO hive_inspections_audit
+				( action_type
 				, user_id
 				, id
 				, hive_id
@@ -50,8 +49,8 @@ $hive_inspections_audit$
 				, temperature_f
 				, wind_speed_mph
 				)
-			VALUES (
-				'i'
+			VALUES
+				( 'i'
 				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, NEW.id
 				, NEW.hive_id
@@ -88,8 +87,8 @@ CREATE OR REPLACE FUNCTION hive_inspection_updated_function()
 RETURNS TRIGGER AS
 $hive_inspections_audit$
 	BEGIN
-		INSERT INTO hive_inspections_audit (
-				action_type
+		INSERT INTO hive_inspections_audit
+				( action_type
 				, user_id
 				, hive_id
 				, queen_seen
@@ -107,8 +106,8 @@ $hive_inspections_audit$
 				, temperature_f
 				, wind_speed_mph
 				)
-			VALUES (
-				'b'
+			VALUES
+				( 'b'
 				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, OLD.id
 				, OLD.hive_id
@@ -127,8 +126,8 @@ $hive_inspections_audit$
 				, OLD.temperature_f
 				, OLD.wind_speed_mph
 				);
-		INSERT INTO hive_inspections_audit (
-				action_type
+		INSERT INTO hive_inspections_audit
+				( action_type
 				, user_id
 				, id
 				, hive_id
@@ -147,8 +146,8 @@ $hive_inspections_audit$
 				, temperature_f
 				, wind_speed_mph
 				)
-			VALUES (
-				'a'
+			VALUES
+				( 'a'
 				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, NEW.id
 				, NEW.hive_id
@@ -185,8 +184,8 @@ CREATE OR REPLACE FUNCTION hive_inspection_deleted_function()
 RETURNS TRIGGER AS
 $hive_inspections_audit$
 	BEGIN
-		INSERT INTO hive_inspections_audit (
-				action_type
+		INSERT INTO hive_inspections_audit
+				( action_type
 				, user_id
 				, id
 				, hive_id
@@ -205,8 +204,8 @@ $hive_inspections_audit$
 				, temperature_f
 				, wind_speed_mph
 				)
-			VALUES (
-				'd'
+			VALUES
+				( 'd'
 				, CAST(current_setting('jeff_farm_db.user_id') AS INT)
 				, OLD. id
 				, OLD.hive_id

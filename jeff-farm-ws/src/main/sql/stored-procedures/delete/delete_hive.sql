@@ -1,4 +1,6 @@
-CREATE OR REPLACE FUNCTION delete_hive(IN id INT)
+CREATE OR REPLACE FUNCTION delete_hive
+	( IN id INT
+	)
 RETURNS VOID
 AS
 $body$

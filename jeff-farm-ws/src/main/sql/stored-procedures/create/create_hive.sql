@@ -1,16 +1,18 @@
-CREATE OR REPLACE FUNCTION create_hive(
-	IN farm_id INT,
-	IN name VARCHAR(255),
-	IN queen_color BIT(24),
-	OUT id INT)
+CREATE OR REPLACE FUNCTION create_hive
+	( IN farm_id INT
+	, IN name VARCHAR(255)
+	, IN queen_color BIT(24)
+	, OUT id INT
+	)
 AS
 $body$
-	INSERT INTO hives (
-			farm_id
+	INSERT INTO hives
+			( farm_id
 			, name
-			, queen_color)
+			, queen_color
+			)
 		SELECT
-			create_hive.farm_id
+			  create_hive.farm_id
 			, create_hive.name
 			, create_hive.queen_color
 		FROM farms AS f

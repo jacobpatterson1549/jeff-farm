@@ -1,6 +1,7 @@
-CREATE OR REPLACE FUNCTION can_delete_hive(
-    IN id INT,
-    OUT can_delete BOOLEAN)
+CREATE OR REPLACE FUNCTION can_delete_hive
+    ( IN id INT
+    , OUT can_delete BOOLEAN
+	)
 AS
 $body$
 	SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END

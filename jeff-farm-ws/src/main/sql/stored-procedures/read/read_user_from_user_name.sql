@@ -1,8 +1,11 @@
-CREATE OR REPLACE FUNCTION read_user_from_user_name(IN user_name VARCHAR(20))
+CREATE OR REPLACE FUNCTION read_user_from_user_name
+	( IN user_name VARCHAR(20)
+	)
 RETURNS users
 AS
 $body$
-	SELECT u.id
+	SELECT
+		  u.id
 		, u.user_name
 		, NULL -- password
 		, u.first_name

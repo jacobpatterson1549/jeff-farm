@@ -2,7 +2,8 @@ CREATE OR REPLACE FUNCTION read_farm(IN id INT)
 RETURNS farms
 AS
 $body$
-	SELECT f.id
+	SELECT
+		  f.id
 		, f.name
 		, f.location
 		, f.created_date
