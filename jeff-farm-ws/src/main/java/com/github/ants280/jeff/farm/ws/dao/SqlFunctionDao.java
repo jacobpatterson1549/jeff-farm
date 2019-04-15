@@ -319,5 +319,15 @@ public class SqlFunctionDao
 		{
 			return sqlType;
 		}
+
+		@Override
+		public String toString()
+		{
+			return String.format(
+					"Parameter{name=%s,value=%s,sqlType=%d}",
+					name,
+					value,
+					sqlType);
+		}
 	}
 }
