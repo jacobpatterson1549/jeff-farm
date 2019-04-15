@@ -191,6 +191,7 @@ public class SqlFunctionDao
 			case Types.INTEGER:
 			case Types.BIT:
 				preparedStatement.setInt(index, (int) parameter.getValue());
+				break;
 			default:
 				throw new IllegalArgumentException(
 					"Cannot set parameter of type " + parameter.getSqlType());
