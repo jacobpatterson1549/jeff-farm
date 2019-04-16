@@ -6,7 +6,7 @@
 	<name>jeff-farm-ws</name>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<properties>
+		<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
@@ -18,13 +18,13 @@
 		<jdbc.driver.artifact.id>postgresql</jdbc.driver.artifact.id>
 		<jdbc.driver.version>42.2.5</jdbc.driver.version>
 		<jdbc.driver.class.name>org.postgresql.Driver</jdbc.driver.class.name>
-		<jdbc.host>localhost</jdbc.host>
-		<jdbc.port>5432</jdbc.port>
-		<jdbc.database>jeff_farm_db</jdbc.database>
-		<jdbc.username>farmer</jdbc.username>
-		<jdbc.password>flint5+0N3</jdbc.password>
+		<jdbc.host>${JDBC_DATABASE_HOST}</jdbc.host>
+		<jdbc.port>${JDBC_DATABASE_PORT}</jdbc.port>
+		<jdbc.database>${JDBC_DATABASE_NAME}</jdbc.database>
+		<jdbc.username>${JDBC_DATABASE_USERNAME}</jdbc.username>
+		<jdbc.password>${JDBC_DATABASE_PASSWORD}</jdbc.password>
 		<jdbc.url>jdbc:${jdbc.driver.name}://${jdbc.host}:${jdbc.port}/${jdbc.database}?serverTimezone=UTC</jdbc.url>
-		
+
 		<resource.data.source.name>jdbc/jeff-farm-data-source</resource.data.source.name> <!-- also in InjectionBinder.java -->
 		<resource.data.source.auth>Container</resource.data.source.auth>
 		<resource.data.source.type>javax.sql.DataSource</resource.data.source.type>
@@ -120,6 +120,25 @@
 						</resource>
 					</webResources>
 				</configuration>
+			</plugin>
+			<plugin>
+				<!--load JDBC_DATABASE_* properties-->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>.env</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<!-- mvn sql:execute -->
