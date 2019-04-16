@@ -30,7 +30,7 @@ public class InjectionBinder extends AbstractBinder
 		bindAsSingleton(HiveInspectionDao.class);
 	}
 	
-	private void bindAsSingleton(Class singletonClass)
+	private <T> void bindAsSingleton(Class<T> singletonClass)
 	{
 		if (!singletonClass.isAnnotationPresent(Singleton.class))
 		{
