@@ -29,8 +29,8 @@ public class FarmDao extends SqlFunctionDao implements CrudDao<Farm>
 		return this.executeCreate(
 				"create_farm",
 				Arrays.asList(
-						new Parameter(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
-						new Parameter(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)),
+						new Parameter<>(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
+						new Parameter<>(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)),
 				Farm.ID_COLUMN,
 				loginDao.getUserId());
 	}
@@ -41,7 +41,7 @@ public class FarmDao extends SqlFunctionDao implements CrudDao<Farm>
 		return this.executeRead(
 				"read_farm",
 				Collections.singletonList(
-						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)),
+						new Parameter<>(Farm.ID_COLUMN, id, Types.INTEGER)),
 				this::mapRow);
 	}
 
@@ -60,9 +60,9 @@ public class FarmDao extends SqlFunctionDao implements CrudDao<Farm>
 		this.executeUpdate(
 				"update_farm",
 				Arrays.asList(
-						new Parameter(Farm.ID_COLUMN, farm.getId(), Types.INTEGER),
-						new Parameter(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
-						new Parameter(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)),
+						new Parameter<>(Farm.ID_COLUMN, farm.getId(), Types.INTEGER),
+						new Parameter<>(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
+						new Parameter<>(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)),
 				loginDao.getUserId());
 	}
 
@@ -72,7 +72,7 @@ public class FarmDao extends SqlFunctionDao implements CrudDao<Farm>
 		this.executeUpdate(
 				"delete_farm",
 				Collections.singletonList(
-						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)),
+						new Parameter<>(Farm.ID_COLUMN, id, Types.INTEGER)),
 				loginDao.getUserId());
 	}
 	
@@ -81,7 +81,7 @@ public class FarmDao extends SqlFunctionDao implements CrudDao<Farm>
 	{
 		return this.executeReadBoolean("can_delete_farm",
 				Collections.singletonList(
-						new Parameter(Farm.ID_COLUMN, id, Types.INTEGER)),
+						new Parameter<>(Farm.ID_COLUMN, id, Types.INTEGER)),
 				Farm.CAN_DELETE_ITEM);
 	}
 

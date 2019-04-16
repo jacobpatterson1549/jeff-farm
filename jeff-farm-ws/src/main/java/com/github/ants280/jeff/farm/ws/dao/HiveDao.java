@@ -29,9 +29,9 @@ public class HiveDao extends SqlFunctionDao implements CrudDao<Hive>
 		return this.executeCreate(
 				"create_hive",
 				Arrays.asList(
-						new Parameter(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
-						new Parameter(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
-						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.INTEGER)),
+						new Parameter<>(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
+						new Parameter<>(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
+						new Parameter<>(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.INTEGER)),
 				Hive.ID_COLUMN,
 				loginDao.getUserId());
 	}
@@ -42,7 +42,7 @@ public class HiveDao extends SqlFunctionDao implements CrudDao<Hive>
 		return this.executeRead(
 				"read_hive",
 				Collections.singletonList(
-						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)),
+						new Parameter<>(Hive.ID_COLUMN, id, Types.INTEGER)),
 				this::mapRow);
 	}
 
@@ -52,7 +52,7 @@ public class HiveDao extends SqlFunctionDao implements CrudDao<Hive>
 		return this.executeReadList(
 				"read_hives",
 				Collections.singletonList(
-						new Parameter(Hive.FARM_ID_COLUMN, parentId, Types.INTEGER)),
+						new Parameter<>(Hive.FARM_ID_COLUMN, parentId, Types.INTEGER)),
 				this::mapRow);
 	}
 
@@ -62,9 +62,9 @@ public class HiveDao extends SqlFunctionDao implements CrudDao<Hive>
 		this.executeUpdate(
 				"update_hive",
 				Arrays.asList(
-						new Parameter(Hive.ID_COLUMN, hive.getId(), Types.INTEGER),
-						new Parameter(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
-						new Parameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.INTEGER)),
+						new Parameter<>(Hive.ID_COLUMN, hive.getId(), Types.INTEGER),
+						new Parameter<>(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
+						new Parameter<>(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.INTEGER)),
 				loginDao.getUserId());
 	}
 
@@ -74,7 +74,7 @@ public class HiveDao extends SqlFunctionDao implements CrudDao<Hive>
 		this.executeUpdate(
 				"delete_hive",
 				Collections.singletonList(
-						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)),
+						new Parameter<>(Hive.ID_COLUMN, id, Types.INTEGER)),
 				loginDao.getUserId());
 	}
 	
@@ -83,7 +83,7 @@ public class HiveDao extends SqlFunctionDao implements CrudDao<Hive>
 	{
 		return this.executeReadBoolean("can_delete_hive",
 				Collections.singletonList(
-						new Parameter(Hive.ID_COLUMN, id, Types.INTEGER)),
+						new Parameter<>(Hive.ID_COLUMN, id, Types.INTEGER)),
 				Hive.CAN_DELETE_ITEM);
 	}
 
