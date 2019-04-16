@@ -12,7 +12,13 @@ public class User extends CrudItem<User>
 	private String password;
 	private String firstName;
 	private String lastName;
-
+	
+	@Override
+	protected User getThis()
+	{
+		return this;
+	}
+	
 	public String getUserName()
 	{
 		return userName;

@@ -10,6 +10,12 @@ public class Hive extends CrudItem<Hive>
 	private int farmId;
 	private String name;
 	private String queenColor;
+	
+	@Override
+	protected Hive getThis()
+	{
+		return this;
+	}
 
 	public int getFarmId()
 	{

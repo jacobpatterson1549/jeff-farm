@@ -32,6 +32,12 @@ public class HiveInspection extends CrudItem<HiveInspection>
 	private String weather;
 	private int temperatureF;
 	private int windSpeedMph;
+	
+	@Override
+	protected HiveInspection getThis()
+	{
+		return this;
+	}
 
 	public int getHiveId()
 	{

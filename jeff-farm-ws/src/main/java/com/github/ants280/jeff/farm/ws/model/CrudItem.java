@@ -7,7 +7,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import javax.json.bind.annotation.JsonbTransient;
 
-public abstract class CrudItem<T extends CrudItem>
+public abstract class CrudItem<T extends CrudItem<T>>
 {
 	private static final DateTimeFormatter DATE_FORMAT
 			 = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL)
@@ -21,6 +21,8 @@ public abstract class CrudItem<T extends CrudItem>
 	private int id;
 	private String createdDate;
 	private String modifiedDate;
+	
+	protected abstract T getThis();
 
 	private static String getFormatedTimestamp(Timestamp modifiedDate1)
 	{
@@ -37,7 +39,7 @@ public abstract class CrudItem<T extends CrudItem>
 	public T setId(int id)
 	{
 		this.id = id;
-		return (T) this;
+		return getThis();
 	}
 
 	public String getCreatedDate()
@@ -49,7 +51,7 @@ public abstract class CrudItem<T extends CrudItem>
 	public T setCreatedTimestamp(Timestamp createdDate)
 	{
 		this.createdDate = getFormatedTimestamp(createdDate);
-		return (T) this;
+		return getThis();
 	}
 
 	public String getModifiedDate()
@@ -61,6 +63,6 @@ public abstract class CrudItem<T extends CrudItem>
 	public T setModifiedTimestamp(Timestamp modifiedDate)
 	{
 		this.modifiedDate = getFormatedTimestamp(modifiedDate);
-		return (T) this;
+		return getThis();
 	}
 }

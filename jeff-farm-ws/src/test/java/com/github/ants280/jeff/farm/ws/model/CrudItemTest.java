@@ -99,8 +99,10 @@ public class CrudItemTest
 	
 	public static class CrudItemImpl extends CrudItem<CrudItemImpl>
 	{
-		public CrudItemImpl()
+		@Override
+		protected CrudItemImpl getThis()
 		{
+			return this;
 		}
 	}
 }
