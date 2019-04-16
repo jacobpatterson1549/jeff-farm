@@ -208,6 +208,7 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<!--run on tomcat on heroku from a jar-->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
