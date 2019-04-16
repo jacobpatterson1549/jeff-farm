@@ -66,6 +66,7 @@
 				<version>3.8.0</version>
 				<configuration>
 					<compilerArgs>
+						<arg>-Xlint:unchecked</arg>
 					</compilerArgs>					
 				</configuration>
 			</plugin>
