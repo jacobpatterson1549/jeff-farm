@@ -20,7 +20,7 @@
 	<resource-ref>
 		<res-ref-name>${resource.data.source.name}</res-ref-name>
 		<res-type>${resource.data.source.type}</res-type>
-		<res-auth>${resource.data.source.auth}</res-auth>
+		<res-auth>Container</res-auth>
 	</resource-ref>
 	
 	<security-constraint>

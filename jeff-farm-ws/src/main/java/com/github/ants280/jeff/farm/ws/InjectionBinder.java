@@ -45,8 +45,7 @@ public class InjectionBinder extends AbstractBinder
 	{
 		try
 		{
-			// https://tomcat.apache.org/tomcat-8.0-doc/jndi-resources-howto.html#JDBC_Data_Sources
-			// https://stackoverflow.com/questions/23393913/how-can-i-make-resource-annotation-work-with-tomcat
+			// https://tomcat.apache.org/tomcat-9.0-doc/jndi-datasource-examples-howto.html#PostgreSQL
 			Context initCtx = new InitialContext();
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");
 			return (DataSource) envCtx.lookup("jdbc/jeff-farm-data-source"); // also in pom.xml ${resource.data.source.name}
