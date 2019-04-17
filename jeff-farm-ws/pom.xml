@@ -258,6 +258,12 @@
 			<artifactId>${jdbc.driver.artifact.id}</artifactId>
 			<version>${jdbc.driver.version}</version>
 		</dependency>
+		<dependency>
+			<!--Postgres JDBC ConnectionPool-->
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>3.2.0</version>
+		</dependency>
 
 		<dependency>
 			<!--GrizzlyHttpServerFactory,HttpServer-->
