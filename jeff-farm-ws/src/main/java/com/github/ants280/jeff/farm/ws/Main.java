@@ -14,12 +14,8 @@ public class Main
 {
 	private final HttpServer server;
 
-	Main(String scheme, String host, int port) throws URISyntaxException
+	Main(URI uri)
 	{
-		URI uri = new URI(scheme, null, // userInfo
-			host, port, null, // path
-			null, // query
-			null); // fragment
 		ResourceConfig resourceConfig = new ResourceConfig().packages(
 			"com.github.ants280.jeff.farm.ws.resources")
 			.registerInstances(new InjectionBinder());
@@ -38,14 +34,20 @@ public class Main
 		String host = System.getProperty("server.host");
 		String port = System.getProperty("server.port");
 		int portNum = Integer.parseInt(port);
-		Main main = new Main(scheme, host, portNum);
+		URI uri = new URI(scheme, null, // userInfo
+			host, portNum, null, // path
+			null, // query
+			null); // fragment
+		Main main = new Main(uri);
 
 		try
 		{
 			main.startServer();
 
 			Logger logger = Logger.getGlobal();
-			logger.log(Level.INFO, "Server started.  Press ENTER to stop");
+			logger.log(Level.INFO,
+				"Server started at {0}.  Press ENTER to stop",
+				uri);
 
 			logger.log(Level.INFO,
 				"[DONE]{0}",
