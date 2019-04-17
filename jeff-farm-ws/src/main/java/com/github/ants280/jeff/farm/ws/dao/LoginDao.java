@@ -30,7 +30,7 @@ public class LoginDao
 			oldSession.invalidate();
 		}
 		
-		// The session MUST be crated befor the login call.
+		// The session MUST be crated before the login call.
 		// See org.apache.catalina.authenticator.AuthenticatorBase.register()
 		HttpSession session = request.getSession(true);
 

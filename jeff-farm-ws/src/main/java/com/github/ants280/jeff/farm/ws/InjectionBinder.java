@@ -43,7 +43,7 @@ public class InjectionBinder extends AbstractBinder
 		String jdbcUsername = System.getProperty("jdbc.username");
 		String jdbcPassword = System.getProperty("jdbc.password");
 		String jdbcUrl = System.getProperty("jdbc.url");
-		
+
 		HikariConfig config = new HikariConfig();
 		config.setUsername(jdbcUsername);
 		config.setPassword(jdbcPassword);
