@@ -259,10 +259,16 @@
 			<version>${jdbc.driver.version}</version>
 		</dependency>
 		<dependency>
-			<!--Postgres JDBC ConnectionPool-->
+			<!--HikariDataSource Postgres JDBC ConnectionPool-->
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
-			<version>3.2.0</version>
+			<version>3.3.1</version>
+		</dependency>
+		<dependency>
+			<!--logging-->
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.25</version>
 		</dependency>
 
 		<dependency>

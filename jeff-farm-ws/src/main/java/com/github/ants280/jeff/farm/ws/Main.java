@@ -16,9 +16,7 @@ public class Main
 
 	Main(String scheme, String host, int port) throws URISyntaxException
 	{
-		URI uri = new URI(
-			scheme,
-			null, // userInfo
+		URI uri = new URI(scheme, null, // userInfo
 			host, port, null, // path
 			null, // query
 			null); // fragment
@@ -47,7 +45,7 @@ public class Main
 			main.startServer();
 
 			Logger logger = Logger.getGlobal();
-			logger.log(Level.INFO, "Server started.  Press any key to stop");
+			logger.log(Level.INFO, "Server started.  Press ENTER to stop");
 
 			logger.log(Level.INFO,
 				"[DONE]{0}",
