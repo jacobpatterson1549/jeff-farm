@@ -100,12 +100,14 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.2</version>
 				<configuration>
+					<!--include version numbers in war-->
 					<archive>
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 						</manifest>
 					</archive>
+					<!--use properties in context.xml and web.xml-->
 					<webResources>
 						<resource>
 							<directory>${project.basedir}/src/main/webapp/META-INF</directory>
