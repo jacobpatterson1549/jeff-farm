@@ -35,7 +35,7 @@ public class Main
 		String port = System.getProperty("server.port");
 		int portNum = Integer.parseInt(port);
 		URI uri = new URI(scheme, null, // userInfo
-			host, portNum, null, // path
+			host, portNum, "/jeff-farm-ws", // path
 			null, // query
 			null); // fragment
 		Main main = new Main(uri);
