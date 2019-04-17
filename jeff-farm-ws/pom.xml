@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.ants280</groupId>
 	<artifactId>jeff-farm-ws</artifactId>
 	<name>jeff-farm-ws</name>
 	<version>1.0-SNAPSHOT</version>
-	<packaging>war</packaging>
-		<properties>
+	<packaging>jar</packaging>
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<sonar.java.libraries>target/classes</sonar.java.libraries>
+		<main.class>com.github.ants280.jeff.farm.ws.Main</main.class>
+		<tomcat.version>9.0.16</tomcat.version>
+
+		<server.scheme>${SERVER_SCHEME}</server.scheme>
+		<server.host>${SERVER_HOST}</server.host>
+		<server.port>${SERVER_PORT}</server.port>
 
 		<jdbc.driver.name>postgresql</jdbc.driver.name>
 		<jdbc.driver.group.id>org.postgresql</jdbc.driver.group.id>
@@ -24,7 +30,6 @@
 		<jdbc.username>${JDBC_DATABASE_USERNAME}</jdbc.username>
 		<jdbc.password>${JDBC_DATABASE_PASSWORD}</jdbc.password>
 		<jdbc.url>jdbc:${jdbc.driver.name}://${jdbc.host}:${jdbc.port}/${jdbc.database}?serverTimezone=UTC</jdbc.url>
-
 		<resource.data.source.name>jdbc/jeff-farm-data-source</resource.data.source.name> <!-- also in InjectionBinder.java -->
 		<resource.data.source.auth>Container</resource.data.source.auth>
 		<resource.data.source.type>javax.sql.DataSource</resource.data.source.type>
@@ -46,7 +51,7 @@
 						<configuration>
 							<rules>
 								<requireMavenVersion>
-									<version>3.3.9</version>
+									<version>3.0.5</version>
 								</requireMavenVersion>
 							</rules>
 						</configuration>
@@ -66,8 +71,12 @@
 				<version>3.8.0</version>
 				<configuration>
 					<compilerArgs>
+						<!--strict mode-->
 						<arg>-Xlint:unchecked</arg>
-					</compilerArgs>					
+					</compilerArgs>
+					<!--set the correct java versions-->
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -85,6 +94,21 @@
 			<plugin>
 				<!-- (from super-pom) -->
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<!--include version numbers in jar-->
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- (from super-pom) -->
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>3.1.0</version>
 			</plugin>
@@ -97,38 +121,22 @@
 			<plugin>
 				<!-- (from super-pom) -->
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>3.2.2</version>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M3</version>
 				<configuration>
-					<!--include version numbers in war-->
-					<archive>
-						<manifest>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-						</manifest>
-					</archive>
-					<!--use properties in context.xml and web.xml-->
-					<webResources>
-						<resource>
-							<directory>${project.basedir}/src/main/webapp/META-INF</directory>
-							<filtering>true</filtering>
-							<targetPath>META-INF</targetPath>
-						</resource>
-						<resource>
-							<directory>${project.basedir}/src/main/webapp/WEB-INF</directory>
-							<filtering>true</filtering>
-							<targetPath>WEB-INF</targetPath>
-						</resource>
-					</webResources>
+					<!--evaluate assertions in tests-->
+					<enableAssertions>true</enableAssertions>
 				</configuration>
 			</plugin>
+
 			<plugin>
-				<!--load JDBC_DATABASE_* properties-->
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>properties-maven-plugin</artifactId>
 				<version>1.0.0</version>
 				<executions>
+					<!--load JDBC_DATABASE_* properties into maven-->
 					<execution>
+						<id>load-env</id>
 						<phase>initialize</phase>
 						<goals>
 							<goal>read-project-properties</goal>
@@ -137,6 +145,17 @@
 							<files>
 								<file>.env</file>
 							</files>
+						</configuration>
+					</execution>
+					<execution>
+						<!--write maven properties to file-->
+						<id>create-app-properties</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>write-project-properties</goal>
+						</goals>
+						<configuration>
+							<outputFile>${project.build.outputDirectory}/app.properties</outputFile>
 						</configuration>
 					</execution>
 				</executions>
@@ -180,61 +199,39 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<!-- (from super-pom) -->
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M3</version>
+				<!--Build, Test, and Run the code with `mvn install test exec:java`-->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
 				<configuration>
-					<enableAssertions>true</enableAssertions>
+					<mainClass>${main.class}</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
-				<!-- for test coverage (with sonar) -->
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.3</version>
-				<executions>
-					<execution>
-						<id>pre-test</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>post-test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<!--run on tomcat on heroku from a jar-->
+				<!--create jar with dependencies-->
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>${main.class}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
 				<executions>
 					<execution>
 						<phase>package</phase>
-						<goals><goal>copy</goal></goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>com.github.jsimone</groupId>
-									<artifactId>webapp-runner</artifactId>
-									<version>9.0.16.0</version>
-									<destFileName>webapp-runner.jar</destFileName>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
+						<goals>
+							<goal>single</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-                <groupId>com.heroku.sdk</groupId>
-                <artifactId>heroku-maven-plugin</artifactId>
-                <version>2.0.8</version>
-            </plugin>
+
 		</plugins>
 	</build>
 	<dependencyManagement>
@@ -250,11 +247,10 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
-			<!--HttpServletRequest,MessageDigestCredentialHandler,AuthenticatorBase,RealmBase-->
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-catalina</artifactId>
-			<version>9.0.16</version>
-			<scope>provided</scope>
+			<!--javax.servlet-->
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>${tomcat.version}</version>
 		</dependency>
 		<dependency>
 			<!--database access-->
@@ -262,11 +258,11 @@
 			<artifactId>${jdbc.driver.artifact.id}</artifactId>
 			<version>${jdbc.driver.version}</version>
 		</dependency>
-		
+
 		<dependency>
-			<!--org.glassfish.jersey.servlet.ServletContainer-->
+			<!--GrizzlyHttpServerFactory,HttpServer-->
 			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-servlet</artifactId>
+			<artifactId>jersey-container-grizzly2-http</artifactId>
 		</dependency>
 		<dependency>
 			<!--injection-->
@@ -278,9 +274,9 @@
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-binding</artifactId>
 		</dependency>
-		
+
 		<dependency>
-			<!--test api--> 
+			<!--test api-->
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>

@@ -6,12 +6,7 @@ import com.github.ants280.jeff.farm.ws.dao.HiveDao;
 import com.github.ants280.jeff.farm.ws.dao.HiveInspectionDao;
 import com.github.ants280.jeff.farm.ws.dao.LoginDao;
 import com.github.ants280.jeff.farm.ws.dao.UserDao;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Singleton;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
@@ -43,21 +38,30 @@ public class InjectionBinder extends AbstractBinder
 
 	private DataSource getDataSource()
 	{
-		try
-		{
-			// https://tomcat.apache.org/tomcat-9.0-doc/jndi-datasource-examples-howto.html#PostgreSQL
-			Context initCtx = new InitialContext();
-			Context envCtx = (Context) initCtx.lookup("java:comp/env");
-			return (DataSource) envCtx.lookup("jdbc/jeff-farm-data-source"); // also in pom.xml ${resource.data.source.name}
-		}
-		catch (NamingException ex)
-		{
-			Logger.getLogger(InjectionBinder.class.getName())
-					.log(
-							Level.SEVERE,
-							"Could not lookup DataSource",
-							ex);
-			return null;
-		}
+		return null;
+//		MultiEndpointPool pool = MultiEndpointPool
+//			.builder(SocketAddress.class)
+//			.connectorHandler(transport)
+//			.maxConnectionsPerEndpoint(4)
+//			.maxConnectionsTotal(16)
+//			.build();
+//
+//
+//		try
+//		{
+//			// https://tomcat.apache.org/tomcat-9.0-doc/jndi-datasource-examples-howto.html#PostgreSQL
+//			Context initCtx = new InitialContext();
+//			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+//			return (DataSource) envCtx.lookup("jdbc/jeff-farm-data-source"); // also in pom.xml ${resource.data.source.name}
+//		}
+//		catch (NamingException ex)
+//		{
+//			Logger.getLogger(InjectionBinder.class.getName())
+//					.log(
+//							Level.SEVERE,
+//							"Could not lookup DataSource",
+//							ex);
+//			return null;
+//		}
 	}
 }
