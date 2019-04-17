@@ -11,5 +11,8 @@ git subtree push --prefix jeff-farm-ws/ heroku-backend master
 heroku addons:create heroku-postgresql
 
 
+heroku create jeff-farm-ui --remote heroku-frontend
+git subtree push --prefix jeff-farm-ui/ heroku-frontend master
+
 ## License
 Project is licensed under the [MIT license](LICENSE.md).
