@@ -134,8 +134,8 @@
 				<artifactId>properties-maven-plugin</artifactId>
 				<version>1.0.0</version>
 				<executions>
-					<!--load JDBC_DATABASE_* properties into maven-->
 					<execution>
+						<!--load JDBC_DATABASE_* properties into maven-->
 						<id>load-env</id>
 						<phase>initialize</phase>
 						<goals>
