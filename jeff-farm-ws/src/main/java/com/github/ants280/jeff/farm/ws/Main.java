@@ -19,8 +19,7 @@ public class Main extends Tomcat
 		String port = System.getProperty("server.port");
 		int portNum = Integer.parseInt(port);
 		URI uri = new URI(scheme, null, // userInfo
-						host, portNum, "/jeff-farm-ws", // path
-//			host, portNum, null, // path
+			host, portNum, null, // path
 			null, // query
 			null); // fragment
 		
@@ -34,10 +33,9 @@ public class Main extends Tomcat
 		tomcat.setBaseDir(targetFolder.getAbsolutePath());
 		tomcat.setHostname(uri.getHost());
 		tomcat.setPort(uri.getPort());
-//		tomcat.getHost().setAppBase(uri.getPath());
 
 		// Create context, load META-INF/context.xml and WEB-INF/web.xml
-//		tomcat.addWebapp("/jeff-farm-ws", webAppFolder.getAbsolutePath());
+		tomcat.addWebapp("", webAppFolder.getAbsolutePath());
 
 		tomcat.start();
 		Logger logger = Logger.getGlobal();
