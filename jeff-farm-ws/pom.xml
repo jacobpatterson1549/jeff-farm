@@ -13,7 +13,7 @@
 		<java.version>1.8</java.version>
 		<sonar.java.libraries>target/classes</sonar.java.libraries>
 		<main.class>com.github.ants280.jeff.farm.ws.Main</main.class>
-		<tomcat.version>9.0.16</tomcat.version>
+		<tomcat.version>8.5.40</tomcat.version>
 
 		<server.scheme>${SERVER_SCHEME}</server.scheme>
 		<server.host>${SERVER_HOST}</server.host>
