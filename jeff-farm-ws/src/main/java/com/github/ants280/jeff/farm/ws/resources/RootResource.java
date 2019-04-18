@@ -1,6 +1,5 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
-import com.github.ants280.jeff.farm.ws.ApplicationConfig;
 import com.github.ants280.jeff.farm.ws.dao.ConnectionDao;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class RootResource
 	
 	private Map getVersionInfo()
 	{
-		Package applicationPackage = ApplicationConfig.class.getPackage();
+		Package applicationPackage = this.getClass().getPackage();
 		boolean hasValidConnection = connectionDao.hasValidConnection();
 		
 		Map<String, Object> versionInfo = new LinkedHashMap<>();
