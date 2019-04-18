@@ -253,28 +253,28 @@
 			<version>${tomcat.version}</version>
 		</dependency>
 		<dependency>
+			<!--BasicDataSourceFactory (DataSource lookup)-->
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-dbcp</artifactId>
+			<version>${tomcat.version}</version>
+		</dependency>
+		<dependency>
+			<!--JspServlet (added by Tomcat.initWebappDefaults)-->
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<version>${tomcat.version}</version>
+		</dependency>
+		<dependency>
 			<!--database access-->
 			<groupId>${jdbc.driver.group.id}</groupId>
 			<artifactId>${jdbc.driver.artifact.id}</artifactId>
 			<version>${jdbc.driver.version}</version>
 		</dependency>
-		<dependency>
-			<!--HikariDataSource Postgres JDBC ConnectionPool-->
-			<groupId>com.zaxxer</groupId>
-			<artifactId>HikariCP</artifactId>
-			<version>3.3.1</version>
-		</dependency>
-		<dependency>
-			<!--logging-->
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>1.7.25</version>
-		</dependency>
 
 		<dependency>
-			<!--GrizzlyHttpServerFactory,HttpServer-->
+			<!--ServletContainer-->
 			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-grizzly2-http</artifactId>
+			<artifactId>jersey-container-servlet</artifactId>
 		</dependency>
 		<dependency>
 			<!--injection-->

@@ -1,32 +1,16 @@
 package com.github.ants280.jeff.farm.ws;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
+import org.apache.catalina.startup.Tomcat;
 
-public class Main
+public class Main extends Tomcat
 {
-	private final HttpServer server;
-
-	Main(URI uri)
-	{
-		ResourceConfig resourceConfig = new ResourceConfig().packages(
-			"com.github.ants280.jeff.farm.ws.resources")
-			.registerInstances(new InjectionBinder());
-
-		this.server = GrizzlyHttpServerFactory.createHttpServer(uri,
-			resourceConfig,
-			false); // auto-start flag
-	}
-
-	public static void main(String[] args)
-		throws IOException, URISyntaxException
+	public static void main(String[] args) throws Exception
 	{
 		loadProperties();
 
@@ -35,28 +19,35 @@ public class Main
 		String port = System.getProperty("server.port");
 		int portNum = Integer.parseInt(port);
 		URI uri = new URI(scheme, null, // userInfo
-			host, portNum, "/jeff-farm-ws", // path
+						host, portNum, "/jeff-farm-ws", // path
+//			host, portNum, null, // path
 			null, // query
 			null); // fragment
-		Main main = new Main(uri);
+		
+		
+		String userDir = System.getProperty("user.dir");
+		File webAppFolder = new File(userDir, "src/main/webapp/");
+		File targetFolder = new File(userDir, "target");
+		
+		Tomcat tomcat = new Tomcat();
+		tomcat.enableNaming();
+		tomcat.setBaseDir(targetFolder.getAbsolutePath());
+		tomcat.setHostname(uri.getHost());
+		tomcat.setPort(uri.getPort());
+//		tomcat.getHost().setAppBase(uri.getPath());
 
-		try
-		{
-			main.startServer();
+		// Create context, load META-INF/context.xml and WEB-INF/web.xml
+//		tomcat.addWebapp("/jeff-farm-ws", webAppFolder.getAbsolutePath());
 
-			Logger logger = Logger.getGlobal();
-			logger.log(Level.INFO,
-				"Server started at {0}.  Press ENTER to stop",
-				uri);
+		tomcat.start();
+		Logger logger = Logger.getGlobal();
+		logger.log(Level.INFO,
+			"Server started at {0}.  Press ENTER to stop",
+			uri);
 
-			logger.log(Level.INFO,
-				"[DONE]{0}",
-				(char) System.in.read()); // BLOCKS
-		}
-		finally
-		{
-			main.stopServer();
-		}
+		logger.log(Level.INFO, "[DONE]{0}", (char) System.in.read()); // BLOCKS
+		tomcat.stop();
+		tomcat.destroy();
 	}
 
 	private static void loadProperties()
@@ -72,15 +63,5 @@ public class Main
 		{
 			throw new RuntimeException("Could not read properties.", ex);
 		}
-	}
-
-	void startServer() throws IOException
-	{
-		server.start();
-	}
-
-	void stopServer()
-	{
-		server.shutdownNow();
 	}
 }

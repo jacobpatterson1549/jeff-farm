@@ -6,9 +6,12 @@ import com.github.ants280.jeff.farm.ws.dao.HiveDao;
 import com.github.ants280.jeff.farm.ws.dao.HiveInspectionDao;
 import com.github.ants280.jeff.farm.ws.dao.LoginDao;
 import com.github.ants280.jeff.farm.ws.dao.UserDao;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Singleton;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
@@ -26,7 +29,7 @@ public class InjectionBinder extends AbstractBinder
 		bindAsSingleton(HiveDao.class);
 		bindAsSingleton(HiveInspectionDao.class);
 	}
-	
+
 	private <T> void bindAsSingleton(Class<T> singletonClass)
 	{
 		if (!singletonClass.isAnnotationPresent(Singleton.class))
@@ -34,20 +37,25 @@ public class InjectionBinder extends AbstractBinder
 			throw new IllegalArgumentException(
 					singletonClass.getSimpleName() + " must be singleton");
 		}
-		
+
 		bindAsContract(singletonClass).in(Singleton.class);
 	}
 
 	private DataSource getDataSource()
 	{
-		String jdbcUsername = System.getProperty("jdbc.username");
-		String jdbcPassword = System.getProperty("jdbc.password");
-		String jdbcUrl = System.getProperty("jdbc.url");
-
-		HikariConfig config = new HikariConfig();
-		config.setUsername(jdbcUsername);
-		config.setPassword(jdbcPassword);
-		config.setJdbcUrl(jdbcUrl);
-		return new HikariDataSource(config);
+		try
+		{
+			String dataSourceName = System.getProperty("resource.data.source.name");
+			Context initCtx = new InitialContext();
+			// https://tomcat.apache.org/tomcat-9.0-doc/jndi-resources-howto.html#Using_resources
+			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+			return (DataSource) envCtx.lookup(dataSourceName);
+		}
+		catch (NamingException ex)
+		{
+			Logger.getLogger(InjectionBinder.class.getName())
+				.log(Level.SEVERE, "Could not lookup DataSource", ex);
+			return null;
+		}
 	}
 }
