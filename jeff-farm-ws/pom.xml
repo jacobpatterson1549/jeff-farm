@@ -253,15 +253,15 @@
 			<version>${tomcat.version}</version>
 		</dependency>
 		<dependency>
-			<!--BasicDataSourceFactory (DataSource lookup)-->
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-dbcp</artifactId>
-			<version>${tomcat.version}</version>
-		</dependency>
-		<dependency>
 			<!--JspServlet (added by Tomcat.initWebappDefaults)-->
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
+			<version>${tomcat.version}</version>
+		</dependency>
+		<dependency>
+			<!--BasicDataSourceFactory (DataSource lookup)-->
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-dbcp</artifactId>
 			<version>${tomcat.version}</version>
 		</dependency>
 		<dependency>
