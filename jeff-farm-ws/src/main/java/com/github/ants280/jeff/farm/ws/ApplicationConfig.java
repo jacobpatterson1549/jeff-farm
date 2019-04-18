@@ -14,7 +14,6 @@ public class ApplicationConfig extends Application
 	public Set<Class<?>> getClasses()
 	{
 		Set<Class<?>> resources = new HashSet<>();
-		//Prevent "MessageBodyWriter not found  for media type=application/json" Exception when running with uber jar
 		resources.add(JsonBindingFeature.class);
 		resources.add(LoginResource.class);
 		resources.add(UserResource.class);
