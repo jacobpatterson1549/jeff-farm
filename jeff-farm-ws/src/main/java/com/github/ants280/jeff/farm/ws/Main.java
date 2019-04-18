@@ -39,14 +39,10 @@ public class Main
 		tomcat.addWebapp("", webAppFolder.getAbsolutePath());
 
 		tomcat.start();
-		Logger logger = Logger.getGlobal();
-		logger.log(Level.INFO,
-			"Server started at {0}.  Press ENTER to stop",
+		Logger.getGlobal().log(Level.INFO,
+			"Server started at {0} - Press Ctrl-C to stop.",
 			uri);
-
-		logger.log(Level.INFO, "[DONE]{0}", (char) System.in.read()); // BLOCKS
-		tomcat.stop();
-		tomcat.destroy();
+		tomcat.getServer().await();
 	}
 
 	private static void loadProperties()
