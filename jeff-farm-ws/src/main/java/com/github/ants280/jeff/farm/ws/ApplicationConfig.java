@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-@ApplicationPath("/resources")
+@ApplicationPath("/jeff-farm-ws")
 public class ApplicationConfig extends Application
 {
 	@Override
