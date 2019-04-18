@@ -15,6 +15,9 @@
 		<main.class>com.github.ants280.jeff.farm.ws.Main</main.class>
 		<tomcat.version>8.5.40</tomcat.version>
 
+		<servlet.name>jeff-farm-ws Jersey Web Application</servlet.name>
+		<servlet.url.prefix>/jeff-farm-ws</servlet.url.prefix>
+		
 		<server.scheme>${SERVER_SCHEME}</server.scheme>
 		<server.host>${SERVER_HOST}</server.host>
 		<server.port>${SERVER_PORT}</server.port>

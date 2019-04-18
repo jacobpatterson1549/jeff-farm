@@ -17,9 +17,10 @@ public class Main
 		String scheme = System.getProperty("server.scheme");
 		String host = System.getProperty("server.host");
 		String port = System.getProperty("server.port");
+		String path = System.getProperty("servlet.url.prefix");
 		int portNum = Integer.parseInt(port);
 		URI uri = new URI(scheme, null, // userInfo
-			host, portNum, null, // path
+			host, portNum, path,
 			null, // query
 			null); // fragment
 		
