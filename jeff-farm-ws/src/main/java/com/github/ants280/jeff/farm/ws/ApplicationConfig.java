@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+import org.glassfish.jersey.jsonb.JsonBindingFeature;
 
 @ApplicationPath("/")
 public class ApplicationConfig extends Application
@@ -13,6 +14,8 @@ public class ApplicationConfig extends Application
 	public Set<Class<?>> getClasses()
 	{
 		Set<Class<?>> resources = new HashSet<>();
+		//Prevent "MessageBodyWriter not found  for media type=application/json" Exception when running with uber jar
+		resources.add(JsonBindingFeature.class);
 		resources.add(LoginResource.class);
 		resources.add(UserResource.class);
 		resources.add(RootResource.class);
