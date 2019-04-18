@@ -30,8 +30,8 @@ public class Main
 		File targetFolder = new File(userDir, "target");
 		
 		Tomcat tomcat = new Tomcat();
-		tomcat.enableNaming();
 		tomcat.setBaseDir(targetFolder.getAbsolutePath());
+		tomcat.enableNaming();
 		tomcat.setHostname(uri.getHost());
 		tomcat.setPort(uri.getPort());
 
