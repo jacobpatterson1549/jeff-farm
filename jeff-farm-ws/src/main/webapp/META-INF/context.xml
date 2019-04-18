@@ -17,7 +17,6 @@
 		   lockOutTime="300">
 		<Realm className="org.apache.catalina.realm.JDBCRealm"
 			   driverName="${jdbc.driver.class.name}"
-			   resourceName="${resource.data.source.name}"
 			   connectionURL="${jdbc.url}"
 			   connectionName="${jdbc.username}"
 			   connectionPassword="${jdbc.password}"
