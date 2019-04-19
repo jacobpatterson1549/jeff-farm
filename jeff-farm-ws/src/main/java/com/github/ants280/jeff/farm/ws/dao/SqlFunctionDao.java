@@ -33,7 +33,7 @@ public class SqlFunctionDao
 		this.executeSingle(
 			functionName,
 			inParameters,
-			resultSet -> (Void) null);
+			resultSet -> null);
 	}
 
 	public int executeCreate(
