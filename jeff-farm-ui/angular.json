@@ -80,8 +80,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "jeff-farm-ui:build",
-			      "proxyConfig": "proxy.conf.json"
+            "browserTarget": "jeff-farm-ui:build"
           },
           "configurations": {
             "production": {
