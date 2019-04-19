@@ -58,12 +58,6 @@
 			<url-pattern>${servlet.url.prefix}/farms/*</url-pattern>
 			<url-pattern>${servlet.url.prefix}/user/*</url-pattern>
 		</web-resource-collection>
-<!--		<auth-constraint>
-			<role-name>user</role-name>
-		</auth-constraint>-->
 	</security-constraint>
-	<security-role>
-		<role-name>user</role-name>
-	</security-role>
 
 </web-app>
