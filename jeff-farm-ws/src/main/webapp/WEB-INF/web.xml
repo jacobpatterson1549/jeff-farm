@@ -23,7 +23,7 @@
 		<init-param>
 			<param-name>cors.allowed.origins</param-name>
 			<!--allowing ui on same server as tomcat, but on different port-->
-			<param-value>http://localhost:4200</param-value>
+			<param-value>${site.origin}</param-value>
 		</init-param>
 		<init-param>
 			<!--allow non-default PUT and DELETE methods-->

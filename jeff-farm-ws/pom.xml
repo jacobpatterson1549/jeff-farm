@@ -17,7 +17,8 @@
 
 		<servlet.name>jeff-farm-ws Jersey Web Application</servlet.name>
 		<servlet.url.prefix>/jeff-farm-ws</servlet.url.prefix>
-		
+
+		<site.origin>${SITE_ORIGIN}</site.origin>
 		<server.scheme>${SERVER_SCHEME}</server.scheme>
 		<server.host>${SERVER_HOST}</server.host>
 		<server.port>${SERVER_PORT}</server.port>
