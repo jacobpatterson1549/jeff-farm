@@ -5,6 +5,8 @@ import javax.json.bind.annotation.JsonbTransient;
 public class User extends CrudItem<User>
 {
 	public static final String USER_NAME_COLUMN = "user_name";
+	// The name of the column containing passwords, is not a hardcoded password.
+	@SuppressWarnings("squid:S2068")
 	public static final String PASSWORD_COLUMN = "user_password";
 	public static final String FIRST_NAME_COLUMN = "first_name";
 	public static final String LAST_NAME_COLUMN = "last_name";
