@@ -107,13 +107,14 @@ public class SqlFunctionDao
 		{
 			setParameters(callableStatement, inParameters);
 
-			ResultSet resultSet = callableStatement.executeQuery();
-
 			// TODO: stream
 			List<T> results = new ArrayList<>();
-			while (resultSet.next())
+			try(ResultSet resultSet = callableStatement.executeQuery())
 			{
-				results.add(rowMapper.getValue(resultSet));
+				while (resultSet.next())
+				{
+					results.add(rowMapper.getValue(resultSet));
+				}
 			}
 
 			return results;
