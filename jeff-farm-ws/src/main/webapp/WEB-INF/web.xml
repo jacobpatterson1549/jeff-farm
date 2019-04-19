@@ -1,7 +1,7 @@
 <web-app version="3.0"
-	     xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_0.xsd">
+		 xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_0.xsd">
 
 	<servlet>
 		<servlet-name>${servlet.name}</servlet-name>
@@ -31,11 +31,6 @@
 			<param-value>GET,POST,HEAD,OPTIONS,PUT,DELETE</param-value>
 		</init-param>
 		<init-param>
-			<!--allow non-default Authorization header-->
-			<param-name>cors.allowed.headers</param-name>
-			<param-value>Authorization, Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers</param-value>
-		</init-param>
-		<init-param>
 			<!--make requests with credentials-->
 			<param-name>cors.support.credentials</param-name>
 			<param-value>true</param-value>
@@ -63,9 +58,9 @@
 			<url-pattern>${servlet.url.prefix}/farms/*</url-pattern>
 			<url-pattern>${servlet.url.prefix}/user/*</url-pattern>
 		</web-resource-collection>
-		<auth-constraint>
+<!--		<auth-constraint>
 			<role-name>user</role-name>
-		</auth-constraint>
+		</auth-constraint>-->
 	</security-constraint>
 	<security-role>
 		<role-name>user</role-name>
