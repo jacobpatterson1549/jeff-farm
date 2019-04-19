@@ -57,7 +57,14 @@
 			<web-resource-name>secured-endpoints</web-resource-name>
 			<url-pattern>${servlet.url.prefix}/farms/*</url-pattern>
 			<url-pattern>${servlet.url.prefix}/user/*</url-pattern>
+			<http-method-omission>OPTIONS</http-method-omission>
 		</web-resource-collection>
+		<auth-constraint>
+			<role-name>user</role-name>
+		</auth-constraint>
 	</security-constraint>
+	<security-role>
+		<role-name>user</role-name>
+	</security-role>
 
 </web-app>
