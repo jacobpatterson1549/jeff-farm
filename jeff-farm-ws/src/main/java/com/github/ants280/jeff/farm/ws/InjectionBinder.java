@@ -51,7 +51,7 @@ public class InjectionBinder extends AbstractBinder
 		}
 		catch (NamingException ex)
 		{
-			throw new RuntimeException("Could not lookup DataSource", ex);
+			throw new JeffFarmWsException("Could not lookup DataSource", ex);
 		}
 	}
 }

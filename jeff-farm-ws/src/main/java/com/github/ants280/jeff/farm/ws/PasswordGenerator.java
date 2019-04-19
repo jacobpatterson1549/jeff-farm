@@ -26,7 +26,7 @@ public class PasswordGenerator
 		}
 		catch (NoSuchAlgorithmException ex)
 		{
-			throw new RuntimeException(
+			throw new JeffFarmWsException(
 					"Could not set password generator's algorithm.",
 					ex);
 		}

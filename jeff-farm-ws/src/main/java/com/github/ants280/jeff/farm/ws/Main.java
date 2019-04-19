@@ -56,7 +56,7 @@ public class Main
 		}
 		catch (IOException ex)
 		{
-			throw new RuntimeException("Could not read properties.", ex);
+			throw new JeffFarmWsException("Could not read properties.", ex);
 		}
 	}
 }
