@@ -47,7 +47,7 @@
 			</activation>
 			<properties>
 				<!--suppress UnresolvedMavenProperty -->
-				<site.origin>${env.SITE.ORIGIN}</site.origin>
+				<site.origin>${env.SITE_ORIGIN}</site.origin>
 				<!--suppress UnresolvedMavenProperty -->
 				<server.scheme>${env.SERVER_SCHEME}</server.scheme>
 				<!--suppress UnresolvedMavenProperty -->
