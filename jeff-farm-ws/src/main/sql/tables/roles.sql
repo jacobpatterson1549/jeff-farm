@@ -1,7 +1,7 @@
 -- DROP TABLE roles;
 
 CREATE TABLE IF NOT EXISTS roles
-	( role_name SERIAL NOT NULL PRIMARY KEY
+	( role_name VARCHAR(20) NOT NULL PRIMARY KEY
 	);
 
 INSERT INTO roles (role_name) VALUES ('user') ON CONFLICT DO NOTHING;
