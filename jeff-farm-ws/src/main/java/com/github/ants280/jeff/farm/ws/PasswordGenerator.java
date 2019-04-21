@@ -13,7 +13,6 @@ public class PasswordGenerator
 	
 	public PasswordGenerator()
 	{
-		// TODO: Ensure multiple instances are not created.
 		String algorithm = System.getProperty("credential.handler.algorithm");
 		String iterations = System.getProperty("credential.handler.iterations");
 		String saltLength = System.getProperty("credential.handler.salt.length");
