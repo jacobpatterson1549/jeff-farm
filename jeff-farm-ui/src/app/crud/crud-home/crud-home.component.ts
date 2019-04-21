@@ -10,7 +10,7 @@ import { CrudItem } from '../crud.item';
 })
 export class CrudHomeComponent<T extends CrudItem> implements OnInit {
 
-  private crudItemName: string;
+  crudItemName: string;
 
   constructor(
     private route: ActivatedRoute,
