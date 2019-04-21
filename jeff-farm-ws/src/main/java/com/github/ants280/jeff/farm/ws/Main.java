@@ -10,6 +10,8 @@ import org.apache.catalina.startup.Tomcat;
 
 public class Main
 {
+	private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+	
 	public static void main(String[] args) throws Exception
 	{
 		loadProperties();
@@ -37,8 +39,7 @@ public class Main
 		tomcat.addWebapp("", webAppFolder.getAbsolutePath());
 
 		tomcat.start();
-		Logger.getGlobal()
-			.log(Level.INFO,
+		LOGGER.log(Level.INFO,
 				"Server started at {0} - Press Ctrl-C to stop.",
 				uri);
 		tomcat.getServer().await();
@@ -56,6 +57,17 @@ public class Main
 		catch (IOException ex)
 		{
 			throw new JeffFarmWsException("Could not read properties.", ex);
+		}
+		
+		LOGGER.info("Environment variables (set on heroku):");
+		for (String prop : new String[] {"DATABASE_URL","SITE_ORIGIN","SERVER_SCHEME","SERVER_HOST","PORT","JDBC_HOST","JDBC_PORT","JDBC_DATABASE","JDBC_USERNAME","JDBC_PASSWORD"})
+		{
+			LOGGER.info(String.format("\t%s => %s", prop, System.getenv(prop)));
+		}
+		LOGGER.info("System properties (set by maven):");
+		for (String prop : new String[] {"site.origin","server.scheme","server.host","server.port","jdbc.host","jdbc.port","jdbc.database","jdbc.username","jdbc.password"})
+		{
+			LOGGER.info(String.format("\t%s => %s", prop, System.getProperty(prop)));
 		}
 	}
 }
