@@ -53,7 +53,7 @@
 				<!--suppress UnresolvedMavenProperty -->
 				<server.host>${env.SERVER_HOST}</server.host>
 				<!--suppress UnresolvedMavenProperty -->
-				<server.port>${env.PORT}</server.port>
+				<server.port>${env.SERVER_PORT}</server.port>
 				<!--suppress UnresolvedMavenProperty -->
 				<jdbc.host>${env.JDBC_HOST}</jdbc.host>
 				<!--suppress UnresolvedMavenProperty -->

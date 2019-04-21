@@ -19,8 +19,9 @@ public class Main
 		String scheme = System.getProperty("server.scheme");
 		String host = System.getProperty("server.host");
 		String port = System.getProperty("server.port");
+		String envPort = System.getenv("PORT");
 		String path = System.getProperty("servlet.url.prefix");
-		int portNum = Integer.parseInt(port);
+		int portNum = Integer.parseInt(envPort == null ? port : envPort);
 		URI uri = new URI(scheme, null, // userInfo
 			host, portNum, path, null, // query
 			null); // fragment
