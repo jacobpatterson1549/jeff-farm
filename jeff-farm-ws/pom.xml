@@ -35,6 +35,7 @@
 		<jdbc.database>jeff_farm_db</jdbc.database>
 		<jdbc.username>farmer</jdbc.username>
 		<jdbc.password>flint5+0N3</jdbc.password>
+		<jdbc.url>Should be overwritten by set-jdbc-url profile.</jdbc.url>
 	</properties>
 	<profiles>
 		<profile>

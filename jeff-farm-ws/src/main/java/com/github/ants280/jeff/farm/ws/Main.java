@@ -66,7 +66,7 @@ public class Main
 			LOGGER.info(String.format("\t%s => %s", prop, System.getenv(prop)));
 		}
 		LOGGER.info("System properties (set by maven):");
-		for (String prop : new String[] {"site.origin","server.scheme","server.host","server.port","jdbc.host","jdbc.port","jdbc.database","jdbc.username","jdbc.password"})
+		for (String prop : new String[] {"site.origin","server.scheme","server.host","server.port","jdbc.host","jdbc.port","jdbc.database","jdbc.username","jdbc.password","jdbc.url"})
 		{
 			LOGGER.info(String.format("\t%s => %s", prop, System.getProperty(prop)));
 		}
