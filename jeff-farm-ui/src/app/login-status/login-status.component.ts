@@ -12,10 +12,10 @@ import { UserService } from 'src/app/user/user.service';
 })
 export class LoginStatusComponent implements OnInit {
 
-  private user: User;
+  user: User;
 
   constructor(
-    private authService: AuthService,
+    authService: AuthService,
     private userService: UserService,
     private router: Router) { }
 
