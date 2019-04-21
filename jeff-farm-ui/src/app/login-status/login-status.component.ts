@@ -15,7 +15,7 @@ export class LoginStatusComponent implements OnInit {
   user: User;
 
   constructor(
-    authService: AuthService,
+    private authService: AuthService,
     private userService: UserService,
     private router: Router) { }
 
