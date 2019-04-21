@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
 public class Main
@@ -37,7 +38,8 @@ public class Main
 		tomcat.setPort(uri.getPort());
 
 		// Create context, load META-INF/context.xml and WEB-INF/web.xml
-		tomcat.addWebapp("", webAppFolder.getAbsolutePath());
+		Context context = tomcat.addWebapp("", webAppFolder.getAbsolutePath());
+		context.setParentClassLoader(Main.class.getClassLoader());
 
 		tomcat.start();
 		LOGGER.log(Level.INFO,
