@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="tables" author="jpatterson" runAlways="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/users.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/roles.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/user_roles.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/farms.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/hives.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/hive_inspections.sql"/>
+	</changeSet>
+	
+<!--	<changeSet id="audit-trigger-tables" author="jpatterson">
+	</changeSet>-->
+
+<!--	<changeSet id="jpatterson" author="stored-procedures">
+	</changeSet>-->
+
+</databaseChangeLog>
