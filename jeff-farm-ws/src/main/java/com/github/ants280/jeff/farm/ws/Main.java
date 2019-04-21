@@ -20,15 +20,13 @@ public class Main
 		String path = System.getProperty("servlet.url.prefix");
 		int portNum = Integer.parseInt(port);
 		URI uri = new URI(scheme, null, // userInfo
-			host, portNum, path,
-			null, // query
+			host, portNum, path, null, // query
 			null); // fragment
-		
-		
+
 		String userDir = System.getProperty("user.dir");
 		File webAppFolder = new File(userDir, "src/main/webapp/");
 		File targetFolder = new File(userDir, "target");
-		
+
 		Tomcat tomcat = new Tomcat();
 		tomcat.setBaseDir(targetFolder.getAbsolutePath());
 		tomcat.enableNaming();
@@ -39,9 +37,10 @@ public class Main
 		tomcat.addWebapp("", webAppFolder.getAbsolutePath());
 
 		tomcat.start();
-		Logger.getGlobal().log(Level.INFO,
-			"Server started at {0} - Press Ctrl-C to stop.",
-			uri);
+		Logger.getGlobal()
+			.log(Level.INFO,
+				"Server started at {0} - Press Ctrl-C to stop.",
+				uri);
 		tomcat.getServer().await();
 	}
 

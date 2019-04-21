@@ -14,30 +14,67 @@
 		<sonar.java.libraries>target/classes</sonar.java.libraries>
 		<main.class>com.github.ants280.jeff.farm.ws.Main</main.class>
 		<tomcat.version>8.5.40</tomcat.version>
-
 		<servlet.name>jeff-farm-ws Jersey Web Application</servlet.name>
 		<servlet.url.prefix>/jeff-farm-ws</servlet.url.prefix>
-
-		<site.origin>${SITE_ORIGIN}</site.origin>
-		<server.scheme>${SERVER_SCHEME}</server.scheme>
-		<server.host>${SERVER_HOST}</server.host>
-		<server.port>${SERVER_PORT}</server.port>
-
 		<jdbc.driver.name>postgresql</jdbc.driver.name>
 		<jdbc.driver.group.id>org.postgresql</jdbc.driver.group.id>
 		<jdbc.driver.artifact.id>postgresql</jdbc.driver.artifact.id>
 		<jdbc.driver.version>42.2.5</jdbc.driver.version>
 		<jdbc.driver.class.name>org.postgresql.Driver</jdbc.driver.class.name>
-		<jdbc.host>${JDBC_DATABASE_HOST}</jdbc.host>
-		<jdbc.port>${JDBC_DATABASE_PORT}</jdbc.port>
-		<jdbc.database>${JDBC_DATABASE_NAME}</jdbc.database>
-		<jdbc.username>${JDBC_DATABASE_USERNAME}</jdbc.username>
-		<jdbc.password>${JDBC_DATABASE_PASSWORD}</jdbc.password>
-		<jdbc.url>jdbc:${jdbc.driver.name}://${jdbc.host}:${jdbc.port}/${jdbc.database}?serverTimezone=UTC</jdbc.url>
 		<resource.data.source.name>jdbc/jeff-farm-data-source</resource.data.source.name> <!-- also in InjectionBinder.java -->
 		<resource.data.source.auth>Container</resource.data.source.auth>
 		<resource.data.source.type>javax.sql.DataSource</resource.data.source.type>
+		<!--derived properties (potentially overwritten by profiles-->
+		<site.origin>http://localhost:4200</site.origin>
+		<server.scheme>http</server.scheme>
+		<server.host>localhost</server.host>
+		<server.port>8080</server.port>
+		<jdbc.host>localhost</jdbc.host>
+		<jdbc.port>5432</jdbc.port>
+		<jdbc.database>jeff_farm_db</jdbc.database>
+		<jdbc.username>farmer</jdbc.username>
+		<jdbc.password>flint5+0N3</jdbc.password>
 	</properties>
+	<profiles>
+		<profile>
+			<!--load the environmental properties on production if DATABASE_URL is set-->
+			<id>production</id>
+			<activation>
+				<property>
+					<name>env.DATABASE_URL</name>
+				</property>
+			</activation>
+			<properties>
+				<!--suppress UnresolvedMavenProperty -->
+				<site.origin>${env.SITE.ORIGIN}</site.origin>
+				<!--suppress UnresolvedMavenProperty -->
+				<server.scheme>${env.SERVER_SCHEME}</server.scheme>
+				<!--suppress UnresolvedMavenProperty -->
+				<server.host>${env.SERVER_HOST}</server.host>
+				<!--suppress UnresolvedMavenProperty -->
+				<server.port>${env.PORT}</server.port>
+				<!--suppress UnresolvedMavenProperty -->
+				<jdbc.host>${env.JDBC_HOST}</jdbc.host>
+				<!--suppress UnresolvedMavenProperty -->
+				<jdbc.port>${env.JDBC_PORT}</jdbc.port>
+				<!--suppress UnresolvedMavenProperty -->
+				<jdbc.database>${env.JDBC_DATABASE}</jdbc.database>
+				<!--suppress UnresolvedMavenProperty -->
+				<jdbc.username>${env.JDBC_USERNAME}</jdbc.username>
+				<!--suppress UnresolvedMavenProperty -->
+				<jdbc.password>${env.JDBC_PASSWORD}</jdbc.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>set-jdbc-url</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<jdbc.url>jdbc:${jdbc.driver.name}://${jdbc.host}:${jdbc.port}/${jdbc.database}?serverTimezone=UTC</jdbc.url>
+			</properties>
+		</profile>
+	</profiles>
 	<build>
 		<!-- mvn -DremoveSnapshot versions:set && mvn clean package && mvn versions:set -DnextSnapshot=true -->
 		<plugins>
@@ -138,19 +175,6 @@
 				<artifactId>properties-maven-plugin</artifactId>
 				<version>1.0.0</version>
 				<executions>
-					<execution>
-						<!--load JDBC_DATABASE_* properties into maven-->
-						<id>load-env</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>read-project-properties</goal>
-						</goals>
-						<configuration>
-							<files>
-								<file>.env</file>
-							</files>
-						</configuration>
-					</execution>
 					<execution>
 						<!--write maven properties to file-->
 						<id>create-app-properties</id>
