@@ -26,9 +26,9 @@
 			   userRoleTable="user_roles"
 			   roleNameCol="role_name">
 			<CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler"
-				               algorithm="SHA-256"
-				               iterations="1000"
-				               saltLength="8"/>
+				               algorithm="${credential.handler.algorithm}"
+				               iterations="${credential.handler.iterations}"
+				               saltLength="${credential.handler.salt.length}"/>
 		</Realm>
 	</Realm>
 

@@ -14,10 +14,11 @@ public class PasswordGenerator
 	public PasswordGenerator()
 	{
 		// TODO: Ensure multiple instances are not created.
-		// TODO: Use properties to sync up MessageDigestCredentialHandler inputs in context.xml
-		String algorithm = "SHA-256";
-		int iterations = 1000;
-		int saltLength = 8;
+		String algorithm = System.getProperty("credential.handler.algorithm");
+		String iterations = System.getProperty("credential.handler.iterations");
+		String saltLength = System.getProperty("credential.handler.salt.length");
+		int iterationsNum = Integer.parseInt(iterations);
+		int saltLengthNum = Integer.parseInt(saltLength);
 		MessageDigestCredentialHandler messageDigestCredentialHandler
 				= new MessageDigestCredentialHandler();
 		try
@@ -30,8 +31,8 @@ public class PasswordGenerator
 					"Could not set password generator's algorithm.",
 					ex);
 		}
-		messageDigestCredentialHandler.setIterations(iterations);
-		messageDigestCredentialHandler.setSaltLength(saltLength);
+		messageDigestCredentialHandler.setIterations(iterationsNum);
+		messageDigestCredentialHandler.setSaltLength(saltLengthNum);
 		
 		
 		credentialHandler = messageDigestCredentialHandler;
