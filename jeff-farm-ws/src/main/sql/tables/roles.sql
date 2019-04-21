@@ -3,3 +3,5 @@
 CREATE TABLE IF NOT EXISTS roles
 	( role_name SERIAL NOT NULL PRIMARY KEY
 	);
+
+INSERT INTO roles (role_name) VALUES ('user') ON CONFLICT DO NOTHING;

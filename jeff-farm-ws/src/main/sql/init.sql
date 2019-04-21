@@ -16,6 +16,3 @@ CREATE USER farmer with PASSWORD 'flint5+0N3';
 -- sudo dpkg -i mysql-connector-java_8.0.15-1ubuntu18.04_all.deb || sudo -k
 -- ./asadmin add-library /usr/share/java/mysql-connector-java-8.0.15.jar
 -- cp ~/.m2/repository/org/postgresql/postgresql/42.2.5/postgresql-42.2.5.jar ~/apps/apache-tomcat-9.0.16/lib/
-
--- SETUP:
-INSERT INTO roles (role_name) VALUES ('user');
