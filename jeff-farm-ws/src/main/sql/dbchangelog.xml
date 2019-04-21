@@ -22,7 +22,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/hive_inspections_audit.sql"/>
 	</changeSet>
 
-	<changeSet id="jpatterson" author="functions">
+	<changeSet id="functions" author="jpatterson">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_user.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_hive.sql"/>
