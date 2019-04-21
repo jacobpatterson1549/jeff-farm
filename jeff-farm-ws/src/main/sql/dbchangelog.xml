@@ -6,7 +6,7 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet id="tables" author="jpatterson" runAlways="true">
+	<changeSet id="tables" author="jpatterson">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/users.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/roles.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/user_roles.sql"/>
@@ -15,10 +15,36 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/hive_inspections.sql"/>
 	</changeSet>
 	
-<!--	<changeSet id="audit-trigger-tables" author="jpatterson">
-	</changeSet>-->
+	<changeSet id="audit-trigger-tables" author="jpatterson">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/users_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/farms_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/hives_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/hive_inspections_audit.sql"/>
+	</changeSet>
 
-<!--	<changeSet id="jpatterson" author="stored-procedures">
-	</changeSet>-->
+	<changeSet id="jpatterson" author="functions">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_user.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_farm.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_hive.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_hive_inspection.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_user_from_user_name.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_user.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_farm.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_hive.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_hive_inspection.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_farms.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_hives.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_hive_inspections.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_user.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_farm.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_hive.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_hive_inspection.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_user.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_farm.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_hive.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_hive_inspection.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/can-delete/can_delete_farm.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/can-delete/can_delete_hive.sql"/>
+	</changeSet>
 
 </databaseChangeLog>
