@@ -62,15 +62,7 @@ public class Main
 			throw new JeffFarmWsException("Could not read properties.", ex);
 		}
 		
-		LOGGER.info("Environment variables (set on heroku):");
-		for (String prop : new String[] {"DATABASE_URL","SITE_ORIGIN","SERVER_SCHEME","SERVER_HOST","PORT","JDBC_HOST","JDBC_PORT","JDBC_DATABASE","JDBC_USERNAME","JDBC_PASSWORD"})
-		{
-			LOGGER.info(String.format("\t%s => %s", prop, System.getenv(prop)));
-		}
-		LOGGER.info("System properties (set by maven):");
-		for (String prop : new String[] {"site.origin","server.scheme","server.host","server.port","jdbc.host","jdbc.port","jdbc.database","jdbc.username","jdbc.password","jdbc.url"})
-		{
-			LOGGER.info(String.format("\t%s => %s", prop, System.getProperty(prop)));
-		}
+		String prop = "jdbc.url";
+		LOGGER.info(String.format("\t%s => %s", prop, System.getProperty(prop)));
 	}
 }
