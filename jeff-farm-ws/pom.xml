@@ -25,6 +25,9 @@
 		<resource.data.source.name>jdbc/jeff-farm-data-source</resource.data.source.name> <!-- also in InjectionBinder.java -->
 		<resource.data.source.auth>Container</resource.data.source.auth>
 		<resource.data.source.type>javax.sql.DataSource</resource.data.source.type>
+		<credential.handler.algorithm>SHA-256</credential.handler.algorithm>
+		<credential.handler.iterations>1000</credential.handler.iterations>
+		<credential.handler.salt.length>8</credential.handler.salt.length>
 		<!--derived properties (potentially overwritten by profiles-->
 		<site.origin>http://localhost:4200</site.origin>
 		<server.scheme>http</server.scheme>
@@ -350,7 +353,6 @@
 			<!--injection-->
 			<groupId>org.glassfish.jersey.inject</groupId>
 			<artifactId>jersey-hk2</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<!--Jsonb,JsonbBuilder-->
