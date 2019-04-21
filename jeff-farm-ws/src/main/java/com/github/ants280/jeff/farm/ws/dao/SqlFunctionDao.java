@@ -15,8 +15,7 @@ import javax.sql.DataSource;
 public class SqlFunctionDao
 {
 	private final DataSource dataSource;
-	// TODO: pull "jeff_farm_db" from ${jdbc.database} maven property
-	private static final String USER_ID = "jeff_farm_db.user_id";
+	private static final String USER_ID = System.getProperty("jdbc.database") + ".user_id";
 
 	public SqlFunctionDao(DataSource dataSource)
 	{
