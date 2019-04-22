@@ -2,7 +2,7 @@
 a web server/site to track the farm
 
 # Deployment
-* Deployed on heroku at jeff-farm.herokuapp.com
+* Deployed on heroku at https://jeff-farm.herokuapp.com
 * The ui (jeff-farm-ui) and webservice (jeff-farm-ws) are actually deployed on different Heroku apps.  The webservice is deployed at jeff-farm-ws.herokuapp.com.
 * Because the ui and webservice are in one repository, git-subtree must be used to deploy the apps separately:
 `git subtree push --prefix jeff-farm-ws/ heroku-backend master` and `git subtree push --prefix jeff-farm-ui/ heroku master`
