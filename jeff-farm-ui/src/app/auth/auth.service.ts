@@ -32,7 +32,7 @@ export class AuthService {
     return this.httpClient.post<string>('login', user)
       .pipe(
         catchError((error: HttpErrorResponse)  => {
-          return throwError('error');
+          return throwError(error);
         }),
         tap(jsessionid => {
           this.isLoggedIn = true;
