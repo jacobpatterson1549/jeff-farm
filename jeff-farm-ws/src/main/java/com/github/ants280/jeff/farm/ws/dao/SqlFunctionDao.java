@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 public class SqlFunctionDao
 {
 	private final DataSource dataSource;
-	private static final String USER_ID = System.getProperty("jdbc.database") + ".user_id";
+	private static final String USER_ID = "jeff_farm_ws.user_id";
 
 	public SqlFunctionDao(DataSource dataSource)
 	{

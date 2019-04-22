@@ -28,7 +28,7 @@ $users_audit$
 			)
 		VALUES
 			( 'i'
-			, CAST(current_setting('jeff_farm_db.user_id') AS INT)
+			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
 			, NEW.id
 			, NEW.user_name
 			, NEW.first_name
@@ -62,7 +62,7 @@ $users_audit$
 			)
 		VALUES
 			( 'b'
-			, CAST(current_setting('jeff_farm_db.user_id') AS INT)
+			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
 			, OLD.id
 			, OLD.user_name
 			, OLD.first_name
@@ -78,7 +78,7 @@ $users_audit$
 			)
 		VALUES
 			( 'a'
-			, CAST(current_setting('jeff_farm_db.user_id') AS INT)
+			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
 			, NEW.id
 			, NEW.user_name
 			, NEW.first_name
@@ -112,7 +112,7 @@ $users_audit$
 			)
 		VALUES
 			( 'd'
-			, CAST(current_setting('jeff_farm_db.user_id') AS INT)
+			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
 			, OLD.id
 			, OLD.user_name
 			, OLD.first_name
