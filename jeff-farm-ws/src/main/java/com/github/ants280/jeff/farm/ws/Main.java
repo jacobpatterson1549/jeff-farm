@@ -11,8 +11,6 @@ import org.apache.catalina.startup.Tomcat;
 
 public class Main
 {
-	private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
-	
 	public static void main(String[] args) throws Exception
 	{
 		loadProperties();
@@ -42,7 +40,8 @@ public class Main
 		context.setParentClassLoader(Main.class.getClassLoader());
 
 		tomcat.start();
-		LOGGER.log(Level.INFO,
+		Logger.getLogger(Main.class.getName())
+			.log(Level.INFO,
 				"Server started at {0} - Press Ctrl-C to stop.",
 				uri);
 		tomcat.getServer().await();
@@ -61,8 +60,5 @@ public class Main
 		{
 			throw new JeffFarmWsException("Could not read properties.", ex);
 		}
-		
-		String prop = "jdbc.url";
-		LOGGER.info(String.format("\t%s => %s", prop, System.getProperty(prop)));
 	}
 }
