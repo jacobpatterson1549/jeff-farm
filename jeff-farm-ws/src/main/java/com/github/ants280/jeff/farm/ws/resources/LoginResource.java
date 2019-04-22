@@ -36,7 +36,19 @@ public class LoginResource
 		try
 		{
 			String sessionId = loginDao.login(user); // creates JSESSIONID cookie
-			NewCookie newCookie = new NewCookie("JSESSIONID", sessionId);
+
+			String scheme = System.getProperty("server.scheme");
+			String host = System.getProperty("server.host");
+			boolean secure = "https".equals(scheme);
+			NewCookie newCookie = new NewCookie(
+				"JSESSIONID", // name
+				sessionId, // value
+				null, // path
+				host, // domain
+				null, // comment
+				NewCookie.DEFAULT_MAX_AGE,
+				secure,
+				true); // httpOnly
 
 			return Response.ok()
 					.cookie(newCookie) // TODO: add test to ensure cookie returned (maybe link to cookie name in web.xml)
