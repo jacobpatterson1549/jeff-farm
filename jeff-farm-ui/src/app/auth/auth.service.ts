@@ -10,6 +10,7 @@ import { User } from '../user/user';
 export class AuthService {
   
   isLoggedIn: boolean = false;
+  jsessionid: string = null;
   private readonly IS_LOGGED_IN_KEY : string = 'isLoggedIn';
 
   constructor(private httpClient: HttpClient) {
@@ -22,19 +23,20 @@ export class AuthService {
     }
   }
 
-  login(username: string, password: string): Observable<any> {
+  login(username: string, password: string): Observable<string> {
 
     const user: User = new User();
     user.userName = username;
     user.password = password;
 
-    return this.httpClient.post<any>('login', user)
+    return this.httpClient.post<string>('login', user)
       .pipe(
         catchError((error: HttpErrorResponse)  => {
           return throwError('error');
         }),
-        tap(_ => {
+        tap(jsessionid => {
           this.isLoggedIn = true;
+          this.jsessionid = jsessionid;
 
           localStorage.setItem(this.IS_LOGGED_IN_KEY, "true");
         }),
