@@ -39,6 +39,8 @@
 		<jdbc.username>farmer</jdbc.username>
 		<jdbc.password>flint5+0N3</jdbc.password>
 		<jdbc.url>Should be overwritten by set-jdbc-url profile.</jdbc.url>
+		<!--computed properties (keep last)-->
+		<jdbc.url>jdbc:${jdbc.driver.name}://${jdbc.host}:${jdbc.port}/${jdbc.database}?serverTimezone=UTC</jdbc.url>
 	</properties>
 	<profiles>
 		<profile>
@@ -68,14 +70,7 @@
 				<jdbc.username>${env.JDBC_USERNAME}</jdbc.username>
 				<!--suppress UnresolvedMavenProperty -->
 				<jdbc.password>${env.JDBC_PASSWORD}</jdbc.password>
-			</properties>
-		</profile>
-		<profile>
-			<id>set-jdbc-url</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
+
 				<jdbc.url>jdbc:${jdbc.driver.name}://${jdbc.host}:${jdbc.port}/${jdbc.database}?serverTimezone=UTC</jdbc.url>
 			</properties>
 		</profile>
