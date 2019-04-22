@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../user/user';
+import { CachingService } from '../caching.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
   jsessionid: string = null;
   private readonly IS_LOGGED_IN_KEY : string = 'isLoggedIn';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private cachingService: CachingService) {
 
     const wasLoggedIn: string = localStorage.getItem(this.IS_LOGGED_IN_KEY);
 
@@ -54,5 +55,7 @@ export class AuthService {
     this.isLoggedIn = false;
 
     localStorage.removeItem(this.IS_LOGGED_IN_KEY);
+
+    this.cachingService.clear();
   }
 }
