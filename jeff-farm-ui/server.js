@@ -7,7 +7,7 @@ var app = express();
 var app_name = 'jeff-farm-ui'
 app.use(express.static(__dirname + '/dist/' + app_name));
 app.get('/*', function(req,res) { 
-    res.sendFile(path.join(__dirname+'/dist' + app_name + '/index.html'));
+    res.sendFile(path.join(__dirname+'/dist/' + app_name + '/index.html'));
 });
 
 // Initialize the app.
