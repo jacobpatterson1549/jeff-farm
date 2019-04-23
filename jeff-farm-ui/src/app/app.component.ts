@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `
+    <error-messages></error-messages>
+    <router-outlet></router-outlet>`
 })
-export class AppComponent {
-  title = 'jeff-farm-ui';
-}
+export class AppComponent { }
