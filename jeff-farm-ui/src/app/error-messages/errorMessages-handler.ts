@@ -1,12 +1,16 @@
 import { ErrorHandler, Injectable, Injector } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from '../auth/auth.service';
+import { ErrorMessagesService } from './error-messages.service';
 
 @Injectable()
-export class ErrorsHandler implements ErrorHandler {
+export class ErrorMessagesHandler implements ErrorHandler {
 
-    constructor(private injector: Injector) { }
+    constructor(
+       private injector: Injector, // TODO: use cdi
+       private  errorMessagesService: ErrorMessagesService
+       ) { }
 
     handleError(error: Error): void {
         
@@ -22,8 +26,7 @@ export class ErrorsHandler implements ErrorHandler {
             return;
         }
         else {
-            // alert(error.message);
-            console.log(error);
+            this.errorMessagesService.add(error.message);
         }
     }
 }

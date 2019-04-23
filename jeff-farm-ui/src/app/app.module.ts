@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { GlobalProviders } from './global-providers';
+import { ErrorMessagesComponent } from './error-messages/error-messages.component';
 
 @NgModule({
   providers: [
@@ -14,6 +15,7 @@ import { GlobalProviders } from './global-providers';
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    ErrorMessagesComponent,
   ],
   imports: [
     BrowserModule,

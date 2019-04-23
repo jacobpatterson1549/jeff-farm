@@ -6,13 +6,17 @@ import { Observable, of } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
 @Injectable()
 export class UserService extends CrudService<User> {
 
-  constructor(httpClient: HttpClient, private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private errorsService: ErrorMessagesService,
+    private httpClient: HttpClient) {
 
-    super(httpClient);
+    super(errorsService, httpClient);
   }
 
   createCrudItem(): User {

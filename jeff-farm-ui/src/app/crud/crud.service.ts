@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 import { CrudItem } from './crud.item';
 import { ActivatedRoute } from '@angular/router';
+import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
 export interface CrudChild {
   pluralName: string;
@@ -15,6 +16,7 @@ export abstract class CrudService<T extends CrudItem> {
   private route: ActivatedRoute;
 
   constructor(
+    private errorMessagesService: ErrorMessagesService,
     private http: HttpClient) { }
 
   abstract createCrudItem(): T;
@@ -35,37 +37,51 @@ export abstract class CrudService<T extends CrudItem> {
   }
 
   post(t: T): Observable<Number> {
-    return this.http.post<Number>(this.getBaseUrl(), t);
+    return this.http.post<Number>(this.getBaseUrl(), t)
+      .pipe(
+        catchError(this.errorMessagesService.handleError<any>('create')),
+      );
   }
 
   get(): Observable<T> {
     const url = `${this.getBaseUrl()}/${this.getId()}`;
     return this.http.get<T>(url)
       .pipe(
+        catchError(this.errorMessagesService.handleError<any>('read')),
         map((data: T) => Object.assign(this.createCrudItem(), data)),
-        );
+      );
   }
 
   getList(): Observable<T[]> {
     return this.http.get<T[]>(this.getBaseUrl())
       .pipe(
+        catchError(this.errorMessagesService.handleError<any>('read-list')),
         map((dataList: T[]) => dataList
           .map(data => Object.assign(this.createCrudItem(), data))),
         );
   }
 
   put(t: T): Observable<Object> {
-    return this.http.put(this.getBaseUrl(), t);
+    return this.http.put(this.getBaseUrl(), t)
+      .pipe(
+        catchError(this.errorMessagesService.handleError<any>('update')),
+      );
   }
 
   delete(): Observable<Object> {
     const url = `${this.getBaseUrl()}/${this.getId()}`;
-    return this.http.delete(url);
+    return this.http.delete(url)
+      .pipe(
+        catchError(this.errorMessagesService.handleError<any>('delete')),
+      );
   }
 
   canDelete(): Observable<boolean> {
     const url = `${this.getBaseUrl()}/${this.getId()}/canDelete`;
-    return this.http.get<boolean>(url);
+    return this.http.get<boolean>(url)
+      .pipe(
+        catchError(this.errorMessagesService.handleError<any>('can-delete')),
+      );
   }
 
   protected getRouteParam(paramName: string): string {

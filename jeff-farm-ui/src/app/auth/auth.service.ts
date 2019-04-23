@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../user/user';
 import { CachingService } from '../caching.service';
+import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,10 @@ export class AuthService {
   jsessionid: string = null;
   private readonly IS_LOGGED_IN_KEY : string = 'isLoggedIn';
 
-  constructor(private httpClient: HttpClient, private cachingService: CachingService) {
+  constructor(
+    private cachingService: CachingService,
+    private errorMessagesService: ErrorMessagesService,
+    private httpClient: HttpClient) {
 
     const wasLoggedIn: string = localStorage.getItem(this.IS_LOGGED_IN_KEY);
 
@@ -32,9 +36,7 @@ export class AuthService {
 
     return this.httpClient.post<string>('login', user)
       .pipe(
-        catchError((error: HttpErrorResponse)  => {
-          return throwError(error);
-        }),
+        catchError(this.errorMessagesService.handleError<any>('login')),
         tap(jsessionid => {
           this.isLoggedIn = true;
           this.jsessionid = jsessionid;
@@ -48,7 +50,10 @@ export class AuthService {
 
     this.clearCredentials(); // clear even if logout fails.
     
-    return this.httpClient.get<any>('user/logout');
+    return this.httpClient.get<any>('user/logout')
+      .pipe(
+        catchError(this.errorMessagesService.handleError<any>('logout')),
+      );
   }
 
   clearCredentials() {

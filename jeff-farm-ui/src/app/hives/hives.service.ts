@@ -3,13 +3,16 @@ import { HttpClient } from '@angular/common/http';
 
 import { CrudService, CrudChild } from '../crud/crud.service';
 import { Hive } from './hive';
+import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
 @Injectable()
 export class HivesService extends CrudService<Hive> {
 
-  constructor(httpClient: HttpClient) {
+  constructor(
+    private errorsService: ErrorMessagesService,
+    private httpClient: HttpClient) {
       
-    super(httpClient);
+    super(errorsService, httpClient);
   }
 
   createCrudItem(): Hive {
