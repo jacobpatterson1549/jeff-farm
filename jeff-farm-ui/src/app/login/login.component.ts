@@ -18,7 +18,7 @@ export class LoginComponent {
       private loginService: LoginService,
       private router: Router) {
 
-    if (authService.isLoggedIn) {
+    if (authService.isLoggedIn()) {
       router.navigate(['/user']);
     }
   }

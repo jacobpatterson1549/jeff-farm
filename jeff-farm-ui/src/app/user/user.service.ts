@@ -34,7 +34,7 @@ export class UserService extends CrudService<User> {
   }
   
   getBaseUrl(): string {
-    return this.authService.isLoggedIn ? 'user' : 'login/create';
+    return this.authService.isLoggedIn() ? 'user' : 'login/create';
   }
 
   getList(): Observable<User[]> {

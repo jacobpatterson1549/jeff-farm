@@ -39,9 +39,4 @@ export class LoginStatusComponent implements OnInit {
     this.loginService.logout()
       .subscribe(_ => this.router.navigate(['/login']));
   }
-
-  isLoggedIn(): boolean {
-
-    return this.authService.isLoggedIn;
-  }
 }

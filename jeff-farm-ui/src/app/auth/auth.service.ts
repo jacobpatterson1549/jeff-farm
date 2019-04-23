@@ -11,35 +11,30 @@ import { ErrorMessagesService } from '../error-messages/error-messages.service';
 })
 export class AuthService {
   
-  isLoggedIn: boolean = false;
-  jsessionid: string = null;
   private readonly IS_LOGGED_IN_KEY : string = 'isLoggedIn';
   private readonly JSESSIONID_KEY : string = 'jsessionid';
 
   constructor(
-    private cachingService: CachingService) {
-
-    const wasLoggedIn: string = localStorage.getItem(this.IS_LOGGED_IN_KEY);
-
-    if (wasLoggedIn != null && "true" == (wasLoggedIn)) {
-
-      this.isLoggedIn = true;
-      this.jsessionid = localStorage.getItem(this.JSESSIONID_KEY)
-    }
-  }
+    private cachingService: CachingService) { }
 
   clearCredentials() {
-    this.isLoggedIn = false;
-
-    localStorage.removeItem(this.IS_LOGGED_IN_KEY);
+    localStorage.setItem(this.IS_LOGGED_IN_KEY, 'false');
+    localStorage.removeItem(this.JSESSIONID_KEY);
 
     this.cachingService.clear();
   }
 
   setJSessionId(jsessionid: string) {
-    this.isLoggedIn = true;
-    this.jsessionid = jsessionid;
+    localStorage.setItem(this.IS_LOGGED_IN_KEY, 'true');
+    localStorage.setItem(this.JSESSIONID_KEY, jsessionid);
+  }
 
-    localStorage.setItem(this.IS_LOGGED_IN_KEY, "true");
+  isLoggedIn(): boolean {
+    const x = localStorage.getItem(this.IS_LOGGED_IN_KEY);
+    return x == 'true';
+  }
+
+  getJsessionId() {
+    return localStorage.getItem(this.JSESSIONID_KEY);
   }
 }

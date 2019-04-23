@@ -10,8 +10,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        if (this.authService.isLoggedIn) {
-            req = req.clone({ url:  req.url + `;jsessionid=${this.authService.jsessionid}` });
+        if (this.authService.isLoggedIn()) {
+            req = req.clone({ url:  req.url + `;jsessionid=${this.authService.getJsessionId()}` });
         }
 
         return next.handle(req.clone({
