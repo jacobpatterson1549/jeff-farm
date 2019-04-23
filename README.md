@@ -1,5 +1,5 @@
 # jeff-farm
-a web server/site to track the farm
+a website to track farm efficiency
 
 # Deployment
 * Deployed on heroku at https://jeff-farm.herokuapp.com
@@ -8,6 +8,18 @@ a web server/site to track the farm
 `git subtree push --prefix jeff-farm-ws/ heroku-backend master` and `git subtree push --prefix jeff-farm-ui/ heroku master`
 
 * The heroku Postgresql addon is used to run liquibase to set up and apply changes to the database.  It was added to jeff-farm-ws with `heroku addons:create heroku-postgresql`.
+
+## Third-Party Technologies
+* Angular 2+ fronted
+* Apache Tomcat backend (embedded)
+* Postgresql database
+* Glassfish Jersey REST web services
+* HK2 dependenccy injection
+* Yasson javax.json serialization
+* Junit tests
+* Mockito object mocking test framework
+* Grizzly web server for tests
+
 
 ## License
 Project is licensed under the [MIT license](LICENSE.md).
