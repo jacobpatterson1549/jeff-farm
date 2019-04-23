@@ -24,22 +24,30 @@ export class ErrorMessagesService {
   }
 
   handleError<T>(attemptedTask: string) {
-      return (error: Error): Observable<T> => {
-        if (error instanceof HttpErrorResponse
-          && error.status == 403) { // FORBIDDEN
+    return (error: Error): Observable<T> => {
+      let errorMessage: string = error.message;
 
-          console.log('redirecting to login');
+      if (error instanceof HttpErrorResponse) {
+        let  goToLogin: boolean = false;
+        if(error.status == 0) {
+          errorMessage = 'Server down'
+          goToLogin = true;
+        }
+        else if(Math.floor(error.status / 100) == 4) {
+          goToLogin = true;
+        }
+        else {
+          errorMessage = error.error;
+        }
 
+        if (goToLogin) {
           this.authService.clearCredentials();
           this.router.navigate(['/login']);
+        }
       }
-      else {
-      const errorMessage = (error instanceof HttpErrorResponse)
-        ? error.error
-        : error.message;
+
       this.add(`${attemptedTask}: ${errorMessage}`);
-      }
       return of();
-    };
+      };
   }
 }
