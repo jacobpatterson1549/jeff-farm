@@ -7,12 +7,14 @@ import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
+import { LoginService } from '../login/login.service';
 
 @Injectable()
 export class UserService extends CrudService<User> {
 
   constructor(
     private authService: AuthService,
+    private loginService: LoginService,
     private errorsService: ErrorMessagesService,
     private httpClient: HttpClient) {
 
@@ -41,7 +43,7 @@ export class UserService extends CrudService<User> {
 
   delete(): Observable<Object> {
 
-    return super.delete().pipe(tap(_ => this.authService.logout() ));
+    return super.delete().pipe(tap(_ => this.loginService.logout() ));
   }
 
   canDelete(): Observable<boolean> {

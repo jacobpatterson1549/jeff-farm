@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from './login.service';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class LoginComponent {
 
   constructor(
       private authService: AuthService,
+      private loginService: LoginService,
       private router: Router) {
 
     if (authService.isLoggedIn) {
@@ -22,7 +24,7 @@ export class LoginComponent {
   }
 
   submitForm() {
-    this.authService.login(this.username, this.password)
+    this.loginService.login(this.username, this.password)
       .subscribe(_ => this.router.navigate(['/farms']) );
   }
 }
