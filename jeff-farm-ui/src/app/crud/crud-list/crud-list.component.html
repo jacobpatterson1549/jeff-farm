@@ -1,12 +1,10 @@
 <button type="button" class="btn btn-secondary" routerLink="create">Create new {{crudItemName}}</button>
 <div *ngIf="crudItems">
-  <table class="table table-striped">
-    <tr class="row" *ngFor="let crudItem of crudItems">
-      <td>
+  <ul>
+    <li *ngFor="let crudItem of crudItems">
         <a routerLink="{{crudItem.id}}">{{crudItem.getDisplayValue()}}</a>
-      </td>
-    </tr>
-  </table>
+    </li>
+  </ul>
   <p *ngIf="crudItems.length == 0">No items</p>
 </div>
 <app-navigation></app-navigation>
