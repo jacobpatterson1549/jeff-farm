@@ -7,7 +7,6 @@ import { CrudItem } from '../crud.item';
 @Component({
   selector: 'crud-list',
   templateUrl: './crud-list.component.html',
-  styleUrls: ['./crud-list.component.css']
 })
 export class CrudListComponent<T extends CrudItem> implements OnInit {
 
