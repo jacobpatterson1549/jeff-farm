@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { CrudService, CrudChild } from '../crud.service';
 import { CrudItem } from '../crud.item';
-import { FormItem, FormItemType } from '../form.item';
+import { FormItemType } from '../form.item';
+import { CrudDeleteComponent } from '../crud-delete/crud-delete.component';
 
 @Component({
   selector: 'crud-view',
@@ -20,8 +21,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   crudItemSingularName: string;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
+    private modalService: NgbModal,
     private crudService: CrudService<T>) { }
 
   ngOnInit() {
@@ -47,9 +47,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   }
 
   deleteCrudItem() {
-    if (window.confirm('Really Delete?')) {
-      this.crudService.delete()
-        .subscribe(_ => this.router.navigate(['..'], { relativeTo: this.route.parent }) );
-    }
+    const modalRef = this.modalService.open(CrudDeleteComponent);
+    modalRef.componentInstance.name = this.crudItem.getDisplayValue();
   }
 }
