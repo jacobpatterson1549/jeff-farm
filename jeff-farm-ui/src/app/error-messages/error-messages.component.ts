@@ -9,9 +9,7 @@ export class ErrorMessagesComponent {
 
   constructor(public errorMessagesService: ErrorMessagesService) { }
 
-  close(message: string) {
-    // TODO: better indexing (indexOf finds first)
-    const index: number = this.errorMessagesService.messages.indexOf(message);
+  close(index: number) {
     this.errorMessagesService.messages.splice(index, 1);
   }
 }

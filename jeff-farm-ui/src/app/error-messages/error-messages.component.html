@@ -1,6 +1,6 @@
 <div *ngIf="errorMessagesService.messages.length">
-  <p *ngFor="let message of errorMessagesService.messages">
-    <ngb-alert type="danger" (close)="close(message)">{{message}}</ngb-alert>
+  <p *ngFor="let message of errorMessagesService.messages; let i = index">
+    <ngb-alert type="danger" (close)="close(i)">{{message}}</ngb-alert>
   </p>
   <button type="button" class="btn btn-secondary" (click)="errorMessagesService.clear()">Clear</button>
 </div>
