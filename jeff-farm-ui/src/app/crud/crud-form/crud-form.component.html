@@ -15,7 +15,7 @@
       </div>
     </div>
     <span *ngIf="!passwordsMatch()">Passwords must match</span>
-    <button type="button" class="btn btn-primary" [disabled]="!passwordsMatch()" type="submit">{{submitValue}}</button>
+    <button class="btn btn-primary" [disabled]="!passwordsMatch()" type="submit">{{submitValue}}</button>
   </form>
 </div>
 <app-navigation></app-navigation>
