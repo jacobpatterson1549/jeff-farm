@@ -33,10 +33,10 @@ export class ErrorMessagesService {
           errorMessage = 'Server down'
           goToLogin = true;
         }
-        else if(Math.floor(error.status / 100) == 4) {
-          goToLogin = true;
-        }
         else {
+          if(error.status == 403) {
+            goToLogin = true;
+          }
           errorMessage = error.error;
         }
 
