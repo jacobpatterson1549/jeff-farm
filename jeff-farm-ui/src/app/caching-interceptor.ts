@@ -8,11 +8,11 @@ import { tap } from 'rxjs/operators';
 @Injectable()
 export class CachingInterceptor implements HttpInterceptor {
 
-    constructor(private cachingService: CachingService) {}
+    constructor(private cachingService: CachingService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-       switch(req.method) {
+        switch (req.method) {
 
             case 'GET':
                 const isCached: boolean = this.cachingService.isCached(req.url);
