@@ -13,7 +13,7 @@ public interface CrudDao<T extends CrudItem>
 	
 	public List<T> readList(int parentId);
 
-	public void update(T entity);
+	public void update(int id, T entity);
 
 	public void delete(int id);
 	

@@ -45,7 +45,7 @@ public class UserResource
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 
-		userDao.update(user);
+		userDao.update(user.getId(), user);
 
 		return Response.ok().build();
 	}

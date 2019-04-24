@@ -36,8 +36,8 @@ public class HiveResource
 	}
 
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getHive(@PathParam("id") int id)
 	{
 		Hive hive = hiveDao.read(id);
@@ -55,10 +55,11 @@ public class HiveResource
 	}
 
 	@PUT
+	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateHive(Hive hive)
+	public Response updateHive(@PathParam("id") int id, Hive hive)
 	{
-		hiveDao.update(hive);
+		hiveDao.update(id, hive);
 
 		return Response.ok().build();
 	}

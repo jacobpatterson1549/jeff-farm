@@ -44,7 +44,7 @@ export abstract class CrudService<T extends CrudItem> {
   }
 
   get(): Observable<T> {
-    const url = `${this.getBaseUrl()}/${this.getId()}`;
+    const url = this.getIdUrl();
     return this.http.get<T>(url)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('read')),
@@ -62,14 +62,15 @@ export abstract class CrudService<T extends CrudItem> {
   }
 
   put(t: T): Observable<Object> {
-    return this.http.put(this.getBaseUrl(), t)
+    const url = this.getIdUrl();
+    return this.http.put(url, t)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('update')),
       );
   }
 
   delete(): Observable<Object> {
-    const url = `${this.getBaseUrl()}/${this.getId()}`;
+    const url = this.getIdUrl();
     return this.http.delete(url)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('delete')),
@@ -77,7 +78,7 @@ export abstract class CrudService<T extends CrudItem> {
   }
 
   canDelete(): Observable<boolean> {
-    const url = `${this.getBaseUrl()}/${this.getId()}/canDelete`;
+    const url = `${this.getIdUrl()}/canDelete`;
     return this.http.get<boolean>(url)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('can-delete')),
@@ -91,5 +92,9 @@ export abstract class CrudService<T extends CrudItem> {
 
   getId(): string {
     return this.getRouteParam('id') || '';
+  }
+
+  private getIdUrl(): string {
+    return `${this.getBaseUrl()}/${this.getId()}`;
   }
 }
