@@ -7,7 +7,6 @@
             [autocomplete]="formItem.name == 'userName' ? 'username' : null">
           <input [name]="formItem.name" *ngSwitchCase="formItemType.Boolean" type="checkbox" [(ngModel)]="formItem.value">
           <input [name]="formItem.name" *ngSwitchCase="formItemType.Integer" type="number" required [(ngModel)]="formItem.value">
-          <!-- TODO: make/utilize fancy star picker directive -->
           <ngb-rating [id]="formItem.name" *ngSwitchCase="formItemType.Stars" max="5" required [(rate)]="formItem.value"></ngb-rating>
           <input [name]="formItem.name" *ngSwitchCase="formItemType.Color" type="color" required [(ngModel)]="formItem.value">
           <input [name]="formItem.name" *ngSwitchCase="formItemType.Password" autocomplete="new-password" type="password" required [(ngModel)]="formItem.value">
