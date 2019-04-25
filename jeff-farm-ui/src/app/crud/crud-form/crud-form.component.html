@@ -3,17 +3,21 @@
     <div *ngFor="let formItem of formItems" class="formItem">
       <label [for]="formItem.name">{{formItem.name | titlecase}}</label>
       <div [ngSwitch]="formItem.type" class="formItemInput">
-          <input [name]="formItem.name" *ngSwitchCase="formItemType.String" type="text" required [(ngModel)]="formItem.value"
-            [autocomplete]="formItem.name == 'userName' ? 'username' : null">
-          <input [name]="formItem.name" *ngSwitchCase="formItemType.Boolean" type="checkbox" [(ngModel)]="formItem.value">
-          <input [name]="formItem.name" *ngSwitchCase="formItemType.Integer" type="number" required [(ngModel)]="formItem.value">
-          <ngb-rating [id]="formItem.name" *ngSwitchCase="formItemType.Stars" max="5" required [(rate)]="formItem.value"></ngb-rating>
-          <input [name]="formItem.name" *ngSwitchCase="formItemType.Color" type="color" required [(ngModel)]="formItem.value">
-          <input [name]="formItem.name" *ngSwitchCase="formItemType.Password" autocomplete="new-password" type="password" required [(ngModel)]="formItem.value">
-          <span  *ngSwitchDefault>[Unknown editor type]</span>
+        <input [name]="formItem.name" *ngSwitchCase="formItemType.String" type="text" required
+          [(ngModel)]="formItem.value" [autocomplete]="formItem.name == 'userName' ? 'username' : null">
+        <input [name]="formItem.name" *ngSwitchCase="formItemType.Boolean" type="checkbox" [(ngModel)]="formItem.value">
+        <input [name]="formItem.name" *ngSwitchCase="formItemType.Integer" type="number" required
+          [(ngModel)]="formItem.value">
+        <ngb-rating [id]="formItem.name" *ngSwitchCase="formItemType.Stars" max="5" resettable="true" required
+          [(rate)]="formItem.value"></ngb-rating>
+        <input [name]="formItem.name" *ngSwitchCase="formItemType.Color" type="color" required
+          [(ngModel)]="formItem.value">
+        <input [name]="formItem.name" *ngSwitchCase="formItemType.Password" autocomplete="new-password" type="password"
+          required [(ngModel)]="formItem.value">
+        <span *ngSwitchDefault>[Unknown editor type]</span>
       </div>
     </div>
-    <span *ngIf="!passwordsMatch()">Passwords must match</span>
+    <div *ngIf="!passwordsMatch()"><span>Passwords must match</span><br/></div>
     <button class="btn btn-primary" [disabled]="!passwordsMatch()" type="submit">{{submitValue}}</button>
   </form>
 </div>
