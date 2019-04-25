@@ -10,6 +10,9 @@
           <div *ngSwitchCase="formItemType.Color">
             <input type="color" disabled [ngModel]="crudItem[displayFieldName]">
           </div>
+          <div *ngSwitchCase="formItemType.Stars">
+            <ngb-rating disabled [rate]="crudItem[displayFieldName]"></ngb-rating>
+          </div>
           <div *ngSwitchDefault>
             <span>{{crudItem[displayFieldName]}}</span>
           </div>
