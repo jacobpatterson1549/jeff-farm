@@ -1,4 +1,4 @@
-package com.github.ants280.jeff.farm.ws.resources;
+package com.github.ants280.jeff.farm.ws;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

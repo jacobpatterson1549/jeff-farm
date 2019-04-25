@@ -1,7 +1,6 @@
 package com.github.ants280.jeff.farm.ws;
 
 
-import com.github.ants280.jeff.farm.ws.resources.Property;
 import java.security.NoSuchAlgorithmException;
 import javax.inject.Singleton;
 import org.apache.catalina.CredentialHandler;

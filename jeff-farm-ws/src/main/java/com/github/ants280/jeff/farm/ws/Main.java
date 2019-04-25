@@ -1,6 +1,5 @@
 package com.github.ants280.jeff.farm.ws;
 
-import com.github.ants280.jeff.farm.ws.resources.Property;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
