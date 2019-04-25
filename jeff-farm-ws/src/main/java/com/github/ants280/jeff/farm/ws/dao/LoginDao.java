@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
+import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.model.User;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,12 +28,6 @@ public class LoginDao
 		HttpSession oldSession = request.getSession(false);
 		if (oldSession != null)
 		{
-			if (request.getUserPrincipal() != null
-				&& request.getRemoteUser() != null
-				&& request.getRemoteUser().equals(user.getUserName()))
-			{
-				return oldSession.getId();
-			}
 			oldSession.invalidate();
 		}
 		
@@ -43,8 +38,13 @@ public class LoginDao
 		request.login(user.getUserName(), user.getPassword());
 
 		User actualUser = userDao.read(user.getUserName());
-		
 		session.setAttribute(USER_ID_SESSION_ATTRIBUTE, actualUser.getId());
+
+		String userRole = System.getProperty("security.role.user");
+		if (!request.isUserInRole(userRole))
+		{
+			throw new JeffFarmWsException("No access");
+		}
 		
 		return session.getId();
 	}

@@ -28,6 +28,7 @@
 		<credential.handler.algorithm>SHA-256</credential.handler.algorithm>
 		<credential.handler.iterations>1000</credential.handler.iterations>
 		<credential.handler.salt.length>8</credential.handler.salt.length>
+		<security.role.user>user</security.role.user>
 		<!--derived properties (potentially overwritten by profiles-->
 		<site.origin>http://localhost:4200</site.origin>
 		<server.scheme>http</server.scheme>

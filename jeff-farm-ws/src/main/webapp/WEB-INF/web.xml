@@ -60,11 +60,11 @@
 			<http-method-omission>OPTIONS</http-method-omission>
 		</web-resource-collection>
 		<auth-constraint>
-			<role-name>user</role-name>
+			<role-name>${security.role.user}</role-name>
 		</auth-constraint>
 	</security-constraint>
 	<security-role>
-		<role-name>user</role-name>
+		<role-name>${security.role.user}</role-name>
 	</security-role>
 
 </web-app>
