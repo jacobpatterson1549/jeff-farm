@@ -3,7 +3,6 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  SERVER_URL: 'http://localhost:8080/jeff-farm-ws/',
   production: false
 };
 

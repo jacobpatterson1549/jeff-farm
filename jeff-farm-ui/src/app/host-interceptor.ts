@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 @Injectable()
 export class HostInterceptor implements HttpInterceptor {
 
-    private readonly HOST_URL: string = environment.SERVER_URL;
+    private readonly HOST_URL: string = '/api/';
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 

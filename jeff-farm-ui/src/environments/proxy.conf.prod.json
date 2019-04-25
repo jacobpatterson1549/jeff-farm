@@ -1,0 +1,10 @@
+{
+    "/api": {
+      "target": "https://jeff-farm-ws.herokuapp.com/",
+      "secure": true,
+      "pathRewrite": {
+        "^/api": "/jeff-farm-ws"
+      },
+      "changeOrigin": true
+    }
+  }

@@ -17,35 +17,6 @@
 		<url-pattern>${servlet.url.prefix}/*</url-pattern>
 	</servlet-mapping>
 
-	<filter>
-		<filter-name>CorsFilter</filter-name>
-		<filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
-		<init-param>
-			<param-name>cors.allowed.origins</param-name>
-			<!--allowing ui on same server as tomcat, but on different port-->
-			<param-value>${site.origin}</param-value>
-		</init-param>
-		<init-param>
-			<!--allow non-default PUT and DELETE methods-->
-			<param-name>cors.allowed.methods</param-name>
-			<param-value>GET,POST,HEAD,OPTIONS,PUT,DELETE</param-value>
-		</init-param>
-		<init-param>
-			<!--make requests with credentials-->
-			<param-name>cors.support.credentials</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<init-param>
-			<!--The amount of seconds, browser is allowed to cache the result of the pre-flight request.-->
-			<param-name>cors.preflight.maxage</param-name>
-			<param-value>10</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>CorsFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
 	<resource-ref>
 		<res-ref-name>${resource.data.source.name}</res-ref-name>
 		<res-type>${resource.data.source.type}</res-type>
@@ -57,7 +28,6 @@
 			<web-resource-name>secured-endpoints</web-resource-name>
 			<url-pattern>${servlet.url.prefix}/farms/*</url-pattern>
 			<url-pattern>${servlet.url.prefix}/user/*</url-pattern>
-			<http-method-omission>OPTIONS</http-method-omission>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>${security.role.user}</role-name>
