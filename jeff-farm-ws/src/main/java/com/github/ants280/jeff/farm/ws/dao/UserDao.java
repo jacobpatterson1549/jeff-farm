@@ -68,7 +68,7 @@ public class UserDao extends SqlFunctionDao implements CrudDao<User>
 	}
 
 	@Override
-	public void update(User user)
+	public void update(int id, User user)
 	{
 		String password
 				= passwordGenerator.getHashedPassword(user.getPassword());
@@ -76,7 +76,7 @@ public class UserDao extends SqlFunctionDao implements CrudDao<User>
 		this.executeUpdate(
 				"update_user",
 				Arrays.asList(
-						new Parameter<>(User.ID_COLUMN, user.getId(), Types.INTEGER),
+						new Parameter<>(User.ID_COLUMN, id, Types.INTEGER),
 						new Parameter<>(User.PASSWORD_COLUMN, password, Types.CHAR),
 						new Parameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
 						new Parameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)),

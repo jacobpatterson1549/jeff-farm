@@ -8,5 +8,6 @@ export class ErrorMessagesHandler implements ErrorHandler {
 
     handleError(error: Error): void {
         this.errorMessagesService.add(error.message);
+        throw error;
     }
 }

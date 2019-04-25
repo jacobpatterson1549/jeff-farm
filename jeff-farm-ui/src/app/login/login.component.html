@@ -1,6 +1,6 @@
 <h2>Login</h2>
 
-<button routerLink="create">Create User</button>
+<button type="button" class="btn btn-secondary" routerLink="create">Create User</button>
 
 <form (ngSubmit)="submitForm()" ngNativeValidate>
 
@@ -14,7 +14,7 @@
     <input name="password" type="password" autocomplete="current-password" required [(ngModel)]="password">
   </div>
 
-  <button type="submit">Submit</button>
+  <button class="btn btn-primary" type="submit">Submit</button>
 
 </form>
 

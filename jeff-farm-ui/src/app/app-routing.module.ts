@@ -40,6 +40,7 @@ const routes: Routes = [
       {
         enableTracing: false, // true for debugging purposes only
         preloadingStrategy: PreloadAllModules,
+        paramsInheritanceStrategy: 'always',
       })
   ],
   exports: [

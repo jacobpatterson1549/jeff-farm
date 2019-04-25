@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
-  template: '<button [disabled]="!canGoUp()" (click)="goUp()">Back</button>',
+  template: '<button type="button" class="btn btn-secondary" [disabled]="!canGoUp()" (click)="goUp()">Back</button>',
 })
 export class NavigationComponent {
 

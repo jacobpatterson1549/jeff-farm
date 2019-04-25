@@ -36,8 +36,8 @@ public class FarmResource
 	}
 
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getFarm(@PathParam("id") int id)
 	{
 		Farm farm = farmDao.read(id);
@@ -55,10 +55,11 @@ public class FarmResource
 	}
 
 	@PUT
+	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateFarm(Farm farm)
+	public Response updateFarm(@PathParam("id") int id, Farm farm)
 	{
-		farmDao.update(farm);
+		farmDao.update(id, farm);
 
 		return Response.ok().build();
 	}

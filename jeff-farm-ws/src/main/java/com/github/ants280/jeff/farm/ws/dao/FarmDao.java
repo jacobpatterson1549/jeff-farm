@@ -55,12 +55,12 @@ public class FarmDao extends SqlFunctionDao implements CrudDao<Farm>
 	}
 
 	@Override
-	public void update(Farm farm)
+	public void update(int id, Farm farm)
 	{
 		this.executeUpdate(
 				"update_farm",
 				Arrays.asList(
-						new Parameter<>(Farm.ID_COLUMN, farm.getId(), Types.INTEGER),
+						new Parameter<>(Farm.ID_COLUMN, id, Types.INTEGER),
 						new Parameter<>(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
 						new Parameter<>(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)),
 				loginDao.getUserId());

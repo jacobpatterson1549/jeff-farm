@@ -10,6 +10,8 @@ import { CrudViewComponent } from './crud-view/crud-view.component';
 import { CrudFormComponent } from './crud-form/crud-form.component';
 import { CrudRoutingModule } from './crud-routing.module';
 import { LoginStatusModule } from '../login-status/login-status.module';
+import { CrudDeleteComponent } from './crud-delete/crud-delete.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -19,9 +21,11 @@ import { LoginStatusModule } from '../login-status/login-status.module';
     CrudListComponent,
     CrudViewComponent,
     CrudFormComponent,
+    CrudDeleteComponent,
   ],
   imports: [
     CommonModule,
+    NgbModule, // for delete modal
     FormsModule,
     CrudRoutingModule,
     LoginStatusModule,
@@ -30,6 +34,9 @@ import { LoginStatusModule } from '../login-status/login-status.module';
     CommonModule,
     FormsModule,
     CrudHomeComponent,
+  ],
+  entryComponents: [
+    CrudDeleteComponent,
   ]
 })
 export class CrudModule { }
