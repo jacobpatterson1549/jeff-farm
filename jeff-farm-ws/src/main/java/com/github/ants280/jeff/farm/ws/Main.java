@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws;
 
+import com.github.ants280.jeff.farm.ws.resources.Property;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,21 +12,34 @@ import org.apache.catalina.startup.Tomcat;
 
 public class Main
 {
+	static // load properties before any code is executed from main
+	{
+		try (
+			InputStream inputStream = Thread.currentThread()
+				.getContextClassLoader()
+				.getResourceAsStream("app.properties"))
+		{
+			System.getProperties().load(inputStream);
+		}
+		catch (IOException ex)
+		{
+			throw new JeffFarmWsException("Could not read properties.", ex);
+		}
+	}
+
 	public static void main(String[] args) throws Exception
 	{
-		loadProperties();
-
-		String scheme = System.getProperty("server.scheme");
-		String host = System.getProperty("server.host");
-		String port = System.getProperty("server.port");
+		String scheme = Property.SERVER_SCHEME.getValue();
+		String host = Property.SERVER_HOST.getValue();
+		String port = Property.SERVER_PORT.getValue();
 		String envPort = System.getenv("PORT");
-		String path = System.getProperty("servlet.url.prefix");
+		String path = Property.SERVER_PATH.getValue();
 		int portNum = Integer.parseInt(envPort == null ? port : envPort);
 		URI uri = new URI(scheme, null, // userInfo
 			host, portNum, path, null, // query
 			null); // fragment
 
-		String userDir = System.getProperty("user.dir");
+		String userDir = Property.USER_DIR.getValue();
 		File webAppFolder = new File(userDir, "src/main/webapp/");
 		File targetFolder = new File(userDir, "target");
 
@@ -45,20 +59,5 @@ public class Main
 				"Server started at {0} - Press Ctrl-C to stop.",
 				uri);
 		tomcat.getServer().await();
-	}
-
-	private static void loadProperties()
-	{
-		try (
-			InputStream inputStream = Thread.currentThread()
-				.getContextClassLoader()
-				.getResourceAsStream("app.properties"))
-		{
-			System.getProperties().load(inputStream);
-		}
-		catch (IOException ex)
-		{
-			throw new JeffFarmWsException("Could not read properties.", ex);
-		}
 	}
 }

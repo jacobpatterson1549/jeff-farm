@@ -6,6 +6,7 @@ import com.github.ants280.jeff.farm.ws.dao.HiveDao;
 import com.github.ants280.jeff.farm.ws.dao.HiveInspectionDao;
 import com.github.ants280.jeff.farm.ws.dao.LoginDao;
 import com.github.ants280.jeff.farm.ws.dao.UserDao;
+import com.github.ants280.jeff.farm.ws.resources.Property;
 import javax.inject.Singleton;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -43,7 +44,7 @@ public class InjectionBinder extends AbstractBinder
 	{
 		try
 		{
-			String dataSourceName = System.getProperty("resource.data.source.name");
+			String dataSourceName = Property.DATA_SOURCE_NAME.getValue();
 			Context initCtx = new InitialContext();
 			// https://tomcat.apache.org/tomcat-9.0-doc/jndi-resources-howto.html#Using_resources
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");

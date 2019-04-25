@@ -1,6 +1,7 @@
 package com.github.ants280.jeff.farm.ws;
 
 
+import com.github.ants280.jeff.farm.ws.resources.Property;
 import java.security.NoSuchAlgorithmException;
 import javax.inject.Singleton;
 import org.apache.catalina.CredentialHandler;
@@ -13,9 +14,9 @@ public class PasswordGenerator
 	
 	public PasswordGenerator()
 	{
-		String algorithm = System.getProperty("credential.handler.algorithm");
-		String iterations = System.getProperty("credential.handler.iterations");
-		String saltLength = System.getProperty("credential.handler.salt.length");
+		String algorithm = Property.PASSWORD_GENERATOR_ALGORITHM.getValue();
+		String iterations = Property.PASSWORD_GENERATOR_ITERATIONS.getValue();
+		String saltLength = Property.PASSWORD_GENERATOR_SALT_LENGTH.getValue();
 		int iterationsNum = Integer.parseInt(iterations);
 		int saltLengthNum = Integer.parseInt(saltLength);
 		MessageDigestCredentialHandler messageDigestCredentialHandler

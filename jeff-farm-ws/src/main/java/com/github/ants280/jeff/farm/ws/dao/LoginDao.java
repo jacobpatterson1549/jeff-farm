@@ -2,6 +2,7 @@ package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.model.User;
+import com.github.ants280.jeff.farm.ws.resources.Property;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.ServletException;
@@ -40,8 +41,7 @@ public class LoginDao
 		User actualUser = userDao.read(user.getUserName());
 		session.setAttribute(USER_ID_SESSION_ATTRIBUTE, actualUser.getId());
 
-		String userRole = System.getProperty("security.role.user");
-		if (!request.isUserInRole(userRole))
+		if (!request.isUserInRole(Property.USER_ROLE.getValue()))
 		{
 			throw new JeffFarmWsException("No access");
 		}
