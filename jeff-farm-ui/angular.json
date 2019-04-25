@@ -56,10 +56,6 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
-                },
-                {
-                  "replace": "src/environments/proxy.conf.json",
-                  "with": "src/environments/proxy.conf.prod.json"
                 }
               ],
               "optimization": true,
@@ -84,7 +80,6 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "proxyConfig": "src/environments/proxy.conf.json",
             "browserTarget": "jeff-farm-ui:build"
           },
           "configurations": {
