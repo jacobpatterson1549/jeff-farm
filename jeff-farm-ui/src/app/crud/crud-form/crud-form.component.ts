@@ -96,6 +96,23 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
     return true;
   }
 
+  allValidStars(): boolean {
+
+    for (let formItem of this.formItems) {
+
+      if (formItem.type == FormItemType.Stars && this.validStars(formItem)) {
+
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  validStars(formItem: FormItem) {
+    return !(formItem.value >= 1 && formItem.value <= 5)
+  }
+
   submitForm() {
     for (let formItem of this.formItems) {
       
