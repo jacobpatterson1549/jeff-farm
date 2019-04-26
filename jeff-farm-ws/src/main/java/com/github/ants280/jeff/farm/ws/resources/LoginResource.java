@@ -34,9 +34,9 @@ public class LoginResource
 	{
 		try
 		{
-			String sessionId = loginDao.login(user);
+			loginDao.login(user);
 
-			return Response.ok('"' + sessionId + '"').build();
+			return Response.ok().build();
 		}
 		catch (ServletException ex)
 		{

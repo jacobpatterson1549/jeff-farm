@@ -25,7 +25,7 @@ export class LoginService {
     return this.httpClient.post<string>('login', user)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('login')),
-        tap((jsessionid: string) => this.authService.setJSessionId(jsessionid)),
+        tap(_ => this.authService.setLoggedIn()),
       );
   }
 

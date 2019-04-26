@@ -24,17 +24,11 @@ public class LoginDao
 		this.userDao = userDao;
 	}
 
-	public String login(User user) throws ServletException
+	public void login(User user) throws ServletException
 	{
 		HttpSession oldSession = request.getSession(false);
 		if (oldSession != null)
 		{
-			if (request.getUserPrincipal() != null
-				&& request.getRemoteUser() != null
-				&& request.getRemoteUser().equals(user.getUserName()))
-			{
-				return oldSession.getId();
-			}
 			oldSession.invalidate();
 		}
 		
@@ -51,8 +45,6 @@ public class LoginDao
 		{
 			throw new JeffFarmWsException("No access");
 		}
-		
-		return session.getId();
 	}
 
 	public void logout()

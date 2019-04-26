@@ -67,4 +67,13 @@
 		<role-name>${security.role.user}</role-name>
 	</security-role>
 
+	<session-config>
+		<cookie-config>
+			<name>JSESSIONID</name>
+			<path>/</path>
+			<http-only>true</http-only>
+			<secure>false</secure>
+		</cookie-config>
+	</session-config>
+
 </web-app>
