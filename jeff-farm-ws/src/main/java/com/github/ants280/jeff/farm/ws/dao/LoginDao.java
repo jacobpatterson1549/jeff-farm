@@ -29,6 +29,12 @@ public class LoginDao
 		HttpSession oldSession = request.getSession(false);
 		if (oldSession != null)
 		{
+			if (request.getUserPrincipal() != null
+				&& request.getRemoteUser() != null
+				&& request.getRemoteUser().equals(user.getUserName()))
+			{
+				return;
+			}
 			oldSession.invalidate();
 		}
 		
