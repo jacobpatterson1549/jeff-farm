@@ -15,6 +15,7 @@ public class ApplicationConfig extends Application
 	{
 		Set<Class<?>> resources = new HashSet<>();
 		resources.add(JsonBindingFeature.class);
+		resources.add(JeffFarmWsExceptionMapper.class);
 		resources.add(LoginResource.class);
 		resources.add(UserResource.class);
 		resources.add(RootResource.class);

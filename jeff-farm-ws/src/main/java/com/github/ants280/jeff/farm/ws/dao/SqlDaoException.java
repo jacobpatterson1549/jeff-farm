@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
+import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 
@@ -7,7 +8,7 @@ import java.sql.SQLWarning;
  * Formatting of SQLException and SQLWarning from
  * https://docs.oracle.com/javase/tutorial/jdbc/basics/sqlexception.html
  */
-public class SqlDaoException extends RuntimeException
+public class SqlDaoException extends JeffFarmWsException
 {
 	public SqlDaoException(String message)
 	{

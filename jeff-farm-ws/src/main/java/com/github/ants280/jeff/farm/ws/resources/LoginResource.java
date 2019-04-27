@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
+import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.dao.LoginDao;
 import com.github.ants280.jeff.farm.ws.dao.UserDao;
 import com.github.ants280.jeff.farm.ws.model.User;
@@ -40,16 +41,7 @@ public class LoginResource
 		}
 		catch (ServletException ex)
 		{
-			Logger.getLogger(LoginResource.class.getName())
-					.log(
-							Level.SEVERE,
-							String.format(
-									"Could not log in as userName = '%s'",
-									user == null ? "" : user.getUserName()),
-							ex);
-
-			return Response.status(Response.Status.BAD_REQUEST)
-					.entity(ex.getMessage()).build();
+			throw new JeffFarmWsException("Login error", ex);
 		}
 	}
 
