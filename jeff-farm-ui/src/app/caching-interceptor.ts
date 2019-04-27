@@ -28,6 +28,9 @@ export class CachingInterceptor implements HttpInterceptor {
             case 'PUT':
             case 'DELETE':
                 this.cachingService.remove(req.url);
+                const parentUrl = req.url.substr(0, req.url.lastIndexOf('/'));
+                this.cachingService.remove(parentUrl);
+
                 return next.handle(req);
 
             default:
