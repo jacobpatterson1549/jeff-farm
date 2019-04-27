@@ -19,6 +19,7 @@
     </div>
     <div *ngIf="!passwordsMatch()"><span>Passwords must match</span><br/></div>
     <button class="btn btn-primary" [disabled]="working || crudForm.invalid || !passwordsMatch() || !allValidStars()" type="submit">{{submitValue}}</button>
+    <spinner [visible]="working"></spinner>
   </form>
 </div>
 <app-navigation></app-navigation>

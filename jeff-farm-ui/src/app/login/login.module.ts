@@ -5,6 +5,7 @@ import { LoginRoutingModule } from './login-routing.module';
 import { CrudModule } from '../crud/crud.module';
 import { CrudService } from '../crud/crud.service';
 import { UserService } from '../user/user.service';
+import { SpinnerModule } from '../spinner/spinner.module';
 
 @NgModule({
   providers: [
@@ -20,6 +21,7 @@ import { UserService } from '../user/user.service';
     CommonModule,
     LoginRoutingModule,
     CrudModule,
+    SpinnerModule,
   ],
   exports: [
     LoginComponent,

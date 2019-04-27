@@ -12,6 +12,7 @@ import { CrudRoutingModule } from './crud-routing.module';
 import { LoginStatusModule } from '../login-status/login-status.module';
 import { CrudDeleteComponent } from './crud-delete/crud-delete.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SpinnerModule } from '../spinner/spinner.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     CrudRoutingModule,
     LoginStatusModule,
+    SpinnerModule,
   ],
   exports: [
     CommonModule,
