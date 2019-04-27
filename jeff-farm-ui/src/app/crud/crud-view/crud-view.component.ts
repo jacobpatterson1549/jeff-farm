@@ -5,6 +5,7 @@ import { CrudService, CrudChild } from '../crud.service';
 import { CrudItem } from '../crud.item';
 import { FormItemType } from '../form.item';
 import { CrudDeleteComponent } from '../crud-delete/crud-delete.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'crud-view',
@@ -21,6 +22,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   crudItemSingularName: string;
 
   constructor(
+    private titleService: Title,
     private modalService: NgbModal,
     private crudService: CrudService<T>) { }
 
@@ -40,6 +42,8 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
             obj[formItem.name] = formItem.type;
             return obj;
           }, {});
+
+          this.titleService.setTitle(`${this.crudService.getSingularName()} ${crudItem.getDisplayValue()} details`);
       });
     
     this.crudService.canDelete()

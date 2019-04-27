@@ -9,6 +9,7 @@ import { CrudItem } from '../crud.item';
 import { FormType } from '../form.type';
 import { FormItem, FormItemType } from '../form.item';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'crud-form',
@@ -26,6 +27,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   working: boolean = false;
 
   constructor(
+    private titleService: Title,
     private router: Router,
     private route: ActivatedRoute,
     private crudService: CrudService<T>) { }
@@ -35,6 +37,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
     this.submitValue = (this.formType === FormType.Update) ? 'Update' : 'Submit';
     this.initCrudItem()
       .subscribe(_ => this.initFormItems());
+    this.titleService.setTitle(`${(this.formType === FormType.Update) ? 'Update' : 'Create'} ${this.crudService.getSingularName()}`);
   }
 
   private initFormType() {
