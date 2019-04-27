@@ -36,13 +36,13 @@ public class LoginResource
 		try
 		{
 			loginDao.login(user);
-
-			return Response.ok().build();
 		}
 		catch (ServletException ex)
 		{
-			throw new JeffFarmWsException("Login error", ex);
+			throw new JeffFarmWsException(ex.getMessage(), ex);
 		}
+
+		return Response.ok().build();
 	}
 
 	@POST
