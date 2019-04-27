@@ -47,7 +47,7 @@ export class ErrorMessagesService {
       }
 
       this.add(`${attemptedTask}: ${errorMessage}`);
-      return of();
+      throw error;
       };
   }
 }

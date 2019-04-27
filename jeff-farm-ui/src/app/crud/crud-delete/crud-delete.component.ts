@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CrudService } from '../crud.service';
 import { CrudItem } from '../crud.item';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   templateUrl: './crud-delete.component.html',
@@ -11,6 +12,7 @@ export class CrudDeleteComponent<T extends CrudItem> {
 
   @Input() name: string;
   type: string;
+  working: boolean = false;
 
   constructor(
     public modal: NgbActiveModal,
@@ -26,7 +28,13 @@ export class CrudDeleteComponent<T extends CrudItem> {
   }
 
   ok() {
+    this.working = true;
     this.crudService.delete()
+      .pipe(catchError((error: Error) => {
+        this.working = false;
+        this.modal.close(error.message);
+        throw error;
+      }))
       .subscribe(_ => {
         this.router.navigate(['..'], { relativeTo: this.route.parent });
         this.modal.close();

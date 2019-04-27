@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
 
 import { CrudService } from '../crud.service';
 
@@ -23,6 +23,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   submitValue: string;
   formItemType = FormItemType; // used for the ngSwitch in the template
   passwordFormItems: FormItem[];
+  working: boolean = false;
 
   constructor(
     private router: Router,
@@ -125,14 +126,24 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
     }
 
     if (this.formType == FormType.Create) {
+      this.working = true;
       this.crudService.post(this.crudItem)
+        .pipe(catchError((error: Error) => {
+          this.working = false;
+          throw error;
+        }))
         .subscribe((id: Number) => {
           const relativeLocation: string = (this.route.data && !this.route.data['redirectToParent']) ? '..' : `../${id}`;
           this.router.navigate([relativeLocation], { relativeTo: this.route });
         });
     }
     if (this.formType == FormType.Update) {
+      this.working = true;
       this.crudService.put(this.crudItem)
+        .pipe(catchError((error: Error) => {
+          this.working = false;
+          throw error;
+        }))
         .subscribe(_ => this.router.navigate(['..'], { relativeTo: this.route }) );
     }
   }

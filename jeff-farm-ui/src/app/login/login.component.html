@@ -14,7 +14,7 @@
     <input name="password" type="password" autocomplete="current-password" required [(ngModel)]="password">
   </div>
 
-  <button class="btn btn-primary" type="submit">Submit</button>
+  <button class="btn btn-primary" [disabled]="working" type="submit">Submit</button>
 
 </form>
 
