@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ErrorMessagesService } from './error-messages.service';
 
 @Component({
-  selector: 'error-messages',
+  selector: 'app-error-messages',
   templateUrl: './error-messages.component.html',
 })
 export class ErrorMessagesComponent {
