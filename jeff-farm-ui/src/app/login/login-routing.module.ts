@@ -2,11 +2,13 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from '@angular/router';
 
 import { CrudFormComponent } from '../crud/crud-form/crud-form.component';
+import { LoginHomeComponent } from './login-home.component';
 import { LoginComponent } from './login.component';
 
 const routes: Routes = [
     {
         path: '',
+        component: LoginHomeComponent,
         children: [
             {
                 path: 'create',

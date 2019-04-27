@@ -6,6 +6,7 @@ import { CrudModule } from '../crud/crud.module';
 import { CrudService } from '../crud/crud.service';
 import { UserService } from '../user/user.service';
 import { SpinnerModule } from '../spinner/spinner.module';
+import { LoginHomeComponent } from './login-home.component';
 
 @NgModule({
   providers: [
@@ -16,6 +17,7 @@ import { SpinnerModule } from '../spinner/spinner.module';
   ],
   declarations: [
     LoginComponent,
+    LoginHomeComponent,
   ],
   imports: [
     CommonModule,

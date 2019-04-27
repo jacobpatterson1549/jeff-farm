@@ -5,7 +5,7 @@ import { AuthService } from '../auth/auth.service';
 import { catchError } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-login',
+  selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
