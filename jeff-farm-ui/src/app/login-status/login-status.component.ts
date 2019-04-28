@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { User } from '../user/user';
 import { UserService } from '../user/user.service';
 import { LoginService } from '../login/login.service';
-import { AuthService } from '../auth/auth.service';
 
 @Component({
   providers: [UserService],

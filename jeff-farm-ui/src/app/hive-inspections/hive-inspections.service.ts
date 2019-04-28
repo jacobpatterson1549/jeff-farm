@@ -9,8 +9,8 @@ import { ErrorMessagesService } from '../error-messages/error-messages.service';
 export class HiveInspectionsService extends CrudService<HiveInspection> {
 
   constructor(
-    private errorsService: ErrorMessagesService,
-    private httpClient: HttpClient) {
+    errorsService: ErrorMessagesService,
+    httpClient: HttpClient) {
 
     super(errorsService, httpClient);
   }

@@ -70,27 +70,19 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
 
     this.passwordFormItems = [];
     for (var index = 0; index < this.formItems.length; index++) {
-
       const formItem: FormItem = this.formItems[index];
-
       if (formItem.type == FormItemType.Password) {
-
         const formItem2: FormItem = new FormItem(formItem.name + ' (Verify)', formItem.type, formItem.value);
-
         index++;
         this.formItems.splice(index, 0, formItem2);
-
         this.passwordFormItems.push(formItem, formItem2);
       }
     }
   }
 
   passwordsMatch(): boolean {
-
     for (var index = 0; index < this.passwordFormItems.length; index += 2) {
-
       if (this.passwordFormItems[index].value != this.passwordFormItems[index + 1].value) {
-
         return false;
       }
     }
@@ -99,15 +91,11 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   }
 
   allValidStars(): boolean {
-
     for (let formItem of this.formItems) {
-
       if (formItem.type == FormItemType.Stars && this.validStars(formItem)) {
-
         return false;
       }
     }
-
     return true;
   }
 
@@ -117,11 +105,9 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
 
   submitForm() {
     for (let formItem of this.formItems) {
-
       // exclude added passworditems
       const passwordFormItemIndex = this.passwordFormItems.indexOf(formItem);
       if (passwordFormItemIndex < 0 || passwordFormItemIndex % 2 == 0) {
-
         this.crudItem[formItem.name] = formItem.value;
       }
     }

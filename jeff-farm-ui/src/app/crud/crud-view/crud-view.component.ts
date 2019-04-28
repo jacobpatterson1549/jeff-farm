@@ -27,10 +27,8 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
     private crudService: CrudService<T>) { }
 
   ngOnInit() {
-
     this.crudChildren = this.crudService.getCrudChildren();
     this.crudItemSingularName = this.crudService.getSingularName();
-
     this.crudService.get()
       .subscribe((crudItem: T) => {
         this.crudItem = crudItem;
