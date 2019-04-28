@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from '@angular/router';
 
-import { CrudDetailComponent } from '../crud/crud-detail/crud-detail.component';
+import { CrudHomeComponent } from '../crud/crud-home/crud-home.component';
 import { CrudFormComponent } from '../crud/crud-form/crud-form.component';
 import { CrudViewComponent } from '../crud/crud-view/crud-view.component';
 import { AuthGuard } from '../auth/auth.guard';
@@ -13,7 +13,7 @@ const routes: Routes = [
             { path: 'create', component: CrudFormComponent },
             {
                 path: '',
-                component: CrudDetailComponent,
+                component: CrudHomeComponent,
                 children: [
                     { path: 'update', component: CrudFormComponent },
                     { path: '', component: CrudViewComponent },
