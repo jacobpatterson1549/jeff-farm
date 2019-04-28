@@ -1,9 +1,10 @@
+import { ErrorHandler } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { HostInterceptor } from './host-interceptor';
 import { AuthInterceptor } from './auth/auth-interceptor';
-import { ErrorHandler } from '@angular/core';
-import { ErrorMessagesHandler } from './error-messages/errorMessages-handler';
 import { CachingInterceptor } from './caching-interceptor';
+import { ErrorMessagesHandler } from './error-messages/errorMessages-handler';
 
 export const GlobalProviders = [
     { provide: HTTP_INTERCEPTORS, useClass: HostInterceptor, multi: true },

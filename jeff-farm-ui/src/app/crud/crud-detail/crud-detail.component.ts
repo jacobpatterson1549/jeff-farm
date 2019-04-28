@@ -17,12 +17,12 @@ export class CrudDetailComponent<T extends CrudItem> implements OnInit {
     private crudService: CrudService<T>) {
 
     this.crudService.setRoute(this.route);
-   }
+  }
 
   ngOnInit() {
     this.crudService.get()
       .subscribe((crudItem: CrudItem) => {
-          this.crudItemName = crudItem.getDisplayValue();
+        this.crudItemName = crudItem.getDisplayValue();
       });
   }
 }

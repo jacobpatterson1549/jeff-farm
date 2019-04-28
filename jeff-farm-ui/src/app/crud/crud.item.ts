@@ -17,8 +17,8 @@ export abstract class CrudItem {
 
     getDisplayFieldNames(): string[] {
         return this.getFormItems()
-        .map(formItem => formItem.name)
-        .filter(formItemName => !formItemName.endsWith('Id'))
-        .concat(['createdDate', 'modifiedDate']);
+            .map(formItem => formItem.name)
+            .filter(formItemName => !formItemName.endsWith('Id'))
+            .concat(['createdDate', 'modifiedDate']);
     }
 }

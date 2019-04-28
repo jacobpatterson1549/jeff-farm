@@ -58,7 +58,7 @@ export abstract class CrudService<T extends CrudItem> {
         catchError(this.errorMessagesService.handleError<any>('read-list')),
         map((dataList: T[]) => dataList
           .map(data => Object.assign(this.createCrudItem(), data))),
-        );
+      );
   }
 
   put(t: T): Observable<Object> {

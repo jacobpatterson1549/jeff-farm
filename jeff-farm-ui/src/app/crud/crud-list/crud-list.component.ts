@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { CrudService } from '../crud.service';
 import { CrudItem } from '../crud.item';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'crud-list',
@@ -20,7 +20,7 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
     private crudService: CrudService<T>) {
 
     this.crudService.setRoute(this.route);
-   }
+  }
 
   ngOnInit() {
     this.crudItemName = this.crudService.getSingularName()

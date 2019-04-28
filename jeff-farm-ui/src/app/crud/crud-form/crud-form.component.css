@@ -15,6 +15,6 @@ div {
 }
 
 .stars-invalid,
-input.ng-invalid:not(form)  {
+input.ng-invalid:not(form) {
   border: 1px solid red;
 }

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from './login.service';
+import { Title } from '@angular/platform-browser';
 import { AuthService } from '../auth/auth.service';
 import { catchError } from 'rxjs/operators';
-import { Title } from '@angular/platform-browser';
+
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'login',
@@ -17,10 +18,10 @@ export class LoginComponent implements OnInit {
   working: boolean = false;
 
   constructor(
-      private titleService: Title,
-      private authService: AuthService,
-      private loginService: LoginService,
-      private router: Router) {
+    private titleService: Title,
+    authService: AuthService,
+    private loginService: LoginService,
+    private router: Router) {
 
     if (authService.isLoggedIn()) {
       router.navigate(['/user']);
@@ -38,6 +39,6 @@ export class LoginComponent implements OnInit {
         this.working = false;
         throw error;
       }))
-      .subscribe(_ => this.router.navigate(['/farms']) );
+      .subscribe(_ => this.router.navigate(['/farms']));
   }
 }

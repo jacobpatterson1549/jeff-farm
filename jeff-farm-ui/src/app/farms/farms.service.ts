@@ -28,7 +28,7 @@ export class FarmsService extends CrudService<Farm> {
       { pluralName: 'Hives', path: 'hives' },
     ];
   }
-  
+
   getBaseUrl(): string {
     return 'farms';
   }

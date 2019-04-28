@@ -17,8 +17,9 @@
         <span *ngSwitchDefault>[Unknown editor type]</span>
       </div>
     </div>
-    <div *ngIf="!passwordsMatch()"><span>Passwords must match</span><br/></div>
-    <button class="btn btn-primary" [disabled]="working || crudForm.invalid || !passwordsMatch() || !allValidStars()" type="submit">{{submitValue}}</button>
+    <div *ngIf="!passwordsMatch()"><span>Passwords must match</span><br /></div>
+    <button class="btn btn-primary" [disabled]="working || crudForm.invalid || !passwordsMatch() || !allValidStars()"
+      type="submit">{{submitValue}}</button>
     <spinner [visible]="working"></spinner>
   </form>
 </div>

@@ -1,11 +1,11 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+import { AuthService } from '../auth/auth.service';
 import { CrudService, CrudChild } from '../crud/crud.service';
 import { User } from './user';
-import { Observable, of } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { LoginService } from '../login/login.service';
 
@@ -15,8 +15,8 @@ export class UserService extends CrudService<User> {
   constructor(
     private authService: AuthService,
     private loginService: LoginService,
-    private errorsService: ErrorMessagesService,
-    private httpClient: HttpClient) {
+    errorsService: ErrorMessagesService,
+    httpClient: HttpClient) {
 
     super(errorsService, httpClient);
   }
@@ -32,7 +32,7 @@ export class UserService extends CrudService<User> {
   getCrudChildren(): CrudChild[] {
     return [];
   }
-  
+
   getBaseUrl(): string {
     return this.authService.isLoggedIn() ? 'user' : 'login/create';
   }
@@ -43,7 +43,7 @@ export class UserService extends CrudService<User> {
 
   delete(): Observable<Object> {
 
-    return super.delete().pipe(tap(_ => this.loginService.logout() ));
+    return super.delete().pipe(tap(_ => this.loginService.logout()));
   }
 
   canDelete(): Observable<boolean> {

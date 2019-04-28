@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
-import { User } from 'src/app/user/user';
-import { UserService } from 'src/app/user/user.service';
+
+import { User } from '../user/user';
+import { UserService } from '../user/user.service';
 import { LoginService } from '../login/login.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   providers: [UserService],
@@ -16,13 +17,11 @@ export class LoginStatusComponent implements OnInit {
   user: User;
 
   constructor(
-    private authService: AuthService,
     private loginService: LoginService,
     private userService: UserService,
     private router: Router) { }
 
   ngOnInit() {
-    
     this.userService.get()
       .subscribe(user => {
         this.user = user
@@ -30,12 +29,10 @@ export class LoginStatusComponent implements OnInit {
   }
 
   viewAccount() {
-
     this.router.navigate([`/user`]);
   }
 
   logout() {
-
     this.loginService.logout()
       .subscribe(_ => this.router.navigate(['/login']));
   }

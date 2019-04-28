@@ -11,7 +11,7 @@ export class HivesService extends CrudService<Hive> {
   constructor(
     private errorsService: ErrorMessagesService,
     private httpClient: HttpClient) {
-      
+
     super(errorsService, httpClient);
   }
 
@@ -28,7 +28,7 @@ export class HivesService extends CrudService<Hive> {
       { pluralName: 'Hive Inspections', path: 'hiveInspections' },
     ];
   }
-  
+
   getBaseUrl(): string {
 
     return `farms/${this.getFarmId()}/hives`;

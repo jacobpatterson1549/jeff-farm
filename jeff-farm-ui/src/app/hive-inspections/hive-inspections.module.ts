@@ -16,7 +16,7 @@ import { HiveInspectionsService } from './hive-inspections.service';
   imports: [
     CommonModule,
     CrudModule,
-    RouterModule.forChild([ { path: '', loadChildren: '../crud/crud.module#CrudModule' } ]),
+    RouterModule.forChild([{ path: '', loadChildren: '../crud/crud.module#CrudModule' }]),
   ],
 })
 export class HiveInspectionsModule { }

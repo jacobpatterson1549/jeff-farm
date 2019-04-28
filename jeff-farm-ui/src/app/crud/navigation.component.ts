@@ -13,10 +13,10 @@ export class NavigationComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute) {
-      if (this.stepsToParent < 1 || !Number.isInteger(this.stepsToParent)) {
-        throw new Error(`Invalid stepsToParent: ${this.stepsToParent}`)
-      }
+    if (this.stepsToParent < 1 || !Number.isInteger(this.stepsToParent)) {
+      throw new Error(`Invalid stepsToParent: ${this.stepsToParent}`)
     }
+  }
 
   canGoUp() {
     return ['/', '/farms'].indexOf(this.router.url) < 0;
@@ -30,6 +30,6 @@ export class NavigationComponent {
       parentRoute = parentRoute.parent;
     }
 
-    this.router.navigate(['..'], { relativeTo:parentRoute } );
+    this.router.navigate(['..'], { relativeTo: parentRoute });
   }
 }

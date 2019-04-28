@@ -2,7 +2,7 @@
 <div *ngIf="crudItems">
   <ul>
     <li *ngFor="let crudItem of crudItems">
-        <a routerLink="{{crudItem.id}}">{{crudItem.getDisplayValue()}}</a>
+      <a routerLink="{{crudItem.id}}">{{crudItem.getDisplayValue()}}</a>
     </li>
   </ul>
   <p *ngIf="crudItems.length == 0">No items</p>

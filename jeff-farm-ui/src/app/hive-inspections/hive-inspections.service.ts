@@ -9,7 +9,7 @@ import { ErrorMessagesService } from '../error-messages/error-messages.service';
 export class HiveInspectionsService extends CrudService<HiveInspection> {
 
   constructor(
-    private errorsService: ErrorMessagesService, 
+    private errorsService: ErrorMessagesService,
     private httpClient: HttpClient) {
 
     super(errorsService, httpClient);
@@ -26,7 +26,7 @@ export class HiveInspectionsService extends CrudService<HiveInspection> {
   getCrudChildren(): CrudChild[] {
     return [];
   }
-  
+
   getBaseUrl(): string {
 
     return `farms/${this.getFarmId()}/hives/${this.getHiveId()}/hiveInspections`;

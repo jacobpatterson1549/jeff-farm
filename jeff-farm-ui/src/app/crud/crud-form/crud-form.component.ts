@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
 import { CrudService } from '../crud.service';
-
 import { CrudItem } from '../crud.item';
 import { FormType } from '../form.type';
 import { FormItem, FormItemType } from '../form.item';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'crud-form',
@@ -119,7 +117,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
 
   submitForm() {
     for (let formItem of this.formItems) {
-      
+
       // exclude added passworditems
       const passwordFormItemIndex = this.passwordFormItems.indexOf(formItem);
       if (passwordFormItemIndex < 0 || passwordFormItemIndex % 2 == 0) {
@@ -147,7 +145,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
           this.working = false;
           throw error;
         }))
-        .subscribe(_ => this.router.navigate(['..'], { relativeTo: this.route }) );
+        .subscribe(_ => this.router.navigate(['..'], { relativeTo: this.route }));
     }
   }
 }

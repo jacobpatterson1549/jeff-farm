@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Title } from '@angular/platform-browser';
 
 import { CrudService, CrudChild } from '../crud.service';
 import { CrudItem } from '../crud.item';
 import { FormItemType } from '../form.item';
 import { CrudDeleteComponent } from '../crud-delete/crud-delete.component';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'crud-view',
@@ -27,10 +27,10 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
     private crudService: CrudService<T>) { }
 
   ngOnInit() {
-    
+
     this.crudChildren = this.crudService.getCrudChildren();
     this.crudItemSingularName = this.crudService.getSingularName();
-    
+
     this.crudService.get()
       .subscribe((crudItem: T) => {
         this.crudItem = crudItem;
@@ -43,9 +43,9 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
             return obj;
           }, {});
 
-          this.titleService.setTitle(`${this.crudService.getSingularName()} ${crudItem.getDisplayValue()} details`);
+        this.titleService.setTitle(`${this.crudService.getSingularName()} ${crudItem.getDisplayValue()} details`);
       });
-    
+
     this.crudService.canDelete()
       .subscribe((canDelete: boolean) => this.canDelete = canDelete);
   }
