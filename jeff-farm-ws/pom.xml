@@ -14,7 +14,7 @@
 		<sonar.java.libraries>target/classes</sonar.java.libraries>
 		<main.class>com.github.ants280.jeff.farm.ws.Main</main.class>
 		<tomcat.version>8.5.40</tomcat.version>
-		<liquibase.version>3.5.5</liquibase.version>
+		<liquibase.version>3.6.3</liquibase.version>
 		<servlet.name>jeff-farm-ws Jersey Web Application</servlet.name>
 		<servlet.url.prefix>/jeff-farm-ws</servlet.url.prefix>
 		<jdbc.driver.name>postgresql</jdbc.driver.name>
@@ -93,7 +93,7 @@
 						<configuration>
 							<rules>
 								<requireMavenVersion>
-									<version>3.0.5</version>
+									<version>3.3.9</version>
 								</requireMavenVersion>
 							</rules>
 						</configuration>
@@ -120,6 +120,37 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<!-- (from super-pom) -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.liquibase</groupId>
+									<artifactId>liquibase-core</artifactId>
+									<version>${liquibase.version}</version>
+									<destFileName>liquibase.jar</destFileName>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${jdbc.driver.group.id}</groupId>
+									<artifactId>${jdbc.driver.artifact.id}</artifactId>
+									<version>${jdbc.driver.version}</version>
+									<destFileName>jdbc_driver.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<!-- (from super-pom) -->
@@ -253,35 +284,6 @@
 						<goals>
 							<goal>report</goal>
 						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.liquibase</groupId>
-									<artifactId>liquibase-core</artifactId>
-									<version>${liquibase.version}</version>
-									<destFileName>liquibase.jar</destFileName>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${jdbc.driver.group.id}</groupId>
-									<artifactId>${jdbc.driver.artifact.id}</artifactId>
-									<version>${jdbc.driver.version}</version>
-									<destFileName>jdbc_driver.jar</destFileName>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
