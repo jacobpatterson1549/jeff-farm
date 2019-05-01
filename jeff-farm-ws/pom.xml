@@ -29,17 +29,17 @@
 		<credential.handler.iterations>1000</credential.handler.iterations>
 		<credential.handler.salt.length>8</credential.handler.salt.length>
 		<security.role.user>user</security.role.user>
-		<!--derived properties (potentially overwritten by profiles-->
+		<!--derived properties (potentially overwritten by production profile-->
 		<site.origin>http://localhost:4200</site.origin>
 		<server.scheme>http</server.scheme>
 		<server.host>localhost</server.host>
 		<server.port>8080</server.port>
+		<server.transport.guarantee>NONE</server.transport.guarantee>
 		<jdbc.host>localhost</jdbc.host>
 		<jdbc.port>5432</jdbc.port>
 		<jdbc.database>jeff_farm_db</jdbc.database>
 		<jdbc.username>farmer</jdbc.username>
 		<jdbc.password>flint5+0N3</jdbc.password>
-		<jdbc.url>Should be overwritten by set-jdbc-url profile.</jdbc.url>
 		<!--computed properties (keep last)-->
 		<jdbc.url>jdbc:${jdbc.driver.name}://${jdbc.host}:${jdbc.port}/${jdbc.database}?serverTimezone=UTC</jdbc.url>
 	</properties>
@@ -61,6 +61,7 @@
 				<server.host>${env.SERVER_HOST}</server.host>
 				<!--suppress UnresolvedMavenProperty -->
 				<server.port>${env.SERVER_PORT}</server.port>
+				<server.transport.guarantee>CONFIDENTIAL</server.transport.guarantee>
 				<!--suppress UnresolvedMavenProperty -->
 				<jdbc.host>${env.JDBC_HOST}</jdbc.host>
 				<!--suppress UnresolvedMavenProperty -->

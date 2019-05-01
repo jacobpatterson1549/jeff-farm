@@ -58,6 +58,9 @@
 			<url-pattern>${servlet.url.prefix}/</url-pattern>
 			<url-pattern>${servlet.url.prefix}/login/*</url-pattern>
 		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>${server.transport.guarantee}</transport-guarantee>
+		</user-data-constraint>
 	</security-constraint>
 	<security-constraint>
 		<web-resource-collection>
@@ -67,6 +70,9 @@
 		<auth-constraint>
 			<role-name>${security.role.user}</role-name>
 		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>${server.transport.guarantee}</transport-guarantee>
+		</user-data-constraint>
 	</security-constraint>
 	<security-role>
 		<role-name>${security.role.user}</role-name>
