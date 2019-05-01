@@ -15,3 +15,13 @@ var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
     console.log('App now running on port', port);
 });
+
+// force https on production
+if (process.env.NODE_ENV === 'production') {
+    var forceSsl = function (req, res, next) {
+        return (req.headers['x-forwarded-proto'] !== 'https')
+            ? res.redirect(`https://${req.hostname}${req.url}`)
+            : next();
+    };
+    app.use(forceSsl);
+}
