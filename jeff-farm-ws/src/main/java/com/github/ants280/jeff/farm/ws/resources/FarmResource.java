@@ -73,7 +73,7 @@ public class FarmResource
 
 		return Response.ok().build();
 	}
-	
+
 	@GET
 	@Path("{id}/canDelete")
 	@Consumes(MediaType.APPLICATION_JSON)

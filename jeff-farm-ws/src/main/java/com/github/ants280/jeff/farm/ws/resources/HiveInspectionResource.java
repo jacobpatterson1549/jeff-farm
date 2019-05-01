@@ -49,7 +49,8 @@ public class HiveInspectionResource
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getHiveInspectionsList(@PathParam("hiveId") int hiveId)
 	{
-		List<HiveInspection> hiveInspections = hiveInspectionDao.readList(hiveId);
+		List<HiveInspection> hiveInspections
+			= hiveInspectionDao.readList(hiveId);
 
 		return Response.ok(hiveInspections).build();
 	}
@@ -57,7 +58,9 @@ public class HiveInspectionResource
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateHiveInspection(@PathParam("id") int id, HiveInspection hiveInspection)
+	public Response updateHiveInspection(
+		@PathParam("id") int id,
+		HiveInspection hiveInspection)
 	{
 		hiveInspectionDao.update(id, hiveInspection);
 
@@ -73,7 +76,7 @@ public class HiveInspectionResource
 
 		return Response.ok().build();
 	}
-	
+
 	@GET
 	@Path("{id}/canDelete")
 	@Consumes(MediaType.APPLICATION_JSON)

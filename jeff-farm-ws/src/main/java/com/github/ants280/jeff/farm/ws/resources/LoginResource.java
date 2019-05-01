@@ -53,7 +53,7 @@ public class LoginResource
 		int id = userDao.create(user);
 
 		Logger.getLogger(this.getClass().getName())
-				.log(Level.INFO, "Created User id={0}", id);
+			.log(Level.INFO, "Created User id={0}", id);
 
 		return Response.ok().build();
 	}

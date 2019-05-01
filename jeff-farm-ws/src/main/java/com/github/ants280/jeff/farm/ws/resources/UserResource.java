@@ -59,7 +59,7 @@ public class UserResource
 
 		return Response.ok().build();
 	}
-	
+
 	@GET
 	@Path("logout")
 	public Response logout()

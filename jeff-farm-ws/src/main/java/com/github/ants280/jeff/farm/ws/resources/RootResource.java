@@ -20,7 +20,7 @@ public class RootResource
 	{
 		this.connectionDao = connectionDao;
 	}
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getFarmsList()
@@ -32,11 +32,11 @@ public class RootResource
 	{
 		Package applicationPackage = this.getClass().getPackage();
 		boolean hasValidConnection = connectionDao.hasValidConnection();
-		
+
 		Map<String, Object> versionInfo = new LinkedHashMap<>();
 		versionInfo.put("package", applicationPackage);
 		versionInfo.put("hasValidDatabaseConnection", hasValidConnection);
-		
+
 		return versionInfo;
 	}
 }
