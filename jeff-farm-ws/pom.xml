@@ -71,7 +71,7 @@
 				<jdbc.username>${env.JDBC_USERNAME}</jdbc.username>
 				<!--suppress UnresolvedMavenProperty -->
 				<jdbc.password>${env.JDBC_PASSWORD}</jdbc.password>
-
+				<!--computed properties (keep last)-->
 				<jdbc.url>jdbc:${jdbc.driver.name}://${jdbc.host}:${jdbc.port}/${jdbc.database}?serverTimezone=UTC</jdbc.url>
 			</properties>
 		</profile>
