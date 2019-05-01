@@ -14,32 +14,73 @@ import javax.sql.DataSource;
 
 public class SqlFunctionDao
 {
-	private final DataSource dataSource;
 	private static final String USER_ID = "jeff_farm_ws.user_id";
+	private final DataSource dataSource;
 
 	public SqlFunctionDao(DataSource dataSource)
 	{
 		this.dataSource = dataSource;
 	}
 
+	private static String createFunctionCall(
+		String functionName, List<Parameter> inParameters)
+	{
+		return String.format("SELECT * FROM %s(%s)",
+			functionName,
+			String.join(", ", Collections.nCopies(inParameters.size(), "?")));
+	}
+
+	private static void setParameters(
+		PreparedStatement preparedStatement, List<Parameter> inParameters)
+		throws SQLException
+	{
+		int index = 1;
+		for (Parameter parameter : inParameters)
+		{
+			setParameter(preparedStatement, parameter, index++);
+		}
+	}
+
+	private static void setParameter(
+		PreparedStatement preparedStatement, Parameter parameter, int index)
+		throws SQLException
+	{
+		// TODO: use map
+		switch (parameter.getSqlType())
+		{
+			case Types.VARCHAR:
+			case Types.CHAR:
+				preparedStatement.setString(
+					index,
+					(String) parameter.getValue());
+				break;
+			case Types.INTEGER:
+				preparedStatement.setInt(index, (int) parameter.getValue());
+				break;
+			case Types.BOOLEAN:
+				preparedStatement.setBoolean(
+					index,
+					(boolean) parameter.getValue());
+				break;
+			default:
+				throw new IllegalArgumentException(
+					"Cannot set parameter of type " + parameter.getSqlType());
+		}
+	}
+
 	public void executeUpdate(
-			String functionName,
-			List<Parameter> inParameters,
-			int userId)
+		String functionName, List<Parameter> inParameters, int userId)
 	{
 		this.setUserId(userId);
 
-		this.executeSingle(
-			functionName,
-			inParameters,
-			resultSet -> null);
+		this.executeSingle(functionName, inParameters, resultSet -> null);
 	}
 
 	public int executeCreate(
-			String functionName,
-			List<Parameter> inParameters,
-			String outParameterName,
-			int userId)
+		String functionName,
+		List<Parameter> inParameters,
+		String outParameterName,
+		int userId)
 	{
 		this.setUserId(userId);
 
@@ -50,9 +91,9 @@ public class SqlFunctionDao
 	}
 
 	public boolean executeReadBoolean(
-			String functionName,
-			List<Parameter> inParameters,
-			String outParameterName)
+		String functionName,
+		List<Parameter> inParameters,
+		String outParameterName)
 	{
 		return this.executeSingle(
 			functionName,
@@ -61,25 +102,25 @@ public class SqlFunctionDao
 	}
 
 	public <T> T executeRead(
-			String functionName,
-			List<Parameter> inParameters,
-			RowMapper<T> rowMapper)
+		String functionName,
+		List<Parameter> inParameters,
+		RowMapper<T> rowMapper)
 	{
 		return this.executeSingle(functionName, inParameters, rowMapper);
 	}
 
 	public <T> List<T> executeReadList(
-			String functionName,
-			List<Parameter> inParameters,
-			RowMapper<T> rowMapper)
+		String functionName,
+		List<Parameter> inParameters,
+		RowMapper<T> rowMapper)
 	{
 		return this.execute(functionName, inParameters, rowMapper);
 	}
 
 	private <T> T executeSingle(
-			String functionName,
-			List<Parameter> inParameters,
-			RowMapper<T> rowMapper)
+		String functionName,
+		List<Parameter> inParameters,
+		RowMapper<T> rowMapper)
 	{
 		List<T> results = this.execute(functionName, inParameters, rowMapper);
 
@@ -93,22 +134,22 @@ public class SqlFunctionDao
 		return results.get(0);
 	}
 
-
 	private <T> List<T> execute(
-			String functionName,
-			List<Parameter> inParameters,
-			RowMapper<T> rowMapper)
+		String functionName,
+		List<Parameter> inParameters,
+		RowMapper<T> rowMapper)
 	{
 		String sql = createFunctionCall(functionName, inParameters);
 
-		try (Connection connection = dataSource.getConnection();
+		try (
+			Connection connection = dataSource.getConnection();
 			CallableStatement callableStatement = connection.prepareCall(sql))
 		{
 			setParameters(callableStatement, inParameters);
 
 			// TODO: stream
 			List<T> results = new ArrayList<>();
-			try(ResultSet resultSet = callableStatement.executeQuery())
+			try (ResultSet resultSet = callableStatement.executeQuery())
 			{
 				while (resultSet.next())
 				{
@@ -130,7 +171,8 @@ public class SqlFunctionDao
 		// TODO: Could this lead to sql injection?
 		String sql = String.format("SET %s = %d", USER_ID, userId);
 
-		try (Connection connection = dataSource.getConnection();
+		try (
+			Connection connection = dataSource.getConnection();
 			Statement statement = connection.createStatement())
 		{
 			boolean resultSetProduced = statement.execute(sql);
@@ -151,52 +193,6 @@ public class SqlFunctionDao
 		catch (SQLException ex)
 		{
 			throw new SqlDaoException(ex);
-		}
-	}
-
-	private static String createFunctionCall(
-		String functionName,
-		List<Parameter> inParameters)
-	{
-		return String.format("SELECT * FROM %s(%s)",
-			functionName,
-			String.join(", ", Collections.nCopies(inParameters.size(), "?")));
-	}
-
-	private static void setParameters(
-		PreparedStatement preparedStatement,
-		List<Parameter> inParameters)
-		throws SQLException
-	{
-		int index = 1;
-		for (Parameter parameter : inParameters)
-		{
-			setParameter(preparedStatement, parameter, index++);
-		}
-	}
-
-	private static void setParameter(
-		PreparedStatement preparedStatement,
-		Parameter parameter,
-		int index)
-		throws SQLException
-	{
-		// TODO: use map
-		switch (parameter.getSqlType())
-		{
-			case Types.VARCHAR:
-			case Types.CHAR:
-				preparedStatement.setString(index, (String) parameter.getValue());
-				break;
-			case Types.INTEGER:
-				preparedStatement.setInt(index, (int) parameter.getValue());
-				break;
-			case Types.BOOLEAN:
-				preparedStatement.setBoolean(index, (boolean) parameter.getValue());
-				break;
-			default:
-				throw new IllegalArgumentException(
-					"Cannot set parameter of type " + parameter.getSqlType());
 		}
 	}
 
@@ -232,10 +228,10 @@ public class SqlFunctionDao
 		public String toString()
 		{
 			return String.format(
-					"Parameter{name=%s,value=%s,sqlType=%d}",
-					name,
-					value,
-					sqlType);
+				"Parameter{name=%s,value=%s,sqlType=%d}",
+				name,
+				value,
+				sqlType);
 		}
 	}
 }
