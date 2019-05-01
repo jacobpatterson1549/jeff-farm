@@ -54,10 +54,15 @@
 
 	<security-constraint>
 		<web-resource-collection>
+			<web-resource-name>unsecured-endpoints</web-resource-name>
+			<url-pattern>${servlet.url.prefix}/</url-pattern>
+			<url-pattern>${servlet.url.prefix}/login/*</url-pattern>
+		</web-resource-collection>
+	</security-constraint>
+	<security-constraint>
+		<web-resource-collection>
 			<web-resource-name>secured-endpoints</web-resource-name>
-			<url-pattern>${servlet.url.prefix}/farms/*</url-pattern>
-			<url-pattern>${servlet.url.prefix}/user/*</url-pattern>
-			<http-method-omission>OPTIONS</http-method-omission>
+			<url-pattern>${servlet.url.prefix}/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>${security.role.user}</role-name>
