@@ -1,6 +1,5 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
-import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,7 +35,7 @@ public class ConnectionDao
 				.log(
 					Level.SEVERE,
 					"Could not establish valid connection.",
-					new JeffFarmWsException("Connection invalid", ex));
+					new SqlDaoException(ex));
 			return false;
 		}
 	}
