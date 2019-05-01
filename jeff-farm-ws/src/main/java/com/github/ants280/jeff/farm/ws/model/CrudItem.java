@@ -9,27 +9,27 @@ import javax.json.bind.annotation.JsonbTransient;
 
 public abstract class CrudItem<T extends CrudItem<T>>
 {
-	private static final DateTimeFormatter DATE_FORMAT
-			 = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL)
-					 .withLocale(Locale.getDefault())
-					 .withZone(TimeZone.getDefault().toZoneId());
 	public static final String ID_COLUMN = "id";
 	public static final String CREATED_DATE_COLUMN = "created_date";
 	public static final String MODIFIED_DATE_COLUMN = "modified_date";
 	public static final String USER_ID = "user_id";
 	public static final String CAN_DELETE_ITEM = "can_delete";
+	private static final DateTimeFormatter DATE_FORMAT
+		= DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL)
+		.withLocale(Locale.getDefault())
+		.withZone(TimeZone.getDefault().toZoneId());
 	private int id;
 	private String createdDate;
 	private String modifiedDate;
-	
-	protected abstract T getThis();
 
 	private static String getFormatedTimestamp(Timestamp modifiedDate1)
 	{
 		return modifiedDate1 == null
-				? null
-				: DATE_FORMAT.format(modifiedDate1.toInstant());
+			? null
+			: DATE_FORMAT.format(modifiedDate1.toInstant());
 	}
+
+	protected abstract T getThis();
 
 	public int getId()
 	{

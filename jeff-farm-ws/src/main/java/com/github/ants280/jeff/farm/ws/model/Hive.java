@@ -10,7 +10,7 @@ public class Hive extends CrudItem<Hive>
 	private int farmId;
 	private String name;
 	private String queenColor;
-	
+
 	@Override
 	protected Hive getThis()
 	{
@@ -44,12 +44,6 @@ public class Hive extends CrudItem<Hive>
 		return queenColor;
 	}
 
-	@JsonbTransient
-	public int getQueenColorInteger()
-	{
-		return Integer.parseInt(queenColor.substring(1), 16);
-	}
-
 	public Hive setQueenColor(String queenColor)
 	{
 		if (queenColor == null || !queenColor.matches("^#[0-9a-fA-F]{6}$"))
@@ -58,6 +52,12 @@ public class Hive extends CrudItem<Hive>
 		}
 		this.queenColor = queenColor;
 		return this;
+	}
+
+	@JsonbTransient
+	public int getQueenColorInteger()
+	{
+		return Integer.parseInt(queenColor.substring(1), 16);
 	}
 
 	@JsonbTransient

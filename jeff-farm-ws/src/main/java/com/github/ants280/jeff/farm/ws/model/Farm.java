@@ -6,7 +6,7 @@ public class Farm extends CrudItem<Farm>
 	public static final String LOCATION_COLUMN = "location";
 	private String name;
 	private String location;
-	
+
 	@Override
 	protected Farm getThis()
 	{
@@ -34,6 +34,4 @@ public class Farm extends CrudItem<Farm>
 		this.location = location;
 		return this;
 	}
-
-	
 }

@@ -38,7 +38,7 @@ public class HiveInspectionDao extends SqlFunctionDao implements CrudDao<HiveIns
 						new Parameter<>(HiveInspection.SUPERSEDURE_CELLS_COLUMN, hiveInspection.getSupersedureCells(), Types.INTEGER),
 						new Parameter<>(HiveInspection.SWARM_CELLS_COLUMN, hiveInspection.getSwarmCells(), Types.INTEGER),
 						new Parameter<>(HiveInspection.COMB_BUILDING_STARS_COLUMN, hiveInspection.getCombBuildingStars(), Types.INTEGER),
-						new Parameter<>(HiveInspection.FRAMES_SEALED_BROOD_COLUMN, hiveInspection.getFramesOpenBrood(), Types.INTEGER),
+						new Parameter<>(HiveInspection.FRAMES_SEALED_BROOD_COLUMN, hiveInspection.getFramesSealedBrood(), Types.INTEGER),
 						new Parameter<>(HiveInspection.FRAMES_OPEN_BROOD_COLUMN, hiveInspection.getFramesOpenBrood(), Types.INTEGER),
 						new Parameter<>(HiveInspection.FRAMES_HONEY_COLUMN, hiveInspection.getFramesHoney(), Types.INTEGER),
 						new Parameter<>(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather(), Types.VARCHAR),
