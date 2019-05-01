@@ -14,7 +14,7 @@
 		<sonar.java.libraries>target/classes</sonar.java.libraries>
 		<main.class>com.github.ants280.jeff.farm.ws.Main</main.class>
 		<tomcat.version>8.5.40</tomcat.version>
-		<liquibase.version>3.6.3</liquibase.version>
+		<liquibase.version>3.5.5</liquibase.version><!--using old version for heroku-->
 		<servlet.name>jeff-farm-ws Jersey Web Application</servlet.name>
 		<servlet.url.prefix>/jeff-farm-ws</servlet.url.prefix>
 		<jdbc.driver.name>postgresql</jdbc.driver.name>
