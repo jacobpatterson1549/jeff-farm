@@ -34,7 +34,6 @@
 		<server.scheme>http</server.scheme>
 		<server.host>localhost</server.host>
 		<server.port>8080</server.port>
-		<server.transport.guarantee>NONE</server.transport.guarantee>
 		<jdbc.host>localhost</jdbc.host>
 		<jdbc.port>5432</jdbc.port>
 		<jdbc.database>jeff_farm_db</jdbc.database>
@@ -61,7 +60,6 @@
 				<server.host>${env.SERVER_HOST}</server.host>
 				<!--suppress UnresolvedMavenProperty -->
 				<server.port>${env.SERVER_PORT}</server.port>
-				<server.transport.guarantee>CONFIDENTIAL</server.transport.guarantee>
 				<!--suppress UnresolvedMavenProperty -->
 				<jdbc.host>${env.JDBC_HOST}</jdbc.host>
 				<!--suppress UnresolvedMavenProperty -->
