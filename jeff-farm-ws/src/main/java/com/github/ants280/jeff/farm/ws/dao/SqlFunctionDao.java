@@ -148,7 +148,7 @@ public class SqlFunctionDao
 				if (userId != null)
 				{
 					connection.setAutoCommit(false);
-					setUserId(userId, connection);
+					this.setUserId(userId, connection);
 				}
 
 				return this.execute(connection,
