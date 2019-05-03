@@ -190,22 +190,20 @@ public class SqlFunctionDao
 		{
 			setParameters(callableStatement, inParameters);
 
-			// TODO: stream
-			List<T> results = new ArrayList<>();
 			try (ResultSet resultSet = callableStatement.executeQuery())
 			{
+				if (callableStatement.getWarnings() != null)
+				{
+					throw new SqlDaoException(callableStatement.getWarnings());
+				}
+
+				List<T> results = new ArrayList<>();
 				while (resultSet.next())
 				{
 					results.add(rowMapper.getValue(resultSet));
 				}
+				return results;
 			}
-
-			if (callableStatement.getWarnings() != null)
-			{
-				throw new SqlDaoException(callableStatement.getWarnings());
-			}
-
-			return results;
 		}
 	}
 
