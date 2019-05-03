@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +13,7 @@ import javax.sql.DataSource;
 
 public class SqlFunctionDao
 {
-	private static final String USER_ID = "jeff_farm_ws.user_id";
+	private static final String SET_USER_ID_FUNCTION_NAME = "set_user_id";
 	private final DataSource dataSource;
 
 	public SqlFunctionDao(DataSource dataSource)
@@ -50,16 +49,14 @@ public class SqlFunctionDao
 		{
 			case Types.VARCHAR:
 			case Types.CHAR:
-				preparedStatement.setString(
-					index,
+				preparedStatement.setString(index,
 					(String) parameter.getValue());
 				break;
 			case Types.INTEGER:
 				preparedStatement.setInt(index, (int) parameter.getValue());
 				break;
 			case Types.BOOLEAN:
-				preparedStatement.setBoolean(
-					index,
+				preparedStatement.setBoolean(index,
 					(boolean) parameter.getValue());
 				break;
 			default:
@@ -84,8 +81,7 @@ public class SqlFunctionDao
 	{
 		this.setUserId(userId);
 
-		return this.executeSingle(
-			functionName,
+		return this.executeSingle(functionName,
 			inParameters,
 			resultSet -> resultSet.getInt(outParameterName));
 	}
@@ -95,8 +91,7 @@ public class SqlFunctionDao
 		List<Parameter> inParameters,
 		String outParameterName)
 	{
-		return this.executeSingle(
-			functionName,
+		return this.executeSingle(functionName,
 			inParameters,
 			resultSet -> resultSet.getBoolean(outParameterName));
 	}
@@ -126,8 +121,7 @@ public class SqlFunctionDao
 
 		if (results.size() != 1)
 		{
-			throw new SqlDaoException(String.format(
-				"Expected 1 result.  Got %d.",
+			throw new SqlDaoException(String.format("Expected 1 result.  Got %d.",
 				results.size()));
 		}
 
@@ -157,6 +151,11 @@ public class SqlFunctionDao
 				}
 			}
 
+			if (callableStatement.getWarnings() != null)
+			{
+				throw new SqlDaoException(callableStatement.getWarnings());
+			}
+
 			return results;
 		}
 		catch (SQLException ex)
@@ -167,32 +166,19 @@ public class SqlFunctionDao
 
 	private void setUserId(int userId)
 	{
-		// TODO: Write function for setting user id
-		// TODO: Could this lead to sql injection?
-		String sql = String.format("SET %s = %d", USER_ID, userId);
+		Parameter<Integer> userIdParameter = new Parameter<>("id",
+			userId,
+			Types.INTEGER);
+		Integer setUserId = this.executeSingle(SET_USER_ID_FUNCTION_NAME,
+			Collections.singletonList(userIdParameter),
+			rs -> rs.getInt(SET_USER_ID_FUNCTION_NAME));
 
-		try (
-			Connection connection = dataSource.getConnection();
-			Statement statement = connection.createStatement())
+		if (setUserId != userId)
 		{
-			boolean resultSetProduced = statement.execute(sql);
-			assert !resultSetProduced;
-
-			if (statement.getWarnings() != null)
-			{
-				throw new SqlDaoException(statement.getWarnings());
-			}
-
-			if (statement.getUpdateCount() != 0)
-			{
-				throw new SqlDaoException(String.format(
-					"Updated %d rows during SET call.  Should not have.",
-					statement.getUpdateCount()));
-			}
-		}
-		catch (SQLException ex)
-		{
-			throw new SqlDaoException(ex);
+			throw new SqlDaoException(String.format(
+				"Setting the user id to %d actually set it ot %d.",
+				userId,
+				setUserId));
 		}
 	}
 
@@ -227,8 +213,7 @@ public class SqlFunctionDao
 		@Override
 		public String toString()
 		{
-			return String.format(
-				"Parameter{name=%s,value=%s,sqlType=%d}",
+			return String.format("Parameter{name=%s,value=%s,sqlType=%d}",
 				name,
 				value,
 				sqlType);
