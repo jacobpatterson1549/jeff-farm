@@ -94,7 +94,6 @@ public class SqlFunctionDao
 		List<SqlFunctionParameter> inParameters,
 		String outParameterName)
 	{
-		// TODO: can this be combined with executeRead<Boolean>?
 		return this.executeSingle(functionName,
 			inParameters,
 			resultSet -> resultSet.getBoolean(outParameterName),
