@@ -45,7 +45,6 @@ public class SqlFunctionDao
 		SqlFunctionParameter parameter,
 		int index) throws SQLException
 	{
-		// TODO: use map
 		switch (parameter.getSqlType())
 		{
 			case Types.VARCHAR:
