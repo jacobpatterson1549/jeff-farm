@@ -127,7 +127,7 @@ public class SqlFunctionDao
 		if (results.size() != 1)
 		{
 			throw new SqlDaoException(String.format(
-				"Expected 1 result.  Get %d.",
+				"Expected 1 result.  Got %d.",
 				results.size()));
 		}
 

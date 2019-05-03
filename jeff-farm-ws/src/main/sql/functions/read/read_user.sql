@@ -1,7 +1,6 @@
-CREATE OR REPLACE FUNCTION read_user
-	( IN id INT
-	, OUT users
-	)
+DROP FUNCTION IF EXISTS read_user;
+CREATE FUNCTION read_user(IN id INT)
+RETURNS SETOF users
 AS
 $body$
 	SELECT

@@ -1,7 +1,6 @@
-CREATE OR REPLACE FUNCTION read_hive_inspection
-	( IN id INT
-	, OUT hive_inspections
-	)
+DROP FUNCTION IF EXISTS read_hive_inspection;
+CREATE FUNCTION read_hive_inspection(IN id INT)
+RETURNS SETOF hive_inspections
 AS
 $body$
 	SELECT

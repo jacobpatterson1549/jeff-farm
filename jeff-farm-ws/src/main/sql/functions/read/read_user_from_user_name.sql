@@ -1,7 +1,6 @@
-CREATE OR REPLACE FUNCTION read_user_from_user_name
-	( IN user_name VARCHAR(20)
-	, OUT users
-	)
+DROP FUNCTION IF EXISTS read_user_from_user_name;
+CREATE FUNCTION read_user_from_user_name(IN user_name VARCHAR(20))
+RETURNS SETOF users
 AS
 $body$
 	SELECT

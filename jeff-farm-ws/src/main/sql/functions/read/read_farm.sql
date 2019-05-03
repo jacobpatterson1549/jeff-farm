@@ -1,8 +1,6 @@
-CREATE OR REPLACE FUNCTION read_farm
-	( IN id INT
-	, OUT farms
-	)
-RETURNS farms
+DROP FUNCTION IF EXISTS read_farm;
+CREATE FUNCTION read_farm(IN id INT)
+RETURNS SETOF farms
 AS
 $body$
 	SELECT
