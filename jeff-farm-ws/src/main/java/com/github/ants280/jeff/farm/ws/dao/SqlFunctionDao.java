@@ -68,9 +68,10 @@ public class SqlFunctionDao
 	public void executeUpdate(
 		String functionName, List<Parameter> inParameters, int userId)
 	{
-		this.setUserId(userId);
-
-		this.executeSingle(functionName, inParameters, resultSet -> null);
+		this.executeSingle(functionName,
+			inParameters,
+			resultSet -> null,
+			userId);
 	}
 
 	public int executeCreate(
@@ -79,11 +80,10 @@ public class SqlFunctionDao
 		String outParameterName,
 		int userId)
 	{
-		this.setUserId(userId);
-
 		return this.executeSingle(functionName,
 			inParameters,
-			resultSet -> resultSet.getInt(outParameterName));
+			resultSet -> resultSet.getInt(outParameterName),
+			userId);
 	}
 
 	public boolean executeReadBoolean(
@@ -91,9 +91,11 @@ public class SqlFunctionDao
 		List<Parameter> inParameters,
 		String outParameterName)
 	{
+		// TODO: can this be combined with executeRead<Boolean>?
 		return this.executeSingle(functionName,
 			inParameters,
-			resultSet -> resultSet.getBoolean(outParameterName));
+			resultSet -> resultSet.getBoolean(outParameterName),
+			null);
 	}
 
 	public <T> T executeRead(
@@ -101,7 +103,7 @@ public class SqlFunctionDao
 		List<Parameter> inParameters,
 		RowMapper<T> rowMapper)
 	{
-		return this.executeSingle(functionName, inParameters, rowMapper);
+		return this.executeSingle(functionName, inParameters, rowMapper, null);
 	}
 
 	public <T> List<T> executeReadList(
@@ -109,15 +111,19 @@ public class SqlFunctionDao
 		List<Parameter> inParameters,
 		RowMapper<T> rowMapper)
 	{
-		return this.execute(functionName, inParameters, rowMapper);
+		return this.execute(functionName, inParameters, rowMapper, null);
 	}
 
 	private <T> T executeSingle(
 		String functionName,
 		List<Parameter> inParameters,
-		RowMapper<T> rowMapper)
+		RowMapper<T> rowMapper,
+		Integer userId)
 	{
-		List<T> results = this.execute(functionName, inParameters, rowMapper);
+		List<T> results = this.execute(functionName,
+			inParameters,
+			rowMapper,
+			userId);
 
 		if (results.size() != 1)
 		{
@@ -131,13 +137,54 @@ public class SqlFunctionDao
 	private <T> List<T> execute(
 		String functionName,
 		List<Parameter> inParameters,
-		RowMapper<T> rowMapper)
+		RowMapper<T> rowMapper,
+		final Integer userId)
+	{
+		try (Connection connection = dataSource.getConnection())
+		{
+			try
+			{
+				if (userId != null)
+				{
+					connection.setAutoCommit(false);
+					setUserId(userId, connection);
+				}
+
+				return this.execute(connection,
+					functionName,
+					inParameters,
+					rowMapper);
+			}
+			catch (SQLException ex2)
+			{
+				if (userId != null)
+				{
+					connection.rollback();
+				}
+				throw ex2;
+			}
+			finally
+			{
+				if (userId != null)
+				{
+					connection.commit();
+				}
+			}
+		}
+		catch (SQLException ex)
+		{
+			throw new SqlDaoException(ex);
+		}
+	}
+
+	private <T> List<T> execute(
+		Connection connection,
+		String functionName,
+		List<Parameter> inParameters,
+		RowMapper<T> rowMapper) throws SQLException
 	{
 		String sql = createFunctionCall(functionName, inParameters);
-
-		try (
-			Connection connection = dataSource.getConnection();
-			CallableStatement callableStatement = connection.prepareCall(sql))
+		try (CallableStatement callableStatement = connection.prepareCall(sql))
 		{
 			setParameters(callableStatement, inParameters);
 
@@ -158,30 +205,30 @@ public class SqlFunctionDao
 
 			return results;
 		}
-		catch (SQLException ex)
-		{
-			throw new SqlDaoException(ex);
-		}
 	}
 
-	private void setUserId(int userId)
+	private void setUserId(int userId, Connection connection)
+		throws SQLException
 	{
 		Parameter<Integer> userIdParameter = new Parameter<>("id",
 			userId,
 			Types.INTEGER);
-		Integer setUserId = this.executeSingle(SET_USER_ID_FUNCTION_NAME,
+		List<Integer> setUserIds = this.execute(connection,
+			SET_USER_ID_FUNCTION_NAME,
 			Collections.singletonList(userIdParameter),
 			rs -> rs.getInt(SET_USER_ID_FUNCTION_NAME));
 
-		if (setUserId != userId)
+		if (setUserIds == null
+			|| setUserIds.size() != 1 && setUserIds.get(0) != userId)
 		{
 			throw new SqlDaoException(String.format(
-				"Setting the user id to %d actually set it ot %d.",
+				"Setting the user id to %d actually set it ot %s.",
 				userId,
-				setUserId));
+				setUserIds));
 		}
 	}
 
+	// TODO: move to seperate file
 	public static class Parameter<T>
 	{
 		private final String name;

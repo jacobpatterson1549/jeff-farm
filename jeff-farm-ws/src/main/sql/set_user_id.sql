@@ -6,8 +6,7 @@ $body$
 	SELECT CAST(set_config(
 		'jeff_farm_ws.user_id',
 		CAST(set_user_id.id AS TEXT),
-		-- TODO: Make this 'true' and do insert/update/delete in transaction:
-		false -- is_local
+		true -- is_local (applies to transaction only)
 		) AS INT);
 $body$
 LANGUAGE SQL;
