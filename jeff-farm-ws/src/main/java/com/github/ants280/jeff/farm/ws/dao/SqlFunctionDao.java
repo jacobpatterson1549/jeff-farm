@@ -143,38 +143,53 @@ public class SqlFunctionDao
 	{
 		try (Connection connection = dataSource.getConnection())
 		{
-			try
-			{
-				if (userId != null)
-				{
-					connection.setAutoCommit(false);
-					this.setUserId(userId, connection);
-				}
-
-				return this.execute(connection,
-					functionName,
-					inParameters,
-					rowMapper);
-			}
-			catch (SQLException ex2)
-			{
-				if (userId != null)
-				{
-					connection.rollback();
-				}
-				throw ex2;
-			}
-			finally
-			{
-				if (userId != null)
-				{
-					connection.commit();
-				}
-			}
+			return execute(
+				connection,
+				functionName,
+				inParameters,
+				rowMapper,
+				userId);
 		}
 		catch (SQLException ex)
 		{
 			throw new SqlDaoException(ex);
+		}
+	}
+
+	private <T> List<T> execute(
+		Connection connection,
+		String functionName,
+		List<SqlFunctionParameter> inParameters,
+		RowMapper<T> rowMapper,
+		Integer userId) throws SQLException
+	{
+		try
+		{
+			if (userId != null)
+			{
+				connection.setAutoCommit(false);
+				this.setUserId(userId, connection);
+			}
+
+			return this.execute(connection,
+				functionName,
+				inParameters,
+				rowMapper);
+		}
+		catch (SQLException ex)
+		{
+			if (userId != null)
+			{
+				connection.rollback();
+			}
+			throw ex;
+		}
+		finally
+		{
+			if (userId != null)
+			{
+				connection.commit();
+			}
 		}
 	}
 
