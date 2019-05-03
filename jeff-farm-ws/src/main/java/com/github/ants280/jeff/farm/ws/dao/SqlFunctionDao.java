@@ -22,7 +22,7 @@ public class SqlFunctionDao
 	}
 
 	private static String createFunctionCall(
-		String functionName, List<Parameter> inParameters)
+		String functionName, List<SqlFunctionParameter> inParameters)
 	{
 		return String.format("SELECT * FROM %s(%s)",
 			functionName,
@@ -30,19 +30,20 @@ public class SqlFunctionDao
 	}
 
 	private static void setParameters(
-		PreparedStatement preparedStatement, List<Parameter> inParameters)
-		throws SQLException
+		PreparedStatement preparedStatement,
+		List<SqlFunctionParameter> inParameters) throws SQLException
 	{
 		int index = 1;
-		for (Parameter parameter : inParameters)
+		for (SqlFunctionParameter parameter : inParameters)
 		{
 			setParameter(preparedStatement, parameter, index++);
 		}
 	}
 
 	private static void setParameter(
-		PreparedStatement preparedStatement, Parameter parameter, int index)
-		throws SQLException
+		PreparedStatement preparedStatement,
+		SqlFunctionParameter parameter,
+		int index) throws SQLException
 	{
 		// TODO: use map
 		switch (parameter.getSqlType())
@@ -66,7 +67,9 @@ public class SqlFunctionDao
 	}
 
 	public void executeUpdate(
-		String functionName, List<Parameter> inParameters, int userId)
+		String functionName,
+		List<SqlFunctionParameter> inParameters,
+		int userId)
 	{
 		this.executeSingle(functionName,
 			inParameters,
@@ -76,7 +79,7 @@ public class SqlFunctionDao
 
 	public int executeCreate(
 		String functionName,
-		List<Parameter> inParameters,
+		List<SqlFunctionParameter> inParameters,
 		String outParameterName,
 		int userId)
 	{
@@ -88,7 +91,7 @@ public class SqlFunctionDao
 
 	public boolean executeReadBoolean(
 		String functionName,
-		List<Parameter> inParameters,
+		List<SqlFunctionParameter> inParameters,
 		String outParameterName)
 	{
 		// TODO: can this be combined with executeRead<Boolean>?
@@ -100,7 +103,7 @@ public class SqlFunctionDao
 
 	public <T> T executeRead(
 		String functionName,
-		List<Parameter> inParameters,
+		List<SqlFunctionParameter> inParameters,
 		RowMapper<T> rowMapper)
 	{
 		return this.executeSingle(functionName, inParameters, rowMapper, null);
@@ -108,7 +111,7 @@ public class SqlFunctionDao
 
 	public <T> List<T> executeReadList(
 		String functionName,
-		List<Parameter> inParameters,
+		List<SqlFunctionParameter> inParameters,
 		RowMapper<T> rowMapper)
 	{
 		return this.execute(functionName, inParameters, rowMapper, null);
@@ -116,7 +119,7 @@ public class SqlFunctionDao
 
 	private <T> T executeSingle(
 		String functionName,
-		List<Parameter> inParameters,
+		List<SqlFunctionParameter> inParameters,
 		RowMapper<T> rowMapper,
 		Integer userId)
 	{
@@ -136,7 +139,7 @@ public class SqlFunctionDao
 
 	private <T> List<T> execute(
 		String functionName,
-		List<Parameter> inParameters,
+		List<SqlFunctionParameter> inParameters,
 		RowMapper<T> rowMapper,
 		final Integer userId)
 	{
@@ -180,7 +183,7 @@ public class SqlFunctionDao
 	private <T> List<T> execute(
 		Connection connection,
 		String functionName,
-		List<Parameter> inParameters,
+		List<SqlFunctionParameter> inParameters,
 		RowMapper<T> rowMapper) throws SQLException
 	{
 		String sql = createFunctionCall(functionName, inParameters);
@@ -210,9 +213,9 @@ public class SqlFunctionDao
 	private void setUserId(int userId, Connection connection)
 		throws SQLException
 	{
-		Parameter<Integer> userIdParameter = new Parameter<>("id",
-			userId,
-			Types.INTEGER);
+		SqlFunctionParameter<Integer>
+			userIdParameter
+			= new SqlFunctionParameter<>("id", userId, Types.INTEGER);
 		List<Integer> setUserIds = this.execute(connection,
 			SET_USER_ID_FUNCTION_NAME,
 			Collections.singletonList(userIdParameter),
@@ -225,45 +228,6 @@ public class SqlFunctionDao
 				"Setting the user id to %d actually set it ot %s.",
 				userId,
 				setUserIds));
-		}
-	}
-
-	// TODO: move to seperate file
-	public static class Parameter<T>
-	{
-		private final String name;
-		private final T value;
-		private final int sqlType;
-
-		public Parameter(String name, T value, int sqlType)
-		{
-			this.name = name;
-			this.value = value;
-			this.sqlType = sqlType;
-		}
-
-		public String getName()
-		{
-			return name;
-		}
-
-		public T getValue()
-		{
-			return value;
-		}
-
-		public int getSqlType()
-		{
-			return sqlType;
-		}
-
-		@Override
-		public String toString()
-		{
-			return String.format("Parameter{name=%s,value=%s,sqlType=%d}",
-				name,
-				value,
-				sqlType);
 		}
 	}
 }

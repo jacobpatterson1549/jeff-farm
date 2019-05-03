@@ -34,10 +34,10 @@ public class UserDao extends SqlFunctionDao implements CrudDao<User>
 		return this.executeCreate(
 				"create_user",
 				Arrays.asList(
-						new Parameter<>(User.USER_NAME_COLUMN, user.getUserName(), Types.VARCHAR),
-						new Parameter<>(User.PASSWORD_COLUMN, password, Types.CHAR),
-						new Parameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
-						new Parameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)),
+						new SqlFunctionParameter<>(User.USER_NAME_COLUMN, user.getUserName(), Types.VARCHAR),
+						new SqlFunctionParameter<>(User.PASSWORD_COLUMN, password, Types.CHAR),
+						new SqlFunctionParameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
+						new SqlFunctionParameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)),
 				User.ID_COLUMN,
 				-1); // (registered users cannot create users)
 	}
@@ -48,7 +48,7 @@ public class UserDao extends SqlFunctionDao implements CrudDao<User>
 		return this.executeRead(
 				"read_user",
 				Collections.singletonList(
-						new Parameter<>(User.ID_COLUMN, id, Types.INTEGER)),
+						new SqlFunctionParameter<>(User.ID_COLUMN, id, Types.INTEGER)),
 				this::mapRow);
 	}
 
@@ -57,7 +57,7 @@ public class UserDao extends SqlFunctionDao implements CrudDao<User>
 		return this.executeRead(
 				"read_user_from_user_name",
 				Collections.singletonList(
-						new Parameter<>(User.USER_NAME_COLUMN, userName, Types.VARCHAR)),
+						new SqlFunctionParameter<>(User.USER_NAME_COLUMN, userName, Types.VARCHAR)),
 				this::mapRow);
 	}
 
@@ -76,10 +76,10 @@ public class UserDao extends SqlFunctionDao implements CrudDao<User>
 		this.executeUpdate(
 				"update_user",
 				Arrays.asList(
-						new Parameter<>(User.ID_COLUMN, id, Types.INTEGER),
-						new Parameter<>(User.PASSWORD_COLUMN, password, Types.CHAR),
-						new Parameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
-						new Parameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)),
+						new SqlFunctionParameter<>(User.ID_COLUMN, id, Types.INTEGER),
+						new SqlFunctionParameter<>(User.PASSWORD_COLUMN, password, Types.CHAR),
+						new SqlFunctionParameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
+						new SqlFunctionParameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)),
 				user.getId());
 	}
 
@@ -89,7 +89,7 @@ public class UserDao extends SqlFunctionDao implements CrudDao<User>
 		this.executeUpdate(
 				"delete_user",
 				Collections.singletonList(
-						new Parameter<>(User.ID_COLUMN, id, Types.INTEGER)),
+						new SqlFunctionParameter<>(User.ID_COLUMN, id, Types.INTEGER)),
 				id);
 	}
 
