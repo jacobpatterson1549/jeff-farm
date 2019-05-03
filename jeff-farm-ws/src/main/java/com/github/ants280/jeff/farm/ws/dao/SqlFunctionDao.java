@@ -217,8 +217,7 @@ public class SqlFunctionDao
 			Collections.singletonList(userIdParameter),
 			rs -> rs.getInt(SET_USER_ID_FUNCTION_NAME));
 
-		if (setUserIds == null
-			|| setUserIds.size() != 1 && setUserIds.get(0) != userId)
+		if (setUserIds.size() != 1 && setUserIds.get(0) != userId)
 		{
 			throw new SqlDaoException(String.format(
 				"Setting the user id to %d actually set it ot %s.",
