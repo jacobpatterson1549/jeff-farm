@@ -18,7 +18,6 @@ export class CrudDeleteComponent<T extends CrudItem> {
   constructor(
     public modal: NgbActiveModal,
     private router: Router,
-    private route: ActivatedRoute,
     private crudService: CrudService<T>) {
 
     this.type = this.crudService.getSingularName();
@@ -37,7 +36,11 @@ export class CrudDeleteComponent<T extends CrudItem> {
         throw error;
       }))
       .subscribe(_ => {
-        this.router.navigate(['..'], { relativeTo: this.route.parent });
+        const url: string = this.router.url;
+        const lastSlashIndex: number = url.lastIndexOf('/');
+        const parentUrl: string = url.substring(0, lastSlashIndex);
+        this.router.navigateByUrl(parentUrl);
+        
         this.modal.close();
       });
   }
