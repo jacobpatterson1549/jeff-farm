@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    const x = localStorage.getItem(this.IS_LOGGED_IN_KEY);
-    return x == 'true';
+    const isLoggedIn = localStorage.getItem(this.IS_LOGGED_IN_KEY);
+    return isLoggedIn == 'true';
   }
 }
