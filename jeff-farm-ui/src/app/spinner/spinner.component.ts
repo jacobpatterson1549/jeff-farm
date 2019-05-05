@@ -3,7 +3,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
-  selector: 'spinner',
+  selector: 'app-spinner',
   template: '<fa-icon [icon]="faSpinner" [hidden]="!visible" [spin]="true"></fa-icon>',
 })
 export class SpinnerComponent {

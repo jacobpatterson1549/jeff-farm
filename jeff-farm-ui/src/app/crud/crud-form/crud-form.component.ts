@@ -10,7 +10,6 @@ import { FormType } from '../form.type';
 import { FormItem, FormItemType } from '../form.item';
 
 @Component({
-  selector: 'crud-form',
   templateUrl: './crud-form.component.html',
   styleUrls: ['./crud-form.component.css']
 })

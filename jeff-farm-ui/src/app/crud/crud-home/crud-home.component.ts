@@ -5,7 +5,6 @@ import { CrudService } from '../crud.service';
 import { CrudItem } from '../crud.item';
 
 @Component({
-  selector: 'crud-home',
   templateUrl: './crud-home.component.html',
 })
 export class CrudHomeComponent<T extends CrudItem> implements OnInit {

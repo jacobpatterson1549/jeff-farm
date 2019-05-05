@@ -7,7 +7,7 @@
   <p class="text-danger">This operation can not be undone.</p>
 </div>
 <div class="modal-footer">
-  <spinner [visible]="working"></spinner>
+  <app-spinner [visible]="working"></app-spinner>
   <button type="button" [disabled]="working" class="btn btn-outline-secondary" (click)="cancel()">Cancel</button>
   <button type="button" [disabled]="working" class="btn btn-primary" (click)="ok()">Ok</button>
 </div>

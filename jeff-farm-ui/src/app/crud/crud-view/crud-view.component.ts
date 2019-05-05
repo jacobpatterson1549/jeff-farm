@@ -8,7 +8,6 @@ import { FormItemType } from '../form.item';
 import { CrudDeleteComponent } from '../crud-delete/crud-delete.component';
 
 @Component({
-  selector: 'crud-view',
   templateUrl: './crud-view.component.html',
 })
 export class CrudViewComponent<T extends CrudItem> implements OnInit {

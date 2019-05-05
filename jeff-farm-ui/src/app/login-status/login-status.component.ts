@@ -7,7 +7,7 @@ import { LoginService } from '../login/login.service';
 
 @Component({
   providers: [UserService],
-  selector: 'login-status',
+  selector: 'app-login-status',
   templateUrl: './login-status.component.html',
   styleUrls: ['login-status.component.css']
 })

@@ -7,7 +7,6 @@ import { catchError } from 'rxjs/operators';
 import { LoginService } from './login.service';
 
 @Component({
-  selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
