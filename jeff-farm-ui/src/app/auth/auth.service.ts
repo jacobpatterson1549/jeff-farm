@@ -5,8 +5,8 @@ import { CachingService } from '../caching.service';
   providedIn: 'root'
 })
 export class AuthService {
-  
-  private readonly IS_LOGGED_IN_KEY : string = 'isLoggedIn';
+
+  private readonly IS_LOGGED_IN_KEY: string = 'isLoggedIn';
 
   constructor(
     private cachingService: CachingService) { }
@@ -23,6 +23,6 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     const isLoggedIn = localStorage.getItem(this.IS_LOGGED_IN_KEY);
-    return isLoggedIn == 'true';
+    return isLoggedIn === 'true';
   }
 }

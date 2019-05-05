@@ -29,13 +29,12 @@ export class ErrorMessagesService {
       let errorMessage: string = error.message;
 
       if (error instanceof HttpErrorResponse) {
-        let goToLogin: boolean = false;
-        if (error.status == 0) {
-          errorMessage = 'Server down'
+        let goToLogin = false;
+        if (error.status === 0) {
+          errorMessage = 'Server down';
           goToLogin = true;
-        }
-        else {
-          if (error.status == 403) {
+        } else {
+          if (error.status === 403) {
             goToLogin = true;
           }
           errorMessage = error.error;

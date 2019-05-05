@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   username: string;
   password: string;
-  working: boolean = false;
+  working = false;
 
   constructor(
     private titleService: Title,

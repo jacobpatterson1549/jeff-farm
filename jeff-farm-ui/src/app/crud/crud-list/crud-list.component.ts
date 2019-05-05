@@ -23,8 +23,8 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
   }
 
   ngOnInit() {
-    this.crudItemName = this.crudService.getSingularName()
-    this.titleService.setTitle(`${this.crudService.getPluralName()} List`)
+    this.crudItemName = this.crudService.getSingularName();
+    this.titleService.setTitle(`${this.crudService.getPluralName()} List`);
 
     this.getItems();
   }

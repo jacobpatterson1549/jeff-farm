@@ -13,7 +13,7 @@ export class CrudDeleteComponent<T extends CrudItem> {
 
   @Input() name: string;
   type: string;
-  working: boolean = false;
+  working = false;
 
   constructor(
     public modal: NgbActiveModal,
@@ -24,7 +24,7 @@ export class CrudDeleteComponent<T extends CrudItem> {
   }
 
   cancel() {
-    this.modal.dismiss()
+    this.modal.dismiss();
   }
 
   ok() {
@@ -40,7 +40,7 @@ export class CrudDeleteComponent<T extends CrudItem> {
         const lastSlashIndex: number = url.lastIndexOf('/');
         const parentUrl: string = url.substring(0, lastSlashIndex);
         this.router.navigateByUrl(parentUrl);
-        
+
         this.modal.close();
       });
   }

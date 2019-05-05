@@ -36,8 +36,8 @@ export abstract class CrudService<T extends CrudItem> {
     return pluralName.substring(0, pluralName.length - 1);
   }
 
-  post(t: T): Observable<Number> {
-    return this.http.post<Number>(this.getBaseUrl(), t)
+  post(t: T): Observable<number> {
+    return this.http.post<number>(this.getBaseUrl(), t)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('create')),
       );
@@ -61,7 +61,7 @@ export abstract class CrudService<T extends CrudItem> {
       );
   }
 
-  put(t: T): Observable<Object> {
+  put(t: T): Observable<object> {
     const url = this.getIdUrl();
     return this.http.put(url, t)
       .pipe(
@@ -69,7 +69,7 @@ export abstract class CrudService<T extends CrudItem> {
       );
   }
 
-  delete(): Observable<Object> {
+  delete(): Observable<object> {
     const url = this.getIdUrl();
     return this.http.delete(url)
       .pipe(

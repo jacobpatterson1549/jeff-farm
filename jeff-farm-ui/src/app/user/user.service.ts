@@ -41,7 +41,7 @@ export class UserService extends CrudService<User> {
     throw new Error('Not Allowed');
   }
 
-  delete(): Observable<Object> {
+  delete(): Observable<object> {
 
     return super.delete().pipe(tap(_ => this.loginService.logout()));
   }

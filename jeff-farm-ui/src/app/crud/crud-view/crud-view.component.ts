@@ -17,7 +17,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   displayFieldNames: string[];
   displayFormItemTypes: object;
   formItemType = FormItemType; // used for the ngSwitch in the template
-  canDelete: boolean = false;
+  canDelete = false;
   crudChildren: CrudChild[];
   crudItemSingularName: string;
 

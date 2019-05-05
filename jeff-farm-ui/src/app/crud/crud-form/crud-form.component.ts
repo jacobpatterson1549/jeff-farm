@@ -16,13 +16,13 @@ import { FormItem, FormItemType } from '../form.item';
 })
 export class CrudFormComponent<T extends CrudItem> implements OnInit {
 
-  crudItem: T
+  crudItem: T;
   formType: FormType;
   formItems: FormItem[];
   submitValue: string;
   formItemType = FormItemType; // used for the ngSwitch in the template
   passwordFormItems: FormItem[];
-  working: boolean = false;
+  working = false;
 
   constructor(
     private titleService: Title,
@@ -54,10 +54,10 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   }
 
   private initCrudItem(): Observable<any> {
-    if (this.formType == FormType.Create) {
+    if (this.formType === FormType.Create) {
       return of(this.crudItem = this.crudService.createCrudItem());
     }
-    if (this.formType == FormType.Update) {
+    if (this.formType === FormType.Update) {
       return this.crudService.get()
         .pipe(
           tap(crudItem => this.crudItem = crudItem),
@@ -69,9 +69,9 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
     this.formItems = this.crudItem.getFormItems();
 
     this.passwordFormItems = [];
-    for (var index = 0; index < this.formItems.length; index++) {
+    for (let index = 0; index < this.formItems.length; index++) {
       const formItem: FormItem = this.formItems[index];
-      if (formItem.type == FormItemType.Password) {
+      if (formItem.type === FormItemType.Password) {
         const formItem2: FormItem = new FormItem(formItem.name + ' (Verify)', formItem.type, formItem.value);
         index++;
         this.formItems.splice(index, 0, formItem2);
@@ -81,8 +81,8 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   }
 
   passwordsMatch(): boolean {
-    for (var index = 0; index < this.passwordFormItems.length; index += 2) {
-      if (this.passwordFormItems[index].value != this.passwordFormItems[index + 1].value) {
+    for (let index = 0; index < this.passwordFormItems.length; index += 2) {
+      if (this.passwordFormItems[index].value !== this.passwordFormItems[index + 1].value) {
         return false;
       }
     }
@@ -91,8 +91,8 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   }
 
   allValidStars(): boolean {
-    for (let formItem of this.formItems) {
-      if (formItem.type == FormItemType.Stars && this.validStars(formItem)) {
+    for (const formItem of this.formItems) {
+      if (formItem.type === FormItemType.Stars && this.validStars(formItem)) {
         return false;
       }
     }
@@ -100,31 +100,31 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   }
 
   validStars(formItem: FormItem) {
-    return !(formItem.value >= 1 && formItem.value <= 5)
+    return !(formItem.value >= 1 && formItem.value <= 5);
   }
 
   submitForm() {
-    for (let formItem of this.formItems) {
+    for (const formItem of this.formItems) {
       // exclude added passworditems
       const passwordFormItemIndex = this.passwordFormItems.indexOf(formItem);
-      if (passwordFormItemIndex < 0 || passwordFormItemIndex % 2 == 0) {
+      if (passwordFormItemIndex < 0 || passwordFormItemIndex % 2 === 0) {
         this.crudItem[formItem.name] = formItem.value;
       }
     }
 
-    if (this.formType == FormType.Create) {
+    if (this.formType === FormType.Create) {
       this.working = true;
       this.crudService.post(this.crudItem)
         .pipe(catchError((error: Error) => {
           this.working = false;
           throw error;
         }))
-        .subscribe((id: Number) => {
+        .subscribe((id: number) => {
           const relativeLocation: string = (this.route.data && !this.route.data['redirectToParent']) ? '..' : `../${id}`;
           this.router.navigate([relativeLocation], { relativeTo: this.route });
         });
     }
-    if (this.formType == FormType.Update) {
+    if (this.formType === FormType.Update) {
       this.working = true;
       this.crudService.put(this.crudItem)
         .pipe(catchError((error: Error) => {
