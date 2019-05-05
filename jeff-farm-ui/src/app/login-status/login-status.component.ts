@@ -23,7 +23,7 @@ export class LoginStatusComponent implements OnInit {
   ngOnInit() {
     this.userService.get()
       .subscribe(user => {
-        this.user = user
+        this.user = user;
       });
   }
 
