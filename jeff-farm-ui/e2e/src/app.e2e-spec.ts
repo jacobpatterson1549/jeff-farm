@@ -10,8 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getH1Text()).toEqual('Welcome to small!');
-    expect(page.getH1Text()).toEqual('Just Effective Farm Facilitation Login');
+    expect(page.getH1Text()).toEqual('Just Effective Farm Facilitation');
   });
 
   afterEach(async () => {
