@@ -1,11 +1,21 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { ErrorMessagesComponent } from './error-messages/error-messages.component';
+import { PageNotFoundComponent } from './page-not-found.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        ErrorMessagesComponent,
+        PageNotFoundComponent,
+      ],
+      imports: [
+        AppRoutingModule,
+        NgbModule,
       ],
     }).compileComponents();
   }));
@@ -16,16 +26,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'jeff-farm-ui'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('jeff-farm-ui');
-  });
-
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to jeff-farm-ui!');
+    expect(compiled.querySelector('h1').textContent).toEqual('Just Effective Farm Facilitation');
   });
 });
