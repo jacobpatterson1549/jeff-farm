@@ -1,6 +1,5 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import javax.json.bind.Jsonb;
@@ -58,13 +57,13 @@ public class FarmTest
 	}
 
 	@Test
-	public void testSerialize() throws IOException
+	public void testSerialize()
 	{
 		int id = 1;
 		String name = "name1";
 		String location = "location1";
 		Timestamp createdDate = Timestamp.from(Instant.now());
-		Timestamp modifiedDate = createdDate;
+		Timestamp modifiedDate = Timestamp.from(Instant.now());
 		Farm farm1 = new Farm()
 				.setId(id)
 				.setName(name)

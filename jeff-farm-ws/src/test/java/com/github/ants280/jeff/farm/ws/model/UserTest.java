@@ -1,6 +1,5 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-import java.io.IOException;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,13 +13,13 @@ public class UserTest
 	private Jsonb jsonb;
 	
 	@Before
-	public void setUp() throws Exception
+	public void setUp()
 	{
 		jsonb = JsonbBuilder.create();
 	}
 
 	@Test
-	public void testSerialize() throws IOException
+	public void testSerialize()
 	{
 		int id = 1996;
 		String userName = "daPrez";
@@ -45,7 +44,7 @@ public class UserTest
 	}
 	
 	@Test
-	public void testDeserialize_noPassword() throws IOException
+	public void testDeserialize_noPassword()
 	{
 		String serializedUser = "{\"id\":1996,\"userName\":\"daPrez\",\"firstName\":\"Bob\",\"lastName\":\"Dole\"}";
 
@@ -59,7 +58,7 @@ public class UserTest
 	}
 	
 	@Test
-	public void testDeserialize_passwordDeserialized() throws IOException
+	public void testDeserialize_passwordDeserialized()
 	{
 		String serializedUser = "{\"id\":1996,\"userName\":\"daPrez\",\"password\":\"crAAZYkat17\",\"firstName\":\"Bob\",\"lastName\":\"Dole\"}";
 

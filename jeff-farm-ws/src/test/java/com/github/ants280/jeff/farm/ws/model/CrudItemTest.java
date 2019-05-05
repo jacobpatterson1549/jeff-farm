@@ -1,6 +1,5 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import javax.json.bind.Jsonb;
@@ -17,7 +16,7 @@ public class CrudItemTest
 	private Jsonb jsonb;
 	
 	@Before
-	public void setUp() throws Exception
+	public void setUp()
 	{
 		jsonb = JsonbBuilder.create();
 	}
@@ -56,11 +55,11 @@ public class CrudItemTest
 	}
 
 	@Test
-	public void testSerialize() throws IOException
+	public void testSerialize()
 	{
 		int id = 1;
 		Timestamp createdDate = Timestamp.from(Instant.now());
-		Timestamp modifiedDate = createdDate;
+		Timestamp modifiedDate = Timestamp.from(Instant.now());
 		CrudItemImpl crudItem1 = new CrudItemImpl()
 				.setId(id)
 				.setCreatedTimestamp(createdDate)
@@ -74,7 +73,7 @@ public class CrudItemTest
 	}
 
 	@Test
-	public void testDeserialize_minimal() throws IOException
+	public void testDeserialize_minimal()
 	{
 		String serializedCrudItemImpl = "{\"id\":2}";
 
@@ -86,7 +85,7 @@ public class CrudItemTest
 	}
 
 	@Test
-	public void testDeserialize_full() throws IOException
+	public void testDeserialize_full()
 	{
 		String serializedCrudItemImpl = "{\"id\":3,\"createdDate\":\"Friday, March 1, 2019 2:18:33 PM PST\",\"modifiedDate\":\"Saturday, March 2, 2019 8:55:17 AM PST\"}";
 

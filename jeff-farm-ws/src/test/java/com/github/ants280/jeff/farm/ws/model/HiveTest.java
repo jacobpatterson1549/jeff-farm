@@ -1,6 +1,5 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-import java.io.IOException;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import static org.hamcrest.CoreMatchers.is;
@@ -15,7 +14,7 @@ public class HiveTest
 	private Jsonb jsonb;
 	
 	@Before
-	public void setUp() throws Exception
+	public void setUp()
 	{
 		jsonb = JsonbBuilder.create();
 	}
@@ -41,7 +40,7 @@ public class HiveTest
 	}
 	
 	@Test
-	public void testDeserialize_minimal() throws IOException
+	public void testDeserialize_minimal()
 	{
 		String serializedFarm = "{\"id\":2,\"farmId\":3,\"name\":\"name2\",\"queenColor\":\"#ff0000\"}";
 
@@ -56,7 +55,7 @@ public class HiveTest
 	}
 	
 	@Test(expected = Exception.class)
-	public void testDeserialize_colorWithoutPoundSign() throws IOException
+	public void testDeserialize_colorWithoutPoundSign()
 	{
 		String serializedFarm = "{\"queenColor\":\"00ff00\"}";
 
@@ -66,7 +65,7 @@ public class HiveTest
 	}
 	
 	@Test(expected = Exception.class)
-	public void testDeserialize_invalidColor_large() throws IOException
+	public void testDeserialize_invalidColor_large()
 	{
 		String serializedFarm = "{\"queenColor\":\"#1000000\"}";
 
@@ -76,7 +75,7 @@ public class HiveTest
 	}
 	
 	@Test(expected = Exception.class)
-	public void testDeserialize_invalidColor_small() throws IOException
+	public void testDeserialize_invalidColor_small()
 	{
 		String serializedFarm = "{\"queenColor\":\"#fff\"}";
 
@@ -86,7 +85,7 @@ public class HiveTest
 	}
 	
 	@Test(expected = Exception.class)
-	public void testDeserialize_invalidColor_badHex() throws IOException
+	public void testDeserialize_invalidColor_badHex()
 	{
 		String serializedFarm = "{\"queenColor\":\"#alfred\"}";
 
@@ -96,7 +95,7 @@ public class HiveTest
 	}
 	
 	@Test
-	public void testDeserialize_UPPERCASE_ok() throws IOException
+	public void testDeserialize_UPPERCASE_ok()
 	{
 		String serializedFarm = "{\"queenColor\":\"#FF0000\"}";
 
@@ -106,7 +105,7 @@ public class HiveTest
 	}
 	
 	@Test
-	public void testDeserialize_okProblemColor() throws IOException
+	public void testDeserialize_okProblemColor()
 	{
 		String serializedFarm = "{\"queenColor\":\"#90FAfa\"}";
 
