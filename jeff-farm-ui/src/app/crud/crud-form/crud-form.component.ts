@@ -119,8 +119,10 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
           throw error;
         }))
         .subscribe((id: number) => {
-          const relativeLocation: string = (this.route.data && !this.route.data['redirectToParent']) ? '..' : `../${id}`;
-          this.router.navigate([relativeLocation], { relativeTo: this.route });
+          this.route.data.subscribe(data => {
+            const relativeLocation: string = data.redirectToParent ? '..' : `../${id}`;
+            this.router.navigate([relativeLocation], { relativeTo: this.route });
+          });
         });
     }
     if (this.formType === FormType.Update) {
