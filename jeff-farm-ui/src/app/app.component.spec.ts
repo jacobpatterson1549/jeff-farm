@@ -1,21 +1,19 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ErrorMessagesComponent } from './error-messages/error-messages.component';
 import { PageNotFoundComponent } from './page-not-found.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ErrorMessagesModule } from './error-messages/error-messages.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        ErrorMessagesComponent,
         PageNotFoundComponent,
       ],
       imports: [
         AppRoutingModule,
-        NgbModule,
+        ErrorMessagesModule,
       ],
     }).compileComponents();
   }));
