@@ -11,7 +11,15 @@ app.get('/*', function (req, res) {
 });
 
 // Initialize the app.
-var server = app.listen(process.env.PORT || 8080, function () {
+var server = app.listen(process.env.PORT || 4200, function () {
     var port = server.address().port;
     console.log('App now running on port', port);
 });
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(function (req, res, next) {
+        return req.protocol === 'https'
+            ? next()
+            : res.redirect('https://' + req.headers.host + req.path);
+    });
+}
