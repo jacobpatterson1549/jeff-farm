@@ -12,7 +12,7 @@ import javax.inject.Singleton;
 import javax.sql.DataSource;
 
 @Singleton
-public class FarmDao extends SqlFunctionDao implements CrudDao<Farm>
+public class FarmDao extends SqlFunctionDao implements CrudItemDao<Farm>
 {
 	private final LoginDao loginDao;
 

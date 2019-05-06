@@ -5,6 +5,8 @@ import com.github.ants280.jeff.farm.ws.dao.FarmDao;
 import com.github.ants280.jeff.farm.ws.dao.HiveDao;
 import com.github.ants280.jeff.farm.ws.dao.HiveInspectionDao;
 import com.github.ants280.jeff.farm.ws.dao.LoginDao;
+import com.github.ants280.jeff.farm.ws.dao.PoultryDao;
+import com.github.ants280.jeff.farm.ws.dao.PoultryInspectionDao;
 import com.github.ants280.jeff.farm.ws.dao.UserDao;
 import javax.inject.Singleton;
 import javax.naming.Context;
@@ -26,6 +28,8 @@ public class InjectionBinder extends AbstractBinder
 		bindAsSingleton(FarmDao.class);
 		bindAsSingleton(HiveDao.class);
 		bindAsSingleton(HiveInspectionDao.class);
+		bindAsSingleton(PoultryDao.class);
+		bindAsSingleton(PoultryInspectionDao.class);
 	}
 
 	private <T> void bindAsSingleton(Class<T> singletonClass)

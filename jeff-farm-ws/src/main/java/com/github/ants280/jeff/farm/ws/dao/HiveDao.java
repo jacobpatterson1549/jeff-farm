@@ -12,7 +12,7 @@ import javax.inject.Singleton;
 import javax.sql.DataSource;
 
 @Singleton
-public class HiveDao extends SqlFunctionDao implements CrudDao<Hive>
+public class HiveDao extends SqlFunctionDao implements CrudItemDao<Hive>
 {
 	private final LoginDao loginDao;
 

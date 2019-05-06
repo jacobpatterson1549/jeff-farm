@@ -13,7 +13,7 @@ import javax.inject.Singleton;
 import javax.sql.DataSource;
 
 @Singleton
-public class UserDao extends SqlFunctionDao implements CrudDao<User>
+public class UserDao extends SqlFunctionDao implements CrudItemDao<User>
 {
 	private final PasswordGenerator passwordGenerator;
 
