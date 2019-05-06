@@ -7,17 +7,17 @@ import java.util.List;
 
 public interface CrudDao<T extends CrudItem>
 {
-	public int create(T entity);
+	 int create(T entity);
 
-	public T read(int id);
+	 T read(int id);
 	
-	public List<T> readList(int parentId);
+	 List<T> readList(int parentId);
 
-	public void update(int id, T entity);
+	 void update(int id, T entity);
 
-	public void delete(int id);
+	 void delete(int id);
 	
-	public boolean canDelete(int id);
+	 boolean canDelete(int id);
 
-	public T mapRow(ResultSet rs) throws SQLException;
+	 T mapRow(ResultSet rs) throws SQLException;
 }
