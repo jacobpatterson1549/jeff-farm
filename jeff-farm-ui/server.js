@@ -5,9 +5,9 @@ var app = express();
 
 // Serve only the static files form the dist directory
 var app_name = 'jeff-farm-ui'
-app.use(express.static(__dirname + '/dist/' + app_name));
+app.use(express.static(path.join(__dirname, 'dist', app_name)));
 app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname + '/dist/' + app_name + '/index.html'));
+    res.sendFile(path.join(__dirname, 'dist', app_name, 'index.html'));
 });
 
 // Initialize the app.
