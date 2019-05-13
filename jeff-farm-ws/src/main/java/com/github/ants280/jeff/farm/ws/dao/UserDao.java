@@ -13,7 +13,7 @@ import javax.inject.Singleton;
 import javax.sql.DataSource;
 
 @Singleton
-public class UserDao extends SqlFunctionDao implements CrudItemDao<User>
+public class UserDao extends CrudItemDao<User>
 {
 	private final PasswordGenerator passwordGenerator;
 
@@ -38,8 +38,7 @@ public class UserDao extends SqlFunctionDao implements CrudItemDao<User>
 						new SqlFunctionParameter<>(User.PASSWORD_COLUMN, password, Types.CHAR),
 						new SqlFunctionParameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
 						new SqlFunctionParameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)),
-				User.ID_COLUMN,
-				-1); // (registered users cannot create users)
+			-1); // (registered users cannot create users)
 	}
 
 	@Override

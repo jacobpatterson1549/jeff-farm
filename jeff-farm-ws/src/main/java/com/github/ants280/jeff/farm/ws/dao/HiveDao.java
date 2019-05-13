@@ -12,7 +12,7 @@ import javax.inject.Singleton;
 import javax.sql.DataSource;
 
 @Singleton
-public class HiveDao extends SqlFunctionDao implements CrudItemDao<Hive>
+public class HiveDao extends CrudItemDao<Hive>
 {
 	private final LoginDao loginDao;
 
@@ -32,8 +32,7 @@ public class HiveDao extends SqlFunctionDao implements CrudItemDao<Hive>
 						new SqlFunctionParameter<>(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
 						new SqlFunctionParameter<>(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
 						new SqlFunctionParameter<>(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.INTEGER)),
-				Hive.ID_COLUMN,
-				loginDao.getUserId());
+			loginDao.getUserId());
 	}
 
 	@Override
@@ -81,7 +80,7 @@ public class HiveDao extends SqlFunctionDao implements CrudItemDao<Hive>
 	@Override
 	public boolean canDelete(int id)
 	{
-		return this.executeReadBoolean("can_delete_hive",
+		return this.canDelete("can_delete_hive",
 				Collections.singletonList(
 						new SqlFunctionParameter<>(Hive.ID_COLUMN, id, Types.INTEGER)),
 				Hive.CAN_DELETE_ITEM);

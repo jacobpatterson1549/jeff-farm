@@ -6,4 +6,6 @@ import java.sql.SQLException;
 public interface RowMapper<T>
 {
 	T getValue(ResultSet rs) throws SQLException;
+
+
 }

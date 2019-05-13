@@ -12,7 +12,7 @@ import javax.inject.Singleton;
 import javax.sql.DataSource;
 
 @Singleton
-public class FarmDao extends SqlFunctionDao implements CrudItemDao<Farm>
+public class FarmDao extends CrudItemDao<Farm>
 {
 	private final LoginDao loginDao;
 
@@ -31,8 +31,7 @@ public class FarmDao extends SqlFunctionDao implements CrudItemDao<Farm>
 				Arrays.asList(
 						new SqlFunctionParameter<>(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
 						new SqlFunctionParameter<>(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)),
-				Farm.ID_COLUMN,
-				loginDao.getUserId());
+			loginDao.getUserId());
 	}
 
 	@Override
@@ -79,7 +78,7 @@ public class FarmDao extends SqlFunctionDao implements CrudItemDao<Farm>
 	@Override
 	public boolean canDelete(int id)
 	{
-		return this.executeReadBoolean("can_delete_farm",
+		return this.canDelete("can_delete_farm",
 				Collections.singletonList(
 						new SqlFunctionParameter<>(Farm.ID_COLUMN, id, Types.INTEGER)),
 				Farm.CAN_DELETE_ITEM);

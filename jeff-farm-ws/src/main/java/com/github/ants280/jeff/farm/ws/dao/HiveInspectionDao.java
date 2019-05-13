@@ -12,7 +12,7 @@ import javax.inject.Singleton;
 import javax.sql.DataSource;
 
 @Singleton
-public class HiveInspectionDao extends SqlFunctionDao implements CrudItemDao<HiveInspection>
+public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 {
 	private final LoginDao loginDao;
 
@@ -44,8 +44,7 @@ public class HiveInspectionDao extends SqlFunctionDao implements CrudItemDao<Hiv
 						new SqlFunctionParameter<>(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather(), Types.VARCHAR),
 						new SqlFunctionParameter<>(HiveInspection.TEMPERATURE_F_COLUMN, hiveInspection.getTemperatureF(), Types.INTEGER),
 						new SqlFunctionParameter<>(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph(), Types.INTEGER)),
-				HiveInspection.ID_COLUMN,
-				loginDao.getUserId());
+			loginDao.getUserId());
 	}
 
 	@Override
