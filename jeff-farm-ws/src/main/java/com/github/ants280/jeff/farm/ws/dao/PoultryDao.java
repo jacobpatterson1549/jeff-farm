@@ -39,8 +39,7 @@ public class PoultryDao extends CrudItemDao<Poultry>
 		return this.executeRead(
 			"read_poultry",
 			Collections.singletonList(
-				new SqlFunctionParameter<>(Poultry.ID_COLUMN, id, Types.INTEGER)),
-			this::mapRow);
+				new SqlFunctionParameter<>(Poultry.ID_COLUMN, id, Types.INTEGER)));
 	}
 
 	@Override
@@ -48,8 +47,7 @@ public class PoultryDao extends CrudItemDao<Poultry>
 	{
 		return this.executeReadList(
 			"read_poultrys",
-			Collections.emptyList(),
-			this::mapRow);
+			Collections.emptyList());
 	}
 
 	@Override

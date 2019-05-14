@@ -41,8 +41,7 @@ public class HiveDao extends CrudItemDao<Hive>
 		return this.executeRead(
 				"read_hive",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(Hive.ID_COLUMN, id, Types.INTEGER)),
-				this::mapRow);
+						new SqlFunctionParameter<>(Hive.ID_COLUMN, id, Types.INTEGER)));
 	}
 
 	@Override
@@ -51,8 +50,7 @@ public class HiveDao extends CrudItemDao<Hive>
 		return this.executeReadList(
 				"read_hives",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(Hive.FARM_ID_COLUMN, parentId, Types.INTEGER)),
-				this::mapRow);
+						new SqlFunctionParameter<>(Hive.FARM_ID_COLUMN, parentId, Types.INTEGER)));
 	}
 
 	@Override

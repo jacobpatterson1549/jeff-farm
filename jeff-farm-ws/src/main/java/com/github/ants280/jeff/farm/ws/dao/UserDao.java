@@ -47,8 +47,7 @@ public class UserDao extends CrudItemDao<User>
 		return this.executeRead(
 				"read_user",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(User.ID_COLUMN, id, Types.INTEGER)),
-				this::mapRow);
+						new SqlFunctionParameter<>(User.ID_COLUMN, id, Types.INTEGER)));
 	}
 
 	public User read(String userName)
@@ -56,8 +55,7 @@ public class UserDao extends CrudItemDao<User>
 		return this.executeRead(
 				"read_user_from_user_name",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(User.USER_NAME_COLUMN, userName, Types.VARCHAR)),
-				this::mapRow);
+						new SqlFunctionParameter<>(User.USER_NAME_COLUMN, userName, Types.VARCHAR)));
 	}
 
 	@Override

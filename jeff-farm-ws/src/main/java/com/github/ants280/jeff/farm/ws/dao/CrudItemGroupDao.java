@@ -51,36 +51,30 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 
 	protected T executeRead(
 		String functionName,
-		List<SqlFunctionParameter> inParameters,
-		RowMapper<T> groupRowMapper,
-		RowMapper<V> itemRowMapper,
-		Function<V, Integer> groupIdMappingFunction)
+		List<SqlFunctionParameter> inParameters, Function<V, Integer> groupIdMappingFunction)
 	{
 		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(
 			functionName,
 			inParameters,
 			new CrudItemGroupResultSetTransformer<>(
 				true,
-				groupRowMapper,
-				itemRowMapper,
+				this::mapGroup,
+				this::mapItem,
 		groupIdMappingFunction));
 		return this.execute(null, functionCall).get(0);
 	}
 
 	protected List<T> executeReadList(
 		String functionName,
-		List<SqlFunctionParameter> inParameters,
-		RowMapper<T> groupRowMapper,
-		RowMapper<V> itemRowMapper,
-		Function<V, Integer> groupIdMappingFunction)
+		List<SqlFunctionParameter> inParameters, Function<V, Integer> groupIdMappingFunction)
 	{
 		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(
 			functionName,
 			inParameters,
 			new CrudItemGroupResultSetTransformer<>(
 				false,
-				groupRowMapper,
-				itemRowMapper,
+				this::mapGroup,
+				this::mapItem,
 				groupIdMappingFunction));
 		return this.execute(null, functionCall);
 	}

@@ -42,26 +42,22 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 	}
 
 	protected T executeRead(
-		String functionName,
-		List<SqlFunctionParameter> inParameters,
-		RowMapper<T> rowMapper) // TODO : remove this parameter.  Replace in other parts with this::mapRow  Also, do in CrudItemGroupDao.
+		String functionName, List<SqlFunctionParameter> inParameters)
 	{
 		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(
 			functionName,
 			inParameters,
-			new SimpleResultSetTransformer<>(true, rowMapper));
+			new SimpleResultSetTransformer<>(true, this::mapRow));
 		return this.executeSingle(null, functionCall);
 	}
 
 	protected List<T> executeReadList(
-		String functionName,
-		List<SqlFunctionParameter> inParameters,
-		RowMapper<T> rowMapper)
+		String functionName, List<SqlFunctionParameter> inParameters)
 	{
 		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(
 			functionName,
 			inParameters,
-			new SimpleResultSetTransformer<>(false, rowMapper));
+			new SimpleResultSetTransformer<>(false, this::mapRow));
 		return this.execute(null, functionCall);
 	}
 

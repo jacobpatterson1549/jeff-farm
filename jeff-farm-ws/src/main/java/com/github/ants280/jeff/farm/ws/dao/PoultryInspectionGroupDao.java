@@ -56,10 +56,7 @@ public class PoultryInspectionGroupDao
 			Collections.singletonList(new SqlFunctionParameter<>(
 				PoultryInspection.ID_COLUMN,
 				id,
-				Types.INTEGER)),
-			this::mapGroup,
-			this::mapItem,
-			PoultryInspection::getPoultryInspectionGroupId);
+				Types.INTEGER)), PoultryInspection::getPoultryInspectionGroupId);
 	}
 
 	@Override
@@ -69,10 +66,7 @@ public class PoultryInspectionGroupDao
 			Collections.singletonList(new SqlFunctionParameter<>(
 				PoultryInspection.POULDRY_INSPECTION_GROUP_ID_COLUMN,
 				parentId,
-				Types.INTEGER)),
-			this::mapGroup,
-			this::mapItem,
-			PoultryInspection::getPoultryInspectionGroupId);
+				Types.INTEGER)), PoultryInspection::getPoultryInspectionGroupId);
 	}
 
 	@Override

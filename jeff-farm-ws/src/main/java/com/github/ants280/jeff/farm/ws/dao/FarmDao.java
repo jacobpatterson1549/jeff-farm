@@ -40,8 +40,7 @@ public class FarmDao extends CrudItemDao<Farm>
 		return this.executeRead(
 				"read_farm",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(Farm.ID_COLUMN, id, Types.INTEGER)),
-				this::mapRow);
+						new SqlFunctionParameter<>(Farm.ID_COLUMN, id, Types.INTEGER)));
 	}
 
 	@Override
@@ -49,8 +48,7 @@ public class FarmDao extends CrudItemDao<Farm>
 	{
 		return this.executeReadList(
 				"read_farms",
-				Collections.emptyList(),
-				this::mapRow);
+				Collections.emptyList());
 	}
 
 	@Override
