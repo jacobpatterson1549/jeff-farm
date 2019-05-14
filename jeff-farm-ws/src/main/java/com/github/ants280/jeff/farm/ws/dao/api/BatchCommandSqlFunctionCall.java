@@ -2,6 +2,7 @@ package com.github.ants280.jeff.farm.ws.dao.api;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 public class BatchCommandSqlFunctionCall<T> extends SqlFunctionCall<T>
@@ -52,6 +53,6 @@ public class BatchCommandSqlFunctionCall<T> extends SqlFunctionCall<T>
 			}
 		}
 
-		return null;
+		return Collections.emptyList();
 	}
 }

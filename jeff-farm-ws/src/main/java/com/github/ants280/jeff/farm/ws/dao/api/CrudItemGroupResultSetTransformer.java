@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
 public class CrudItemGroupResultSetTransformer<V extends CrudItem, T extends CrudItemGroup<V, T>>
@@ -17,7 +18,7 @@ public class CrudItemGroupResultSetTransformer<V extends CrudItem, T extends Cru
 	private final boolean expectSingleRecord;
 	private final RowMapper<T> crudItemGroupRowMapper;
 	private final RowMapper<V> crudItemRowMapper;
-	private final Function<V, Integer> groupIdMappingFunction;
+	private final ToIntFunction<V> groupIdMappingFunction;
 	private final List<T> crudItemGroups;
 	private final List<V> crudItems;
 	private int resultSetsTransformed;
@@ -26,7 +27,7 @@ public class CrudItemGroupResultSetTransformer<V extends CrudItem, T extends Cru
 		boolean expectSingleRecord,
 		RowMapper<T> crudItemGroupRowMapper,
 		RowMapper<V> crudItemRowMapper,
-		Function<V, Integer> groupIdMappingFunction)
+		ToIntFunction<V> groupIdMappingFunction)
 	{
 		this.expectSingleRecord = expectSingleRecord;
 		this.crudItemGroupRowMapper = crudItemGroupRowMapper;
@@ -80,7 +81,7 @@ public class CrudItemGroupResultSetTransformer<V extends CrudItem, T extends Cru
 			.collect(Collectors.toMap(CrudItemGroup::getId,
 				Function.identity()));
 		Map<Integer, List<V>> crudItemsByGroupId = crudItems.stream()
-			.collect(Collectors.groupingBy(groupIdMappingFunction));
+			.collect(Collectors.groupingBy((Function<V, Integer>) groupIdMappingFunction));
 		if (crudItemGroups.size() != crudItemsByGroupId.size()
 			|| crudItemGroupsById.keySet()
 			.containsAll(crudItemsByGroupId.keySet()))

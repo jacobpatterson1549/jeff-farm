@@ -5,7 +5,7 @@ import com.github.ants280.jeff.farm.ws.model.CrudItemGroup;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.ToIntFunction;
 import javax.sql.DataSource;
 
 // TODO: is it possible to use better generics?  It is annoying to have to put the V param first...
@@ -51,7 +51,8 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 
 	protected T executeRead(
 		String functionName,
-		List<SqlFunctionParameter> inParameters, Function<V, Integer> groupIdMappingFunction)
+		List<SqlFunctionParameter> inParameters,
+		ToIntFunction<V> groupIdMappingFunction)
 	{
 		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(
 			functionName,
@@ -66,7 +67,8 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 
 	protected List<T> executeReadList(
 		String functionName,
-		List<SqlFunctionParameter> inParameters, Function<V, Integer> groupIdMappingFunction)
+		List<SqlFunctionParameter> inParameters,
+		ToIntFunction<V> groupIdMappingFunction)
 	{
 		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(
 			functionName,
