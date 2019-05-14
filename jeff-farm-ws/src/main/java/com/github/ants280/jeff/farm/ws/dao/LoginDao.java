@@ -15,13 +15,13 @@ public class LoginDao
 {
 	private static final String USER_ID_SESSION_ATTRIBUTE = "userId";
 	private final UserDao userDao;
-	@Context
-	private HttpServletRequest request;
+	private final HttpServletRequest request;
 
 	@Inject
-	public LoginDao(UserDao userDao)
+	public LoginDao(UserDao userDao, @Context HttpServletRequest request)
 	{
 		this.userDao = userDao;
+		this.request = request;
 	}
 
 	public void login(User user) throws ServletException
