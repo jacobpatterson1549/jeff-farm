@@ -2,8 +2,7 @@ package com.github.ants280.jeff.farm.ws.model;
 
 public class PoultryInspection extends CrudItem<PoultryInspection>
 {
-	public static final String
-		POULDRY_INSPECTION_GROUP_ID_COLUMN
+	public static final String POULTRY_INSPECTION_GROUP_ID_COLUMN
 		= "poultry_inspection_group_id";
 	public static final String POULTRY_ID_COLUMN = "poultry_id";
 	public static final String BIRD_COUNT_COLUMN = "bird_count";

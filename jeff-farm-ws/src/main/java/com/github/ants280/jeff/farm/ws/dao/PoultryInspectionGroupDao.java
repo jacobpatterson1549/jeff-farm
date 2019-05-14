@@ -68,7 +68,7 @@ public class PoultryInspectionGroupDao
 	{
 		return this.executeReadList("read_poultry_inspection_groups",
 			Collections.singletonList(new IntegerSqlFunctionParameter(
-				PoultryInspection.POULDRY_INSPECTION_GROUP_ID_COLUMN,
+				PoultryInspection.POULTRY_INSPECTION_GROUP_ID_COLUMN,
 				parentId)),
 			PoultryInspection::getPoultryInspectionGroupId);
 	}
