@@ -1,5 +1,5 @@
 -- DROP TABLE users_audit;
--- SELECT  * FROM users_audit LIMIT 0;
+-- SELECT * FROM users_audit LIMIT 0;
 -- 
 CREATE TABLE IF NOT EXISTS users_audit
 	( audit_id SERIAL PRIMARY KEY

@@ -1,5 +1,5 @@
 -- DROP TABLE hive_inspections_audit;
--- SELECT  * FROM hive_inspections_audit LIMIT 0;
+-- SELECT * FROM hive_inspections_audit LIMIT 0;
 -- 
 CREATE TABLE IF NOT EXISTS hive_inspections_audit
 	( audit_id SERIAL PRIMARY KEY
