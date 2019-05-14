@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
+import com.github.ants280.jeff.farm.ws.dao.api.SqlDaoException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

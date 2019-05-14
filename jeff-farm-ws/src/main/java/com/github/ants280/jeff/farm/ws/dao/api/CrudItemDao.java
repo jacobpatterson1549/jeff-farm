@@ -1,4 +1,4 @@
-package com.github.ants280.jeff.farm.ws.dao;
+package com.github.ants280.jeff.farm.ws.dao.api;
 
 import com.github.ants280.jeff.farm.ws.model.CrudItem;
 import java.sql.ResultSet;

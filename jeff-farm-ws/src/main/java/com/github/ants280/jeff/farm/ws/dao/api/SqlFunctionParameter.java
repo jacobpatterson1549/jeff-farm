@@ -1,4 +1,4 @@
-package com.github.ants280.jeff.farm.ws.dao;
+package com.github.ants280.jeff.farm.ws.dao.api;
 
 public class SqlFunctionParameter<T>
 {
