@@ -30,7 +30,8 @@ public class PoultryDao extends CrudItemDao<Poultry>
 	{
 		return this.executeCreate(
 			"create_poultry",
-			Collections.singletonList(
+			Arrays.asList(
+				new IntegerSqlFunctionParameter(Poultry.FARM_ID_COLUMN, poultry.getFarmId()),
 				new StringSqlFunctionParameter(Poultry.NAME_COLUMN, poultry.getName())),
 			loginDao.getUserId());
 	}
@@ -59,6 +60,7 @@ public class PoultryDao extends CrudItemDao<Poultry>
 			"update_poultry",
 			Arrays.asList(
 				new IntegerSqlFunctionParameter(Poultry.ID_COLUMN, id),
+				new IntegerSqlFunctionParameter(Poultry.FARM_ID_COLUMN, poultry.getFarmId()),
 				new StringSqlFunctionParameter(Poultry.NAME_COLUMN, poultry.getName())),
 			loginDao.getUserId());
 	}
@@ -87,6 +89,7 @@ public class PoultryDao extends CrudItemDao<Poultry>
 	{
 		return new Poultry()
 			.setId(rs.getInt(Poultry.ID_COLUMN))
+			.setFarmId(rs.getInt(Poultry.FARM_ID_COLUMN))
 			.setName(rs.getString(Poultry.NAME_COLUMN))
 			.setCreatedTimestamp(rs.getTimestamp(Poultry.CREATED_DATE_COLUMN))
 			.setModifiedTimestamp(rs.getTimestamp(Poultry.MODIFIED_DATE_COLUMN));

@@ -18,9 +18,10 @@ public class Poultry extends CrudItem<Poultry>
 		return farmId;
 	}
 
-	public void setFarmId(int farmId)
+	public Poultry setFarmId(int farmId)
 	{
 		this.farmId = farmId;
+		return this;
 	}
 
 	public String getName()
