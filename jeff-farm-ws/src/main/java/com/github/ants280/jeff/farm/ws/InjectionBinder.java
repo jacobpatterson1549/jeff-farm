@@ -29,6 +29,7 @@ public class InjectionBinder extends AbstractBinder
 		bindAsSingleton(HiveDao.class);
 		bindAsSingleton(HiveInspectionDao.class);
 		bindAsSingleton(PoultryDao.class);
+		bindAsSingleton(PoultryDao.class);
 		bindAsSingleton(PoultryInspectionGroupDao.class);
 	}
 
