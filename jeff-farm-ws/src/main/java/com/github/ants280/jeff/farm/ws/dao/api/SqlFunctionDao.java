@@ -29,7 +29,14 @@ public class SqlFunctionDao
 		Integer userId,
 		SqlFunctionCall<T>... functionCalls)
 	{
-		return this.execute0(userId, functionCalls).get(0);
+		List<T> results = this.execute0(userId, functionCalls);
+		if (results == null || results.size() != 1)
+		{
+			throw new SqlDaoException(String.format(
+				"Not one result.  Got %d",
+				results == null ? null : results.size()));
+		}
+		return results.get(0);
 	}
 
 	@SafeVarargs
