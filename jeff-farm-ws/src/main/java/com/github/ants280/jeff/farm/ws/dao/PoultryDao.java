@@ -49,7 +49,7 @@ public class PoultryDao extends CrudItemDao<Poultry>
 	public List<Poultry> readList(int parentId)
 	{
 		return this.executeReadList(
-			"read_poultry",
+			"read_poultry_list",
 			Collections.emptyList());
 	}
 
