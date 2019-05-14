@@ -18,12 +18,41 @@ public class SqlFunctionDao
 		this.dataSource = dataSource;
 	}
 
-	protected <T> List<T> execute(
-		SqlFunctionCall<T> functionCall, final Integer userId)
+	protected final <T> List<T> execute(
+		Integer userId,
+		SqlFunctionCall<T> functionCall)
+	{
+		return this.execute0(userId, functionCall);
+	}
+
+	@SafeVarargs
+	protected final <T> T executeSingle(
+		Integer userId,
+		SqlFunctionCall<T>... functionCalls)
+	{
+		return this.execute0(userId, functionCalls).get(0);
+	}
+
+	@SafeVarargs
+	protected final <T> void executeUpdate(
+		Integer userId,
+		SqlFunctionCall<T>... functionCalls)
+	{
+		if (functionCalls == null || functionCalls.length == 0)
+		{
+			throw new SqlDaoException("No function calls specified");
+		}
+		this.execute0(userId, functionCalls);
+	}
+
+	@SafeVarargs
+	private final <T> List<T> execute0(
+		Integer userId,
+		SqlFunctionCall<T>... functionCalls)
 	{
 		try (Connection connection = dataSource.getConnection())
 		{
-			return execute(connection, functionCall, userId);
+			return execute(connection, userId, functionCalls);
 		}
 		catch (SQLException ex)
 		{
@@ -32,7 +61,8 @@ public class SqlFunctionDao
 	}
 
 	private <T> List<T> execute(
-		Connection connection, SqlFunctionCall<T> functionCall, Integer userId)
+		Connection connection, Integer userId,
+		SqlFunctionCall<T>[] functionCalls)
 		throws SQLException
 	{
 		try
@@ -43,7 +73,7 @@ public class SqlFunctionDao
 				this.setUserId(userId, connection);
 			}
 
-			return this.execute(connection, functionCall);
+			return this.execute(connection, functionCalls);
 		}
 		catch (SQLException ex)
 		{
@@ -63,10 +93,32 @@ public class SqlFunctionDao
 	}
 
 	private <T> List<T> execute(
+		Connection connection, SqlFunctionCall<T>[] sqlFunctionCalls)
+		throws SQLException
+	{
+		if (sqlFunctionCalls.length == 1)
+		{
+			return this.execute(connection, sqlFunctionCalls[0]);
+		}
+
+		// Be lazy, return value from first function call.
+		// This is that is needed for inserting CrudItemGroups
+		List<T> firstResult = null;
+		for (int i = 0; i < sqlFunctionCalls.length; i++)
+		{
+			List<T> result = this.execute(connection, sqlFunctionCalls[i]);
+			if (i == 0)
+			{
+				firstResult = result;
+			}
+		}
+		return firstResult;
+	}
+
+	private <T> List<T> execute(
 		Connection connection, SqlFunctionCall<T> sqlFunctionCall)
 		throws SQLException
 	{
-
 		String sql = sqlFunctionCall.getFunctionCallSql();
 		try (CallableStatement callableStatement = connection.prepareCall(sql))
 		{
@@ -79,14 +131,16 @@ public class SqlFunctionDao
 	private void setUserId(int userId, Connection connection)
 		throws SQLException
 	{
-		SqlFunctionParameter<Integer> userIdParameter
+		SqlFunctionParameter<Integer>
+			userIdParameter
 			= new SqlFunctionParameter<>("id", userId, Types.INTEGER);
-		SqlFunctionCall<Integer> sqlFunctionCall
-			= new SingleCommandSqlFunctionCall<>(
-				SET_USER_ID_FUNCTION_NAME,
-				Collections.singletonList(userIdParameter),
-				new SimpleResultSetTransformer<>(
-					true, resultSet -> resultSet.getInt(SET_USER_ID_FUNCTION_NAME)));
+		SqlFunctionCall<Integer>
+			sqlFunctionCall
+			= new SingleCommandSqlFunctionCall<>(SET_USER_ID_FUNCTION_NAME,
+			Collections.singletonList(userIdParameter),
+			new SimpleResultSetTransformer<>(
+				true,
+				resultSet -> resultSet.getInt(SET_USER_ID_FUNCTION_NAME)));
 		Integer setUserId = this.execute(connection, sqlFunctionCall).get(0);
 
 		if (setUserId == null || setUserId != userId)

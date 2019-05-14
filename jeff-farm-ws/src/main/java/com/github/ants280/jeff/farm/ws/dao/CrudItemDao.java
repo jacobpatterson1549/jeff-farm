@@ -38,19 +38,19 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 			new SimpleResultSetTransformer<>(
 				true,
 				resultSet -> resultSet.getInt(CrudItem.ID_COLUMN)));
-		return this.execute(functionCall, userId).get(0);
+		return this.execute(userId, functionCall).get(0);
 	}
 
 	protected T executeRead(
 		String functionName,
 		List<SqlFunctionParameter> inParameters,
-		RowMapper<T> rowMapper)
+		RowMapper<T> rowMapper) // TODO : remove this parameter.  Replace in other parts with this::mapRow  Also, do in CrudItemGroupDao.
 	{
 		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(
 			functionName,
 			inParameters,
-			new SimpleResultSetTransformer<>(false, rowMapper));
-		return this.execute(functionCall, null).get(0);
+			new SimpleResultSetTransformer<>(true, rowMapper));
+		return this.executeSingle(null, functionCall);
 	}
 
 	protected List<T> executeReadList(
@@ -62,7 +62,7 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 			functionName,
 			inParameters,
 			new SimpleResultSetTransformer<>(false, rowMapper));
-		return this.execute(functionCall, null);
+		return this.execute(null, functionCall);
 	}
 
 	protected void executeUpdate( // and delete
@@ -70,11 +70,11 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 		List<SqlFunctionParameter> inParameters,
 		int userId)
 	{
-		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(
+		SqlFunctionCall<Void> functionCall = new SingleCommandSqlFunctionCall<>(
 			functionName,
 			inParameters,
-			new SimpleResultSetTransformer<>(false, null)); // TODO: should expectSingleRecord be false here?
-		this.execute(functionCall, userId); // TODO: should this be checked? (also in crudItemGroupDao update & delete
+			new SimpleResultSetTransformer<>(false, null));
+		this.executeUpdate(userId, functionCall);
 	}
 
 	protected boolean canDelete(
@@ -88,6 +88,6 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 			new SimpleResultSetTransformer<>(
 				true,
 				resultSet -> resultSet.getBoolean(outParameterName)));
-		return this.execute(functionCall, null).get(0);
+		return this.executeSingle(null, functionCall);
 	}
 }
