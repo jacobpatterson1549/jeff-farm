@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 
 public class SqlFunctionDao
 {
-	private static final String SET_USER_ID_FUNCTION_NAME = "set_user_id";
+	public static final String SET_USER_ID_FUNCTION_NAME = "set_user_id";
 	private final DataSource dataSource;
 
 	public SqlFunctionDao(DataSource dataSource)
@@ -57,6 +57,10 @@ public class SqlFunctionDao
 	private final <T> List<T> execute0(
 		Integer userId, SqlFunctionCall<T>... functionCalls)
 	{
+		if (functionCalls == null || functionCalls.length == 0)
+		{
+			throw new SqlDaoException("No function calls to execute.");
+		}
 		try (Connection connection = dataSource.getConnection())
 		{
 			return execute(connection, userId, functionCalls);
