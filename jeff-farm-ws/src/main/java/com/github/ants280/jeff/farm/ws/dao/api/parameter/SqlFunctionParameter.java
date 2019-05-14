@@ -9,7 +9,10 @@ public abstract class SqlFunctionParameter<T> // TODO: it would be nice if this 
 	private final T value;
 	private final PreparedStatementIndexSetter<T> preparedStatementIndexSetter;
 
-	protected SqlFunctionParameter(String name, T value, PreparedStatementIndexSetter<T> preparedStatementIndexSetter)
+	protected SqlFunctionParameter(
+		String name,
+		T value,
+		PreparedStatementIndexSetter<T> preparedStatementIndexSetter)
 	{
 		this.name = name;
 		this.value = value;
@@ -24,7 +27,10 @@ public abstract class SqlFunctionParameter<T> // TODO: it would be nice if this 
 	public void setValue(PreparedStatement preparedStatement, int index)
 		throws SQLException
 	{
-		preparedStatementIndexSetter.setAtIndex(preparedStatement, index, value);
+		preparedStatementIndexSetter.setAtIndex(
+			preparedStatement,
+			index,
+			value);
 	}
 
 	@Override

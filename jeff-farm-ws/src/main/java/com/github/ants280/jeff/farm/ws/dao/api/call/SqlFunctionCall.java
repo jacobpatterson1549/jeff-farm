@@ -19,7 +19,8 @@ public abstract class SqlFunctionCall<T>
 
 	public String getFunctionCallSql()
 	{
-		return String.format("SELECT * FROM %s(%s)",
+		return String.format(
+			"SELECT * FROM %s(%s)", // TODO: should this not SELECT if void is return value?
 			functionCallSql,
 			String.join(", ", Collections.nCopies(numParameters, "?")));
 	}
@@ -38,5 +39,6 @@ public abstract class SqlFunctionCall<T>
 		}
 	}
 
-	public abstract List<T> execute(PreparedStatement preparedStatement) throws SQLException;
+	public abstract List<T> execute(PreparedStatement preparedStatement)
+		throws SQLException;
 }

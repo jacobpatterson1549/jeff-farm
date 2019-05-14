@@ -23,16 +23,14 @@ public class SqlFunctionDao
 	}
 
 	protected final <T> List<T> execute(
-		Integer userId,
-		SqlFunctionCall<T> functionCall)
+		Integer userId, SqlFunctionCall<T> functionCall)
 	{
 		return this.execute0(userId, functionCall);
 	}
 
 	@SafeVarargs
 	protected final <T> T executeSingle(
-		Integer userId,
-		SqlFunctionCall<T>... functionCalls)
+		Integer userId, SqlFunctionCall<T>... functionCalls)
 	{
 		List<T> results = this.execute0(userId, functionCalls);
 		if (results == null || results.size() != 1)
@@ -46,8 +44,7 @@ public class SqlFunctionDao
 
 	@SafeVarargs
 	protected final <T> void executeUpdate(
-		Integer userId,
-		SqlFunctionCall<T>... functionCalls)
+		Integer userId, SqlFunctionCall<T>... functionCalls)
 	{
 		if (functionCalls == null || functionCalls.length == 0)
 		{
@@ -58,8 +55,7 @@ public class SqlFunctionDao
 
 	@SafeVarargs
 	private final <T> List<T> execute0(
-		Integer userId,
-		SqlFunctionCall<T>... functionCalls)
+		Integer userId, SqlFunctionCall<T>... functionCalls)
 	{
 		try (Connection connection = dataSource.getConnection())
 		{
@@ -72,9 +68,9 @@ public class SqlFunctionDao
 	}
 
 	private <T> List<T> execute(
-		Connection connection, Integer userId,
-		SqlFunctionCall<T>[] functionCalls)
-		throws SQLException
+		Connection connection,
+		Integer userId,
+		SqlFunctionCall<T>[] functionCalls) throws SQLException
 	{
 		try
 		{
@@ -147,7 +143,8 @@ public class SqlFunctionDao
 			= new IntegerSqlFunctionParameter("id", userId);
 		SqlFunctionCall<Integer>
 			sqlFunctionCall
-			= new SingleCommandSqlFunctionCall<>(SET_USER_ID_FUNCTION_NAME,
+			= new SingleCommandSqlFunctionCall<>(
+			SET_USER_ID_FUNCTION_NAME,
 			Collections.singletonList(userIdParameter),
 			new SimpleResultSetTransformer<>(
 				true,

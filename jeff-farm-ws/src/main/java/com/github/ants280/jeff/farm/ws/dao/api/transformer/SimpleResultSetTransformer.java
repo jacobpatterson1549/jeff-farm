@@ -14,10 +14,12 @@ public class SimpleResultSetTransformer<T> implements ResultSetTransformer<T>
 	private final List<T> results;
 	private boolean resultSetTransformed;
 
-	public SimpleResultSetTransformer(boolean expectSingleRecord, RowMapper<T> crudItemRowMapper)
+	public SimpleResultSetTransformer(
+		boolean expectSingleRecord,
+		RowMapper<T> rowMapper)
 	{
 		this.expectSingleRecord = expectSingleRecord;
-		this.crudItemRowMapper = crudItemRowMapper;
+		this.crudItemRowMapper = rowMapper;
 		this.results = new ArrayList<>();
 		this.resultSetTransformed = false;
 	}

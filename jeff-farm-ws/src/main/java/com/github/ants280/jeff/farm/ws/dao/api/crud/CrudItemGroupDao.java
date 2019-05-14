@@ -16,8 +16,8 @@ import java.util.function.ToIntFunction;
 import javax.sql.DataSource;
 
 // TODO: is it possible to use better generics?  It is annoying to have to put the V param first...
-public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGroup<V, T>> extends
-	SqlFunctionDao
+public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGroup<V, T>>
+	extends SqlFunctionDao
 {
 	public CrudItemGroupDao(DataSource dataSource)
 	{
@@ -48,12 +48,13 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 		int userId)
 	{
 		SqlFunctionCall<Integer>
-			groupFunctionCall = new SingleCommandSqlFunctionCall<>(
-			createGroupFunctionName,
+			groupFunctionCall
+			= new SingleCommandSqlFunctionCall<>(createGroupFunctionName,
 			groupInParameters,
 			new SimpleResultSetTransformer<>(false, null));
-		SqlFunctionCall<Integer> itemsFunctionCall = new BatchCommandSqlFunctionCall<>(
-			createItemsFunctionName,
+		SqlFunctionCall<Integer>
+			itemsFunctionCall
+			= new BatchCommandSqlFunctionCall<>(createItemsFunctionName,
 			itemInParameters);
 		return this.executeSingle(userId, groupFunctionCall, itemsFunctionCall);
 	}
@@ -63,14 +64,12 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 		List<SqlFunctionParameter> inParameters,
 		ToIntFunction<V> groupIdMappingFunction)
 	{
-		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(
-			functionName,
+		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(functionName,
 			inParameters,
-			new CrudItemGroupResultSetTransformer<>(
-				true,
+			new CrudItemGroupResultSetTransformer<>(true,
 				this::mapGroup,
 				this::mapItem,
-		groupIdMappingFunction));
+				groupIdMappingFunction));
 		return this.execute(null, functionCall).get(0);
 	}
 
@@ -79,11 +78,9 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 		List<SqlFunctionParameter> inParameters,
 		ToIntFunction<V> groupIdMappingFunction)
 	{
-		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(
-			functionName,
+		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(functionName,
 			inParameters,
-			new CrudItemGroupResultSetTransformer<>(
-				false,
+			new CrudItemGroupResultSetTransformer<>(false,
 				this::mapGroup,
 				this::mapItem,
 				groupIdMappingFunction));
@@ -98,12 +95,14 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 		int userId)
 	{
 		// TODO: Ensure all items in group have id of parent that is updated... maybe in implementations.
-		SqlFunctionCall<Void> groupFunctionCall = new SingleCommandSqlFunctionCall<>(
-			updateGroupFunctionName,
+		SqlFunctionCall<Void>
+			groupFunctionCall
+			= new SingleCommandSqlFunctionCall<>(updateGroupFunctionName,
 			groupInParameters,
 			new SimpleResultSetTransformer<>(false, null));
-		SqlFunctionCall<Void> itemsFunctionCall = new BatchCommandSqlFunctionCall<>(
-			updateItemsFunctionName,
+		SqlFunctionCall<Void>
+			itemsFunctionCall
+			= new BatchCommandSqlFunctionCall<>(updateItemsFunctionName,
 			itemInParameters);
 		this.executeUpdate(userId, groupFunctionCall, itemsFunctionCall);
 	}
@@ -126,11 +125,11 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 		List<SqlFunctionParameter> inParameters,
 		String outParameterName)
 	{
-		SqlFunctionCall<Boolean> functionCall = new SingleCommandSqlFunctionCall<>(
-			functionName,
+		SqlFunctionCall<Boolean>
+			functionCall
+			= new SingleCommandSqlFunctionCall<>(functionName,
 			inParameters,
-			new SimpleResultSetTransformer<>(
-				true,
+			new SimpleResultSetTransformer<>(true,
 				resultSet -> resultSet.getBoolean(outParameterName)));
 		return this.executeSingle(null, functionCall);
 	}

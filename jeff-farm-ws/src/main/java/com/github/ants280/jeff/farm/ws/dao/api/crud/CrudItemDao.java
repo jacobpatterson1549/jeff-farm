@@ -38,11 +38,10 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 		int userId)
 	{
 		SqlFunctionCall<Integer>
-			functionCall = new SingleCommandSqlFunctionCall<>(
-			functionName,
+			functionCall
+			= new SingleCommandSqlFunctionCall<>(functionName,
 			inParameters,
-			new SimpleResultSetTransformer<>(
-				true,
+			new SimpleResultSetTransformer<>(true,
 				resultSet -> resultSet.getInt(CrudItem.ID_COLUMN)));
 		return this.execute(userId, functionCall).get(0);
 	}
@@ -84,11 +83,11 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 		List<SqlFunctionParameter> inParameters,
 		String outParameterName)
 	{
-		SqlFunctionCall<Boolean> functionCall = new SingleCommandSqlFunctionCall<>(
-			functionName,
+		SqlFunctionCall<Boolean>
+			functionCall
+			= new SingleCommandSqlFunctionCall<>(functionName,
 			inParameters,
-			new SimpleResultSetTransformer<>(
-				true,
+			new SimpleResultSetTransformer<>(true,
 				resultSet -> resultSet.getBoolean(outParameterName)));
 		return this.executeSingle(null, functionCall);
 	}
