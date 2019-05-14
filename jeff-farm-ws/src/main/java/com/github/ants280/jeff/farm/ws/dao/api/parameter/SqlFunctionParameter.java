@@ -1,4 +1,4 @@
-package com.github.ants280.jeff.farm.ws.dao.api;
+package com.github.ants280.jeff.farm.ws.dao.api.parameter;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

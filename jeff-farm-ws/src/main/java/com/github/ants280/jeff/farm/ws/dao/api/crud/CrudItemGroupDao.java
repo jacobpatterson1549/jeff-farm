@@ -1,5 +1,12 @@
-package com.github.ants280.jeff.farm.ws.dao.api;
+package com.github.ants280.jeff.farm.ws.dao.api.crud;
 
+import com.github.ants280.jeff.farm.ws.dao.api.SqlFunctionDao;
+import com.github.ants280.jeff.farm.ws.dao.api.call.BatchCommandSqlFunctionCall;
+import com.github.ants280.jeff.farm.ws.dao.api.call.SingleCommandSqlFunctionCall;
+import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
+import com.github.ants280.jeff.farm.ws.dao.api.parameter.SqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.transformer.CrudItemGroupResultSetTransformer;
+import com.github.ants280.jeff.farm.ws.dao.api.transformer.SimpleResultSetTransformer;
 import com.github.ants280.jeff.farm.ws.model.CrudItem;
 import com.github.ants280.jeff.farm.ws.model.CrudItemGroup;
 import java.sql.ResultSet;
@@ -9,7 +16,8 @@ import java.util.function.ToIntFunction;
 import javax.sql.DataSource;
 
 // TODO: is it possible to use better generics?  It is annoying to have to put the V param first...
-public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGroup<V, T>> extends SqlFunctionDao
+public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGroup<V, T>> extends
+	SqlFunctionDao
 {
 	public CrudItemGroupDao(DataSource dataSource)
 	{
@@ -39,7 +47,8 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 		List<List<SqlFunctionParameter>> itemInParameters,
 		int userId)
 	{
-		SqlFunctionCall<Integer> groupFunctionCall = new SingleCommandSqlFunctionCall<>(
+		SqlFunctionCall<Integer>
+			groupFunctionCall = new SingleCommandSqlFunctionCall<>(
 			createGroupFunctionName,
 			groupInParameters,
 			new SimpleResultSetTransformer<>(false, null));

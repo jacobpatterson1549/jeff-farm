@@ -1,9 +1,9 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
-import com.github.ants280.jeff.farm.ws.dao.api.CrudItemGroupDao;
-import com.github.ants280.jeff.farm.ws.dao.api.IntegerSqlFunctionParameter;
-import com.github.ants280.jeff.farm.ws.dao.api.SqlFunctionParameter;
-import com.github.ants280.jeff.farm.ws.dao.api.StringSqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.crud.CrudItemGroupDao;
+import com.github.ants280.jeff.farm.ws.dao.api.parameter.IntegerSqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.parameter.SqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.parameter.StringSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.model.PoultryInspection;
 import com.github.ants280.jeff.farm.ws.model.PoultryInspectionGroup;
 import java.sql.ResultSet;

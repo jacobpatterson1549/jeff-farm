@@ -1,9 +1,9 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.PasswordGenerator;
-import com.github.ants280.jeff.farm.ws.dao.api.CrudItemDao;
-import com.github.ants280.jeff.farm.ws.dao.api.IntegerSqlFunctionParameter;
-import com.github.ants280.jeff.farm.ws.dao.api.StringSqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.crud.CrudItemDao;
+import com.github.ants280.jeff.farm.ws.dao.api.parameter.IntegerSqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.parameter.StringSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
