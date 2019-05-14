@@ -1,11 +1,11 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.dao.api.CrudItemDao;
-import com.github.ants280.jeff.farm.ws.dao.api.SqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.IntegerSqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.StringSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.model.Hive;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -31,9 +31,9 @@ public class HiveDao extends CrudItemDao<Hive>
 		return this.executeCreate(
 				"create_hive",
 				Arrays.asList(
-						new SqlFunctionParameter<>(Hive.FARM_ID_COLUMN, hive.getFarmId(), Types.INTEGER),
-						new SqlFunctionParameter<>(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
-						new SqlFunctionParameter<>(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.INTEGER)),
+						new IntegerSqlFunctionParameter(Hive.FARM_ID_COLUMN, hive.getFarmId()),
+						new StringSqlFunctionParameter(Hive.NAME_COLUMN, hive.getName()),
+						new IntegerSqlFunctionParameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger())),
 			loginDao.getUserId());
 	}
 
@@ -43,7 +43,7 @@ public class HiveDao extends CrudItemDao<Hive>
 		return this.executeRead(
 				"read_hive",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(Hive.ID_COLUMN, id, Types.INTEGER)));
+						new IntegerSqlFunctionParameter(Hive.ID_COLUMN, id)));
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class HiveDao extends CrudItemDao<Hive>
 		return this.executeReadList(
 				"read_hives",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(Hive.FARM_ID_COLUMN, parentId, Types.INTEGER)));
+						new IntegerSqlFunctionParameter(Hive.FARM_ID_COLUMN, parentId)));
 	}
 
 	@Override
@@ -61,9 +61,9 @@ public class HiveDao extends CrudItemDao<Hive>
 		this.executeUpdate(
 				"update_hive",
 				Arrays.asList(
-						new SqlFunctionParameter<>(Hive.ID_COLUMN, id, Types.INTEGER),
-						new SqlFunctionParameter<>(Hive.NAME_COLUMN, hive.getName(), Types.VARCHAR),
-						new SqlFunctionParameter<>(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger(), Types.INTEGER)),
+						new IntegerSqlFunctionParameter(Hive.ID_COLUMN, id),
+						new StringSqlFunctionParameter(Hive.NAME_COLUMN, hive.getName()),
+						new IntegerSqlFunctionParameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger())),
 				loginDao.getUserId());
 	}
 
@@ -73,7 +73,7 @@ public class HiveDao extends CrudItemDao<Hive>
 		this.executeUpdate(
 				"delete_hive",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(Hive.ID_COLUMN, id, Types.INTEGER)),
+						new IntegerSqlFunctionParameter(Hive.ID_COLUMN, id)),
 				loginDao.getUserId());
 	}
 	
@@ -82,7 +82,7 @@ public class HiveDao extends CrudItemDao<Hive>
 	{
 		return this.canDelete("can_delete_hive",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(Hive.ID_COLUMN, id, Types.INTEGER)),
+						new IntegerSqlFunctionParameter(Hive.ID_COLUMN, id)),
 				Hive.CAN_DELETE_ITEM);
 	}
 

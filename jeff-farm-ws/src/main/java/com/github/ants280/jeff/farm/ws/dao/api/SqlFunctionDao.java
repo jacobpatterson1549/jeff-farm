@@ -3,7 +3,6 @@ package com.github.ants280.jeff.farm.ws.dao.api;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.Collections;
 import java.util.List;
 import javax.sql.DataSource;
@@ -133,7 +132,7 @@ public class SqlFunctionDao
 	{
 		SqlFunctionParameter<Integer>
 			userIdParameter
-			= new SqlFunctionParameter<>("id", userId, Types.INTEGER);
+			= new IntegerSqlFunctionParameter("id", userId);
 		SqlFunctionCall<Integer>
 			sqlFunctionCall
 			= new SingleCommandSqlFunctionCall<>(SET_USER_ID_FUNCTION_NAME,

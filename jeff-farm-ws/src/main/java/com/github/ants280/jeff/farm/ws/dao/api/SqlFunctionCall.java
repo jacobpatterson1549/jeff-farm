@@ -2,7 +2,6 @@ package com.github.ants280.jeff.farm.ws.dao.api;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,31 +14,6 @@ public abstract class SqlFunctionCall<T>
 	{
 		this.functionCallSql = functionCallSql;
 		this.numParameters = numParameters;
-	}
-
-	private static void setParameter(
-		PreparedStatement preparedStatement,
-		SqlFunctionParameter parameter,
-		int index) throws SQLException
-	{
-		switch (parameter.getSqlType())
-		{
-			case Types.VARCHAR:
-			case Types.CHAR:
-				preparedStatement.setString(index,
-					(String) parameter.getValue());
-				break;
-			case Types.INTEGER:
-				preparedStatement.setInt(index, (int) parameter.getValue());
-				break;
-			case Types.BOOLEAN:
-				preparedStatement.setBoolean(index,
-					(boolean) parameter.getValue());
-				break;
-			default:
-				throw new IllegalArgumentException(
-					"Cannot set parameter of type " + parameter.getSqlType());
-		}
 	}
 
 	public String getFunctionCallSql()
@@ -57,9 +31,9 @@ public abstract class SqlFunctionCall<T>
 		List<SqlFunctionParameter> inParameters) throws SQLException
 	{
 		int index = 1;
-		for (SqlFunctionParameter parameter : inParameters)
+		for (SqlFunctionParameter inParameter : inParameters)
 		{
-			setParameter(preparedStatement, parameter, index++);
+			inParameter.setValue(preparedStatement, index++);
 		}
 	}
 

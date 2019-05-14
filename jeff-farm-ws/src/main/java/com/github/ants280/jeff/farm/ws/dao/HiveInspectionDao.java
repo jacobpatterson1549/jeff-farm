@@ -1,11 +1,12 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
+import com.github.ants280.jeff.farm.ws.dao.api.BooleanSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.CrudItemDao;
-import com.github.ants280.jeff.farm.ws.dao.api.SqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.IntegerSqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.StringSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.model.HiveInspection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -31,21 +32,21 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 		return this.executeCreate(
 				"create_hive_inspection",
 				Arrays.asList(
-						new SqlFunctionParameter<>(HiveInspection.HIVE_ID_COLUMN, hiveInspection.getHiveId(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.getQueenSeen(), Types.BOOLEAN),
-						new SqlFunctionParameter<>(HiveInspection.EGGS_SEEN_COLUMN, hiveInspection.getEggsSeen(), Types.BOOLEAN),
-						new SqlFunctionParameter<>(HiveInspection.LAYING_PATTERN_STARS_COLUMN, hiveInspection.getLayingPatternStars(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.TEMPERAMENT_STARS_COLUMN, hiveInspection.getTemperamentStars(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.QUEEN_CELLS_COLUMN, hiveInspection.getQueenCells(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.SUPERSEDURE_CELLS_COLUMN, hiveInspection.getSupersedureCells(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.SWARM_CELLS_COLUMN, hiveInspection.getSwarmCells(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.COMB_BUILDING_STARS_COLUMN, hiveInspection.getCombBuildingStars(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.FRAMES_SEALED_BROOD_COLUMN, hiveInspection.getFramesSealedBrood(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.FRAMES_OPEN_BROOD_COLUMN, hiveInspection.getFramesOpenBrood(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.FRAMES_HONEY_COLUMN, hiveInspection.getFramesHoney(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather(), Types.VARCHAR),
-						new SqlFunctionParameter<>(HiveInspection.TEMPERATURE_F_COLUMN, hiveInspection.getTemperatureF(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph(), Types.INTEGER)),
+						new IntegerSqlFunctionParameter(HiveInspection.HIVE_ID_COLUMN, hiveInspection.getHiveId()),
+						new BooleanSqlFunctionParameter(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.getQueenSeen()),
+						new BooleanSqlFunctionParameter(HiveInspection.EGGS_SEEN_COLUMN, hiveInspection.getEggsSeen()),
+						new IntegerSqlFunctionParameter(HiveInspection.LAYING_PATTERN_STARS_COLUMN, hiveInspection.getLayingPatternStars()),
+						new IntegerSqlFunctionParameter(HiveInspection.TEMPERAMENT_STARS_COLUMN, hiveInspection.getTemperamentStars()),
+						new IntegerSqlFunctionParameter(HiveInspection.QUEEN_CELLS_COLUMN, hiveInspection.getQueenCells()),
+						new IntegerSqlFunctionParameter(HiveInspection.SUPERSEDURE_CELLS_COLUMN, hiveInspection.getSupersedureCells()),
+						new IntegerSqlFunctionParameter(HiveInspection.SWARM_CELLS_COLUMN, hiveInspection.getSwarmCells()),
+						new IntegerSqlFunctionParameter(HiveInspection.COMB_BUILDING_STARS_COLUMN, hiveInspection.getCombBuildingStars()),
+						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_SEALED_BROOD_COLUMN, hiveInspection.getFramesSealedBrood()),
+						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_OPEN_BROOD_COLUMN, hiveInspection.getFramesOpenBrood()),
+						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_HONEY_COLUMN, hiveInspection.getFramesHoney()),
+						new StringSqlFunctionParameter(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather()),
+						new IntegerSqlFunctionParameter(HiveInspection.TEMPERATURE_F_COLUMN, hiveInspection.getTemperatureF()),
+						new IntegerSqlFunctionParameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph())),
 			loginDao.getUserId());
 	}
 
@@ -55,7 +56,7 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 		return this.executeRead(
 				"read_hive_inspection",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(HiveInspection.ID_COLUMN, id, Types.INTEGER)));
+						new IntegerSqlFunctionParameter(HiveInspection.ID_COLUMN, id)));
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 		return this.executeReadList(
 				"read_hive_inspections",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(HiveInspection.HIVE_ID_COLUMN, parentId, Types.INTEGER)));
+						new IntegerSqlFunctionParameter(HiveInspection.HIVE_ID_COLUMN, parentId)));
 	}
 
 	@Override
@@ -73,21 +74,21 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 		this.executeUpdate(
 				"update_hive_inspection",
 				Arrays.asList(
-						new SqlFunctionParameter<>(HiveInspection.ID_COLUMN, id, Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.getQueenSeen(), Types.BOOLEAN),
-						new SqlFunctionParameter<>(HiveInspection.EGGS_SEEN_COLUMN, hiveInspection.getEggsSeen(), Types.BOOLEAN),
-						new SqlFunctionParameter<>(HiveInspection.LAYING_PATTERN_STARS_COLUMN, hiveInspection.getLayingPatternStars(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.TEMPERAMENT_STARS_COLUMN, hiveInspection.getTemperamentStars(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.QUEEN_CELLS_COLUMN, hiveInspection.getQueenCells(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.SUPERSEDURE_CELLS_COLUMN, hiveInspection.getSupersedureCells(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.SWARM_CELLS_COLUMN, hiveInspection.getSwarmCells(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.COMB_BUILDING_STARS_COLUMN, hiveInspection.getCombBuildingStars(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.FRAMES_SEALED_BROOD_COLUMN, hiveInspection.getFramesOpenBrood(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.FRAMES_OPEN_BROOD_COLUMN, hiveInspection.getFramesOpenBrood(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.FRAMES_HONEY_COLUMN, hiveInspection.getFramesHoney(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather(), Types.VARCHAR),
-						new SqlFunctionParameter<>(HiveInspection.TEMPERATURE_F_COLUMN, hiveInspection.getTemperatureF(), Types.INTEGER),
-						new SqlFunctionParameter<>(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph(), Types.INTEGER)),
+						new IntegerSqlFunctionParameter(HiveInspection.ID_COLUMN, id),
+						new BooleanSqlFunctionParameter(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.getQueenSeen()),
+						new BooleanSqlFunctionParameter(HiveInspection.EGGS_SEEN_COLUMN, hiveInspection.getEggsSeen()),
+						new IntegerSqlFunctionParameter(HiveInspection.LAYING_PATTERN_STARS_COLUMN, hiveInspection.getLayingPatternStars()),
+						new IntegerSqlFunctionParameter(HiveInspection.TEMPERAMENT_STARS_COLUMN, hiveInspection.getTemperamentStars()),
+						new IntegerSqlFunctionParameter(HiveInspection.QUEEN_CELLS_COLUMN, hiveInspection.getQueenCells()),
+						new IntegerSqlFunctionParameter(HiveInspection.SUPERSEDURE_CELLS_COLUMN, hiveInspection.getSupersedureCells()),
+						new IntegerSqlFunctionParameter(HiveInspection.SWARM_CELLS_COLUMN, hiveInspection.getSwarmCells()),
+						new IntegerSqlFunctionParameter(HiveInspection.COMB_BUILDING_STARS_COLUMN, hiveInspection.getCombBuildingStars()),
+						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_SEALED_BROOD_COLUMN, hiveInspection.getFramesOpenBrood()),
+						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_OPEN_BROOD_COLUMN, hiveInspection.getFramesOpenBrood()),
+						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_HONEY_COLUMN, hiveInspection.getFramesHoney()),
+						new StringSqlFunctionParameter(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather()),
+						new IntegerSqlFunctionParameter(HiveInspection.TEMPERATURE_F_COLUMN, hiveInspection.getTemperatureF()),
+						new IntegerSqlFunctionParameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph())),
 				loginDao.getUserId());
 	}
 
@@ -97,7 +98,7 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 		this.executeUpdate(
 				"delete_hive_inspection",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(HiveInspection.ID_COLUMN, id, Types.INTEGER)),
+						new IntegerSqlFunctionParameter(HiveInspection.ID_COLUMN, id)),
 				loginDao.getUserId());
 	}
 	

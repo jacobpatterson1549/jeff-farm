@@ -87,7 +87,6 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 		int userId)
 	{
 		// TODO: Ensure all items in group have id of parent that is updated... maybe in implementations.
-		// TODO: validate all itemInParameter lists are in same order...
 		SqlFunctionCall<Void> groupFunctionCall = new SingleCommandSqlFunctionCall<>(
 			updateGroupFunctionName,
 			groupInParameters,

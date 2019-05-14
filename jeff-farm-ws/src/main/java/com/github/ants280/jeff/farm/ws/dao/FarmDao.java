@@ -1,11 +1,11 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.dao.api.CrudItemDao;
-import com.github.ants280.jeff.farm.ws.dao.api.SqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.IntegerSqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.StringSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.model.Farm;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -31,8 +31,8 @@ public class FarmDao extends CrudItemDao<Farm>
 		return this.executeCreate(
 				"create_farm",
 				Arrays.asList(
-						new SqlFunctionParameter<>(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
-						new SqlFunctionParameter<>(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)),
+						new StringSqlFunctionParameter(Farm.NAME_COLUMN, farm.getName()),
+						new StringSqlFunctionParameter(Farm.LOCATION_COLUMN, farm.getLocation())),
 			loginDao.getUserId());
 	}
 
@@ -42,7 +42,7 @@ public class FarmDao extends CrudItemDao<Farm>
 		return this.executeRead(
 				"read_farm",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(Farm.ID_COLUMN, id, Types.INTEGER)));
+						new IntegerSqlFunctionParameter(Farm.ID_COLUMN, id)));
 	}
 
 	@Override
@@ -59,9 +59,9 @@ public class FarmDao extends CrudItemDao<Farm>
 		this.executeUpdate(
 				"update_farm",
 				Arrays.asList(
-						new SqlFunctionParameter<>(Farm.ID_COLUMN, id, Types.INTEGER),
-						new SqlFunctionParameter<>(Farm.NAME_COLUMN, farm.getName(), Types.VARCHAR),
-						new SqlFunctionParameter<>(Farm.LOCATION_COLUMN, farm.getLocation(), Types.VARCHAR)),
+						new IntegerSqlFunctionParameter(Farm.ID_COLUMN, id),
+						new StringSqlFunctionParameter(Farm.NAME_COLUMN, farm.getName()),
+						new StringSqlFunctionParameter(Farm.LOCATION_COLUMN, farm.getLocation())),
 				loginDao.getUserId());
 	}
 
@@ -71,7 +71,7 @@ public class FarmDao extends CrudItemDao<Farm>
 		this.executeUpdate(
 				"delete_farm",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(Farm.ID_COLUMN, id, Types.INTEGER)),
+						new IntegerSqlFunctionParameter(Farm.ID_COLUMN, id)),
 				loginDao.getUserId());
 	}
 	
@@ -80,7 +80,7 @@ public class FarmDao extends CrudItemDao<Farm>
 	{
 		return this.canDelete("can_delete_farm",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(Farm.ID_COLUMN, id, Types.INTEGER)),
+						new IntegerSqlFunctionParameter(Farm.ID_COLUMN, id)),
 				Farm.CAN_DELETE_ITEM);
 	}
 

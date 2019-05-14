@@ -1,16 +1,19 @@
 package com.github.ants280.jeff.farm.ws.dao.api;
 
-public class SqlFunctionParameter<T>
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public abstract class SqlFunctionParameter<T> // TODO: it would be nice if this was not abstract
 {
 	private final String name;
 	private final T value;
-	private final int sqlType;
+	private final PreparedStatementIndexSetter<T> preparedStatementIndexSetter;
 
-	public SqlFunctionParameter(String name, T value, int sqlType)
+	protected SqlFunctionParameter(String name, T value, PreparedStatementIndexSetter<T> preparedStatementIndexSetter)
 	{
 		this.name = name;
 		this.value = value;
-		this.sqlType = sqlType;
+		this.preparedStatementIndexSetter = preparedStatementIndexSetter;
 	}
 
 	public String getName()
@@ -18,23 +21,24 @@ public class SqlFunctionParameter<T>
 		return name;
 	}
 
-	public T getValue()
+	public void setValue(PreparedStatement preparedStatement, int index)
+		throws SQLException
 	{
-		return value;
-	}
-
-	public int getSqlType()
-	{
-		return sqlType;
+		preparedStatementIndexSetter.setAtIndex(preparedStatement, index, value);
 	}
 
 	@Override
 	public String toString()
 	{
-		return String.format(
-			"SqlFunctionParameter{name=%s,value=%s,sqlType=%d}",
+		return String.format("%s{name=%s,value=%s",
+			this.getClass().getSimpleName(),
 			name,
-			value,
-			sqlType);
+			value);
+	}
+
+	protected interface PreparedStatementIndexSetter<T>
+	{
+		void setAtIndex(PreparedStatement ps, int index, T value)
+			throws SQLException;
 	}
 }

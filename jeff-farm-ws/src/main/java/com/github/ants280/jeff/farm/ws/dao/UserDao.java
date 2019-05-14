@@ -2,11 +2,11 @@ package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.PasswordGenerator;
 import com.github.ants280.jeff.farm.ws.dao.api.CrudItemDao;
-import com.github.ants280.jeff.farm.ws.dao.api.SqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.IntegerSqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.StringSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -36,10 +36,10 @@ public class UserDao extends CrudItemDao<User>
 		return this.executeCreate(
 				"create_user",
 				Arrays.asList(
-						new SqlFunctionParameter<>(User.USER_NAME_COLUMN, user.getUserName(), Types.VARCHAR),
-						new SqlFunctionParameter<>(User.PASSWORD_COLUMN, password, Types.CHAR),
-						new SqlFunctionParameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
-						new SqlFunctionParameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)),
+						new StringSqlFunctionParameter(User.USER_NAME_COLUMN, user.getUserName()),
+						new StringSqlFunctionParameter(User.PASSWORD_COLUMN, password),
+						new StringSqlFunctionParameter(User.FIRST_NAME_COLUMN, user.getFirstName()),
+						new StringSqlFunctionParameter(User.LAST_NAME_COLUMN, user.getLastName())),
 			-1); // (registered users cannot create users)
 	}
 
@@ -49,7 +49,7 @@ public class UserDao extends CrudItemDao<User>
 		return this.executeRead(
 				"read_user",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(User.ID_COLUMN, id, Types.INTEGER)));
+						new IntegerSqlFunctionParameter(User.ID_COLUMN, id)));
 	}
 
 	public User read(String userName)
@@ -57,7 +57,7 @@ public class UserDao extends CrudItemDao<User>
 		return this.executeRead(
 				"read_user_from_user_name",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(User.USER_NAME_COLUMN, userName, Types.VARCHAR)));
+						new StringSqlFunctionParameter(User.USER_NAME_COLUMN, userName)));
 	}
 
 	@Override
@@ -75,10 +75,10 @@ public class UserDao extends CrudItemDao<User>
 		this.executeUpdate(
 				"update_user",
 				Arrays.asList(
-						new SqlFunctionParameter<>(User.ID_COLUMN, id, Types.INTEGER),
-						new SqlFunctionParameter<>(User.PASSWORD_COLUMN, password, Types.CHAR),
-						new SqlFunctionParameter<>(User.FIRST_NAME_COLUMN, user.getFirstName(), Types.VARCHAR),
-						new SqlFunctionParameter<>(User.LAST_NAME_COLUMN, user.getLastName(), Types.VARCHAR)),
+						new IntegerSqlFunctionParameter(User.ID_COLUMN, id),
+						new StringSqlFunctionParameter(User.PASSWORD_COLUMN, password),
+						new StringSqlFunctionParameter(User.FIRST_NAME_COLUMN, user.getFirstName()),
+						new StringSqlFunctionParameter(User.LAST_NAME_COLUMN, user.getLastName())),
 				user.getId());
 	}
 
@@ -88,7 +88,7 @@ public class UserDao extends CrudItemDao<User>
 		this.executeUpdate(
 				"delete_user",
 				Collections.singletonList(
-						new SqlFunctionParameter<>(User.ID_COLUMN, id, Types.INTEGER)),
+						new IntegerSqlFunctionParameter(User.ID_COLUMN, id)),
 				id);
 	}
 

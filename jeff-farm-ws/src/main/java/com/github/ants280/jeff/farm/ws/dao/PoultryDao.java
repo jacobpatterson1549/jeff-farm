@@ -1,11 +1,11 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.dao.api.CrudItemDao;
-import com.github.ants280.jeff.farm.ws.dao.api.SqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.IntegerSqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.StringSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.model.Poultry;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +31,7 @@ public class PoultryDao extends CrudItemDao<Poultry>
 		return this.executeCreate(
 			"create_poultry",
 			Collections.singletonList(
-				new SqlFunctionParameter<>(Poultry.NAME_COLUMN, poultry.getName(), Types.VARCHAR)),
+				new StringSqlFunctionParameter(Poultry.NAME_COLUMN, poultry.getName())),
 			loginDao.getUserId());
 	}
 
@@ -41,7 +41,7 @@ public class PoultryDao extends CrudItemDao<Poultry>
 		return this.executeRead(
 			"read_poultry",
 			Collections.singletonList(
-				new SqlFunctionParameter<>(Poultry.ID_COLUMN, id, Types.INTEGER)));
+				new IntegerSqlFunctionParameter(Poultry.ID_COLUMN, id)));
 	}
 
 	@Override
@@ -58,8 +58,8 @@ public class PoultryDao extends CrudItemDao<Poultry>
 		this.executeUpdate(
 			"update_poultry",
 			Arrays.asList(
-				new SqlFunctionParameter<>(Poultry.ID_COLUMN, id, Types.INTEGER),
-				new SqlFunctionParameter<>(Poultry.NAME_COLUMN, poultry.getName(), Types.VARCHAR)),
+				new IntegerSqlFunctionParameter(Poultry.ID_COLUMN, id),
+				new StringSqlFunctionParameter(Poultry.NAME_COLUMN, poultry.getName())),
 			loginDao.getUserId());
 	}
 
@@ -69,7 +69,7 @@ public class PoultryDao extends CrudItemDao<Poultry>
 		this.executeUpdate(
 			"delete_poultry",
 			Collections.singletonList(
-				new SqlFunctionParameter<>(Poultry.ID_COLUMN, id, Types.INTEGER)),
+				new IntegerSqlFunctionParameter(Poultry.ID_COLUMN, id)),
 			loginDao.getUserId());
 	}
 
@@ -78,7 +78,7 @@ public class PoultryDao extends CrudItemDao<Poultry>
 	{
 		return this.canDelete("can_delete_poultry",
 			Collections.singletonList(
-				new SqlFunctionParameter<>(Poultry.ID_COLUMN, id, Types.INTEGER)),
+				new IntegerSqlFunctionParameter(Poultry.ID_COLUMN, id)),
 			Poultry.CAN_DELETE_ITEM);
 	}
 
