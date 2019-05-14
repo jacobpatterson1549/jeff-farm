@@ -18,7 +18,7 @@ public class CrudItemGroupResultSetTransformer<V extends CrudItem, T extends Cru
 	private final boolean expectSingleRecord;
 	private final RowMapper<T> crudItemGroupRowMapper;
 	private final RowMapper<V> crudItemRowMapper;
-	private final ToIntFunction<V> groupIdMappingFunction;
+	private final Function<V, Integer> groupIdMappingFunction;
 	private final List<T> crudItemGroups;
 	private final List<V> crudItems;
 	private int resultSetsTransformed;
@@ -32,7 +32,7 @@ public class CrudItemGroupResultSetTransformer<V extends CrudItem, T extends Cru
 		this.expectSingleRecord = expectSingleRecord;
 		this.crudItemGroupRowMapper = crudItemGroupRowMapper;
 		this.crudItemRowMapper = crudItemRowMapper;
-		this.groupIdMappingFunction = groupIdMappingFunction;
+		this.groupIdMappingFunction = groupIdMappingFunction::applyAsInt;
 		this.crudItemGroups = new ArrayList<>();
 		this.crudItems = new ArrayList<>();
 		this.resultSetsTransformed = 0;
@@ -81,7 +81,7 @@ public class CrudItemGroupResultSetTransformer<V extends CrudItem, T extends Cru
 			.collect(Collectors.toMap(CrudItemGroup::getId,
 				Function.identity()));
 		Map<Integer, List<V>> crudItemsByGroupId = crudItems.stream()
-			.collect(Collectors.groupingBy((Function<V, Integer>) groupIdMappingFunction));
+			.collect(Collectors.groupingBy(groupIdMappingFunction));
 		if (crudItemGroups.size() != crudItemsByGroupId.size()
 			|| crudItemGroupsById.keySet()
 			.containsAll(crudItemsByGroupId.keySet()))
