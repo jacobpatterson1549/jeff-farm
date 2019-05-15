@@ -46,7 +46,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_hive.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_hive_inspection.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_poultry.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_poultry_inspection_groups.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_poultry_inspection_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_poultry_inspection.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_farms.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_hives.sql"/>
