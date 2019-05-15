@@ -128,6 +128,7 @@ public class PoultryInspectionGroupDao
 	public PoultryInspection mapItem(ResultSet rs) throws SQLException
 	{
 		return new PoultryInspection().setId(rs.getInt(PoultryInspection.ID_COLUMN))
+			.setPoultryInspectionGroupId(rs.getInt(PoultryInspection.POULTRY_INSPECTION_GROUP_ID_COLUMN))
 			.setPoultryId(rs.getInt(PoultryInspection.POULTRY_ID_COLUMN))
 			.setBirdCount(rs.getInt(PoultryInspection.BIRD_COUNT_COLUMN))
 			.setEggCount(rs.getInt(PoultryInspection.EGG_COUNT_COLUMN))
