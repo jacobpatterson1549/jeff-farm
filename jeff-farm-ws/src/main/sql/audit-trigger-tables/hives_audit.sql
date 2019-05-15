@@ -70,7 +70,8 @@ $hives_audit$
 			, user_id
 			, id
 			, name
-			, queen_color)
+			, queen_color
+			)
 		VALUES
 			( 'a'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
