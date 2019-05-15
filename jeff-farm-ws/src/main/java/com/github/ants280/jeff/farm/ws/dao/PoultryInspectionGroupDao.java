@@ -36,16 +36,25 @@ public class PoultryInspectionGroupDao
 		// TODO: having to hardcode a mapping Function here is gross.
 		Function<PoultryInspection, List<SqlFunctionParameter>>
 			itemParameterMapper
-			= poultryInspection -> Arrays.asList(new IntegerSqlFunctionParameter(
-				PoultryInspection.BIRD_COUNT_COLUMN,
+			= poultryInspection -> Arrays.asList(
+			new IntegerSqlFunctionParameter(
+				PoultryInspection.POULTRY_INSPECTION_GROUP_ID_COLUMN,
+				poultryInspection.getPoultryInspectionGroupId()),// TODO: BUG!!! need to get created poultry_inspection_group id and set it on the group.
+			new IntegerSqlFunctionParameter(
+				PoultryInspection.POULTRY_ID_COLUMN,
+				poultryInspection.getPoultryId()),
+			new IntegerSqlFunctionParameter(PoultryInspection.BIRD_COUNT_COLUMN,
 				poultryInspection.getBirdCount()),
 			new IntegerSqlFunctionParameter(PoultryInspection.EGG_COUNT_COLUMN,
 				poultryInspection.getEggCount()));
-		return this.executeCreate("create_poultry_inspection",
-			Collections.singletonList(new StringSqlFunctionParameter(
-				PoultryInspectionGroup.NOTES_COLUMN,
-				poultryInspectionGroup.getNotes())),
-			"create_poultry_inspection_group",
+		return this.executeCreate("create_poultry_inspection_group",
+			Arrays.asList(
+				new IntegerSqlFunctionParameter(
+					PoultryInspectionGroup.FARM_ID_COLUMN,
+					poultryInspectionGroup.getFarmId()),
+				new StringSqlFunctionParameter(PoultryInspectionGroup.NOTES_COLUMN,
+					poultryInspectionGroup.getNotes())),
+			"create_poultry_inspection",
 			poultryInspectionGroup.getItems()
 				.stream()
 				.map(itemParameterMapper)
@@ -119,6 +128,7 @@ public class PoultryInspectionGroupDao
 	{
 		return new PoultryInspectionGroup().setId(rs.getInt(
 			PoultryInspectionGroup.ID_COLUMN))
+			.setFarmId(rs.getInt(PoultryInspectionGroup.FARM_ID_COLUMN))
 			.setNotes(rs.getString(PoultryInspectionGroup.NOTES_COLUMN))
 			.setCreatedTimestamp(rs.getTimestamp(PoultryInspectionGroup.CREATED_DATE_COLUMN))
 			.setModifiedTimestamp(rs.getTimestamp(PoultryInspectionGroup.MODIFIED_DATE_COLUMN));

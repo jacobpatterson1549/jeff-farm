@@ -31,6 +31,7 @@ public class HiveDao extends CrudItemDao<Hive>
 		return this.executeCreate(
 				"create_hive",
 				Arrays.asList(
+						// BUG!  the farmId (parentId) needs to be validated when creating any crudItem
 						new IntegerSqlFunctionParameter(Hive.FARM_ID_COLUMN, hive.getFarmId()),
 						new StringSqlFunctionParameter(Hive.NAME_COLUMN, hive.getName()),
 						new IntegerSqlFunctionParameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger())),
