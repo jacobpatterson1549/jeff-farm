@@ -28,7 +28,7 @@ $poultry_audit$
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
 			, NEW.id
 			, NEW.farm_id
-			, NEW. name
+			, NEW.name
 			);
 		RETURN NEW;
 	END;
