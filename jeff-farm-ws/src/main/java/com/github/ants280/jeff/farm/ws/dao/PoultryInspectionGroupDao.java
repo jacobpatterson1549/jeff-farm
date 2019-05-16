@@ -38,7 +38,7 @@ public class PoultryInspectionGroupDao
 			= poultryInspection -> Arrays.asList(
 			new IntegerSqlFunctionParameter(
 				PoultryInspection.POULTRY_INSPECTION_GROUP_ID_COLUMN,
-				poultryInspection.getPoultryInspectionGroupId()),// TODO: BUG!!! need to get created poultry_inspection_group id and set it on the group.
+				poultryInspection.getPoultryInspectionGroupId()),
 			new IntegerSqlFunctionParameter(
 				PoultryInspection.POULTRY_ID_COLUMN,
 				poultryInspection.getPoultryId()),
