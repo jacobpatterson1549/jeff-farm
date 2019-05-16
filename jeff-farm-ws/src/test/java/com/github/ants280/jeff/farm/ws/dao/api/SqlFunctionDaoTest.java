@@ -37,7 +37,8 @@ public class SqlFunctionDaoTest
 		sqlFunctionDao = new SqlFunctionDao(mockDataSource) {};
 	}
 
-	//	@SuppressWarnings("unchecked") // mocking the function call is incorrectly flagged.
+	@SuppressWarnings("unchecked")
+	// (mocking the function call is incorrectly flagged)
 	@Test
 	public void testCreateBasic() throws SQLException
 	{
