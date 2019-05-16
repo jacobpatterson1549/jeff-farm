@@ -44,7 +44,7 @@ public class SimpleResultSetTransformer<T> implements ResultSetTransformer<T>
 	}
 
 	@Override
-	public List<T> getResults()
+	public List<T> getResults() throws SqlDaoException
 	{
 		if (!resultSetTransformed)
 		{

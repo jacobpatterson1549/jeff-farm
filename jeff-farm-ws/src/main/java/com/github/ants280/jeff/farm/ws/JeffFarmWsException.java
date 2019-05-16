@@ -11,4 +11,9 @@ public class JeffFarmWsException extends RuntimeException
 	{
 		super(message, cause);
 	}
+
+	public JeffFarmWsException(Throwable cause)
+	{
+		super(cause);
+	}
 }

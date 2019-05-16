@@ -65,7 +65,7 @@ public class CrudItemGroupResultSetTransformer<V extends CrudItem, T extends Cru
 	}
 
 	@Override
-	public List<T> getResults()
+	public List<T> getResults() throws SqlDaoException
 	{
 		if (resultSetsTransformed != 2)
 		{

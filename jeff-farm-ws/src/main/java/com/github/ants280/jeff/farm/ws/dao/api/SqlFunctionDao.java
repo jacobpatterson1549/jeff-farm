@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.dao.api;
 
+import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SingleCommandSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.IntegerSqlFunctionParameter;
@@ -35,8 +36,8 @@ public class SqlFunctionDao
 		List<T> results = this.execute0(userId, functionCalls);
 		if (results == null || results.size() != 1)
 		{
-			throw new SqlDaoException(String.format(
-				"Not one result.  Got %d",
+			throw new JeffFarmWsException(String.format(
+				"Not one result.  Got %d.  Database altered",
 				results == null ? null : results.size()));
 		}
 		return results.get(0);
@@ -46,10 +47,6 @@ public class SqlFunctionDao
 	protected final <T> void executeUpdate(
 		Integer userId, SqlFunctionCall<T>... functionCalls)
 	{
-		if (functionCalls == null || functionCalls.length == 0)
-		{
-			throw new SqlDaoException("No function calls specified");
-		}
 		this.execute0(userId, functionCalls);
 	}
 
@@ -59,15 +56,16 @@ public class SqlFunctionDao
 	{
 		if (functionCalls == null || functionCalls.length == 0)
 		{
-			throw new SqlDaoException("No function calls to execute.");
+			throw new JeffFarmWsException("No function calls to execute.");
 		}
+
 		try (Connection connection = dataSource.getConnection())
 		{
 			return execute(connection, userId, functionCalls);
 		}
 		catch (SQLException ex)
 		{
-			throw new SqlDaoException(ex);
+			throw new JeffFarmWsException(ex);
 		}
 	}
 

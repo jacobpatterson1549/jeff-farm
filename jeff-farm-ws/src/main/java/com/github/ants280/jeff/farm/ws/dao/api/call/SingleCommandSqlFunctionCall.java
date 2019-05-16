@@ -4,6 +4,7 @@ import com.github.ants280.jeff.farm.ws.dao.api.SqlDaoException;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.SqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.transformer.ResultSetTransformer;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -37,9 +38,10 @@ public class SingleCommandSqlFunctionCall<T> extends SqlFunctionCall<T>
 		{
 			do
 			{
-				resultSetTransformer.accept(preparedStatement.getResultSet());
+				ResultSet resultSet = preparedStatement.getResultSet();
+				resultSetTransformer.accept(resultSet);
 			}
-			while (preparedStatement.getMoreResults());
+			while (preparedStatement.getMoreResults()); // TODO: this always will return false with the current structure.
 		}
 
 		if (preparedStatement.getWarnings() != null)
