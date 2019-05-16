@@ -58,6 +58,7 @@ public class PoultryInspectionGroupDao
 				.stream()
 				.map(itemParameterMapper)
 				.collect(Collectors.toList()),
+			PoultryInspection.POULTRY_INSPECTION_GROUP_ID_COLUMN,
 			loginDao.getUserId());
 	}
 

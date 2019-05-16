@@ -6,7 +6,7 @@ import java.sql.SQLException;
 public abstract class SqlFunctionParameter<T>
 {
 	private final String name;
-	private final T value;
+	private T value;
 	private final PreparedStatementIndexSetter<T> preparedStatementIndexSetter;
 
 	protected SqlFunctionParameter(
@@ -22,6 +22,11 @@ public abstract class SqlFunctionParameter<T>
 	public String getName()
 	{
 		return name;
+	}
+
+	public void setValue(T value)
+	{
+		this.value = value;
 	}
 
 	public void setValue(PreparedStatement preparedStatement, int index)
