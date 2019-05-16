@@ -20,7 +20,7 @@ public abstract class SqlFunctionCall<T>
 	public String getFunctionCallSql()
 	{
 		return String.format(
-			"SELECT * FROM %s(%s)", // TODO: should this not SELECT if void is return value?
+			"SELECT * FROM %s(%s)",
 			functionCallSql,
 			String.join(", ", Collections.nCopies(numParameters, "?")));
 	}

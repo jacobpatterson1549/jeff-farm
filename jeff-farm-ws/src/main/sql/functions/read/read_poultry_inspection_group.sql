@@ -11,7 +11,5 @@ $body$
 		, pig.modified_date
 	FROM poultry_inspection_groups AS pig
 	WHERE pig.id = read_poultry_inspection_group.id;
-
-	-- TODO: SELECT poultry_inspections
 $body$
 LANGUAGE SQL;

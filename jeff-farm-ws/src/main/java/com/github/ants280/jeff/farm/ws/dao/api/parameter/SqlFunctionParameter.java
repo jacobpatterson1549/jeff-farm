@@ -3,7 +3,7 @@ package com.github.ants280.jeff.farm.ws.dao.api.parameter;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public abstract class SqlFunctionParameter<T> // TODO: it would be nice if this was not abstract
+public abstract class SqlFunctionParameter<T>
 {
 	private final String name;
 	private final T value;

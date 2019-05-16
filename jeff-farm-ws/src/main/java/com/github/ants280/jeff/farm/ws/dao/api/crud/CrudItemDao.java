@@ -43,7 +43,7 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 			inParameters,
 			new SimpleResultSetTransformer<>(true,
 				resultSet -> resultSet.getInt(CrudItem.ID_COLUMN)));
-		return this.execute(userId, functionCall).get(0);
+		return this.executeSingle(userId, functionCall);
 	}
 
 	protected T executeRead(

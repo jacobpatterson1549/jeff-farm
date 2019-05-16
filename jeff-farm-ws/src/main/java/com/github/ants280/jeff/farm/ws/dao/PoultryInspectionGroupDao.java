@@ -33,7 +33,6 @@ public class PoultryInspectionGroupDao
 	@Override
 	public int create(PoultryInspectionGroup poultryInspectionGroup)
 	{
-		// TODO: having to hardcode a mapping Function here is gross.
 		Function<PoultryInspection, List<SqlFunctionParameter>>
 			itemParameterMapper
 			= poultryInspection -> Arrays.asList(

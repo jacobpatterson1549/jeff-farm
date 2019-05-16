@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.function.ToIntFunction;
 import javax.sql.DataSource;
 
-// TODO: is it possible to use better generics?  It is annoying to have to put the V param first...
 public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGroup<V, T>>
 	extends SqlFunctionDao
 {
@@ -70,7 +69,7 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 				this::mapGroup,
 				this::mapItem,
 				groupIdMappingFunction));
-		return this.execute(null, functionCall).get(0);
+		return this.executeSingle(null, functionCall);
 	}
 
 	protected List<T> executeReadList(
@@ -94,7 +93,6 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 		List<List<SqlFunctionParameter>> itemInParameters,
 		int userId)
 	{
-		// TODO: Ensure all items in group have id of parent that is updated... maybe in implementations.
 		SqlFunctionCall<Void>
 			groupFunctionCall
 			= new SingleCommandSqlFunctionCall<>(updateGroupFunctionName,
