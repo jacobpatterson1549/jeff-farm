@@ -37,14 +37,13 @@ public class SqlFunctionDaoTest
 		sqlFunctionDao = new SqlFunctionDao(mockDataSource) {};
 	}
 
+	//	@SuppressWarnings("unchecked") // mocking the function call is incorrectly flagged.
 	@Test
 	public void testCreateBasic() throws SQLException
 	{
 		int userId = 111;
 		int expectedCreationId = 1;
-		SqlFunctionCall<Integer>
-			mockFunctionCall
-			= (SqlFunctionCall<Integer>) mock(SqlFunctionCall.class);
+		SqlFunctionCall<Integer> mockFunctionCall = mock(SqlFunctionCall.class);
 		when(mockFunctionCall.execute(any())).thenReturn(Collections.singletonList(
 			expectedCreationId));
 		// set userId mocking :
