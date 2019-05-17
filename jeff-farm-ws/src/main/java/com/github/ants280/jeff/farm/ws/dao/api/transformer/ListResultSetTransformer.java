@@ -22,10 +22,7 @@ public class ListResultSetTransformer<T>
 		List<T> results = new ArrayList<>();
 		while (resultSet.next())
 		{
-			if (crudItemRowMapper != null)
-			{
-				results.add(crudItemRowMapper.getValue(resultSet));
-			}
+			results.add(crudItemRowMapper.getValue(resultSet));
 		}
 
 		return results;
