@@ -8,12 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class SingleCommandSqlFunctionCall<T> extends SqlFunctionCall<T>
+public class SimpleCommandSqlFunctionCall<T> extends SqlFunctionCall<T>
 {
 	private final List<SqlFunctionParameter> inParameters;
 	private final ResultSetTransformer<T> resultSetTransformer;
+	private T result;
+	private boolean resultsSet;
 
-	public SingleCommandSqlFunctionCall(
+	public SimpleCommandSqlFunctionCall(
 		String functionCallSql,
 		List<SqlFunctionParameter> inParameters,
 		ResultSetTransformer<T> resultSetTransformer)
@@ -21,34 +23,40 @@ public class SingleCommandSqlFunctionCall<T> extends SqlFunctionCall<T>
 		super(functionCallSql, inParameters.size());
 		this.inParameters = inParameters;
 		this.resultSetTransformer = resultSetTransformer;
+		this.result = null;
+		this.resultsSet = false;
 	}
 
 	@Override
-	public void setParameters(PreparedStatement preparedStatement)
+	public void execute(PreparedStatement preparedStatement)
 		throws SQLException
 	{
 		this.setParameters(preparedStatement, inParameters);
+
+		if (preparedStatement.execute() && resultSetTransformer != null)
+		{
+			try (ResultSet resultSet = preparedStatement.getResultSet())
+			{
+				if (preparedStatement.getWarnings() != null)
+				{
+					throw new SqlDaoException(preparedStatement.getWarnings());
+				}
+
+				result = resultSetTransformer.transform(resultSet);
+			}
+		}
+
+		resultsSet = true;
 	}
 
 	@Override
-	public List<T> execute(PreparedStatement preparedStatement)
-		throws SQLException
+	public T getResult()
 	{
-		if (preparedStatement.execute())
+		if (!resultsSet)
 		{
-			do
-			{
-				ResultSet resultSet = preparedStatement.getResultSet();
-				resultSetTransformer.accept(resultSet);
-			}
-			while (preparedStatement.getMoreResults()); // TODO: this always will return false with the current structure.
+			throw new IllegalArgumentException("Call has not been executed");
 		}
 
-		if (preparedStatement.getWarnings() != null)
-		{
-			throw new SqlDaoException(preparedStatement.getWarnings());
-		}
-
-		return resultSetTransformer.getResults();
+		return result;
 	}
 }

@@ -1,7 +1,7 @@
 package com.github.ants280.jeff.farm.ws.dao.api;
 
 import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
-import com.github.ants280.jeff.farm.ws.dao.api.call.SingleCommandSqlFunctionCall;
+import com.github.ants280.jeff.farm.ws.dao.api.call.SimpleCommandSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.IntegerSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.SqlFunctionParameter;
@@ -10,7 +10,8 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
-import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 import javax.sql.DataSource;
 
 public class SqlFunctionDao
@@ -23,45 +24,40 @@ public class SqlFunctionDao
 		this.dataSource = dataSource;
 	}
 
-	protected final <T> List<T> execute(
-		Integer userId, SqlFunctionCall<T> functionCall)
+	public <A, B, C> C execute(
+		Integer userId,
+		BiFunction<A, B, C> resultFunction,
+		SqlFunctionCall<A> functionCallA,
+		SqlFunctionCall<B> functionCallB)
 	{
-		return this.execute0(userId, functionCall);
+		return this.execute(userId,
+			() -> resultFunction.apply(functionCallA.getResult(),
+				functionCallB.getResult()),
+			new SqlFunctionCall[]{functionCallA, functionCallB});
 	}
 
-	@SafeVarargs
-	protected final <T> T executeSingle(
-		Integer userId, SqlFunctionCall<T>... functionCalls)
+	public <A> A execute(
+		Integer userId, SqlFunctionCall<A> functionCall)
 	{
-		List<T> results = this.execute0(userId, functionCalls);
-		if (results == null || results.size() != 1)
-		{
-			throw new JeffFarmWsException(String.format(
-				"Not one result.  Got %d.  Database altered",
-				results == null ? null : results.size()));
-		}
-		return results.get(0);
+		return this.execute(userId,
+			functionCall::getResult,
+			new SqlFunctionCall[]{functionCall});
 	}
 
-	@SafeVarargs
-	protected final <T> void executeUpdate(
-		Integer userId, SqlFunctionCall<T>... functionCalls)
+	public void execute(
+		Integer userId, SqlFunctionCall... functionCalls)
 	{
-		this.execute0(userId, functionCalls);
+		this.execute(userId, () -> null, functionCalls);
 	}
 
-	@SafeVarargs
-	private final <T> List<T> execute0(
-		Integer userId, SqlFunctionCall<T>... functionCalls)
+	private <T> T execute(
+		Integer userId,
+		Supplier<T> resultSupplier,
+		SqlFunctionCall<?>[] functionCalls)
 	{
-		if (functionCalls == null || functionCalls.length == 0)
-		{
-			throw new JeffFarmWsException("No function calls to execute.");
-		}
-
 		try (Connection connection = dataSource.getConnection())
 		{
-			return execute(connection, userId, functionCalls);
+			return execute(connection, userId, resultSupplier, functionCalls);
 		}
 		catch (SQLException ex)
 		{
@@ -69,10 +65,11 @@ public class SqlFunctionDao
 		}
 	}
 
-	private <T> List<T> execute(
+	private <T> T execute(
 		Connection connection,
 		Integer userId,
-		SqlFunctionCall<T>[] functionCalls) throws SQLException
+		Supplier<T> resultSupplier,
+		SqlFunctionCall<?>[] functionCalls) throws SQLException
 	{
 		try
 		{
@@ -82,7 +79,7 @@ public class SqlFunctionDao
 				this.setUserId(userId, connection);
 			}
 
-			return this.execute(connection, functionCalls);
+			return this.execute(connection, resultSupplier, functionCalls);
 		}
 		catch (SQLException ex)
 		{
@@ -101,39 +98,27 @@ public class SqlFunctionDao
 		}
 	}
 
-	private <T> List<T> execute(
-		Connection connection, SqlFunctionCall<T>[] sqlFunctionCalls)
-		throws SQLException
+	private <T> T execute(
+		Connection connection,
+		Supplier<T> resultSupplier,
+		SqlFunctionCall<?>... sqlFunctionCalls) throws SQLException
 	{
-		if (sqlFunctionCalls.length == 1)
+		for (SqlFunctionCall<?> sqlFunctionCall : sqlFunctionCalls)
 		{
-			return this.execute(connection, sqlFunctionCalls[0]);
+			execute(connection, sqlFunctionCall);
 		}
 
-		// Be lazy, return value from first function call.
-		// This is that is needed for inserting CrudItemGroups
-		List<T> firstResult = null;
-		for (int i = 0; i < sqlFunctionCalls.length; i++)
-		{
-			List<T> result = this.execute(connection, sqlFunctionCalls[i]);
-			if (i == 0)
-			{
-				firstResult = result;
-			}
-		}
-		return firstResult;
+		return resultSupplier.get();
 	}
 
-	private <T> List<T> execute(
-		Connection connection, SqlFunctionCall<T> sqlFunctionCall)
+	private void execute(
+		Connection connection, SqlFunctionCall<?> sqlFunctionCall)
 		throws SQLException
 	{
 		String sql = sqlFunctionCall.getFunctionCallSql();
 		try (CallableStatement callableStatement = connection.prepareCall(sql))
 		{
-			sqlFunctionCall.setParameters(callableStatement);
-
-			return sqlFunctionCall.execute(callableStatement);
+			sqlFunctionCall.execute(callableStatement);
 		}
 	}
 
@@ -145,13 +130,14 @@ public class SqlFunctionDao
 			= new IntegerSqlFunctionParameter("id", userId);
 		SqlFunctionCall<Integer>
 			sqlFunctionCall
-			= new SingleCommandSqlFunctionCall<>(
-			SET_USER_ID_FUNCTION_NAME,
+			= new SimpleCommandSqlFunctionCall<>(SET_USER_ID_FUNCTION_NAME,
 			Collections.singletonList(userIdParameter),
-			new SimpleResultSetTransformer<>(
-				true,
-				resultSet -> resultSet.getInt(SET_USER_ID_FUNCTION_NAME)));
-		Integer setUserId = this.execute(connection, sqlFunctionCall).get(0);
+			new SimpleResultSetTransformer<>(resultSet -> resultSet.getInt(
+				SET_USER_ID_FUNCTION_NAME)));
+
+		Integer setUserId = this.execute(connection,
+			sqlFunctionCall::getResult,
+			sqlFunctionCall);
 
 		if (setUserId == null || setUserId != userId)
 		{

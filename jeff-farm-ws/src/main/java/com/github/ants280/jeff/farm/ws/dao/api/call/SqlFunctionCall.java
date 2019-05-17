@@ -25,9 +25,6 @@ public abstract class SqlFunctionCall<T>
 			String.join(", ", Collections.nCopies(numParameters, "?")));
 	}
 
-	public abstract void setParameters(PreparedStatement preparedStatement)
-		throws SQLException;
-
 	protected void setParameters(
 		PreparedStatement preparedStatement,
 		List<SqlFunctionParameter> inParameters) throws SQLException
@@ -39,6 +36,8 @@ public abstract class SqlFunctionCall<T>
 		}
 	}
 
-	public abstract List<T> execute(PreparedStatement preparedStatement)
+	public abstract void execute(PreparedStatement preparedStatement)
 		throws SQLException;
+
+	public abstract T getResult();
 }

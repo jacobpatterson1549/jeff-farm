@@ -2,11 +2,11 @@ package com.github.ants280.jeff.farm.ws.dao.api.crud;
 
 import com.github.ants280.jeff.farm.ws.dao.api.SqlFunctionDao;
 import com.github.ants280.jeff.farm.ws.dao.api.call.BatchCommandSqlFunctionCall;
-import com.github.ants280.jeff.farm.ws.dao.api.call.SingleCommandSqlFunctionCall;
+import com.github.ants280.jeff.farm.ws.dao.api.call.SimpleCommandSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.IntegerSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.SqlFunctionParameter;
-import com.github.ants280.jeff.farm.ws.dao.api.transformer.CrudItemGroupResultSetTransformer;
+import com.github.ants280.jeff.farm.ws.dao.api.transformer.ListResultSetTransformer;
 import com.github.ants280.jeff.farm.ws.dao.api.transformer.SimpleResultSetTransformer;
 import com.github.ants280.jeff.farm.ws.model.CrudItem;
 import com.github.ants280.jeff.farm.ws.model.CrudItemGroup;
@@ -14,15 +14,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
 import javax.sql.DataSource;
 
 public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGroup<V, T>>
 	extends SqlFunctionDao
 {
-	public CrudItemGroupDao(DataSource dataSource)
+	private final Function<V, Integer> groupIdMappingFunction;
+
+	public CrudItemGroupDao(
+		DataSource dataSource, ToIntFunction<V> groupIdMappingFunction)
 	{
 		super(dataSource);
+		this.groupIdMappingFunction = groupIdMappingFunction::applyAsInt;
 	}
 
 	public abstract int create(T entity);
@@ -50,44 +57,66 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 		int userId)
 	{
 		SqlFunctionCall<Integer>
-			groupFunctionCall
+			createGroupFunctionCall
 			= new ParentIdSettingSqlFunctionCall(createGroupFunctionName,
 			groupInParameters,
 			itemInParameters,
 			parentIdColumnName);
-		SqlFunctionCall<Integer>
-			itemsFunctionCall
-			= new BatchCommandSqlFunctionCall<>(createItemsFunctionName,
+		SqlFunctionCall<Void>
+			createItemsFunctionCall
+			= new BatchCommandSqlFunctionCall(createItemsFunctionName,
 			itemInParameters);
-		return this.executeSingle(userId, groupFunctionCall, itemsFunctionCall);
+
+		return this.execute(userId,
+			(a, b) -> a,
+			createGroupFunctionCall,
+			createItemsFunctionCall);
 	}
 
 	protected T executeRead(
-		String functionName,
-		List<SqlFunctionParameter> inParameters,
-		ToIntFunction<V> groupIdMappingFunction)
+		String readGroupFunctionName,
+		List<SqlFunctionParameter> readGroupInParameters,
+		String readItemsFunctionName,
+		List<SqlFunctionParameter> readItemsInParameters)
 	{
-		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(functionName,
-			inParameters,
-			new CrudItemGroupResultSetTransformer<>(true,
-				this::mapGroup,
-				this::mapItem,
-				groupIdMappingFunction));
-		return this.executeSingle(null, functionCall);
+		SqlFunctionCall<T>
+			readGroupFunctionCall
+			= new SimpleCommandSqlFunctionCall<>(readGroupFunctionName,
+			readGroupInParameters,
+			new SimpleResultSetTransformer<>(this::mapGroup));
+		SqlFunctionCall<List<V>>
+			readItemsFunctionCall
+			= new SimpleCommandSqlFunctionCall<>(readItemsFunctionName,
+			readItemsInParameters,
+			new ListResultSetTransformer<>(this::mapItem));
+
+		return this.execute(null,
+			this::addItemsToGroup,
+			readGroupFunctionCall,
+			readItemsFunctionCall);
 	}
 
 	protected List<T> executeReadList(
-		String functionName,
-		List<SqlFunctionParameter> inParameters,
-		ToIntFunction<V> groupIdMappingFunction)
+		String readGroupFunctionName,
+		List<SqlFunctionParameter> readGroupInParameters,
+		String readItemsFunctionName,
+		List<SqlFunctionParameter> readItemsInParameters)
 	{
-		SqlFunctionCall<T> functionCall = new SingleCommandSqlFunctionCall<>(functionName,
-			inParameters,
-			new CrudItemGroupResultSetTransformer<>(false,
-				this::mapGroup,
-				this::mapItem,
-				groupIdMappingFunction));
-		return this.execute(null, functionCall);
+		SimpleCommandSqlFunctionCall<List<T>>
+			readGroupFunctionCall
+			= new SimpleCommandSqlFunctionCall<>(readGroupFunctionName,
+			readGroupInParameters,
+			new ListResultSetTransformer<>(this::mapGroup));
+		SqlFunctionCall<List<V>>
+			readItemsFunctionCall
+			= new SimpleCommandSqlFunctionCall<>(readItemsFunctionName,
+			readItemsInParameters,
+			new ListResultSetTransformer<>(this::mapItem));
+
+		return this.execute(null,
+			this::partitionItemsForGroups,
+			readGroupFunctionCall,
+			readItemsFunctionCall);
 	}
 
 	protected void executeUpdate(
@@ -98,28 +127,43 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 		int userId)
 	{
 		SqlFunctionCall<Void>
-			groupFunctionCall
-			= new SingleCommandSqlFunctionCall<>(updateGroupFunctionName,
+			updateGroupFunctionCall
+			= new SimpleCommandSqlFunctionCall<>(updateGroupFunctionName,
 			groupInParameters,
-			new SimpleResultSetTransformer<>(false, null));
+			new SimpleResultSetTransformer<>(null));
 		SqlFunctionCall<Void>
-			itemsFunctionCall
-			= new BatchCommandSqlFunctionCall<>(updateItemsFunctionName,
+			updateItemsFunctionCall
+			= new BatchCommandSqlFunctionCall(updateItemsFunctionName,
 			itemInParameters);
-		this.executeUpdate(userId, groupFunctionCall, itemsFunctionCall);
+
+		this.execute(
+			userId,
+			updateGroupFunctionCall,
+			updateItemsFunctionCall);
 	}
 
 
 	protected void executeDelete(
-		String functionName,
-		List<SqlFunctionParameter> inParameters,
+		String deleteGroupFunctionName,
+		List<SqlFunctionParameter> deleteGroupInParameters,
+		String deleteItemsFunctionName,
+		List<SqlFunctionParameter> deleteItemsInParameters,
 		int userId)
 	{
-		SqlFunctionCall<Void> functionCall = new SingleCommandSqlFunctionCall<>(
-			functionName,
-			inParameters,
-			new SimpleResultSetTransformer<>(false, null));
-		this.executeUpdate(userId, functionCall);
+		SqlFunctionCall<Void>
+			deleteGroupFunctionCall
+			= new SimpleCommandSqlFunctionCall<>(deleteGroupFunctionName,
+			deleteGroupInParameters,
+			null);
+		SqlFunctionCall<Void>
+			deleteItemsFunctionCall
+			= new SimpleCommandSqlFunctionCall<>(deleteItemsFunctionName,
+			deleteItemsInParameters,
+			null);
+
+		this.execute(userId,
+			deleteGroupFunctionCall,
+			deleteItemsFunctionCall);
 	}
 
 	protected boolean canDelete(
@@ -129,14 +173,39 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 	{
 		SqlFunctionCall<Boolean>
 			functionCall
-			= new SingleCommandSqlFunctionCall<>(functionName,
+			= new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
-			new SimpleResultSetTransformer<>(true,
-				resultSet -> resultSet.getBoolean(outParameterName)));
-		return this.executeSingle(null, functionCall);
+			new SimpleResultSetTransformer<>(resultSet -> resultSet.getBoolean(
+				outParameterName)));
+
+		return this.execute(null, functionCall);
 	}
 
-	private static class ParentIdSettingSqlFunctionCall extends SingleCommandSqlFunctionCall<Integer>
+	private T addItemsToGroup(T crudItemGroup, List<V> crudItems)
+	{
+		crudItemGroup.setItems(crudItems);
+
+		return crudItemGroup;
+	}
+
+	private List<T> partitionItemsForGroups(
+		List<T> crudItemGroups, List<V> crudItems)
+	{
+
+		Map<Integer, T> crudItemGroupsById = crudItemGroups.stream()
+			.collect(Collectors.toMap(CrudItemGroup::getId,
+				Function.identity()));
+		Map<Integer, List<V>> crudItemsByGroupId = crudItems.stream()
+			.collect(Collectors.groupingBy(groupIdMappingFunction));
+
+		crudItemGroupsById.forEach((id, crudItemGroup) -> crudItemGroup.setItems(
+			crudItemsByGroupId.get(id)));
+
+		return crudItemGroups;
+	}
+
+	private static class ParentIdSettingSqlFunctionCall
+		extends SimpleCommandSqlFunctionCall<Integer>
 	{
 		private final List<List<SqlFunctionParameter>> itemInParameters;
 		private final String parentIdColumnName;
@@ -147,27 +216,29 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 			List<List<SqlFunctionParameter>> itemInParameters,
 			String parentIdColumnName)
 		{
-			super(functionCallSql, groupInParameters, new SimpleResultSetTransformer<>(false, null));
+			super(functionCallSql,
+				groupInParameters,
+				new SimpleResultSetTransformer<>(null));
 			this.itemInParameters = itemInParameters;
 			this.parentIdColumnName = parentIdColumnName;
 		}
 
 		@Override
-		public List<Integer> execute(PreparedStatement preparedStatement)
+		public void execute(PreparedStatement preparedStatement)
 			throws SQLException
 		{
-			List<Integer> results = super.execute(preparedStatement);
+			super.execute(preparedStatement);
+			Integer parentId = this.getResult();
 
 			// set the parentId in the itemInParameters
-			Integer parentId = results.get(0);
 			itemInParameters.stream()
 				.flatMap(List::stream)
-				.filter(sqlFunctionParameter -> sqlFunctionParameter.getName().equals(parentIdColumnName)
+				.filter(sqlFunctionParameter -> sqlFunctionParameter.getName()
+					.equals(parentIdColumnName)
 					&& sqlFunctionParameter instanceof IntegerSqlFunctionParameter)
 				.map(sqlFunctionParameter -> (IntegerSqlFunctionParameter) sqlFunctionParameter)
-				.forEach(sqlFunctionParameter -> sqlFunctionParameter.setValue(parentId));
-
-			return results;
+				.forEach(sqlFunctionParameter -> sqlFunctionParameter.setValue(
+					parentId));
 		}
 	}
 }

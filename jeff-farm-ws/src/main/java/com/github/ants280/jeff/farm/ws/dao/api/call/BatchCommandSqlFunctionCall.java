@@ -4,10 +4,9 @@ import com.github.ants280.jeff.farm.ws.dao.api.SqlDaoException;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.SqlFunctionParameter;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
 
-public class BatchCommandSqlFunctionCall<T> extends SqlFunctionCall<T>
+public class BatchCommandSqlFunctionCall extends SqlFunctionCall<Void>
 {
 	private final List<List<SqlFunctionParameter>> inParametersList;
 
@@ -20,7 +19,7 @@ public class BatchCommandSqlFunctionCall<T> extends SqlFunctionCall<T>
 	}
 
 	@Override
-	public void setParameters(PreparedStatement preparedStatement)
+	public void execute(PreparedStatement preparedStatement)
 		throws SQLException
 	{
 		for (List<SqlFunctionParameter> inParameters : inParametersList)
@@ -28,12 +27,8 @@ public class BatchCommandSqlFunctionCall<T> extends SqlFunctionCall<T>
 			this.setParameters(preparedStatement, inParameters);
 			preparedStatement.addBatch();
 		}
-	}
 
-	@Override
-	public List<T> execute(PreparedStatement preparedStatement)
-		throws SQLException
-	{
+		// TODO: debug this to ensure this variable is populated as expected.
 		int[] updateCounts = preparedStatement.executeBatch();
 
 		if (updateCounts.length != inParametersList.size())
@@ -54,7 +49,11 @@ public class BatchCommandSqlFunctionCall<T> extends SqlFunctionCall<T>
 					updateCounts[i]));
 			}
 		}
+	}
 
-		return Collections.emptyList();
+	@Override
+	public Void getResult()
+	{
+		return null;
 	}
 }

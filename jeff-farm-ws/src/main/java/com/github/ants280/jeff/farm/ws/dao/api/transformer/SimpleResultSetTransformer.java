@@ -4,58 +4,27 @@ import com.github.ants280.jeff.farm.ws.dao.api.RowMapper;
 import com.github.ants280.jeff.farm.ws.dao.api.SqlDaoException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SimpleResultSetTransformer<T> implements ResultSetTransformer<T>
 {
-	private final boolean expectSingleRecord;
 	private final RowMapper<T> crudItemRowMapper;
-	private final List<T> results;
-	private boolean resultSetTransformed;
 
-	public SimpleResultSetTransformer(
-		boolean expectSingleRecord,
-		RowMapper<T> rowMapper)
+	public SimpleResultSetTransformer(RowMapper<T> rowMapper)
 	{
-		this.expectSingleRecord = expectSingleRecord;
 		this.crudItemRowMapper = rowMapper;
-		this.results = new ArrayList<>();
-		this.resultSetTransformed = false;
 	}
 
 	@Override
-	public void accept(ResultSet resultSet) throws SQLException
+	public T transform(ResultSet resultSet) throws SQLException
 	{
-		if (resultSetTransformed)
+		resultSet.next();
+		T result = crudItemRowMapper.getValue(resultSet);
+
+		if (resultSet.next())
 		{
-			throw new SqlDaoException("ResultSet already transformed.");
+			throw new SqlDaoException("Expected single ResultsSet, got more");
 		}
 
-		while (resultSet.next())
-		{
-			if (crudItemRowMapper != null)
-			{
-				results.add(crudItemRowMapper.getValue(resultSet));
-			}
-		}
-
-		resultSetTransformed = true;
-	}
-
-	@Override
-	public List<T> getResults() throws SqlDaoException
-	{
-		if (!resultSetTransformed)
-		{
-			throw new SqlDaoException("ResultSet not transformed.");
-		}
-		if (expectSingleRecord && results.size() != 1)
-		{
-			throw new SqlDaoException(String.format("Expected single record, but got %d.",
-				results.size()));
-		}
-
-		return results;
+		return result;
 	}
 }
