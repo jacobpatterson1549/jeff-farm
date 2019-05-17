@@ -14,13 +14,13 @@ import org.junit.Test;
 public class CrudItemTest
 {
 	private Jsonb jsonb;
-	
+
 	@Before
 	public void setUp()
 	{
 		jsonb = JsonbBuilder.create();
 	}
-	
+
 	@Test
 	public void testGetId()
 	{
@@ -53,6 +53,15 @@ public class CrudItemTest
 
 		assertThat(modifiedDate1, is(not(nullValue())));
 	}
+	@Test
+	public void testGetModifiedDate_null()
+	{
+		CrudItem crudItem = new CrudItemImpl().setModifiedTimestamp(null);
+
+		String modifiedDate1 = crudItem.getModifiedDate();
+
+		assertThat(modifiedDate1, is(nullValue()));
+	}
 
 	@Test
 	public void testSerialize()
@@ -64,7 +73,7 @@ public class CrudItemTest
 				.setId(id)
 				.setCreatedTimestamp(createdDate)
 				.setModifiedTimestamp(modifiedDate);
-		
+
 		String serializedCrudItemImpl = jsonb.toJson(crudItem1);
 
 		assertThat(serializedCrudItemImpl.contains("id"), is(true));

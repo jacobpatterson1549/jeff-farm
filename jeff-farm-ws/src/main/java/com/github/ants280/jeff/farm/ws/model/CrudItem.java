@@ -21,11 +21,11 @@ public abstract class CrudItem<T extends CrudItem<T>>
 	private String createdDate;
 	private String modifiedDate;
 
-	private static String getFormattedTimestamp(Timestamp modifiedDate1)
+	private static String getFormattedTimestamp(Timestamp timestamp)
 	{
-		return modifiedDate1 == null
+		return timestamp == null
 			? null
-			: DATE_FORMAT.format(modifiedDate1.toInstant());
+			: DATE_FORMAT.format(timestamp.toInstant());
 	}
 
 	protected abstract T getThis();
