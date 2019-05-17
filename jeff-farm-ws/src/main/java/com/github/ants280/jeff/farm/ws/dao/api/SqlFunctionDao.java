@@ -6,8 +6,8 @@ import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.IntegerSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.SqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.transformer.SimpleResultSetTransformer;
-import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.function.BiFunction;
@@ -116,9 +116,11 @@ public class SqlFunctionDao
 		throws SQLException
 	{
 		String sql = sqlFunctionCall.getFunctionCallSql();
-		try (CallableStatement callableStatement = connection.prepareCall(sql))
+		try (
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				sql))
 		{
-			sqlFunctionCall.execute(callableStatement);
+			sqlFunctionCall.execute(preparedStatement);
 		}
 	}
 
