@@ -57,19 +57,28 @@ public class HiveTest
 	@Test(expected = Exception.class)
 	public void testDeserialize_colorWithoutPoundSign()
 	{
-		String serializedFarm = "{\"queenColor\":\"00ff00\"}";
+		String serializedHive = "{\"queenColor\":\"00ff00\"}";
 
-		jsonb.fromJson(serializedFarm, Hive.class);
+		jsonb.fromJson(serializedHive, Hive.class);
 
 		fail("expected to fail");
 	}
 	
 	@Test(expected = Exception.class)
+	public void testDeserialize_invalidColor_null()
+	{
+		String serializedHive = "{{\"queenColor\":\"1\"}";
+
+		jsonb.fromJson(serializedHive, Hive.class);
+
+		fail("expected to fail");
+	}
+	@Test(expected = Exception.class)
 	public void testDeserialize_invalidColor_large()
 	{
-		String serializedFarm = "{\"queenColor\":\"#1000000\"}";
+		String serializedHive = "{\"queenColor\":null}";
 
-		jsonb.fromJson(serializedFarm, Hive.class);
+		jsonb.fromJson(serializedHive, Hive.class);
 
 		fail("expected to fail");
 	}
@@ -77,9 +86,9 @@ public class HiveTest
 	@Test(expected = Exception.class)
 	public void testDeserialize_invalidColor_small()
 	{
-		String serializedFarm = "{\"queenColor\":\"#fff\"}";
+		String serializedHive = "{\"queenColor\":\"#fff\"}";
 
-		jsonb.fromJson(serializedFarm, Hive.class);
+		jsonb.fromJson(serializedHive, Hive.class);
 
 		fail("expected to fail");
 	}
@@ -87,9 +96,9 @@ public class HiveTest
 	@Test(expected = Exception.class)
 	public void testDeserialize_invalidColor_badHex()
 	{
-		String serializedFarm = "{\"queenColor\":\"#alfred\"}";
+		String serializedHive = "{\"queenColor\":\"#alfred\"}";
 
-		jsonb.fromJson(serializedFarm, Hive.class);
+		jsonb.fromJson(serializedHive, Hive.class);
 
 		fail("expected to fail");
 	}
@@ -97,9 +106,9 @@ public class HiveTest
 	@Test
 	public void testDeserialize_UPPERCASE_ok()
 	{
-		String serializedFarm = "{\"queenColor\":\"#FF0000\"}";
+		String serializedHive = "{\"queenColor\":\"#FF0000\"}";
 
-		Hive hive = jsonb.fromJson(serializedFarm, Hive.class);
+		Hive hive = jsonb.fromJson(serializedHive, Hive.class);
 
 		assertThat(hive.getQueenColorInteger(), is(0xff0000));
 	}
@@ -107,9 +116,9 @@ public class HiveTest
 	@Test
 	public void testDeserialize_okProblemColor()
 	{
-		String serializedFarm = "{\"queenColor\":\"#90FAfa\"}";
+		String serializedHive = "{\"queenColor\":\"#90FAfa\"}";
 
-		Hive hive = jsonb.fromJson(serializedFarm, Hive.class);
+		Hive hive = jsonb.fromJson(serializedHive, Hive.class);
 
 		assertThat(hive.getQueenColorInteger(), is(0x90FAFA));
 	}
