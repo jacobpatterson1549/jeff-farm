@@ -23,7 +23,7 @@ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS user_modified_date_trigger
 	ON users;
 CREATE TRIGGER user_modified_date_trigger
-	AFTER UPDATE
+	BEFORE UPDATE
 	ON users
 	FOR EACH ROW
 	EXECUTE PROCEDURE user_update_modified_date_function();

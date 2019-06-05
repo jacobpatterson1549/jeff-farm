@@ -38,7 +38,7 @@ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS hive_inspection_modified_date_trigger
 	ON hive_inspections;
 CREATE TRIGGER hive_inspection_modified_date_trigger
-	AFTER UPDATE
+	BEFORE UPDATE
 	ON hive_inspections
 	FOR EACH ROW
 	EXECUTE PROCEDURE hive_inspection_update_modified_date_function();

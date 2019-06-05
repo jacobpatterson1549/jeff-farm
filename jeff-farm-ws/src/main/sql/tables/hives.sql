@@ -26,7 +26,7 @@ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS hive_modified_date_trigger
 	ON hives;
 CREATE TRIGGER hive_modified_date_trigger
-	AFTER UPDATE
+	BEFORE UPDATE
 	ON hives
 	FOR EACH ROW
 	EXECUTE PROCEDURE hive_update_modified_date_function();

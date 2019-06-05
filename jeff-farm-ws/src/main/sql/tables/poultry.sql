@@ -25,7 +25,7 @@ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS poultry_modified_date_trigger
 	ON poultry;
 CREATE TRIGGER poultry_modified_date_trigger
-	AFTER UPDATE
+	BEFORE UPDATE
 	ON poultry
 	FOR EACH ROW
 	EXECUTE PROCEDURE poultry_update_modified_date_function();

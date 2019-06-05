@@ -22,7 +22,7 @@ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS farm_modified_date_trigger
 	ON farms;
 CREATE TRIGGER farm_modified_date_trigger
-	AFTER UPDATE
+	BEFORE UPDATE
 	ON farms
 	FOR EACH ROW
 	EXECUTE PROCEDURE farm_update_modified_date_function();
