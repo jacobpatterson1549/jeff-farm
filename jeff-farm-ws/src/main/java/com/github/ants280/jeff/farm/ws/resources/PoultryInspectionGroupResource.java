@@ -47,7 +47,7 @@ public class PoultryInspectionGroupResource
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getPoultriesList(@PathParam("farmId") int farmId)
+	public Response getPoultryList(@PathParam("farmId") int farmId)
 	{
 		List<PoultryInspectionGroup> poultryInspectionGroups
 			= poultryInspectionGroupDao.readList(farmId);
