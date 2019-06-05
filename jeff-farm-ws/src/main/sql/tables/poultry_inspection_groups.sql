@@ -23,7 +23,7 @@ $poultry_inspection_groups$
 LANGUAGE plpgsql;
 
 DROP TRIGGER IF EXISTS poultry_inspection_group_modified_date_trigger
-	ON poultry_inspection_group;
+	ON poultry_inspection_groups;
 CREATE TRIGGER poultry_inspection_group_modified_date_trigger
 	AFTER UPDATE
 	ON poultry_inspection_groups
