@@ -52,24 +52,28 @@ $poultry_audit$
 			( action_type
 			, user_id
 			, id
+			, farm_id
 			, name
 			)
 		VALUES
 			( 'b'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
 			, OLD.id
+			, OLD.farm_id
 			, OLD.name
 			);
 		INSERT INTO poultry_audit
 			( action_type
 			, user_id
 			, id
+			, farm_id
 			, name
 			)
 		VALUES
 			( 'a'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
 			, NEW.id
+			, NEW.farm_id
 			, NEW.name
 			);
 		RETURN NEW;
