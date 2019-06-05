@@ -55,7 +55,7 @@ public class Main
 		tomcat.start();
 		Logger.getLogger(Main.class.getName())
 			.log(Level.INFO,
-				"Server started at {0} - Press Ctrl-C to stop.",
+				"Server started at {0}/ - Press Ctrl-C to stop.",
 				uri);
 		tomcat.getServer().await();
 	}
