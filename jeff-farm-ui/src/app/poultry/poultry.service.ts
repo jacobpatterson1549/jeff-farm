@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { CrudService, CrudChild } from '../crud/crud.service';
-import { Farm } from './farm';
+import { Poultry } from './poultry';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
 @Injectable()
-export class FarmsService extends CrudService<Farm> {
+export class PoultrysService extends CrudService<Poultry> {
 
   constructor(
     errorsService: ErrorMessagesService,
@@ -15,22 +15,31 @@ export class FarmsService extends CrudService<Farm> {
     super(errorsService, httpClient);
   }
 
-  createCrudItem(): Farm {
-    return new Farm();
+  createCrudItem(): Poultry {
+    return new Poultry(this.getFarmId());
+  }
+
+  getSingularName(): string {
+    return 'Poultry';
   }
 
   getPluralName(): string {
-    return 'Farms';
+    return 'Poultry';
   }
 
   getCrudChildren(): CrudChild[] {
     return [
-      { pluralName: 'Hives', path: 'hives' },
-      { pluralName: 'Poultry', path: 'poultry' },
+      // { pluralName: 'Inspections', path: '../inspections' },
     ];
   }
 
   getBaseUrl(): string {
-    return 'farms';
+
+    return `farms/${this.getFarmId()}/poultry`;
+  }
+
+  getFarmId(): number {
+
+    return +this.getRouteParam('farm_id');
   }
 }

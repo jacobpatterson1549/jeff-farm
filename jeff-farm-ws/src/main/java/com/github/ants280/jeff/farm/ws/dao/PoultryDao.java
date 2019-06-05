@@ -50,7 +50,8 @@ public class PoultryDao extends CrudItemDao<Poultry>
 	{
 		return this.executeReadList(
 			"read_poultry_list",
-			Collections.emptyList());
+			Arrays.asList(
+				new IntegerSqlFunctionParameter(Poultry.FARM_ID_COLUMN, parentId)));
 	}
 
 	@Override
@@ -60,7 +61,6 @@ public class PoultryDao extends CrudItemDao<Poultry>
 			"update_poultry",
 			Arrays.asList(
 				new IntegerSqlFunctionParameter(Poultry.ID_COLUMN, id),
-				new IntegerSqlFunctionParameter(Poultry.FARM_ID_COLUMN, poultry.getFarmId()),
 				new StringSqlFunctionParameter(Poultry.NAME_COLUMN, poultry.getName())),
 			loginDao.getUserId());
 	}

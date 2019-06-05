@@ -31,7 +31,7 @@ export abstract class CrudService<T extends CrudItem> {
     this.route = route;
   }
 
-  getSingularName() {
+  getSingularName(): string {
     const pluralName: string = this.getPluralName();
     return pluralName.substring(0, pluralName.length - 1);
   }
