@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Title } from '@angular/platform-browser';
 
 import { CrudService, CrudChild } from '../crud.service';
 import { CrudItem } from '../crud.item';
-import { FormItemType } from '../form.item';
 import { CrudDeleteComponent } from '../crud-delete/crud-delete.component';
+import { CrudDisplayDirective } from '../CrudDisplayDirective';
 
 @Component({
   templateUrl: './crud-view.component.html',
@@ -13,15 +13,14 @@ import { CrudDeleteComponent } from '../crud-delete/crud-delete.component';
 export class CrudViewComponent<T extends CrudItem> implements OnInit {
 
   crudItem: T;
-  displayFieldNames: string[];
-  displayFormItemTypes: object;
-  formItemType = FormItemType; // used for the ngSwitch in the template
   canDelete = false;
   crudChildren: CrudChild[];
   crudItemSingularName: string;
+  @ViewChild(CrudDisplayDirective) viewDirective: CrudDisplayDirective;
 
   constructor(
     private titleService: Title,
+    private componentFactoryResolver: ComponentFactoryResolver,
     private modalService: NgbModal,
     private crudService: CrudService<T>) { }
 
@@ -29,18 +28,12 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
     this.crudChildren = this.crudService.getCrudChildren();
     this.crudItemSingularName = this.crudService.getSingularName();
     this.crudService.get()
-      .subscribe((crudItem: T) => {
-        this.crudItem = crudItem;
-        this.displayFieldNames = crudItem.getDisplayFieldNames();
-
-        this.displayFormItemTypes = crudItem.getFormItems()
-          .filter(formItem => this.displayFieldNames.indexOf(formItem.name) >= 0)
-          .reduce((obj, formItem) => {
-            obj[formItem.name] = formItem.type;
-            return obj;
-          }, {});
-
-        this.titleService.setTitle(`${this.crudService.getSingularName()} ${crudItem.getDisplayValue()} details`);
+    .subscribe((crudItem: T) => {
+      this.crudItem = crudItem;
+      this.titleService.setTitle(`${this.crudService.getSingularName()} ${crudItem.getDisplayValue()} details`);
+      this.viewDirective.viewContainerRef.createComponent(
+        this.componentFactoryResolver.resolveComponentFactory(
+          this.crudItem.getViewComponent()));
       });
 
     this.crudService.canDelete()

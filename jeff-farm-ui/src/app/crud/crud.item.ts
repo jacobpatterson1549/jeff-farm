@@ -1,4 +1,6 @@
+import { Type } from '@angular/core';
 import { FormItem } from './form.item';
+import { CrudItemViewComponent } from './crud-item-view/crud-item-view.component';
 
 export abstract class CrudItem {
 
@@ -20,5 +22,9 @@ export abstract class CrudItem {
             .map(formItem => formItem.name)
             .filter(formItemName => !formItemName.endsWith('Id'))
             .concat(['createdDate', 'modifiedDate']);
+    }
+
+    getViewComponent(): Type<any> {
+        return CrudItemViewComponent;
     }
 }

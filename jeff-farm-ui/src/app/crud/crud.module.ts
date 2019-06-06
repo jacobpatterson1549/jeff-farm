@@ -13,6 +13,8 @@ import { LoginStatusModule } from '../login-status/login-status.module';
 import { CrudDeleteComponent } from './crud-delete/crud-delete.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerModule } from '../spinner/spinner.module';
+import { CrudItemViewComponent } from './crud-item-view/crud-item-view.component';
+import { CrudDisplayDirective } from './CrudDisplayDirective';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { SpinnerModule } from '../spinner/spinner.module';
     CrudViewComponent,
     CrudFormComponent,
     CrudDeleteComponent,
+    CrudDisplayDirective,
+    CrudItemViewComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +43,7 @@ import { SpinnerModule } from '../spinner/spinner.module';
   ],
   entryComponents: [
     CrudDeleteComponent,
+    CrudItemViewComponent,
   ]
 })
 export class CrudModule { }

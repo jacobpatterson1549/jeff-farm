@@ -1,25 +1,5 @@
+<ng-template appCrudDisplay></ng-template>
 <div *ngIf="crudItem">
-  <table class="table table-bordered table-striped">
-    <tr *ngFor="let displayFieldName of displayFieldNames">
-      <td>{{displayFieldName}}</td>
-      <td>
-        <div [ngSwitch]="displayFormItemTypes[displayFieldName]">
-          <div *ngSwitchCase="formItemType.Boolean">
-            <input type="checkbox" disabled [ngModel]="crudItem[displayFieldName]">
-          </div>
-          <div *ngSwitchCase="formItemType.Color">
-            <input type="color" disabled [ngModel]="crudItem[displayFieldName]">
-          </div>
-          <div *ngSwitchCase="formItemType.Stars">
-            <ngb-rating readonly="true" max="5" [rate]="crudItem[displayFieldName]"></ngb-rating>
-          </div>
-          <div *ngSwitchDefault>
-            <span>{{crudItem[displayFieldName]}}</span>
-          </div>
-        </div>
-      </td>
-    </tr>
-  </table>
   <button type="button" class="btn btn-secondary" routerLink="update">Update</button>
   <button type="button" class="btn btn-secondary" #deleteButton [disabled]="!canDelete"
     (click)="deleteCrudItem()">Delete</button>
