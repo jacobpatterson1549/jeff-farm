@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 
 import { CrudModule } from '../crud/crud.module';
 import { CrudService } from '../crud/crud.service';
-import { PoultrysService } from './poultry.service';
+import { PoultryService } from './poultry.service';
 
 @NgModule({
   providers: [
     {
       provide: CrudService,
-      useClass: PoultrysService
+      useClass: PoultryService
     },
   ],
   imports: [

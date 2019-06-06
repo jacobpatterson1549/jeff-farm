@@ -6,7 +6,7 @@ import { Poultry } from './poultry';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
 @Injectable()
-export class PoultrysService extends CrudService<Poultry> {
+export class PoultryService extends CrudService<Poultry> {
 
   constructor(
     errorsService: ErrorMessagesService,
