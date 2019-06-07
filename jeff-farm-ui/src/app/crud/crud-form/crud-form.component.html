@@ -1,26 +1,7 @@
-<div *ngIf="formType">
-  <form #crudForm="ngForm" *ngIf="formItems" (ngSubmit)="submitForm()" ngNativeValidate>
-    <div *ngFor="let formItem of formItems" class="formItem">
-      <label [for]="formItem.name">{{formItem.name | titlecase}}</label>
-      <div [ngSwitch]="formItem.type" class="formItemInput">
-        <input [name]="formItem.name" *ngSwitchCase="formItemType.String" type="text" required
-          [(ngModel)]="formItem.value" [autocomplete]="formItem.name == 'userName' ? 'username' : null">
-        <input [name]="formItem.name" *ngSwitchCase="formItemType.Boolean" type="checkbox" [(ngModel)]="formItem.value">
-        <input [name]="formItem.name" *ngSwitchCase="formItemType.Integer" type="number" required
-          [(ngModel)]="formItem.value">
-        <ngb-rating [id]="formItem.name" *ngSwitchCase="formItemType.Stars" max="5" resettable="true" required
-          [ngClass]="{'stars-invalid': validStars(formItem)}" [(rate)]="formItem.value"></ngb-rating>
-        <input [name]="formItem.name" *ngSwitchCase="formItemType.Color" type="color" required
-          [(ngModel)]="formItem.value">
-        <input [name]="formItem.name" *ngSwitchCase="formItemType.Password" autocomplete="new-password" type="password"
-          required [(ngModel)]="formItem.value">
-        <span *ngSwitchDefault>[Unknown editor type]</span>
-      </div>
-    </div>
-    <div *ngIf="!passwordsMatch()"><span>Passwords must match</span><br /></div>
-    <button class="btn btn-primary" [disabled]="working || crudForm.invalid || !passwordsMatch() || !allValidStars()"
-      type="submit">{{submitValue}}</button>
-    <app-spinner [visible]="working"></app-spinner>
-  </form>
-</div>
+<form #crudForm="ngForm" (ngSubmit)="submitForm()" ngNativeValidate>
+  <ng-template appCrudDisplay></ng-template>
+  <button class="btn btn-primary" [disabled]="working || crudForm.invalid || !isValid()"
+    type="submit">{{submitValue}}</button>
+  <app-spinner [visible]="working"></app-spinner>
+</form>
 <app-navigation></app-navigation>

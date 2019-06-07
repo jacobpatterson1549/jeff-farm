@@ -15,6 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerModule } from '../spinner/spinner.module';
 import { CrudItemViewComponent } from './crud-item-view/crud-item-view.component';
 import { CrudDisplayDirective } from './CrudDisplayDirective';
+import { CrudItemFormComponent } from './crud-item-form/crud-item-form.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { CrudDisplayDirective } from './CrudDisplayDirective';
     CrudDeleteComponent,
     CrudDisplayDirective,
     CrudItemViewComponent,
+    CrudItemFormComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +46,7 @@ import { CrudDisplayDirective } from './CrudDisplayDirective';
   entryComponents: [
     CrudDeleteComponent,
     CrudItemViewComponent,
+    CrudItemFormComponent,
   ]
 })
 export class CrudModule { }

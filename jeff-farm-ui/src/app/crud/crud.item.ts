@@ -1,6 +1,7 @@
 import { Type } from '@angular/core';
 import { FormItem } from './form.item';
 import { CrudItemViewComponent } from './crud-item-view/crud-item-view.component';
+import { CrudItemFormComponent } from './crud-item-form/crud-item-form.component';
 
 export abstract class CrudItem {
 
@@ -26,5 +27,9 @@ export abstract class CrudItem {
 
     getViewComponent(): Type<any> {
         return CrudItemViewComponent;
+    }
+
+    getFormComponent(): Type<any> {
+        return CrudItemFormComponent;
     }
 }
