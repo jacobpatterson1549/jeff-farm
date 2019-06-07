@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { CrudService } from '../crud.service';
+import { CrudService, CrudChild } from '../crud.service';
 import { CrudItem } from '../crud.item';
 
 @Component({
@@ -10,6 +10,7 @@ import { CrudItem } from '../crud.item';
 })
 export class CrudListComponent<T extends CrudItem> implements OnInit {
 
+  crudChildren: CrudChild[];
   crudItemName: string;
   crudItems: T[];
 
@@ -22,6 +23,7 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
   }
 
   ngOnInit() {
+    this.crudChildren = this.crudService.getCrudGroups();
     this.crudItemName = this.crudService.getSingularName();
     this.titleService.setTitle(`${this.crudService.getPluralName()} List`);
 

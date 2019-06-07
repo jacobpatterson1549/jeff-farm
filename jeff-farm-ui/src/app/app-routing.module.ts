@@ -15,6 +15,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'farms/:farm_id/poultry/inspections',
+    loadChildren: './poultry-inspection-groups/poultry-inspection-groups.module#PoultryInspectionGroupsModule',
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'farms/:farm_id/poultry',
     loadChildren: './poultry/poultry.module#PoultryModule',
     canActivate: [AuthGuard],

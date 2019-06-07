@@ -5,7 +5,7 @@ import { CrudService } from '../crud.service';
 import { FormItemType } from '../form.item';
 
 @Component({
-  selector: 'app-crud-item-view',
+  selector: 'app-crud-item-view', // TODO: needed? (and other view/form components)
   templateUrl: './crud-item-view.component.html',
 })
 export class CrudItemViewComponent<T extends CrudItem> implements OnInit {

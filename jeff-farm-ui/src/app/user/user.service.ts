@@ -29,10 +29,6 @@ export class UserService extends CrudService<User> {
     return 'Users';
   }
 
-  getCrudChildren(): CrudChild[] {
-    return [];
-  }
-
   getBaseUrl(): string {
     return this.authService.isLoggedIn() ? 'user' : 'login/create';
   }

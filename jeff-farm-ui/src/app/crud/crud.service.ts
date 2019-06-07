@@ -23,7 +23,15 @@ export abstract class CrudService<T extends CrudItem> {
 
   abstract getPluralName(): string;
 
-  abstract getCrudChildren(): CrudChild[];
+  // The groups visible at the list level for this CrudItem
+  getCrudGroups(): CrudChild[] {
+    return [];
+  }
+
+  // The children that are descendents of individual items
+  getCrudChildren(): CrudChild[] {
+    return [];
+  }
 
   abstract getBaseUrl(): string;
 

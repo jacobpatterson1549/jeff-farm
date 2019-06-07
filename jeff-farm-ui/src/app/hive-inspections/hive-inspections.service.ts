@@ -23,10 +23,6 @@ export class HiveInspectionsService extends CrudService<HiveInspection> {
     return 'Hive Inspections';
   }
 
-  getCrudChildren(): CrudChild[] {
-    return [];
-  }
-
   getBaseUrl(): string {
 
     return `farms/${this.getFarmId()}/hives/${this.getHiveId()}/hiveInspections`;
