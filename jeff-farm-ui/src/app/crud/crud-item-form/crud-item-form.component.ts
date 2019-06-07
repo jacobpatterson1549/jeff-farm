@@ -24,19 +24,23 @@ export class CrudItemFormComponent<T extends CrudItem> implements CrudFormEditor
 
   setFormType(formType: FormType) {
     this.initCrudItem(formType)
-      .subscribe(_ => this.initFormItems());
+      .subscribe((crudItem: T) => {
+        this.setCrudItem(crudItem);
+      });
   }
 
-  private initCrudItem(formType: FormType): Observable<any> {
+  private initCrudItem(formType: FormType): Observable<T> {
     if (formType === FormType.Create) {
-      return of(this.crudItem = this.crudService.createCrudItem());
+      return of(this.crudService.createCrudItem());
     }
     if (formType === FormType.Update) {
-      return this.crudService.get()
-        .pipe(
-          tap(crudItem => this.crudItem = crudItem), // TODO: Move this to tap(), in setFormType?
-        );
+      return this.crudService.get();
     }
+  }
+
+  private setCrudItem(crudItem: T) {
+    this.crudItem = crudItem;
+    this.initFormItems();
   }
 
   private initFormItems() {
