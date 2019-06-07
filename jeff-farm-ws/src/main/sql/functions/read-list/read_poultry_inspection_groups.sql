@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS read_poultry_inspection_group_list;
-CREATE FUNCTION read_poultry_inspection_group_list(IN farm_id INT)
+DROP FUNCTION IF EXISTS read_poultry_inspection_groups;
+CREATE FUNCTION read_poultry_inspection_groups(IN farm_id INT)
 RETURNS SETOF poultry_inspection_groups
 AS
 $body$
@@ -10,6 +10,6 @@ $body$
 		, pig.created_date
 		, pig.modified_date
 	FROM poultry_inspection_groups AS pig
-	WHERE pig.farm_id = read_poultry_inspection_group_list.farm_id;
+	WHERE pig.farm_id = read_poultry_inspection_groups.farm_id;
 $body$
 LANGUAGE SQL;
