@@ -8,13 +8,14 @@ import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 
 // TODO: Rename CrudService to CrudItemsService
-export abstract class CrudItemGroupsService<U extends CrudItem, V extends CrudItem, T extends CrudItemGroup<V>> extends CrudService<T> {
+export abstract class CrudItemGroupsService<U extends CrudItem, V extends CrudItem, T extends CrudItemGroup<V>>
+    extends CrudService<T> {
 
     constructor(
         private selectItemService: CrudService<U>,
-        private errorMessagesService1: ErrorMessagesService,
-        private http1: HttpClient) {
-        super(errorMessagesService1, http1);
+        errorMessagesService: ErrorMessagesService,
+        http: HttpClient) {
+        super(errorMessagesService, http);
     }
 
     // TODO: specify which old items to delete, add
