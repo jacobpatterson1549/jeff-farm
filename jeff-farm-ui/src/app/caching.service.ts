@@ -1,32 +1,47 @@
 import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpRequest, HttpHandler, HttpResponse } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { tap, share } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CachingService {
 
-    cache = new Map<string, HttpResponse<any>>();
+    completedCache = new Map<string, HttpResponse<any>>();
+    pendingCache = new Map<string, Observable<HttpEvent<any>>>();
 
-    isCached(url: string): boolean {
-        return this.cache.has(url);
-    }
-
-    get(url: string): HttpResponse<any> {
-        return this.cache.get(url);
-    }
-
-    add(url: string, httpResponse: HttpResponse<any>) {
-        if (!this.isCached(url)) {
-            this.cache.set(url, httpResponse);
+    handle(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const completedResponse = this.completedCache.get(req.url) || null;
+        if (completedResponse) {
+            return of(completedResponse);
         }
+
+        const pendingResponse = this.pendingCache.get(req.url) || null;
+        if (pendingResponse) {
+            return pendingResponse;
+        }
+
+        const pendingRequest = next.handle(req)
+            .pipe(
+                share(),
+                tap(value => {
+                    if (value instanceof HttpResponse) {
+                        this.completedCache.set(req.url, value);
+                        this.pendingCache.delete(req.url);
+                    }
+                }));
+        this.pendingCache.set(req.url, pendingRequest);
+        return pendingRequest;
     }
 
     clear() {
-        this.cache.clear();
+        this.completedCache.clear();
+        this.pendingCache.clear();
     }
 
     remove(url: string) {
-        this.cache.delete(url);
+        this.completedCache.delete(url);
+        this.pendingCache.delete(url);
     }
 }
