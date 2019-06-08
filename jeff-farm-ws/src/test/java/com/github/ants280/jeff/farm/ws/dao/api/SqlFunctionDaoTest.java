@@ -4,6 +4,7 @@ import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.sql.DataSource;
@@ -33,7 +34,7 @@ public class SqlFunctionDaoTest
 		mockConnection = mock(Connection.class);
 		mockDataSource = mock(DataSource.class);
 		when(mockDataSource.getConnection()).thenReturn(mockConnection);
-		sqlFunctionDao = new SqlFunctionDao(mockDataSource) {};
+		sqlFunctionDao = new SqlFunctionDao(mockDataSource);
 	}
 
 	@Test
@@ -49,14 +50,14 @@ public class SqlFunctionDaoTest
 		when(mockUserIdResultSet.next()).thenReturn(true, false);
 		when(mockUserIdResultSet.getInt(SqlFunctionDao.SET_USER_ID_FUNCTION_NAME))
 			.thenReturn(userId);
-		CallableStatement mockSetUserIdCallableStatement = mock(
+		PreparedStatement mockSetUserIdPreparedStatement = mock(
 			CallableStatement.class);
-		when(mockSetUserIdCallableStatement.execute()).thenReturn(true);
-		when(mockSetUserIdCallableStatement.getMoreResults()).thenReturn(false);
-		when(mockSetUserIdCallableStatement.getResultSet()).thenReturn(
+		when(mockSetUserIdPreparedStatement.execute()).thenReturn(true);
+		when(mockSetUserIdPreparedStatement.getMoreResults()).thenReturn(false);
+		when(mockSetUserIdPreparedStatement.getResultSet()).thenReturn(
 			mockUserIdResultSet);
-		when(mockConnection.prepareCall(contains(SqlFunctionDao.SET_USER_ID_FUNCTION_NAME)))
-			.thenReturn(mockSetUserIdCallableStatement);
+		when(mockConnection.prepareStatement(contains(SqlFunctionDao.SET_USER_ID_FUNCTION_NAME)))
+			.thenReturn(mockSetUserIdPreparedStatement);
 
 		Integer actualCreationId = sqlFunctionDao.execute(userId,
 			mockFunctionCall);
@@ -79,14 +80,14 @@ public class SqlFunctionDaoTest
 		when(mockUserIdResultSet.next()).thenReturn(true, false);
 		when(mockUserIdResultSet.getInt(SqlFunctionDao.SET_USER_ID_FUNCTION_NAME))
 			.thenReturn(userId);
-		CallableStatement mockSetUserIdCallableStatement = mock(
+		PreparedStatement mockSetUserIdPreparedStatement = mock(
 			CallableStatement.class);
-		when(mockSetUserIdCallableStatement.execute()).thenReturn(true);
-		when(mockSetUserIdCallableStatement.getMoreResults()).thenReturn(false);
-		when(mockSetUserIdCallableStatement.getResultSet()).thenReturn(
+		when(mockSetUserIdPreparedStatement.execute()).thenReturn(true);
+		when(mockSetUserIdPreparedStatement.getMoreResults()).thenReturn(false);
+		when(mockSetUserIdPreparedStatement.getResultSet()).thenReturn(
 			mockUserIdResultSet);
-		when(mockConnection.prepareCall(contains(SqlFunctionDao.SET_USER_ID_FUNCTION_NAME)))
-			.thenReturn(mockSetUserIdCallableStatement);
+		when(mockConnection.prepareStatement(contains(SqlFunctionDao.SET_USER_ID_FUNCTION_NAME)))
+			.thenReturn(mockSetUserIdPreparedStatement);
 
 		try
 		{
