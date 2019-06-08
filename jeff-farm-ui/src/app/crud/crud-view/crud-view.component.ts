@@ -16,7 +16,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   canDelete = false;
   crudChildren: CrudChild[];
   crudItemSingularName: string;
-  @ViewChild(CrudDisplayDirective) viewDirective: CrudDisplayDirective;
+  @ViewChild(CrudDisplayDirective, {static: false}) viewDirective: CrudDisplayDirective;
 
   constructor(
     private titleService: Title,

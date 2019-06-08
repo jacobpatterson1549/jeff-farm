@@ -7,36 +7,36 @@ import { AuthGuard } from './auth/auth.guard';
 const routes: Routes = [
   {
     path: 'login',
-    loadChildren: './login/login.module#LoginModule',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
   },
   {
     path: 'user',
-    loadChildren: './user/user.module#UserModule',
+    loadChildren: () => import('./user/user.module').then(m => m.UserModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'farms/:farm_id/poultry/inspections',
-    loadChildren: './poultry-inspection-groups/poultry-inspection-groups.module#PoultryInspectionGroupsModule',
+    loadChildren: () => import('./poultry-inspection-groups/poultry-inspection-groups.module').then(m => m.PoultryInspectionGroupsModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'farms/:farm_id/poultry',
-    loadChildren: './poultry/poultry.module#PoultryModule',
+    loadChildren: () => import('./poultry/poultry.module').then(m => m.PoultryModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'farms/:farm_id/hives/:hive_id/hiveInspections',
-    loadChildren: './hive-inspections/hive-inspections.module#HiveInspectionsModule',
+    loadChildren: () => import('./hive-inspections/hive-inspections.module').then(m => m.HiveInspectionsModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'farms/:farm_id/hives',
-    loadChildren: './hives/hives.module#HivesModule',
+    loadChildren: () => import('./hives/hives.module').then(m => m.HivesModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'farms',
-    loadChildren: './farms/farms.module#FarmsModule',
+    loadChildren: () => import('./farms/farms.module').then(m => m.FarmsModule),
     canActivate: [AuthGuard],
   },
   { path: '', redirectTo: '/farms', pathMatch: 'full' },

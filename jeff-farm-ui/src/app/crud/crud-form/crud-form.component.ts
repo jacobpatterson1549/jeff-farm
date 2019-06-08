@@ -18,7 +18,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   submitValue: string;
   crudFormEditorComponent: CrudFormEditor<T>;
   working = false;
-  @ViewChild(CrudDisplayDirective) viewDirective: CrudDisplayDirective;
+  @ViewChild(CrudDisplayDirective, {static: false}) viewDirective: CrudDisplayDirective;
 
   constructor(
     private titleService: Title,
