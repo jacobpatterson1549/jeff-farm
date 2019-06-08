@@ -12,17 +12,13 @@ export class CachingService {
     pendingCache = new Map<string, Observable<HttpEvent<any>>>();
 
     handle(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const completedResponse = this.completedCache.get(req.url) || null;
-        if (completedResponse) {
-            return of(completedResponse);
+        if (this.pendingCache.has(req.url)) {
+            return this.pendingCache.get(req.url);
         }
-
-        const pendingResponse = this.pendingCache.get(req.url) || null;
-        if (pendingResponse) {
-            return pendingResponse;
+        if (this.completedCache.has(req.url)) {
+            return of(this.completedCache.get(req.url));
         }
-
-        const pendingRequest = next.handle(req)
+        const pendingRequest: Observable<HttpEvent<any>> = next.handle(req)
             .pipe(
                 share(),
                 tap(value => {
