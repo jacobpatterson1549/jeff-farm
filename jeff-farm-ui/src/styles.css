@@ -2,6 +2,6 @@
 
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
-button {
-    margin: 1em;
+.btn {
+    margin: .2em;
 }

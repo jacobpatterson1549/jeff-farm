@@ -8,7 +8,7 @@
     <h4>Child items:</h4>
     <ul>
       <li *ngFor="let crudChild of crudChildren">
-        <a routerLink="{{crudChild.path}}">{{crudChild.pluralName}}</a>
+        <a routerLink="{{crudChild.path}}" class="btn btn-info">{{crudChild.pluralName}}</a>
       </li>
     </ul>
   </div>
