@@ -1,0 +1,14 @@
+{
+    "name": "Just Effective Farm Facilitation",
+    "short_name": "jeff-farm",
+    "description": "A website to track farm efficiency.",  
+    "icons": [{
+        "src": "assets/favicon512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }],
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#a0ff60"
+  }
