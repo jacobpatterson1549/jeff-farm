@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { GlobalProviders } from './global-providers';
 import { ErrorMessagesModule } from './error-messages/error-messages.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   providers: [
@@ -21,6 +23,7 @@ import { ErrorMessagesModule } from './error-messages/error-messages.module';
     HttpClientModule,
     AppRoutingModule,
     ErrorMessagesModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   bootstrap: [AppComponent]
 })
