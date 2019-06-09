@@ -18,7 +18,7 @@ var server = app.listen(process.env.PORT || 4200, function () {
 
 if (process.env.NODE_ENV === 'production') {
     app.use(function (req, res, next) {
-        return req.protocol === 'https'
+        return req.secure
             ? next()
             : res.redirect('https://' + req.headers.host + req.path);
     });
