@@ -29,7 +29,7 @@
     </tr>
     <tr *ngFor="let inspectionItem of crudItem.inspectionItems">
       <td>
-          <a routerLink="../{{inspectionItem.targetId}}" class="btn btn-info">{{inspectionItem.targetName}}</a>
+          <button (click)="goToInspection(inspectionItem.targetId)" class="btn btn-info">{{inspectionItem.targetName}}</button>
       </td>
       <td>
         <app-crud-item-view [crudItem]="inspectionItem" hideDates></app-crud-item-view>

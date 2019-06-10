@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { CrudItem } from '../crud.item';
 import { FormItemType } from '../form.item';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-crud-item-view',
@@ -17,7 +18,9 @@ export class CrudItemViewComponent<T extends CrudItem> implements OnInit {
   @Input()
   private hideDates ? = 'false';
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.displayFieldNames = this.crudItem.getDisplayFieldNames(this.hideDates !== '');
@@ -28,5 +31,9 @@ export class CrudItemViewComponent<T extends CrudItem> implements OnInit {
         obj[formItem.name] = formItem.type;
         return obj;
       }, {});
+  }
+
+  goToInspection(inspectionId: number) {
+    this.router.navigate(['../..', inspectionId], { relativeTo: this.route.parent });
   }
 }
