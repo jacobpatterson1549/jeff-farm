@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, Input } from '@angular/core';
 
 import { FormItem, FormItemType } from '../form.item';
-import { FormType } from '../form.type';
 import { CrudItem } from '../crud.item';
 
 @Component({
@@ -19,7 +17,8 @@ export class CrudItemFormComponent<T extends CrudItem> {
 
   constructor() { }
 
-  public initFormItems() {
+  public setCrudItem(crudItem: T) {
+    this.crudItem = crudItem;
     this.formItems = this.crudItem.getFormItems();
 
     this.passwordFormItems = [];

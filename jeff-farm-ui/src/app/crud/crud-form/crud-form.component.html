@@ -1,5 +1,5 @@
 <form #crudForm="ngForm" (ngSubmit)="submitForm()" ngNativeValidate>
-  <app-crud-item-view [crudItem]="crudItem"></app-crud-item-view>
+  <app-crud-item-form></app-crud-item-form>
   <button class="btn btn-primary" [disabled]="working || crudForm.invalid || !isValid()"
     type="submit">{{submitValue}}</button>
   <app-spinner [visible]="working"></app-spinner>

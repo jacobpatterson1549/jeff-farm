@@ -18,7 +18,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   formType: FormType;
   submitValue: string;
   working = false;
-  @ViewChild(CrudItemFormComponent, {static: false}) crudFormEditorComponent: CrudItemFormComponent<T>;
+  @ViewChild(CrudItemFormComponent, {static: true}) crudFormEditorComponent: CrudItemFormComponent<T>;
 
   constructor(
     private titleService: Title,
@@ -33,7 +33,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
     this.initCrudItem(this.formType)
       .subscribe((crudItem: T) => {
         this.crudItem = crudItem;
-        this.crudFormEditorComponent.initFormItems();
+        this.crudFormEditorComponent.setCrudItem(this.crudItem);
       });
   }
 
