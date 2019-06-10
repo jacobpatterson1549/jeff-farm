@@ -1,21 +1,16 @@
-import { CrudItem } from '../crud/crud.item';
 import { FormItem, FormItemType } from '../crud/form.item';
+import { CrudItemInspection } from '../crud/crud.item.inspection';
+import { Poultry } from '../poultry/poultry';
 
-export class PoultryInspection extends CrudItem {
+export class PoultryInspection extends CrudItemInspection<Poultry> {
 
-    public poultryInspectionGroupId: number;
-    public poultryId: number;
     public birdCount: number;
     public eggCount: number;
 
     constructor(
-        poultryInspectionGroupId: number,
-        poultryId: number,
         birdCount: number,
         eggCount: number) {
         super();
-        this.poultryInspectionGroupId = poultryInspectionGroupId;
-        this.poultryId = poultryId;
         this.birdCount = birdCount;
         this.eggCount = eggCount;
     }
@@ -28,6 +23,6 @@ export class PoultryInspection extends CrudItem {
     }
 
     getDisplayValue(): string {
-        return this.poultryId.toString();
+        return this.targetName.toString();
     }
 }

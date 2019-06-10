@@ -9,7 +9,7 @@ import { tap, map, catchError } from 'rxjs/operators';
 import { CrudItemInspection } from './crud.item.inspection';
 
 // TODO: Rename CrudService to CrudItemsService
-export abstract class CrudItemGroupsService<V extends CrudItemInspection, T extends CrudItemGroup<V>>
+export abstract class CrudItemGroupsService<U extends CrudItem, V extends CrudItemInspection<U>, T extends CrudItemGroup<V>>
     extends CrudService<T> {
 
     constructor(

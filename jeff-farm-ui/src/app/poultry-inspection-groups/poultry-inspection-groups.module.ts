@@ -18,10 +18,6 @@ import { PoultryService } from '../poultry/poultry.service';
       provide: CrudService, // TODO: investigate if this can be excluded.
       useClass: PoultryInspectionGroupsService
     },
-    {
-      provide: PoultryService,
-      useClass: PoultryService
-    },
   ],
   imports: [
     CommonModule,
