@@ -1,34 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { CrudItem } from '../crud.item';
-import { CrudService } from '../crud.service';
 import { FormItemType } from '../form.item';
 
 @Component({
-  selector: 'app-crud-item-view', // TODO: needed? (and other view/form components)
+  selector: 'app-crud-item-view',
   templateUrl: './crud-item-view.component.html',
 })
 export class CrudItemViewComponent<T extends CrudItem> implements OnInit {
 
-  crudItem: T;
   displayFieldNames: string[];
   displayFormItemTypes: object;
   formItemType = FormItemType; // used for the ngSwitch in the template
+  @Input()
+  crudItem: T;
+  @Input()
+  private viewDates ? = true;
 
-  constructor(private crudService: CrudService<T>) { }
+  constructor() { }
 
   ngOnInit() {
-    this.crudService.get()
-      .subscribe((crudItem: T) => {
-        this.crudItem = crudItem;
-        this.displayFieldNames = crudItem.getDisplayFieldNames();
+    this.displayFieldNames = this.crudItem.getDisplayFieldNames(this.viewDates);
 
-        this.displayFormItemTypes = crudItem.getFormItems()
-          .filter(formItem => this.displayFieldNames.indexOf(formItem.name) >= 0)
-          .reduce((obj, formItem) => {
-            obj[formItem.name] = formItem.type;
-            return obj;
-          }, {});
-      });
+    this.displayFormItemTypes = this.crudItem.getFormItems()
+      .filter(formItem => this.displayFieldNames.indexOf(formItem.name) >= 0)
+      .reduce((obj, formItem) => {
+        obj[formItem.name] = formItem.type;
+        return obj;
+      }, {});
   }
 }

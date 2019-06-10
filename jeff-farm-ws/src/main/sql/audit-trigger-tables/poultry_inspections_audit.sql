@@ -7,8 +7,8 @@ CREATE TABLE IF NOT EXISTS poultry_inspections_audit
 	, user_id INT NOT NULL
 	, action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	, id INT
-	, poultry_inspection_group_id INT NOT NULL
-	, poultry_id INT NOT NULL
+	, group_id INT NOT NULL
+	, target_id INT NOT NULL
 	, bird_count INT NOT NULL
 	, egg_count INT NOT NULL
 	);
@@ -22,8 +22,8 @@ $poultry_inspections_audit$
 			( action_type
 			, user_id
 			, id
-			, poultry_inspection_group_id
-			, poultry_id
+			, group_id
+			, target_id
 			, bird_count
 			, egg_count
 			)
@@ -31,8 +31,8 @@ $poultry_inspections_audit$
 			( 'i'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
 			, NEW.id
-			, NEW.poultry_inspection_group_id
-			, NEW.poultry_id
+			, NEW.group_id
+			, NEW.target_id
 			, NEW.bird_count
 			, NEW.egg_count
 			);
@@ -58,8 +58,8 @@ $poultry_inspections_audit$
 			( action_type
 			, user_id
 			, id
-			, poultry_inspection_group_id
-			, poultry_id
+			, group_id
+			, target_id
 			, bird_count
 			, egg_count
 			)
@@ -67,8 +67,8 @@ $poultry_inspections_audit$
 			( 'b'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
 			, OLD.id
-			, OLD.poultry_inspection_group_id
-			, OLD.poultry_id
+			, OLD.group_id
+			, OLD.target_id
 			, OLD.bird_count
 			, OLD.egg_count
 			);
@@ -76,8 +76,8 @@ $poultry_inspections_audit$
 			( action_type
 			, user_id
 			, id
-			, poultry_inspection_group_id
-			, poultry_id
+			, group_id
+			, target_id
 			, bird_count
 			, egg_count
 			)
@@ -85,8 +85,8 @@ $poultry_inspections_audit$
 			( 'a'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
 			, NEW.id
-			, NEW.poultry_inspection_group_id
-			, NEW.poultry_id
+			, NEW.group_id
+			, NEW.target_id
 			, NEW.bird_count
 			, NEW.egg_count
 			);
@@ -112,8 +112,8 @@ $poultry_inspections_audit$
 			( action_type
 			, user_id
 			, id
-			, poultry_inspection_group_id
-			, poultry_id
+			, group_id
+			, target_id
 			, bird_count
 			, egg_count
 			)
@@ -121,8 +121,8 @@ $poultry_inspections_audit$
 			( 'd'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
 			, OLD.id
-			, OLD.poultry_inspection_group_id
-			, OLD.poultry_id
+			, OLD.group_id
+			, OLD.target_id
 			, OLD.bird_count
 			, OLD.egg_count
 			);

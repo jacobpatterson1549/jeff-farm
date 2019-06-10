@@ -1,28 +1,27 @@
-import { Component, OnInit, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 import { CrudService } from '../crud.service';
 import { CrudItem } from '../crud.item';
 import { FormType } from '../form.type';
-import { CrudDisplayDirective } from '../CrudDisplayDirective';
-import { CrudFormEditor } from './crud-form-editor';
+import { CrudItemFormComponent } from '../crud-item-form/crud-item-form.component';
 
 @Component({
   templateUrl: './crud-form.component.html',
 })
 export class CrudFormComponent<T extends CrudItem> implements OnInit {
 
+  crudItem: T;
   formType: FormType;
   submitValue: string;
-  crudFormEditorComponent: CrudFormEditor<T>;
   working = false;
-  @ViewChild(CrudDisplayDirective, {static: false}) viewDirective: CrudDisplayDirective;
+  @ViewChild(CrudItemFormComponent, {static: false}) crudFormEditorComponent: CrudItemFormComponent<T>;
 
   constructor(
     private titleService: Title,
-    private componentFactoryResolver: ComponentFactoryResolver,
     private router: Router,
     private route: ActivatedRoute,
     private crudService: CrudService<T>) { }
@@ -31,11 +30,20 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
     this.formType = this.computeFormType();
     this.submitValue = (this.formType === FormType.Update) ? 'Update' : 'Submit';
     this.titleService.setTitle(`${(this.formType === FormType.Update) ? 'Update' : 'Create'} ${this.crudService.getSingularName()}`);
-    const componentRef = this.viewDirective.viewContainerRef.createComponent(
-      this.componentFactoryResolver.resolveComponentFactory(
-        this.crudService.createCrudItem().getFormComponent()));
-    this.crudFormEditorComponent = componentRef.instance;
-    this.crudFormEditorComponent.setFormType(this.formType);
+    this.initCrudItem(this.formType)
+      .subscribe((crudItem: T) => {
+        this.crudItem = crudItem;
+        this.crudFormEditorComponent.initFormItems();
+      });
+  }
+
+  private initCrudItem(formType: FormType): Observable<T> {
+    if (formType === FormType.Create) {
+      return of(this.crudService.createCrudItem());
+    }
+    if (formType === FormType.Update) {
+      return this.crudService.get();
+    }
   }
 
   private computeFormType(): FormType {

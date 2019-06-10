@@ -6,6 +6,6 @@ AS
 $body$
 	SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END
 		FROM poultry_inspections AS pi
-		WHERE pi.poultry_id = can_delete_poultry.id;
+		WHERE pi.target_id = can_delete_poultry.id;
 $body$
 LANGUAGE SQL;

@@ -3,7 +3,7 @@ package com.github.ants280.jeff.farm.ws.model;
 import java.util.List;
 
 public class PoultryInspectionGroup
-	extends CrudItemGroup<PoultryInspection, PoultryInspectionGroup>
+	extends CrudItemInspectionGroup<PoultryInspection, PoultryInspectionGroup>
 {
 	public static final String FARM_ID_COLUMN = "farm_id";
 	public static final String NOTES_COLUMN = "notes";
@@ -18,13 +18,13 @@ public class PoultryInspectionGroup
 	}
 
 	@Override
-	public List<PoultryInspection> getItems()
+	public List<PoultryInspection> getInspectionItems()
 	{
 		return items;
 	}
 
 	@Override
-	public PoultryInspectionGroup setItems(List<PoultryInspection> items)
+	public PoultryInspectionGroup setInspectionItems(List<PoultryInspection> items)
 	{
 		this.items = items;
 		return this;

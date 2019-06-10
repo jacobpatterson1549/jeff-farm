@@ -5,14 +5,14 @@ import { CrudItemGroup } from './crud.item.group';
 import { CrudItem } from './crud.item';
 import { CrudService } from './crud.service';
 import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, catchError } from 'rxjs/operators';
+import { CrudItemInspection } from './crud.item.inspection';
 
 // TODO: Rename CrudService to CrudItemsService
-export abstract class CrudItemGroupsService<U extends CrudItem, V extends CrudItem, T extends CrudItemGroup<V>>
+export abstract class CrudItemGroupsService<V extends CrudItemInspection, T extends CrudItemGroup<V>>
     extends CrudService<T> {
 
     constructor(
-        private selectItemService: CrudService<U>,
         errorMessagesService: ErrorMessagesService,
         http: HttpClient) {
         super(errorMessagesService, http);
@@ -21,11 +21,10 @@ export abstract class CrudItemGroupsService<U extends CrudItem, V extends CrudIt
     // TODO: specify which old items to delete, add
     // put(t: T): Observable<object> {...}
 
-    getSelectItems(): Observable<Map<number, U>> {
-        return this.selectItemService.getList()
-            .pipe(map((items: U[]) => items.reduce((m, item) => {
-                m[item.id] = item;
-                return m;
-            }, new Map())));
-    }
+    getTargets(): Observable<Map<number, string>> {
+        return this.http.get<Map<number, string>>(this.getBaseUrl())
+          .pipe(
+            catchError(this.errorMessagesService.handleError<any>('targets')),
+          );
+      }
 }

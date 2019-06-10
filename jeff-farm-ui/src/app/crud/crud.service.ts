@@ -16,8 +16,8 @@ export abstract class CrudService<T extends CrudItem> {
   private route: ActivatedRoute;
 
   constructor(
-    private errorMessagesService: ErrorMessagesService,
-    private http: HttpClient) { }
+    protected errorMessagesService: ErrorMessagesService,
+    protected http: HttpClient) { }
 
   abstract createCrudItem(): T;
 

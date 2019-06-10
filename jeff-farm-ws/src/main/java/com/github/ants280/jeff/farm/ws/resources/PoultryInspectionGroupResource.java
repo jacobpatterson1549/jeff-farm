@@ -3,6 +3,7 @@ package com.github.ants280.jeff.farm.ws.resources;
 import com.github.ants280.jeff.farm.ws.dao.PoultryInspectionGroupDao;
 import com.github.ants280.jeff.farm.ws.model.PoultryInspectionGroup;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -83,5 +84,17 @@ public class PoultryInspectionGroupResource
 		boolean canDelete = poultryInspectionGroupDao.canDelete(id);
 
 		return Response.ok(canDelete).build();
+	}
+
+
+	@GET
+	@Path("targets")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getTargets(@PathParam("farmId") int farmId)
+	{
+		Map<Integer, String> targets = poultryInspectionGroupDao.getTargets(
+			farmId);
+
+		return Response.ok(targets).build();
 	}
 }

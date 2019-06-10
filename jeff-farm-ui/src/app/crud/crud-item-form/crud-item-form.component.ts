@@ -1,49 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 import { FormItem, FormItemType } from '../form.item';
-import { CrudFormEditor } from '../crud-form/crud-form-editor';
 import { FormType } from '../form.type';
 import { CrudItem } from '../crud.item';
-import { CrudService } from '../crud.service';
 
 @Component({
   selector: 'app-crud-item-form',
   templateUrl: './crud-item-form.component.html',
   styleUrls: ['./crud-item-form.component.css']
 })
-export class CrudItemFormComponent<T extends CrudItem> implements CrudFormEditor<T> {
+export class CrudItemFormComponent<T extends CrudItem> {
 
   crudItem: T;
   formItems: FormItem[];
   formItemType = FormItemType; // used for the ngSwitch in the template
   passwordFormItems: FormItem[];
 
-  constructor(private crudService: CrudService<T>) { }
+  constructor() { }
 
-  setFormType(formType: FormType) {
-    this.initCrudItem(formType)
-      .subscribe((crudItem: T) => {
-        this.setCrudItem(crudItem);
-      });
-  }
-
-  private initCrudItem(formType: FormType): Observable<T> {
-    if (formType === FormType.Create) {
-      return of(this.crudService.createCrudItem());
-    }
-    if (formType === FormType.Update) {
-      return this.crudService.get();
-    }
-  }
-
-  private setCrudItem(crudItem: T) {
-    this.crudItem = crudItem;
-    this.initFormItems();
-  }
-
-  private initFormItems() {
+  public initFormItems() {
     this.formItems = this.crudItem.getFormItems();
 
     this.passwordFormItems = [];

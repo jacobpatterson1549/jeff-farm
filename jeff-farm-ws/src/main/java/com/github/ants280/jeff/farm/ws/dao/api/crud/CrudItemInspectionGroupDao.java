@@ -8,28 +8,24 @@ import com.github.ants280.jeff.farm.ws.dao.api.parameter.IntegerSqlFunctionParam
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.SqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.transformer.ListResultSetTransformer;
 import com.github.ants280.jeff.farm.ws.dao.api.transformer.SimpleResultSetTransformer;
-import com.github.ants280.jeff.farm.ws.model.CrudItem;
-import com.github.ants280.jeff.farm.ws.model.CrudItemGroup;
+import com.github.ants280.jeff.farm.ws.model.CrudItemInspection;
+import com.github.ants280.jeff.farm.ws.model.CrudItemInspectionGroup;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 import javax.sql.DataSource;
 
-public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGroup<V, T>>
+public abstract class CrudItemInspectionGroupDao
+	<V extends CrudItemInspection<?, V>, T extends CrudItemInspectionGroup<V, T>>
 	extends SqlFunctionDao
 {
-	private final Function<V, Integer> groupIdMappingFunction;
-
-	public CrudItemGroupDao(
-		DataSource dataSource, ToIntFunction<V> groupIdMappingFunction)
+	public CrudItemInspectionGroupDao(DataSource dataSource)
 	{
 		super(dataSource);
-		this.groupIdMappingFunction = groupIdMappingFunction::applyAsInt;
 	}
 
 	public abstract int create(T entity);
@@ -43,6 +39,8 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 	public abstract void delete(int id);
 
 	public abstract boolean canDelete(int id);
+
+	public abstract Map<Integer, String> getTargets(int parentId);
 
 	protected abstract T mapGroup(ResultSet rs) throws SQLException;
 
@@ -183,7 +181,7 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 
 	private T addItemsToGroup(T crudItemGroup, List<V> crudItems)
 	{
-		crudItemGroup.setItems(crudItems);
+		crudItemGroup.setInspectionItems(crudItems);
 
 		return crudItemGroup;
 	}
@@ -193,12 +191,13 @@ public abstract class CrudItemGroupDao<V extends CrudItem, T extends CrudItemGro
 	{
 
 		Map<Integer, T> crudItemGroupsById = crudItemGroups.stream()
-			.collect(Collectors.toMap(CrudItemGroup::getId,
+			.collect(Collectors.toMap(
+				CrudItemInspectionGroup::getId,
 				Function.identity()));
 		Map<Integer, List<V>> crudItemsByGroupId = crudItems.stream()
-			.collect(Collectors.groupingBy(groupIdMappingFunction));
+			.collect(Collectors.groupingBy(CrudItemInspection::getGroupId));
 
-		crudItemGroupsById.forEach((id, crudItemGroup) -> crudItemGroup.setItems(
+		crudItemGroupsById.forEach((id, crudItemGroup) -> crudItemGroup.setInspectionItems(
 			crudItemsByGroupId.get(id)));
 
 		return crudItemGroups;

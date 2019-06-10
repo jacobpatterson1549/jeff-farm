@@ -1,5 +1,5 @@
-<ng-template appCrudDisplay></ng-template>
 <div *ngIf="crudItem">
+  <app-crud-item-view [crudItem]="crudItem"></app-crud-item-view>
   <button type="button" class="btn btn-secondary" routerLink="update">Update</button>
   <button type="button" class="btn btn-secondary" #deleteButton [disabled]="!canDelete"
     (click)="deleteCrudItem()">Delete</button>

@@ -3,14 +3,14 @@
 
 CREATE TABLE IF NOT EXISTS poultry_inspections
 	( id SERIAL PRIMARY KEY
-	, poultry_inspection_group_id INT NOT NULL
-	, poultry_id INT NOT NULL
+	, group_id INT NOT NULL
+	, target_id INT NOT NULL
 	, bird_count INT NOT NULL
 	, egg_count INT NOT NULL
 	, created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	, modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
-	, FOREIGN KEY (poultry_inspection_group_id)
+	, FOREIGN KEY (group_id)
 		REFERENCES poultry_inspection_groups(id)
 	, FOREIGN KEY (poultry_id)
 		REFERENCES poultry(id)
