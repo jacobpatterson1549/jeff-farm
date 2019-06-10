@@ -22,6 +22,10 @@ export class PoultryInspectionGroupsService
     return new PoultryInspectionGroup();
   }
 
+  createCrudItemInspection(): PoultryInspection {
+    return new PoultryInspection();
+  }
+
   getSingularName(): string {
     return 'Poultry Inspection Group';
   }

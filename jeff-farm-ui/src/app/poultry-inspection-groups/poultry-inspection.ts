@@ -7,12 +7,8 @@ export class PoultryInspection extends CrudItemInspection<Poultry> {
     public birdCount: number;
     public eggCount: number;
 
-    constructor(
-        birdCount: number,
-        eggCount: number) {
+    constructor() {
         super();
-        this.birdCount = birdCount;
-        this.eggCount = eggCount;
     }
 
     getFormItems(): FormItem[] {

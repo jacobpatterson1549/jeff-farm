@@ -10,21 +10,31 @@ import { CrudItemInspection } from './crud.item.inspection';
 
 // TODO: Rename CrudService to CrudItemsService
 export abstract class CrudItemGroupsService<U extends CrudItem, V extends CrudItemInspection<U>, T extends CrudItemGroup<V>>
-    extends CrudService<T> {
+  extends CrudService<T> {
 
-    constructor(
-        errorMessagesService: ErrorMessagesService,
-        http: HttpClient) {
-        super(errorMessagesService, http);
-    }
+  constructor(
+    errorMessagesService: ErrorMessagesService,
+    http: HttpClient) {
+    super(errorMessagesService, http);
+  }
 
-    // TODO: specify which old items to delete, add
-    // put(t: T): Observable<object> {...}
+  abstract createCrudItemInspection(): V;
 
-    getTargets(): Observable<Map<number, string>> {
-        return this.http.get<Map<number, string>>(this.getBaseUrl())
-          .pipe(
-            catchError(this.errorMessagesService.handleError<any>('targets')),
-          );
-      }
+  get(): Observable<T> {
+    return super.get()
+      .pipe(
+        tap((crudItemGroup: T) =>
+          crudItemGroup.inspectionItems.forEach((data, index, items) =>
+            items[index] = Object.assign(this.createCrudItemInspection(), data))));
+  }
+
+  // TODO: specify which old items to delete, add
+  // put(t: T): Observable<object> {...}
+
+  getTargets(): Observable<Map<number, string>> {
+    return this.http.get<Map<number, string>>(this.getBaseUrl())
+      .pipe(
+        catchError(this.errorMessagesService.handleError<any>('targets')),
+      );
+  }
 }

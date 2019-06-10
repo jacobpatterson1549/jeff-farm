@@ -19,3 +19,22 @@
     </td>
   </tr>
 </table>
+
+<div *ngIf="crudItem.inspectionItems">
+  <h4>Inspections:</h4>
+  <table class="table table-bordered table-striped">
+    <tr>
+      <th>Target Name</th>
+      <th>Inspection</th>
+    </tr>
+    <tr *ngFor="let inspectionItem of crudItem.inspectionItems">
+      <td>
+        <!-- <p>TODO: style as button</p> -->
+          <a routerLink="../{{inspectionItem.targetId}}">{{inspectionItem.targetName}}</a>
+      </td>
+      <td>
+        <app-crud-item-view [crudItem]="inspectionItem" hideDates></app-crud-item-view>
+      </td>
+    </tr>
+  </table>
+</div>
