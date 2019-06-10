@@ -15,12 +15,12 @@ export class CrudItemViewComponent<T extends CrudItem> implements OnInit {
   @Input()
   crudItem: T;
   @Input()
-  private hideDates ? = true; // HACK! actually false
+  private hideDates ? = 'false';
 
   constructor() { }
 
   ngOnInit() {
-    this.displayFieldNames = this.crudItem.getDisplayFieldNames(this.hideDates);
+    this.displayFieldNames = this.crudItem.getDisplayFieldNames(this.hideDates !== '');
 
     this.displayFormItemTypes = this.crudItem.getFormItems()
       .filter(formItem => this.displayFieldNames.indexOf(formItem.name) >= 0)
