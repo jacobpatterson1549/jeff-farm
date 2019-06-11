@@ -17,7 +17,6 @@ public class PoultryInspectionGroupTest
 		jsonb = JsonbBuilder.create();
 	}
 
-
 	@Test
 	public void testDeserialize_basic()
 	{
