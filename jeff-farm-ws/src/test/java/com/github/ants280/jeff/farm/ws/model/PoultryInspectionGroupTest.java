@@ -19,7 +19,7 @@ public class PoultryInspectionGroupTest
 
 
 	@Test
-	public void testDeserialize_dasic()
+	public void testDeserialize_basic()
 	{
 		String serializedFarm = "{\"inspectionItems\":[{\"targetId\":5,\"targetName\":\"duck\",\"birdCount\":2,\"eggCount\":1},{\"targetId\":6,\"targetName\":\"chicken\",\"birdCount\":17,\"eggCount\":6}],\"notes\":\"first inspection\",\"farmId\":14}";
 
