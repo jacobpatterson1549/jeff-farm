@@ -3,10 +3,10 @@ import { Observable } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators';
 
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
-import { CrudItemGroup } from './crud.item.group';
-import { CrudItem } from './crud.item';
-import { CrudItemService } from './crud.item.service';
-import { CrudItemInspection } from './crud.item.inspection';
+import { CrudItemGroup } from './crud-item-group';
+import { CrudItem } from './crud-item';
+import { CrudItemService } from './crud-item.service';
+import { CrudItemInspection } from './crud-item-inspection';
 
 export abstract class CrudItemGroupsService<U extends CrudItem, V extends CrudItemInspection<U>, T extends CrudItemGroup<V>>
   extends CrudItemService<T> {

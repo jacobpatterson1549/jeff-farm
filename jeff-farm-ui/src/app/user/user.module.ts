@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user-routing.module';
 import { UserService } from './user.service';
 import { CrudModule } from '../crud/crud.module';
-import { CrudItemService } from '../crud/crud.item.service';
+import { CrudItemService } from '../crud/crud-item.service';
 
 @NgModule({
   providers: [

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-import { CrudItem } from './crud.item';
+import { CrudItem } from './crud-item';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
 export interface CrudChild {

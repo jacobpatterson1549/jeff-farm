@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, AfterViewInit, QueryList, ViewChildren } from '@angular/core';
 
-import { FormItem, FormItemType } from '../form.item';
-import { CrudItem } from '../crud.item';
-import { CrudItemGroup } from '../crud.item.group';
-import { CrudItemService } from '../crud.item.service';
+import { FormItem, FormItemType } from '../form-item';
+import { CrudItem } from '../crud-item';
+import { CrudItemGroup } from '../crud-item-group';
+import { CrudItemService } from '../crud-item.service';
 import { CrudItemGroupsService } from '../crud-item-group.service';
 
 @Component({

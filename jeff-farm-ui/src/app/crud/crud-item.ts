@@ -1,4 +1,4 @@
-import { FormItem } from './form.item';
+import { FormItem } from './form-item';
 
 export abstract class CrudItem {
 

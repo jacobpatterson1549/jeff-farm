@@ -1,5 +1,5 @@
-import { FormItem, FormItemType } from '../crud/form.item';
-import { CrudItemInspection } from '../crud/crud.item.inspection';
+import { FormItem, FormItemType } from '../crud/form-item';
+import { CrudItemInspection } from '../crud/crud-item-inspection';
 import { Poultry } from '../poultry/poultry';
 
 export class PoultryInspection extends CrudItemInspection<Poultry> {

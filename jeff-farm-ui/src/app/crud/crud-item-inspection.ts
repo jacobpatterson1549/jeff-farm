@@ -1,4 +1,4 @@
-import { CrudItem } from './crud.item'; // TODO: use hiphens in filename: crud-item.  Same for this class (crud-item-group)
+import { CrudItem } from './crud-item';
 
 export abstract class CrudItemInspection<V extends CrudItem> extends CrudItem {
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { CrudItem } from '../crud.item';
-import { FormItemType } from '../form.item';
+import { CrudItem } from '../crud-item';
+import { FormItemType } from '../form-item';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({

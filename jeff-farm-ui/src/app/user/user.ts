@@ -1,5 +1,5 @@
-import { CrudItem } from '../crud/crud.item';
-import { FormItem, FormItemType } from '../crud/form.item';
+import { CrudItem } from '../crud/crud-item';
+import { FormItem, FormItemType } from '../crud/form-item';
 
 export class User extends CrudItem {
 

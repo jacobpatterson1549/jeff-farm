@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError } from 'rxjs/operators';
 
-import { CrudItemService } from '../crud.item.service';
-import { CrudItem } from '../crud.item';
+import { CrudItemService } from '../crud-item.service';
+import { CrudItem } from '../crud-item';
 
 @Component({
   templateUrl: './crud-delete.component.html',

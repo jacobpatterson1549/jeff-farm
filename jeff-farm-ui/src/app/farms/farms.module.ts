@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { CrudModule } from '../crud/crud.module';
-import { CrudItemService } from '../crud/crud.item.service';
+import { CrudItemService } from '../crud/crud-item.service';
 import { FarmsService } from './farms.service';
 
 @NgModule({

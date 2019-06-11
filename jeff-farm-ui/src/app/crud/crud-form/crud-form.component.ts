@@ -4,9 +4,9 @@ import { Title } from '@angular/platform-browser';
 import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import { CrudItemService } from '../crud.item.service';
-import { CrudItem } from '../crud.item';
-import { FormType } from '../form.type';
+import { CrudItemService } from '../crud-item.service';
+import { CrudItem } from '../crud-item';
+import { FormType } from '../form-type';
 import { CrudItemFormComponent } from '../crud-item-form/crud-item-form.component';
 
 @Component({
