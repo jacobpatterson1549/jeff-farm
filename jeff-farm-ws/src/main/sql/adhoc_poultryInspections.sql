@@ -1,38 +1,38 @@
 DO
 $$
 BEGIN
-	IF NOT EXISTS
+	IF EXISTS
 	(
 		SELECT table_name, column_name
 		FROM information_schema.columns
 		WHERE table_name = 'poultry_inspections'
-			AND column_name = 'target_id'
+			AND column_name = 'poultry_id'
 	)
 	THEN
 		ALTER TABLE poultry_inspections_audit RENAME poultry_id TO target_id;
 	END IF;
-	IF NOT EXISTS
+	IF EXISTS
 	(
 		SELECT table_name, column_name
 		FROM information_schema.columns
 		WHERE table_name = 'poultry_inspections'
-			AND column_name = 'group_id'
+			AND column_name = 'poultry_inspection_group_id'
 	)
 	THEN
 		ALTER TABLE poultry_inspections RENAME poultry_inspection_group_id TO group_id;
 	END IF;
 
-	IF NOT EXISTS
+	IF EXISTS
 	(
 		SELECT table_name, column_name
 		FROM information_schema.columns
 		WHERE table_name = 'poultry_inspections_audit'
-			AND column_name = 'target_id'
+			AND column_name = 'poultry_id'
 	)
 	THEN
 		ALTER TABLE poultry_inspections_audit RENAME poultry_id TO target_id;
 	END IF;
-	IF NOT EXISTS
+	IF EXISTS
 	(
 		SELECT table_name, column_name
 		FROM information_schema.columns
