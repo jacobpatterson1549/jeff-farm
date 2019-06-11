@@ -19,7 +19,7 @@ export class PoultryInspectionGroupsService
   }
 
   createCrudItem(): PoultryInspectionGroup {
-    return new PoultryInspectionGroup();
+    return new PoultryInspectionGroup(this.getFarmId());
   }
 
   createCrudItemInspection(): PoultryInspection {

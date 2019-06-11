@@ -5,10 +5,12 @@ import { PoultryInspection } from './poultry-inspection';
 
 export class PoultryInspectionGroup extends CrudItemGroup<PoultryInspection> {
 
+    public farmId: number;
     public notes: string;
 
-    constructor() {
+    constructor(farmId: number) {
         super();
+        this.farmId = farmId;
     }
 
     getFormItems(): FormItem[] {
