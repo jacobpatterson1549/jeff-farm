@@ -51,6 +51,7 @@ public abstract class CrudItemInspectionGroupDao
 		List<SqlFunctionParameter> groupInParameters,
 		String createItemsFunctionName,
 		List<List<SqlFunctionParameter>> itemInParameters,
+		String groupIdColumnName,
 		String parentIdColumnName,
 		int userId)
 	{
@@ -59,6 +60,7 @@ public abstract class CrudItemInspectionGroupDao
 			= new ParentIdSettingSqlFunctionCall(createGroupFunctionName,
 			groupInParameters,
 			itemInParameters,
+			groupIdColumnName,
 			parentIdColumnName);
 		SqlFunctionCall<Void>
 			createItemsFunctionCall
@@ -213,11 +215,12 @@ public abstract class CrudItemInspectionGroupDao
 			String functionCallSql,
 			List<SqlFunctionParameter> groupInParameters,
 			List<List<SqlFunctionParameter>> itemInParameters,
+			String groupIdColumnName,
 			String parentIdColumnName)
 		{
 			super(functionCallSql,
 				groupInParameters,
-				new SimpleResultSetTransformer<>(null));
+				new SimpleResultSetTransformer<>(rs -> rs.getInt(groupIdColumnName)));
 			this.itemInParameters = itemInParameters;
 			this.parentIdColumnName = parentIdColumnName;
 		}
