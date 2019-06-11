@@ -4,13 +4,13 @@ import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service';
-import { CrudService, CrudChild } from '../crud/crud.service';
+import { CrudItemService, CrudChild } from '../crud/crud.item.service';
 import { User } from './user';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { LoginService } from '../login/login.service';
 
 @Injectable()
-export class UserService extends CrudService<User> {
+export class UserService extends CrudItemService<User> {
 
   constructor(
     private authService: AuthService,

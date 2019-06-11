@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { CrudService } from '../crud.service';
+import { CrudItemService } from '../crud.item.service';
 import { CrudItem } from '../crud.item';
 
 @Component({
@@ -13,13 +13,13 @@ export class CrudDetailComponent<T extends CrudItem> implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private crudService: CrudService<T>) {
+    private crudItemService: CrudItemService<T>) {
 
-    this.crudService.setRoute(this.route);
+    this.crudItemService.setRoute(this.route);
   }
 
   ngOnInit() {
-    this.crudService.get()
+    this.crudItemService.get()
       .subscribe((crudItem: CrudItem) => {
         this.crudItemName = crudItem.getDisplayValue();
       });

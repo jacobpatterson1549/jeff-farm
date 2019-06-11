@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { CrudItem } from './crud.item';
-import { ActivatedRoute } from '@angular/router';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
 export interface CrudChild {
@@ -11,7 +11,7 @@ export interface CrudChild {
   path: string;
 }
 
-export abstract class CrudService<T extends CrudItem> {
+export abstract class CrudItemService<T extends CrudItem> {
 
   private route: ActivatedRoute;
 

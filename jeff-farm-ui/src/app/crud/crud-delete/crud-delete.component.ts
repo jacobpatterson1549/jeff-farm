@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError } from 'rxjs/operators';
 
-import { CrudService } from '../crud.service';
+import { CrudItemService } from '../crud.item.service';
 import { CrudItem } from '../crud.item';
 
 @Component({
@@ -18,9 +18,9 @@ export class CrudDeleteComponent<T extends CrudItem> {
   constructor(
     public modal: NgbActiveModal,
     private router: Router,
-    private crudService: CrudService<T>) {
+    private crudItemService: CrudItemService<T>) {
 
-    this.type = this.crudService.getSingularName();
+    this.type = this.crudItemService.getSingularName();
   }
 
   cancel() {
@@ -29,7 +29,7 @@ export class CrudDeleteComponent<T extends CrudItem> {
 
   ok() {
     this.working = true;
-    this.crudService.delete()
+    this.crudItemService.delete()
       .pipe(catchError((error: Error) => {
         this.working = false;
         this.modal.close(error.message);

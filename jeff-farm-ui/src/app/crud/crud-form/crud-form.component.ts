@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import { CrudService } from '../crud.service';
+import { CrudItemService } from '../crud.item.service';
 import { CrudItem } from '../crud.item';
 import { FormType } from '../form.type';
 import { CrudItemFormComponent } from '../crud-item-form/crud-item-form.component';
@@ -25,12 +25,12 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewI
     private titleService: Title,
     private router: Router,
     private route: ActivatedRoute,
-    private crudService: CrudService<T>) { }
+    private crudItemService: CrudItemService<T>) { }
 
   ngOnInit() {
     this.formType = this.computeFormType();
     this.submitValue = (this.formType === FormType.Update) ? 'Update' : 'Submit';
-    this.titleService.setTitle(`${(this.formType === FormType.Update) ? 'Update' : 'Create'} ${this.crudService.getSingularName()}`);
+    this.titleService.setTitle(`${(this.formType === FormType.Update) ? 'Update' : 'Create'} ${this.crudItemService.getSingularName()}`);
     this.initCrudItem(this.formType)
       .subscribe((crudItem: T) => {
         this.crudItem = crudItem;
@@ -43,10 +43,10 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewI
 
   private initCrudItem(formType: FormType): Observable<T> {
     if (formType === FormType.Create) {
-      return of(this.crudService.createCrudItem());
+      return of(this.crudItemService.createCrudItem());
     }
     if (formType === FormType.Update) {
-      return this.crudService.get();
+      return this.crudItemService.get();
     }
   }
 
@@ -68,7 +68,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewI
 
     if (this.formType === FormType.Create) {
       this.working = true;
-      this.crudService.post(crudItem)
+      this.crudItemService.post(crudItem)
         .pipe(catchError((error: Error) => {
           this.working = false;
           throw error;
@@ -82,7 +82,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewI
     }
     if (this.formType === FormType.Update) {
       this.working = true;
-      this.crudService.put(crudItem)
+      this.crudItemService.put(crudItem)
         .pipe(catchError((error: Error) => {
           this.working = false;
           throw error;

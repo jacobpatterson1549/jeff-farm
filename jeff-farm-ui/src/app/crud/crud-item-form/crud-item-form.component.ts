@@ -3,7 +3,7 @@ import { Component, Input, OnInit, AfterViewInit, QueryList, ViewChildren } from
 import { FormItem, FormItemType } from '../form.item';
 import { CrudItem } from '../crud.item';
 import { CrudItemGroup } from '../crud.item.group';
-import { CrudService } from '../crud.service';
+import { CrudItemService } from '../crud.item.service';
 import { CrudItemGroupsService } from '../crud-item-group.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterV
   private groupsInitialized = false;
   initialized = false;
 
-  constructor(private crudService: CrudService<T>) { }
+  constructor(private crudItemService: CrudItemService<T>) { }
 
   ngOnInit() {
     this.formItems = this.crudItem.getFormItems();
@@ -41,8 +41,8 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterV
       }
     }
 
-    if (this.crudItem instanceof CrudItemGroup && this.crudService instanceof CrudItemGroupsService) {
-      this.crudService.getTargets()
+    if (this.crudItem instanceof CrudItemGroup && this.crudItemService instanceof CrudItemGroupsService) {
+      this.crudItemService.getTargets()
         .subscribe((targets: Map<number, string>) => {
           this.targets = {};
           this.targets[0] = ' ';
@@ -128,8 +128,8 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterV
 
   addInspection(targetIndex: number) {
     if (targetIndex > 0 // not blank item
-      && this.crudItem instanceof CrudItemGroup && this.crudService instanceof CrudItemGroupsService) {
-      const inspectionItem = this.crudService.createCrudItemInspection();
+      && this.crudItem instanceof CrudItemGroup && this.crudItemService instanceof CrudItemGroupsService) {
+      const inspectionItem = this.crudItemService.createCrudItemInspection();
       const targetId: number = +Object.keys(this.targets)[targetIndex];
       inspectionItem.targetId = targetId;
       inspectionItem.targetName = this.targets[targetId];

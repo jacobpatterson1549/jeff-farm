@@ -2,7 +2,7 @@ import { Component, OnInit, ComponentFactoryResolver, ViewChild } from '@angular
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Title } from '@angular/platform-browser';
 
-import { CrudService, CrudChild } from '../crud.service';
+import { CrudItemService, CrudChild } from '../crud.item.service';
 import { CrudItem } from '../crud.item';
 import { CrudDeleteComponent } from '../crud-delete/crud-delete.component';
 
@@ -19,18 +19,18 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   constructor(
     private titleService: Title,
     private modalService: NgbModal,
-    private crudService: CrudService<T>) { }
+    private crudItemService: CrudItemService<T>) { }
 
   ngOnInit() {
-    this.crudChildren = this.crudService.getCrudChildren();
-    this.crudItemSingularName = this.crudService.getSingularName();
-    this.crudService.get()
+    this.crudChildren = this.crudItemService.getCrudChildren();
+    this.crudItemSingularName = this.crudItemService.getSingularName();
+    this.crudItemService.get()
     .subscribe((crudItem: T) => {
       this.crudItem = crudItem;
-      this.titleService.setTitle(`${this.crudService.getSingularName()} ${crudItem.getDisplayValue()} details`);
+      this.titleService.setTitle(`${this.crudItemService.getSingularName()} ${crudItem.getDisplayValue()} details`);
       });
 
-    this.crudService.canDelete()
+    this.crudItemService.canDelete()
       .subscribe((canDelete: boolean) => this.canDelete = canDelete);
   }
 

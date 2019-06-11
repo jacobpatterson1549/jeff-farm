@@ -3,10 +3,9 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { CrudModule } from '../crud/crud.module';
-import { CrudService } from '../crud/crud.service';
+import { CrudItemService } from '../crud/crud.item.service';
 import { PoultryInspectionGroupsService } from './poultry-inspection-groups.service';
 import { CrudItemGroupsService } from '../crud/crud-item-group.service';
-import { PoultryService } from '../poultry/poultry.service';
 
 @NgModule({
   providers: [
@@ -15,7 +14,7 @@ import { PoultryService } from '../poultry/poultry.service';
       useClass: PoultryInspectionGroupsService
     },
     {
-      provide: CrudService, // TODO: investigate if this can be excluded.
+      provide: CrudItemService, // TODO: investigate if this can be excluded.
       useClass: PoultryInspectionGroupsService
     },
   ],
