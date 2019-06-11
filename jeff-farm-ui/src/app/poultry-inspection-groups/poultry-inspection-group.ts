@@ -15,7 +15,7 @@ export class PoultryInspectionGroup extends CrudItemGroup<PoultryInspection> {
 
     getFormItems(): FormItem[] {
         return [
-            new FormItem('notes', FormItemType.String, this.notes), // TODO: make FormItemType.TextArea
+            new FormItem('notes', FormItemType.TextArea, this.notes),
         ];
     }
 

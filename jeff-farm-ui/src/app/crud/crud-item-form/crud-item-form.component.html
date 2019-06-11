@@ -11,6 +11,7 @@
     <input [name]="formItem.name" *ngSwitchCase="formItemType.Color" type="color" required [(ngModel)]="formItem.value">
     <input [name]="formItem.name" *ngSwitchCase="formItemType.Password" autocomplete="new-password" type="password"
       required [(ngModel)]="formItem.value">
+    <textarea rows="2" cols="20" *ngSwitchCase="formItemType.TextArea" [(ngModel)]="formItem.value"></textarea>
     <span *ngSwitchDefault>[Unknown editor type]</span>
   </div>
 </div>

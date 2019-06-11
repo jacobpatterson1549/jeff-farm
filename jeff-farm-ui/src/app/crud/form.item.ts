@@ -17,4 +17,5 @@ export enum FormItemType {
     Stars,
     Color,
     Password,
+    TextArea,
 }

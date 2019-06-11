@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-crud-item-view',
   templateUrl: './crud-item-view.component.html',
+  styleUrls: ['./crud-item-view.component.css']
 })
 export class CrudItemViewComponent<T extends CrudItem> implements OnInit {
 
