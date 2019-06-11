@@ -130,7 +130,7 @@ public abstract class CrudItemInspectionGroupDao
 			updateGroupFunctionCall
 			= new SimpleCommandSqlFunctionCall<>(updateGroupFunctionName,
 			groupInParameters,
-			new SimpleResultSetTransformer<>(null));
+			null);
 		SqlFunctionCall<Void>
 			updateItemsFunctionCall
 			= new BatchCommandSqlFunctionCall(updateItemsFunctionName,
