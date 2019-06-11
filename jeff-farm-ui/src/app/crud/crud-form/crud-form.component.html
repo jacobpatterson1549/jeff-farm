@@ -1,7 +1,9 @@
-<form #crudForm="ngForm" (ngSubmit)="submitForm()" ngNativeValidate>
-  <app-crud-item-form></app-crud-item-form>
-  <button class="btn btn-primary" [disabled]="working || crudForm.invalid || !isValid()"
-    type="submit">{{submitValue}}</button>
-  <app-spinner [visible]="working"></app-spinner>
-</form>
+<div *ngIf="crudItem">
+  <form #crudForm="ngForm" (ngSubmit)="submitForm()" ngNativeValidate>
+    <app-crud-item-form [crudItem]="crudItem"></app-crud-item-form>
+    <button class="btn btn-primary" [disabled]="working" type="submit">{{submitValue}}</button>
+    <!-- <button class="btn btn-primary" [disabled]="working || crudForm.invalid || !isValid()" type="submit">{{submitValue}}</button> -->
+    <app-spinner [visible]="working"></app-spinner>
+  </form>
+</div>
 <app-navigation></app-navigation>

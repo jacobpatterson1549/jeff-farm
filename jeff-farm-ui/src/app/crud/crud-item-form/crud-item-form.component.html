@@ -15,3 +15,31 @@
   </div>
 </div>
 <div *ngIf="!passwordsMatch()"><span>Passwords must match</span><br /></div>
+
+<div *ngIf="isCrudItemGroupGroup()">
+  <h4>Inspections: ({{crudItem.inspectionItems.length}})</h4>
+  <table class="table table-bordered table-striped">
+    <tr>
+      <th>Target Name</th>
+      <th>Inspection</th>
+    </tr>
+    <tr *ngFor="let inspectionItem of crudItem.inspectionItems">
+      <td>
+        <ngb-alert type="info" (close)="removeInspection(inspectionItem.targetId)">{{inspectionItem.targetName}}</ngb-alert>
+      </td>
+      <td>
+        <app-crud-item-form [crudItem]="inspectionItem" id="{{inspectionItem.targetId}}"></app-crud-item-form>
+      </td>
+    <tr *ngIf="targets">
+      <td colspan="2">
+        <span>Add target: </span>
+        <select>
+          <!-- <option *ngFor="let targetEntry of Object.entries(targets)"
+          [value]="targetEntry[0]" [selected]="targetEntry[1]">
+            {{targetEntry[1]}}
+          </option> -->
+        </select>
+      </td>
+    </tr>
+  </table>
+</div>

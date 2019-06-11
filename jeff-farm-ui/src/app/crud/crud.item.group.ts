@@ -3,7 +3,7 @@ import { CrudItemInspection } from './crud.item.inspection';
 
 export abstract class CrudItemGroup<V extends CrudItemInspection<CrudItem>> extends CrudItem {
 
-    public inspectionItems: V[];
+    public inspectionItems: V[] = [];
 
     constructor() {
         super();

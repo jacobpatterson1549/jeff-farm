@@ -32,7 +32,8 @@ export abstract class CrudItemGroupsService<U extends CrudItem, V extends CrudIt
   // put(t: T): Observable<object> {...}
 
   getTargets(): Observable<Map<number, string>> {
-    return this.http.get<Map<number, string>>(this.getBaseUrl())
+    const url = `${this.getBaseUrl()}/targets`;
+    return this.http.get<Map<number, string>>(url)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('targets')),
       );

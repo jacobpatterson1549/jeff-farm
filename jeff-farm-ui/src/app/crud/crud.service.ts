@@ -102,7 +102,7 @@ export abstract class CrudService<T extends CrudItem> {
     return this.getRouteParam('id') || '';
   }
 
-  private getIdUrl(): string {
+  protected getIdUrl(): string {
     return `${this.getBaseUrl()}/${this.getId()}`;
   }
 }

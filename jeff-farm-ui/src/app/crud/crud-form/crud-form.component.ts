@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { catchError } from 'rxjs/operators';
@@ -18,7 +18,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   formType: FormType;
   submitValue: string;
   working = false;
-  @ViewChild(CrudItemFormComponent, {static: true}) crudFormEditorComponent: CrudItemFormComponent<T>;
+  @ViewChild(CrudItemFormComponent, {static: false}) editor: CrudItemFormComponent<T>;
 
   constructor(
     private titleService: Title,
@@ -33,7 +33,6 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
     this.initCrudItem(this.formType)
       .subscribe((crudItem: T) => {
         this.crudItem = crudItem;
-        this.crudFormEditorComponent.setCrudItem(this.crudItem);
       });
   }
 
@@ -60,11 +59,11 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   }
 
   isValid() {
-    return this.crudFormEditorComponent.isValid();
+    return this.editor.isValid();
   }
 
   submitForm() {
-    const crudItem: T = this.crudFormEditorComponent.getCrudItem();
+    const crudItem: T = this.editor.getCrudItem();
 
     if (this.formType === FormType.Create) {
       this.working = true;
