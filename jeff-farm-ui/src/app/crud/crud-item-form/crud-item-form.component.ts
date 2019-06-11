@@ -1,4 +1,4 @@
-import { Component, Input, Inject, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, QueryList, ViewChildren } from '@angular/core';
 
 import { FormItem, FormItemType } from '../form.item';
 import { CrudItem } from '../crud.item';
@@ -11,7 +11,7 @@ import { CrudItemGroupsService } from '../crud-item-group.service';
   templateUrl: './crud-item-form.component.html',
   styleUrls: ['./crud-item-form.component.css']
 })
-export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
+export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterViewInit {
 
   @Input()
   crudItem: T;
@@ -20,6 +20,10 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
   passwordFormItems: FormItem[];
   targets;
   objectKeys = Object.keys; // used in the template
+  @ViewChildren(CrudItemFormComponent) groupEditors: QueryList<CrudItemFormComponent<T>>;
+  private editorInitialized = false;
+  private groupsInitialized = false;
+  initialized = false;
 
   constructor(private crudService: CrudService<T>) { }
 
@@ -48,8 +52,25 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
           if (this.crudItem instanceof CrudItemGroup) {
             this.crudItem.inspectionItems
               .forEach(inspectionItem => delete this.targets[inspectionItem.targetId]);
+            this.editorInitialized = true;
+            this.initialized = this.groupsInitialized;
           }
         });
+    } else {
+      this.editorInitialized = true;
+      this.initialized = true;
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.groupEditors.length > 0) {
+      this.groupEditors.changes.subscribe((r) => {
+        this.groupsInitialized = true;
+        this.initialized = this.editorInitialized;
+      });
+    } else {
+      this.groupsInitialized = true;
+      this.initialized = this.editorInitialized;
     }
   }
 

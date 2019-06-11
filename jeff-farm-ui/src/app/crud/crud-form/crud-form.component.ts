@@ -12,13 +12,14 @@ import { CrudItemFormComponent } from '../crud-item-form/crud-item-form.componen
 @Component({
   templateUrl: './crud-form.component.html',
 })
-export class CrudFormComponent<T extends CrudItem> implements OnInit {
+export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewInit {
 
   crudItem: T;
   formType: FormType;
   submitValue: string;
   working = false;
   @ViewChild(CrudItemFormComponent, {static: false}) editor: CrudItemFormComponent<T>;
+  initialized = false;
 
   constructor(
     private titleService: Title,
@@ -34,6 +35,14 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
       .subscribe((crudItem: T) => {
         this.crudItem = crudItem;
       });
+  }
+
+  ngAfterViewInit() {
+    this.initialized = this.crudItem != null;
+  }
+
+  getCrudItemCopy(): T {
+    return Object.assign(this.crudService.createCrudItem(), JSON.parse(JSON.stringify(this.crudItem)));
   }
 
   private initCrudItem(formType: FormType): Observable<T> {
@@ -56,10 +65,6 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
       default:
         throw new Error(`Unknown endPath: ${endPath}.  Could not set FormType`);
     }
-  }
-
-  isValid() {
-    return this.editor.isValid();
   }
 
   submitForm() {
