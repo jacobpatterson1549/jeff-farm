@@ -18,7 +18,8 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
   formItems: FormItem[];
   formItemType = FormItemType; // used for the ngSwitch in the template
   passwordFormItems: FormItem[];
-  targets: Map<number, string>;
+  targets;
+  objectKeys = Object.keys; // used in the template
 
   constructor(private crudService: CrudService<T>) { }
 
@@ -39,7 +40,11 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
     if (this.crudItem instanceof CrudItemGroup && this.crudService instanceof CrudItemGroupsService) {
       this.crudService.getTargets()
         .subscribe((targets: Map<number, string>) => {
-          this.targets = targets;
+          this.targets = {};
+          this.targets[0] = ' ';
+          for (const [targetId, targetName] of Object.entries(targets)) {
+            this.targets[+targetId] = targetName;
+          }
           if (this.crudItem instanceof CrudItemGroup) {
             this.crudItem.inspectionItems
               .forEach(inspectionItem => delete this.targets[inspectionItem.targetId]);
@@ -97,9 +102,11 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
       && this.crudItem.inspectionItems.length > 0;
   }
 
-  addInspection(targetId: number) {
-    if (this.crudItem instanceof CrudItemGroup && this.crudService instanceof CrudItemGroupsService) {
+  addInspection(targetIndex: number) {
+    if (targetIndex > 0 // not blank item
+      && this.crudItem instanceof CrudItemGroup && this.crudService instanceof CrudItemGroupsService) {
       const inspectionItem = this.crudService.createCrudItemInspection();
+      const targetId: number = +Object.keys(this.targets)[targetIndex];
       inspectionItem.targetId = targetId;
       inspectionItem.targetName = this.targets[targetId];
       delete this.targets[targetId];
@@ -113,8 +120,8 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
         if (this.crudItem.inspectionItems[targetIndex].targetId === targetId) {
           const inspectionItem = this.crudItem.inspectionItems[targetIndex];
           const targetName = inspectionItem.targetName;
-          this.crudItem.inspectionItems.slice(targetIndex, 1);
-          this.targets.set(targetId, targetName);
+          this.crudItem.inspectionItems.splice(targetIndex, 1);
+          this.targets[targetId] = targetName;
           break;
         }
       }
