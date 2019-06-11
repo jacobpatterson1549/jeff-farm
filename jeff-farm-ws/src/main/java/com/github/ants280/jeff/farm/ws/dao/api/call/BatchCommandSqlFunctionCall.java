@@ -28,7 +28,6 @@ public class BatchCommandSqlFunctionCall extends SqlFunctionCall<Void>
 			preparedStatement.addBatch();
 		}
 
-		// TODO: debug this to ensure this variable is populated as expected.
 		int[] updateCounts = preparedStatement.executeBatch();
 
 		if (updateCounts.length != inParametersList.size())
