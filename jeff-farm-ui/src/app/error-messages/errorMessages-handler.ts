@@ -8,7 +8,9 @@ export class ErrorMessagesHandler implements ErrorHandler {
     constructor(private errorMessagesService: ErrorMessagesService) { }
 
     handleError(error: Error): void {
-        this.errorMessagesService.add(error.message);
+        if (this.errorMessagesService != null) {
+            this.errorMessagesService.add(error.message);
+        }
         throw error;
     }
 }
