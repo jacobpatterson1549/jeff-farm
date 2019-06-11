@@ -25,19 +25,21 @@
     </tr>
     <tr *ngFor="let inspectionItem of crudItem.inspectionItems">
       <td>
-        <ngb-alert type="info" (close)="removeInspection(inspectionItem.targetId)">{{inspectionItem.targetName}}</ngb-alert>
+        <ngb-alert type="info" (close)="removeInspection(inspectionItem.targetId)">{{inspectionItem.targetName}}
+        </ngb-alert>
       </td>
       <td>
         <app-crud-item-form [crudItem]="inspectionItem" id="{{inspectionItem.targetId}}"></app-crud-item-form>
       </td>
+    </tr>
     <tr *ngIf="targets">
       <td colspan="2">
         <span>Add target: </span>
         <select>
-          <!-- <option *ngFor="let targetEntry of Object.entries(targets)"
-          [value]="targetEntry[0]" [selected]="targetEntry[1]">
+          <option *ngFor="let targetEntry of Object.entries(targets)" [value]="targetEntry[0]"
+            [selected]="targetEntry[1]">
             {{targetEntry[1]}}
-          </option> -->
+          </option>
         </select>
       </td>
     </tr>
