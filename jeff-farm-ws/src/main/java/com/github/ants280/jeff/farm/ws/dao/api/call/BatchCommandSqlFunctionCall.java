@@ -39,16 +39,7 @@ public class BatchCommandSqlFunctionCall extends SqlFunctionCall<Void>
 				inParametersList.size(),
 				updateCounts.length));
 		}
-		for (int i = 0; i < updateCounts.length; i++)
-		{
-			if (updateCounts[i] != 1)
-			{
-				throw new SqlDaoException(String.format("Expected to only update one row for batch item %d.  "
-						+ "Actually updated %d rows",
-					i,
-					updateCounts[i]));
-			}
-		}
+		// not checking the update counts because Postgres returns 0 for each batch executed
 	}
 
 	@Override
