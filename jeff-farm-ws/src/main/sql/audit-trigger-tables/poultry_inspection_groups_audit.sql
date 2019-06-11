@@ -60,7 +60,7 @@ $poultry_inspection_groups_audit$
 			, OLD.id
 			, OLD.notes
 			);
-		INSERT INTO poultry_inspection_group_audit
+		INSERT INTO poultry_inspection_groups_audit
 			( action_type
 			, user_id
 			, id
