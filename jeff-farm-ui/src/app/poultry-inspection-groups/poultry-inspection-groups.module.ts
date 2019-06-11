@@ -14,7 +14,7 @@ import { CrudItemGroupsService } from '../crud/crud-item-group.service';
       useClass: PoultryInspectionGroupsService
     },
     {
-      provide: CrudItemService, // TODO: investigate if this can be excluded.
+      provide: CrudItemService,
       useClass: PoultryInspectionGroupsService
     },
   ],
