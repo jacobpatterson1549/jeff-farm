@@ -9,7 +9,7 @@ BEGIN
 			AND column_name = 'poultry_id'
 	)
 	THEN
-		ALTER TABLE poultry_inspections_audit RENAME poultry_id TO target_id;
+		ALTER TABLE poultry_inspections RENAME poultry_id TO target_id;
 	END IF;
 	IF EXISTS
 	(
