@@ -41,10 +41,6 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewI
     this.initialized = this.crudItem != null;
   }
 
-  getCrudItemCopy(): T {
-    return Object.assign(this.crudService.createCrudItem(), JSON.parse(JSON.stringify(this.crudItem)));
-  }
-
   private initCrudItem(formType: FormType): Observable<T> {
     if (formType === FormType.Create) {
       return of(this.crudService.createCrudItem());

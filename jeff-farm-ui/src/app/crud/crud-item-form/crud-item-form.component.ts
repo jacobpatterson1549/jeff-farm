@@ -111,6 +111,9 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterV
         this.crudItem[formItem.name] = formItem.value;
       }
     }
+    if (this.crudItem instanceof CrudItemGroup) {
+      this.crudItem.inspectionItems = this.groupEditors.map((groupEditor: CrudItemFormComponent<T>) => groupEditor.getCrudItem());
+    }
     return this.crudItem;
   }
 
