@@ -1,9 +1,9 @@
 import { CrudItem } from '../crud/crud-item';
 import { FormItem, FormItemType } from '../crud/form-item';
-import { CrudItemGroup } from '../crud/crud-item-group';
+import { CrudItemInspectionGroup } from '../crud/crud-item-inspection-group';
 import { PoultryInspection } from './poultry-inspection';
 
-export class PoultryInspectionGroup extends CrudItemGroup<PoultryInspection> {
+export class PoultryInspectionGroup extends CrudItemInspectionGroup<PoultryInspection> {
 
     public farmId: number;
     public notes: string;

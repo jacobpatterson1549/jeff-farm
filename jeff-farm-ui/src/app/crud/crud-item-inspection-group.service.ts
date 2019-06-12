@@ -3,13 +3,13 @@ import { Observable } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators';
 
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
-import { CrudItemGroup } from './crud-item-group';
+import { CrudItemInspectionGroup } from './crud-item-inspection-group';
 import { CrudItem } from './crud-item';
 import { CrudItemService } from './crud-item.service';
 import { CrudItemInspection } from './crud-item-inspection';
-import { CrudItemGroupUpdate } from './crud-item-group-update';
+import { CrudItemInspectionGroupUpdate } from './crud-item-inspection-group-update';
 
-export abstract class CrudItemGroupService<U extends CrudItem, V extends CrudItemInspection<U>, T extends CrudItemGroup<V>>
+export abstract class CrudItemGroupService<U extends CrudItem, V extends CrudItemInspection<U>, T extends CrudItemInspectionGroup<V>>
   extends CrudItemService<T> {
 
   constructor(
@@ -29,7 +29,7 @@ export abstract class CrudItemGroupService<U extends CrudItem, V extends CrudIte
   }
 
   // The preferred way to update a group.  This allows inspections to be added and removed.
-  putUpdate(t: CrudItemGroupUpdate<V, T>): Observable<object> {
+  putUpdate(t: CrudItemInspectionGroupUpdate<V, T>): Observable<object> {
     const url = this.getIdUrl();
     return this.http.put(url, t)
       .pipe(

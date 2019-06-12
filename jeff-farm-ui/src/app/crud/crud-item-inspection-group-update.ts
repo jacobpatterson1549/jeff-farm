@@ -1,8 +1,8 @@
 import { CrudItem } from './crud-item';
 import { CrudItemInspection } from './crud-item-inspection';
-import { CrudItemGroup } from './crud-item-group';
+import { CrudItemInspectionGroup } from './crud-item-inspection-group';
 
-export class CrudItemGroupUpdate<V extends CrudItemInspection<CrudItem>, T extends CrudItemGroup<V>> {
+export class CrudItemInspectionGroupUpdate<V extends CrudItemInspection<CrudItem>, T extends CrudItemInspectionGroup<V>> {
 
     constructor(
         public group: T,

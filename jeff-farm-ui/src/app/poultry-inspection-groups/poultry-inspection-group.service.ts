@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { PoultryInspectionGroup } from './poultry-inspection-group';
 import { PoultryInspection } from './poultry-inspection';
-import { CrudItemGroupService } from '../crud/crud-item-group.service';
+import { CrudItemGroupService } from '../crud/crud-item-inspection-group.service';
 import { Poultry } from '../poultry/poultry';
 
 @Injectable()

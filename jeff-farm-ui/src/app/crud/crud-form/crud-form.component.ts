@@ -8,9 +8,9 @@ import { CrudItemService } from '../crud-item.service';
 import { CrudItem } from '../crud-item';
 import { FormType } from '../form-type';
 import { CrudItemFormComponent } from '../crud-item-form/crud-item-form.component';
-import { CrudItemGroup } from '../crud-item-group';
-import { CrudItemGroupUpdate } from '../crud-item-group-update';
-import { CrudItemGroupService } from '../crud-item-group.service';
+import { CrudItemInspectionGroup } from '../crud-item-inspection-group';
+import { CrudItemInspectionGroupUpdate } from '../crud-item-inspection-group-update';
+import { CrudItemGroupService } from '../crud-item-inspection-group.service';
 
 @Component({
   templateUrl: './crud-form.component.html',
@@ -85,7 +85,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewI
     }
     if (this.formType === FormType.Update) {
       let putRequest: Observable<any>;
-      if (crudItem instanceof CrudItemGroup && this.crudItemService instanceof CrudItemGroupService) {
+      if (crudItem instanceof CrudItemInspectionGroup && this.crudItemService instanceof CrudItemGroupService) {
         const addItems = [];
         this.editor.addItemTargetIds.forEach((targetId: number) => {
           const itemIndex: number = crudItem.inspectionItems.findIndex(item => item.targetId === targetId);
@@ -93,7 +93,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewI
           crudItem.inspectionItems.splice(itemIndex, 1);
         });
         const removeItemIds = this.editor.removeItemIds;
-        const groupUpdate = new CrudItemGroupUpdate(crudItem, addItems, removeItemIds);
+        const groupUpdate = new CrudItemInspectionGroupUpdate(crudItem, addItems, removeItemIds);
         putRequest = this.crudItemService.putUpdate(groupUpdate);
       } else {
         putRequest = this.crudItemService.put(crudItem);

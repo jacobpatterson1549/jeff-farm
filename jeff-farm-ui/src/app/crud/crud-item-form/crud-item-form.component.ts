@@ -2,9 +2,9 @@ import { Component, Input, OnInit, AfterViewInit, QueryList, ViewChildren } from
 
 import { FormItem, FormItemType } from '../form-item';
 import { CrudItem } from '../crud-item';
-import { CrudItemGroup } from '../crud-item-group';
+import { CrudItemInspectionGroup } from '../crud-item-inspection-group';
 import { CrudItemService } from '../crud-item.service';
-import { CrudItemGroupService } from '../crud-item-group.service';
+import { CrudItemGroupService } from '../crud-item-inspection-group.service';
 
 @Component({
   selector: 'app-crud-item-form',
@@ -43,7 +43,7 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterV
       }
     }
 
-    if (this.crudItem instanceof CrudItemGroup && this.crudItemService instanceof CrudItemGroupService) {
+    if (this.crudItem instanceof CrudItemInspectionGroup && this.crudItemService instanceof CrudItemGroupService) {
       this.crudItemService.getTargets()
         .subscribe((targets: Map<number, string>) => {
           this.targets = {};
@@ -51,7 +51,7 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterV
           for (const [targetId, targetName] of Object.entries(targets)) {
             this.targets[+targetId] = targetName;
           }
-          if (this.crudItem instanceof CrudItemGroup) {
+          if (this.crudItem instanceof CrudItemInspectionGroup) {
             this.crudItem.inspectionItems
               .forEach(inspectionItem => delete this.targets[inspectionItem.targetId]);
             this.editorInitialized = true;
@@ -113,24 +113,24 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterV
         this.crudItem[formItem.name] = formItem.value;
       }
     }
-    if (this.crudItem instanceof CrudItemGroup) {
+    if (this.crudItem instanceof CrudItemInspectionGroup) {
       this.crudItem.inspectionItems = this.groupEditors.map((groupEditor: CrudItemFormComponent<T>) => groupEditor.getCrudItem());
     }
     return this.crudItem;
   }
 
   isCrudItemGroupGroup(): boolean {
-    return this.crudItem instanceof CrudItemGroup;
+    return this.crudItem instanceof CrudItemInspectionGroup;
   }
 
   isValidCrudItemGroup(): boolean {
-    return this.crudItem instanceof CrudItemGroup
+    return this.crudItem instanceof CrudItemInspectionGroup
       && this.crudItem.inspectionItems.length > 0;
   }
 
   addInspection(targetIndex: number) {
     if (targetIndex > 0 // not blank item
-      && this.crudItem instanceof CrudItemGroup && this.crudItemService instanceof CrudItemGroupService) {
+      && this.crudItem instanceof CrudItemInspectionGroup && this.crudItemService instanceof CrudItemGroupService) {
       const inspectionItem = this.crudItemService.createCrudItemInspection();
       const targetId: number = +Object.keys(this.targets)[targetIndex];
       inspectionItem.targetId = targetId;
@@ -144,7 +144,7 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterV
   }
 
   removeInspection(targetId: number) {
-    if (this.crudItem instanceof CrudItemGroup) {
+    if (this.crudItem instanceof CrudItemInspectionGroup) {
       for (let targetIndex = 0; targetIndex < this.crudItem.inspectionItems.length; targetIndex++) {
         if (this.crudItem.inspectionItems[targetIndex].targetId === targetId) {
           const inspectionItem = this.crudItem.inspectionItems[targetIndex];

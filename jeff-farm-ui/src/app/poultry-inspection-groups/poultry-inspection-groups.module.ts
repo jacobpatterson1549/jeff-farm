@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { CrudModule } from '../crud/crud.module';
 import { CrudItemService } from '../crud/crud-item.service';
 import { PoultryInspectionGroupService } from './poultry-inspection-group.service';
-import { CrudItemGroupService } from '../crud/crud-item-group.service';
+import { CrudItemGroupService } from '../crud/crud-item-inspection-group.service';
 
 @NgModule({
   providers: [
