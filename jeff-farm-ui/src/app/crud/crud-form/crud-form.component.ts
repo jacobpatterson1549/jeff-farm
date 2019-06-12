@@ -8,6 +8,9 @@ import { CrudItemService } from '../crud-item.service';
 import { CrudItem } from '../crud-item';
 import { FormType } from '../form-type';
 import { CrudItemFormComponent } from '../crud-item-form/crud-item-form.component';
+import { CrudItemGroup } from '../crud-item-group';
+import { CrudItemGroupUpdate } from '../crud-item-group-update';
+import { CrudItemGroupsService } from '../crud-item-group.service';
 
 @Component({
   templateUrl: './crud-form.component.html',
@@ -18,7 +21,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewI
   formType: FormType;
   submitValue: string;
   working = false;
-  @ViewChild(CrudItemFormComponent, {static: false}) editor: CrudItemFormComponent<T>;
+  @ViewChild(CrudItemFormComponent, { static: false }) editor: CrudItemFormComponent<T>;
   initialized = false;
 
   constructor(
@@ -81,12 +84,25 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewI
         });
     }
     if (this.formType === FormType.Update) {
+      let putRequest: Observable<any>;
+      if (crudItem instanceof CrudItemGroup && this.crudItemService instanceof CrudItemGroupsService) {
+        const addItems = [];
+        this.editor.addItemTargetIds.forEach((targetId: number) => {
+          const itemIndex: number = crudItem.inspectionItems.findIndex(item => item.targetId === targetId);
+          addItems.push(crudItem.inspectionItems[itemIndex]);
+          crudItem.inspectionItems.splice(itemIndex, 1);
+        });
+        const removeItemIds = this.editor.removeItemIds;
+        const groupUpdate = new CrudItemGroupUpdate(crudItem, addItems, removeItemIds);
+        putRequest = this.crudItemService.putUpdate(groupUpdate);
+      } else {
+        putRequest = this.crudItemService.put(crudItem);
+      }
       this.working = true;
-      this.crudItemService.put(crudItem)
-        .pipe(catchError((error: Error) => {
-          this.working = false;
-          throw error;
-        }))
+      putRequest.pipe(catchError((error: Error) => {
+        this.working = false;
+        throw error;
+      }))
         .subscribe(_ => this.router.navigate(['..'], { relativeTo: this.route }));
     }
   }

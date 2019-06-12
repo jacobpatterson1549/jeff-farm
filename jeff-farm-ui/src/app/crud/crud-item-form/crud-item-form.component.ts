@@ -19,6 +19,8 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterV
   formItemType = FormItemType; // used for the ngSwitch in the template
   passwordFormItems: FormItem[];
   targets;
+  addItemTargetIds: number[] = [];
+  removeItemIds: number[] = [];
   objectKeys = Object.keys; // used in the template
   @ViewChildren(CrudItemFormComponent) groupEditors: QueryList<CrudItemFormComponent<T>>;
   private editorInitialized = false;
@@ -135,6 +137,9 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterV
       inspectionItem.targetName = this.targets[targetId];
       delete this.targets[targetId];
       this.crudItem.inspectionItems.push(inspectionItem);
+      if (this.addItemTargetIds.indexOf(targetId) < 0) {
+        this.addItemTargetIds.push(targetId);
+      }
     }
   }
 
@@ -146,6 +151,9 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterV
           const targetName = inspectionItem.targetName;
           this.crudItem.inspectionItems.splice(targetIndex, 1);
           this.targets[targetId] = targetName;
+          if (inspectionItem.id !== 0) {
+            this.removeItemIds.push(inspectionItem.id);
+          }
           break;
         }
       }

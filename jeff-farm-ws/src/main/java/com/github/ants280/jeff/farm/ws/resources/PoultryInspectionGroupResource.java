@@ -2,6 +2,7 @@ package com.github.ants280.jeff.farm.ws.resources;
 
 import com.github.ants280.jeff.farm.ws.dao.PoultryInspectionGroupDao;
 import com.github.ants280.jeff.farm.ws.model.PoultryInspectionGroup;
+import com.github.ants280.jeff.farm.ws.model.PoultryInspectionGroupUpdate;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
@@ -59,9 +60,12 @@ public class PoultryInspectionGroupResource
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updatePoultryInspectionGroup(@PathParam("id") int id, PoultryInspectionGroup poultryInspectionGroup)
+	public Response updatePoultryInspectionGroup(
+		@PathParam("id") int id,
+		PoultryInspectionGroupUpdate poultryInspectionGroupUpdate
+		)
 	{
-		poultryInspectionGroupDao.update(id, poultryInspectionGroup);
+		poultryInspectionGroupDao.update(id, poultryInspectionGroupUpdate);
 
 		return Response.ok().build();
 	}

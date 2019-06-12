@@ -10,6 +10,7 @@ import com.github.ants280.jeff.farm.ws.dao.api.transformer.ListResultSetTransfor
 import com.github.ants280.jeff.farm.ws.dao.api.transformer.SimpleResultSetTransformer;
 import com.github.ants280.jeff.farm.ws.model.CrudItemInspection;
 import com.github.ants280.jeff.farm.ws.model.CrudItemInspectionGroup;
+import com.github.ants280.jeff.farm.ws.model.CrudItemInspectionGroupUpdate;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,7 +35,7 @@ public abstract class CrudItemInspectionGroupDao
 
 	public abstract List<T> readList(int parentId);
 
-	public abstract void update(int id, T entity);
+	public abstract void update(int id, CrudItemInspectionGroupUpdate<V, T> entityUpdate);
 
 	public abstract void delete(int id);
 
@@ -124,6 +125,10 @@ public abstract class CrudItemInspectionGroupDao
 		List<SqlFunctionParameter> groupInParameters,
 		String updateItemsFunctionName,
 		List<List<SqlFunctionParameter>> itemInParameters,
+		String createItemsFunctionName,
+		List<List<SqlFunctionParameter>> createInParameters,
+		String deleteItemsFunctionName,
+		List<List<SqlFunctionParameter>> deleteItemsInParameters,
 		int userId)
 	{
 		SqlFunctionCall<Void>
@@ -135,11 +140,21 @@ public abstract class CrudItemInspectionGroupDao
 			updateItemsFunctionCall
 			= new BatchCommandSqlFunctionCall(updateItemsFunctionName,
 			itemInParameters);
+		SqlFunctionCall<Void>
+			createItemsFunctionCall
+			= new BatchCommandSqlFunctionCall(createItemsFunctionName,
+			createInParameters);
+		SqlFunctionCall<Void>
+			deleteItemsFunctionCall
+			= new BatchCommandSqlFunctionCall(deleteItemsFunctionName,
+			deleteItemsInParameters);
 
 		this.execute(
 			userId,
 			updateGroupFunctionCall,
-			updateItemsFunctionCall);
+			updateItemsFunctionCall,
+			createItemsFunctionCall,
+			deleteItemsFunctionCall);
 	}
 
 

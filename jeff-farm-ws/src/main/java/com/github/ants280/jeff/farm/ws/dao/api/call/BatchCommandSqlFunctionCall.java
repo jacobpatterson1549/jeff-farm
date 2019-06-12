@@ -14,7 +14,9 @@ public class BatchCommandSqlFunctionCall extends SqlFunctionCall<Void>
 		String functionCallSql,
 		List<List<SqlFunctionParameter>> inParametersList)
 	{
-		super(functionCallSql, inParametersList.get(0).size());
+		super(
+			functionCallSql,
+			inParametersList.isEmpty() ? 0 : inParametersList.get(0).size());
 		this.inParametersList = inParametersList;
 	}
 
@@ -22,6 +24,11 @@ public class BatchCommandSqlFunctionCall extends SqlFunctionCall<Void>
 	public void execute(PreparedStatement preparedStatement)
 		throws SQLException
 	{
+		if (inParametersList.isEmpty())
+		{
+			return; // Nothing to do.
+		}
+
 		for (List<SqlFunctionParameter> inParameters : inParametersList)
 		{
 			this.setParameters(preparedStatement, inParameters);

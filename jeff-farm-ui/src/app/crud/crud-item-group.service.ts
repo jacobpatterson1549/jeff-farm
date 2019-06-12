@@ -7,6 +7,7 @@ import { CrudItemGroup } from './crud-item-group';
 import { CrudItem } from './crud-item';
 import { CrudItemService } from './crud-item.service';
 import { CrudItemInspection } from './crud-item-inspection';
+import { CrudItemGroupUpdate } from './crud-item-group-update';
 
 export abstract class CrudItemGroupsService<U extends CrudItem, V extends CrudItemInspection<U>, T extends CrudItemGroup<V>>
   extends CrudItemService<T> {
@@ -27,8 +28,14 @@ export abstract class CrudItemGroupsService<U extends CrudItem, V extends CrudIt
             items[index] = Object.assign(this.createCrudItemInspection(), data))));
   }
 
-  // TODO: specify which old items to delete, add
-  // put(t: T): Observable<object> {...}
+  // The preferred way to update a group.  This allows inspections to be added and removed.
+  putUpdate(t: CrudItemGroupUpdate<V, T>): Observable<object> {
+    const url = this.getIdUrl();
+    return this.http.put(url, t)
+      .pipe(
+        catchError(this.errorMessagesService.handleError<any>('update')),
+      );
+  }
 
   getTargets(): Observable<Map<number, string>> {
     const url = `${this.getBaseUrl()}/targets`;

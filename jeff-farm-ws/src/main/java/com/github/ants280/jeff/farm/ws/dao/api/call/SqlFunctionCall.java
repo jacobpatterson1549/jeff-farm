@@ -22,7 +22,9 @@ public abstract class SqlFunctionCall<T>
 		return String.format(
 			"SELECT * FROM %s(%s)",
 			functionCallSql,
-			String.join(", ", Collections.nCopies(numParameters, "?")));
+			numParameters == 0
+				? ""
+				: String.join(", ", Collections.nCopies(numParameters, "?")));
 	}
 
 	protected void setParameters(
