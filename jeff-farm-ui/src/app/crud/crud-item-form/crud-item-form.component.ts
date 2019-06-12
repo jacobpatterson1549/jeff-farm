@@ -4,7 +4,7 @@ import { FormItem, FormItemType } from '../form-item';
 import { CrudItem } from '../crud-item';
 import { CrudItemGroup } from '../crud-item-group';
 import { CrudItemService } from '../crud-item.service';
-import { CrudItemGroupsService } from '../crud-item-group.service';
+import { CrudItemGroupService } from '../crud-item-group.service';
 
 @Component({
   selector: 'app-crud-item-form',
@@ -43,7 +43,7 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterV
       }
     }
 
-    if (this.crudItem instanceof CrudItemGroup && this.crudItemService instanceof CrudItemGroupsService) {
+    if (this.crudItem instanceof CrudItemGroup && this.crudItemService instanceof CrudItemGroupService) {
       this.crudItemService.getTargets()
         .subscribe((targets: Map<number, string>) => {
           this.targets = {};
@@ -130,7 +130,7 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterV
 
   addInspection(targetIndex: number) {
     if (targetIndex > 0 // not blank item
-      && this.crudItem instanceof CrudItemGroup && this.crudItemService instanceof CrudItemGroupsService) {
+      && this.crudItem instanceof CrudItemGroup && this.crudItemService instanceof CrudItemGroupService) {
       const inspectionItem = this.crudItemService.createCrudItemInspection();
       const targetId: number = +Object.keys(this.targets)[targetIndex];
       inspectionItem.targetId = targetId;

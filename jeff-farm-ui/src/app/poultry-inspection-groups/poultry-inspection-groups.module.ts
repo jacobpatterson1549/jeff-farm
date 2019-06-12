@@ -4,18 +4,18 @@ import { CommonModule } from '@angular/common';
 
 import { CrudModule } from '../crud/crud.module';
 import { CrudItemService } from '../crud/crud-item.service';
-import { PoultryInspectionGroupsService } from './poultry-inspection-groups.service';
-import { CrudItemGroupsService } from '../crud/crud-item-group.service';
+import { PoultryInspectionGroupService } from './poultry-inspection-group.service';
+import { CrudItemGroupService } from '../crud/crud-item-group.service';
 
 @NgModule({
   providers: [
     {
-      provide: CrudItemGroupsService,
-      useClass: PoultryInspectionGroupsService
+      provide: CrudItemGroupService,
+      useClass: PoultryInspectionGroupService
     },
     {
       provide: CrudItemService,
-      useClass: PoultryInspectionGroupsService
+      useClass: PoultryInspectionGroupService
     },
   ],
   imports: [
