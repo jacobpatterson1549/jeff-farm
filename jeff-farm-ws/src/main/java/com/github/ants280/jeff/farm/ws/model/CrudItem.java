@@ -17,7 +17,7 @@ public abstract class CrudItem<T extends CrudItem<T>>
 		= DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL)
 		.withLocale(Locale.getDefault())
 		.withZone(TimeZone.getDefault().toZoneId());
-	private int id;
+	private Integer id;
 	private String createdDate;
 	private String modifiedDate;
 
@@ -30,12 +30,12 @@ public abstract class CrudItem<T extends CrudItem<T>>
 
 	protected abstract T getThis();
 
-	public int getId()
+	public Integer getId()
 	{
 		return id;
 	}
 
-	public T setId(int id)
+	public T setId(Integer id)
 	{
 		this.id = id;
 		return getThis();
