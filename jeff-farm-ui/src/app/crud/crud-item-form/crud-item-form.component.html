@@ -38,7 +38,7 @@
     <tr *ngIf="selectTargets && objectKeys(selectTargets).length > 1">
       <td colspan="2">
         <span>Add target: </span>
-        <select (change)="addInspectionItem($event.target.selectedIndex)">
+        <select (change)="addInspectionItem($event.target.selectedIndex)" [formGroup]="inspectionItems">
           <option *ngFor="let targetId of objectKeys(selectTargets)">
             {{selectTargets[targetId]}}
           </option>

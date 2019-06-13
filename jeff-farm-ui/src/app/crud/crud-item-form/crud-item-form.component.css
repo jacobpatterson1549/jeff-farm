@@ -14,7 +14,6 @@
     display: inline;
   }
   
-  ngb-rating.ng-invalid,
-  input.ng-invalid:not(form) {
+  *.ng-invalid:not(form) {
     border: 1px solid red;
   }
