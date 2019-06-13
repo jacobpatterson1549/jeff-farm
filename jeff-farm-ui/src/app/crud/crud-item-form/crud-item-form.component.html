@@ -19,7 +19,7 @@
 
 <!-- TODO: create <app-crud-item-inspection-group-form> component to handle this-->
 <div *ngIf="selectTargets">
-  <h4>Inspections: ({{inspectionItems.length}})</h4>
+  <h4 [formGroup]="inspectionItems">Inspections:</h4>
   <table class="table table-bordered table-striped">
     <tr>
       <th>Target Name</th>
@@ -38,7 +38,7 @@
     <tr *ngIf="selectTargets && objectKeys(selectTargets).length > 1">
       <td colspan="2">
         <span>Add target: </span>
-        <select (change)="addInspectionItem($event.target.selectedIndex)" [formGroup]="inspectionItems">
+        <select (change)="addInspectionItem($event.target.selectedIndex)">
           <option *ngFor="let targetId of objectKeys(selectTargets)">
             {{selectTargets[targetId]}}
           </option>
