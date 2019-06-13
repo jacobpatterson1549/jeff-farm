@@ -30,8 +30,7 @@ export abstract class CrudItemGroupService<U extends CrudItem, V extends CrudIte
 
   put(t: T, updatedValue: any): Observable<object> {
     const addItems: V[] = [];
-    let i = updatedValue.inspectionItems.length;
-    while (i--) {
+    for (let i = updatedValue.inspectionItems.length - 1; i >= 0; i--) {
       const inspectionItem: V = updatedValue.inspectionItems[i]; // not really a V, but like one
       if (!inspectionItem.id) {
         addItems.push(inspectionItem);
@@ -39,8 +38,7 @@ export abstract class CrudItemGroupService<U extends CrudItem, V extends CrudIte
       }
     }
     const removeItemIds: number[] = [];
-    i = t.inspectionItems.length;
-    while (i--) {
+    for (let i = t.inspectionItems.length - 1; i >= 0; i--) {
       const inspectionItem: V = t.inspectionItems[i];
       if (!updatedValue.inspectionItems.find(updatedInspectionItem => updatedInspectionItem.id === inspectionItem.id)) {
         removeItemIds.push(inspectionItem.id);
