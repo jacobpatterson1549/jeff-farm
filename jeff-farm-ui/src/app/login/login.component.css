@@ -5,3 +5,11 @@ label {
   margin-right: 1em;
   margin-top: .5em;
 }
+
+.serverOnline {
+  color: green;
+}
+
+.serverOffline {
+  color: red;
+}

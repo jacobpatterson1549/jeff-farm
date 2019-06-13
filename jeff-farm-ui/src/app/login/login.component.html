@@ -12,7 +12,16 @@
     <input name="password" type="password" autocomplete="current-password" required [(ngModel)]="password">
   </div>
 
-  <button class="btn btn-primary" [disabled]="working" type="submit">Submit</button>
+  <button class="btn btn-primary" [disabled]="working || !serverRunning" type="submit">Submit</button>
   <app-spinner [visible]="working"></app-spinner>
+  <span *ngIf="serverRunning; else serverNotRunning">
+    <span *ngIf="showServerConnected" class="serverOnline">Server connected</span>
+  </span>
+  <ng-template #serverNotRunning>
+    <span *ngIf="working; else notWorking">Connecting to Server...</span>
+    <ng-template #notWorking>
+      <span class="serverOffline">Server offline</span>
+    </ng-template>
+  </ng-template>
 
 </form>

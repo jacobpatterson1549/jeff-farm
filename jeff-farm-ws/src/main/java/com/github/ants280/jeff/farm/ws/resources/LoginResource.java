@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -55,6 +56,13 @@ public class LoginResource
 		Logger.getLogger(this.getClass().getName())
 			.log(Level.INFO, "Created User id={0}", id);
 
+		return Response.ok().build();
+	}
+
+	@GET
+	@Path("status")
+	public Response status()
+	{
 		return Response.ok().build();
 	}
 }

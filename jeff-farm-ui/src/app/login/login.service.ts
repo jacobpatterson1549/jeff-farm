@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { User } from '../user/user';
@@ -34,6 +34,14 @@ export class LoginService {
     return this.httpClient.get<any>('user/logout')
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('logout')),
+      );
+  }
+
+  serverRunning(): Observable<boolean> {
+    return this.httpClient.get<boolean>('login/status')
+      .pipe(
+        catchError(this.errorMessagesService.handleError<any>('login-status')),
+        map(_ => true),
       );
   }
 }
