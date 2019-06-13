@@ -46,7 +46,7 @@ export class ErrorMessagesService {
         }
       }
 
-      this.add(`${attemptedTask}: ${errorMessage}`);
+      error.message = `${attemptedTask}: ${errorMessage}`;
       throw error;
     };
   }
