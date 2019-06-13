@@ -13,7 +13,6 @@
   </div>
 
   <button class="btn btn-primary" [disabled]="working || !serverRunning" type="submit">Submit</button>
-  <app-spinner [visible]="working"></app-spinner>
   <span *ngIf="serverRunning; else serverNotRunning">
     <span *ngIf="showServerConnected" class="serverOnline">Server connected</span>
   </span>
@@ -23,5 +22,6 @@
       <span class="serverOffline">Server offline</span>
     </ng-template>
   </ng-template>
+  <app-spinner [visible]="working"></app-spinner>
 
 </form>
