@@ -29,6 +29,7 @@ export class FormItem {
                 return [Validators.required];
             case FormItemType.Stars:
                 return [
+                    Validators.required,
                     Validators.min(0),
                     Validators.max(5),
                 ];
