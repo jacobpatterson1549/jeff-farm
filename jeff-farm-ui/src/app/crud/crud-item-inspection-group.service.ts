@@ -28,10 +28,29 @@ export abstract class CrudItemGroupService<U extends CrudItem, V extends CrudIte
             items[index] = Object.assign(this.createCrudItemInspection(), data))));
   }
 
-  // The preferred way to update a group.  This allows inspections to be added and removed.
-  putUpdate(t: CrudItemInspectionGroupUpdate<V, T>): Observable<object> {
+  put(t: T, updatedValue: any): Observable<object> {
+    const addItems: V[] = [];
+    let i = updatedValue.inspectionItems.length;
+    while (i--) {
+      const inspectionItem: V = updatedValue.inspectionItems[i]; // not really a V, but like one
+      if (!inspectionItem.id) {
+        addItems.push(inspectionItem);
+        updatedValue.inspectionItems.splice(i, 1);
+      }
+    }
+    const removeItemIds: number[] = [];
+    i = t.inspectionItems.length;
+    while (i--) {
+      const inspectionItem: V = t.inspectionItems[i];
+      if (!updatedValue.inspectionItems.find(updatedInspectionItem => updatedInspectionItem.id === inspectionItem.id)) {
+        removeItemIds.push(inspectionItem.id);
+        t.inspectionItems.splice(i, 1);
+      }
+    }
+    Object.assign(t, updatedValue);
+    const inspectionGroupUpdate: CrudItemInspectionGroupUpdate<V, T> = new CrudItemInspectionGroupUpdate(t, addItems, removeItemIds);
     const url = this.getIdUrl();
-    return this.http.put(url, t)
+    return this.http.put(url, inspectionGroupUpdate)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('update')),
       );

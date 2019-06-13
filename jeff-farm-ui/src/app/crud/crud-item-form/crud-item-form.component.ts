@@ -1,8 +1,8 @@
-import { Component, Input, OnInit, AfterViewInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChildren, ChangeDetectorRef } from '@angular/core';
+import { FormGroup, FormArray, AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
 
 import { FormItem, FormItemType } from '../form-item';
 import { CrudItem } from '../crud-item';
-import { CrudItemInspectionGroup } from '../crud-item-inspection-group';
 import { CrudItemService } from '../crud-item.service';
 import { CrudItemGroupService } from '../crud-item-inspection-group.service';
 
@@ -11,149 +11,69 @@ import { CrudItemGroupService } from '../crud-item-inspection-group.service';
   templateUrl: './crud-item-form.component.html',
   styleUrls: ['./crud-item-form.component.css']
 })
-export class CrudItemFormComponent<T extends CrudItem> implements OnInit, AfterViewInit {
+export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
 
   @Input()
   crudItem: T;
+  @Input()
+  crudForm: FormGroup;
   formItems: FormItem[];
   formItemType = FormItemType; // used for the ngSwitch in the template
-  passwordFormItems: FormItem[];
-  targets;
-  addItemTargetIds: number[] = [];
-  removeItemIds: number[] = [];
+  selectTargets;
   objectKeys = Object.keys; // used in the template
   @ViewChildren(CrudItemFormComponent) groupEditors: QueryList<CrudItemFormComponent<T>>;
-  private editorInitialized = false;
-  private groupsInitialized = false;
-  initialized = false;
 
-  constructor(private crudItemService: CrudItemService<T>) { }
+  constructor(
+    private fb: FormBuilder,
+    private crudItemService: CrudItemService<T>) { }
 
   ngOnInit() {
     this.formItems = this.crudItem.getFormItems();
 
-    this.passwordFormItems = [];
-    for (let index = 0; index < this.formItems.length; index++) {
-      const formItem: FormItem = this.formItems[index];
-      if (formItem.type === FormItemType.Password) {
-        const formItem2: FormItem = new FormItem(formItem.name + ' (Verify)', formItem.type, formItem.value);
-        index++;
-        this.formItems.splice(index, 0, formItem2);
-        this.passwordFormItems.push(formItem, formItem2);
-      }
-    }
-
-    if (this.crudItem instanceof CrudItemInspectionGroup && this.crudItemService instanceof CrudItemGroupService) {
+    if (this.inspectionItems != null && this.crudItemService instanceof CrudItemGroupService) {
       this.crudItemService.getTargets()
         .subscribe((targets: Map<number, string>) => {
-          this.targets = {};
-          this.targets[0] = ' ';
+          this.selectTargets = {};
+          this.selectTargets[0] = ' ';
           for (const [targetId, targetName] of Object.entries(targets)) {
-            this.targets[+targetId] = targetName;
+            this.selectTargets[+targetId] = targetName;
           }
-          if (this.crudItem instanceof CrudItemInspectionGroup) {
-            this.crudItem.inspectionItems
-              .forEach(inspectionItem => delete this.targets[inspectionItem.targetId]);
-            this.editorInitialized = true;
-            this.initialized = this.groupsInitialized;
-          }
+          this.inspectionItems.controls
+            .forEach((inspectionItem: AbstractControl) => {
+              const targetId: number = inspectionItem.get('targetId').value;
+              delete this.selectTargets[targetId];
+            });
         });
-    } else {
-      this.editorInitialized = true;
-      this.initialized = true;
     }
   }
 
-  ngAfterViewInit() {
-    if (this.groupEditors.length > 0) {
-      this.groupEditors.changes.subscribe((r) => {
-        this.groupsInitialized = true;
-        this.initialized = this.editorInitialized;
-      });
-    } else {
-      this.groupsInitialized = true;
-      this.initialized = this.editorInitialized;
-    }
+  get inspectionItems(): FormArray {
+    return this.crudForm.get('inspectionItems') as FormArray;
   }
 
-  passwordsMatch(): boolean {
-    for (let index = 0; index < this.passwordFormItems.length; index += 2) {
-      if (this.passwordFormItems[index].value !== this.passwordFormItems[index + 1].value) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  allValidStars(): boolean {
-    for (const formItem of this.formItems) {
-      if (formItem.type === FormItemType.Stars && this.validStars(formItem)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  validStars(formItem: FormItem) {
-    return !(formItem.value >= 1 && formItem.value <= 5);
-  }
-
-  isValid(): boolean {
-    return this.passwordsMatch()
-      && this.allValidStars()
-      && (!this.isCrudItemGroupGroup() || this.isValidCrudItemGroup()); // TODO: and inspections valid
-  }
-
-  getCrudItem(): T {
-    for (const formItem of this.formItems) {
-      // exclude added passworditems
-      const passwordFormItemIndex = this.passwordFormItems.indexOf(formItem);
-      if (passwordFormItemIndex < 0 || passwordFormItemIndex % 2 === 0) {
-        this.crudItem[formItem.name] = formItem.value;
-      }
-    }
-    if (this.crudItem instanceof CrudItemInspectionGroup) {
-      this.crudItem.inspectionItems = this.groupEditors.map((groupEditor: CrudItemFormComponent<T>) => groupEditor.getCrudItem());
-    }
-    return this.crudItem;
-  }
-
-  isCrudItemGroupGroup(): boolean {
-    return this.crudItem instanceof CrudItemInspectionGroup;
-  }
-
-  isValidCrudItemGroup(): boolean {
-    return this.crudItem instanceof CrudItemInspectionGroup
-      && this.crudItem.inspectionItems.length > 0;
-  }
-
-  addInspection(targetIndex: number) {
+  addInspectionItem(targetIndex: number) {
     if (targetIndex > 0 // not blank item
-      && this.crudItem instanceof CrudItemInspectionGroup && this.crudItemService instanceof CrudItemGroupService) {
-      const inspectionItem = this.crudItemService.createCrudItemInspection();
-      const targetId: number = +Object.keys(this.targets)[targetIndex];
-      inspectionItem.targetId = targetId;
-      inspectionItem.targetName = this.targets[targetId];
-      delete this.targets[targetId];
-      this.crudItem.inspectionItems.push(inspectionItem);
-      if (this.addItemTargetIds.indexOf(targetId) < 0) {
-        this.addItemTargetIds.push(targetId);
-      }
+      && this.inspectionItems != null
+      && this.crudItemService instanceof CrudItemGroupService) {
+      const inspectionItem: FormGroup = this.crudItemService.createCrudItemInspection().getFormGroup(this.fb);
+      const addTargetId: number = +Object.keys(this.selectTargets)[targetIndex];
+      inspectionItem.patchValue({
+        targetId: addTargetId,
+        targetName: this.selectTargets[addTargetId]
+      });
+      delete this.selectTargets[addTargetId];
+      this.inspectionItems.push(inspectionItem);
     }
   }
 
-  removeInspection(targetId: number) {
-    if (this.crudItem instanceof CrudItemInspectionGroup) {
-      for (let targetIndex = 0; targetIndex < this.crudItem.inspectionItems.length; targetIndex++) {
-        if (this.crudItem.inspectionItems[targetIndex].targetId === targetId) {
-          const inspectionItem = this.crudItem.inspectionItems[targetIndex];
-          const targetName = inspectionItem.targetName;
-          this.crudItem.inspectionItems.splice(targetIndex, 1);
-          this.targets[targetId] = targetName;
-          if (inspectionItem.id !== 0) {
-            this.removeItemIds.push(inspectionItem.id);
-          }
+  removeInspectionItem(removeTargetIdStr: string) {
+    if (this.inspectionItems != null) {
+      const targeremoveTargetId = +removeTargetIdStr;
+      for (let i = 0; i < this.inspectionItems.length; i++) {
+        const inspectionItem: FormGroup = this.inspectionItems.at(i) as FormGroup;
+        if (inspectionItem.get('targetId').value === targeremoveTargetId) {
+          this.selectTargets[targeremoveTargetId] = inspectionItem.get('targetName').value;
+          this.inspectionItems.removeAt(i);
           break;
         }
       }

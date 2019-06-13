@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NavigationComponent } from './navigation.component';
 import { CrudHomeComponent } from './crud-home/crud-home.component';
@@ -32,6 +32,7 @@ import { CrudItemFormComponent } from './crud-item-form/crud-item-form.component
     CommonModule,
     NgbModule, // for delete modal
     FormsModule,
+    ReactiveFormsModule,
     CrudRoutingModule,
     LoginStatusModule,
     SpinnerModule,

@@ -1,33 +1,32 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { CrudItemService } from '../crud-item.service';
 import { CrudItem } from '../crud-item';
 import { FormType } from '../form-type';
 import { CrudItemFormComponent } from '../crud-item-form/crud-item-form.component';
-import { CrudItemInspectionGroup } from '../crud-item-inspection-group';
-import { CrudItemInspectionGroupUpdate } from '../crud-item-inspection-group-update';
-import { CrudItemGroupService } from '../crud-item-inspection-group.service';
 
 @Component({
   templateUrl: './crud-form.component.html',
 })
-export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewInit {
+export class CrudFormComponent<T extends CrudItem> implements OnInit {
 
   crudItem: T;
+  crudForm: FormGroup;
   formType: FormType;
   submitValue: string;
   working = false;
   @ViewChild(CrudItemFormComponent, { static: false }) editor: CrudItemFormComponent<T>;
-  initialized = false;
 
   constructor(
     private titleService: Title,
     private router: Router,
     private route: ActivatedRoute,
+    private fb: FormBuilder,
     private crudItemService: CrudItemService<T>) { }
 
   ngOnInit() {
@@ -37,11 +36,8 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewI
     this.initCrudItem(this.formType)
       .subscribe((crudItem: T) => {
         this.crudItem = crudItem;
+        this.crudForm = crudItem.getFormGroup(this.fb);
       });
-  }
-
-  ngAfterViewInit() {
-    this.initialized = this.crudItem != null;
   }
 
   private initCrudItem(formType: FormType): Observable<T> {
@@ -66,12 +62,14 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewI
     }
   }
 
-  submitForm() {
-    const crudItem: T = this.editor.getCrudItem();
+  onSubmit() {
+    console.log('TODO: Submit');
+    console.log(this.crudItem);
+    console.log(this.crudForm.value);
 
     if (this.formType === FormType.Create) {
       this.working = true;
-      this.crudItemService.post(crudItem)
+      this.crudItemService.post(this.crudItem, this.crudForm.value)
         .pipe(catchError((error: Error) => {
           this.working = false;
           throw error;
@@ -84,25 +82,12 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit, AfterViewI
         });
     }
     if (this.formType === FormType.Update) {
-      let putRequest: Observable<any>;
-      if (crudItem instanceof CrudItemInspectionGroup && this.crudItemService instanceof CrudItemGroupService) {
-        const addItems = [];
-        this.editor.addItemTargetIds.forEach((targetId: number) => {
-          const itemIndex: number = crudItem.inspectionItems.findIndex(item => item.targetId === targetId);
-          addItems.push(crudItem.inspectionItems[itemIndex]);
-          crudItem.inspectionItems.splice(itemIndex, 1);
-        });
-        const removeItemIds = this.editor.removeItemIds;
-        const groupUpdate = new CrudItemInspectionGroupUpdate(crudItem, addItems, removeItemIds);
-        putRequest = this.crudItemService.putUpdate(groupUpdate);
-      } else {
-        putRequest = this.crudItemService.put(crudItem);
-      }
       this.working = true;
-      putRequest.pipe(catchError((error: Error) => {
-        this.working = false;
-        throw error;
-      }))
+      this.crudItemService.put(this.crudItem, this.crudForm.value)
+        .pipe(catchError((error: Error) => {
+          this.working = false;
+          throw error;
+        }))
         .subscribe(_ => this.router.navigate(['..'], { relativeTo: this.route }));
     }
   }

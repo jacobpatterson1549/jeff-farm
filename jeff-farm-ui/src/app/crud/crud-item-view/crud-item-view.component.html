@@ -13,7 +13,7 @@
           <ngb-rating readonly="true" max="5" [rate]="crudItem[displayFieldName]"></ngb-rating>
         </div>
         <div *ngSwitchCase="formItemType.TextArea" class="textarea">
-          {{crudItem[displayFieldName]}}
+          <span>{{crudItem[displayFieldName]}}</span>
         </div>
         <div *ngSwitchDefault>
           <span>{{crudItem[displayFieldName]}}</span>

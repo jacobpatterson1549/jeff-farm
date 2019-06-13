@@ -1,44 +1,46 @@
 <div *ngFor="let formItem of formItems" class="formItem">
-  <label [for]="formItem.name">{{formItem.name | titlecase}}</label>
-  <div [ngSwitch]="formItem.type" class="formItemInput">
-    <input [name]="formItem.name" *ngSwitchCase="formItemType.String" type="text" required [(ngModel)]="formItem.value"
-      [autocomplete]="formItem.name == 'userName' ? 'username' : null">
-    <input [name]="formItem.name" *ngSwitchCase="formItemType.Boolean" type="checkbox" [(ngModel)]="formItem.value">
-    <input [name]="formItem.name" *ngSwitchCase="formItemType.Integer" type="number" required
-      [(ngModel)]="formItem.value">
-    <ngb-rating [id]="formItem.name" *ngSwitchCase="formItemType.Stars" max="5" resettable="true" required
-      [ngClass]="{'stars-invalid': validStars(formItem)}" [(rate)]="formItem.value"></ngb-rating>
-    <input [name]="formItem.name" *ngSwitchCase="formItemType.Color" type="color" required [(ngModel)]="formItem.value">
-    <input [name]="formItem.name" *ngSwitchCase="formItemType.Password" autocomplete="new-password" type="password"
-      required [(ngModel)]="formItem.value">
-    <textarea rows="2" cols="20" *ngSwitchCase="formItemType.TextArea" [(ngModel)]="formItem.value"></textarea>
-    <span *ngSwitchDefault>[Unknown editor type]</span>
-  </div>
+  <label>{{formItem.name | titlecase}}
+    <ng-container [ngSwitch]="formItem.type" class="formItemInput">
+      <input *ngSwitchCase="formItemType.String" [formControl]="crudForm.get(formItem.name)" type="text"
+        [autocomplete]="formItem.name == 'userName' ? 'username' : null">
+      <input *ngSwitchCase="formItemType.Boolean" [formControl]="crudForm.get(formItem.name)" type="checkbox">
+      <input *ngSwitchCase="formItemType.Integer" [formControl]="crudForm.get(formItem.name)" type="number">
+      <ngb-rating *ngSwitchCase="formItemType.Stars" [formControl]="crudForm.get(formItem.name)" max="5"
+        resettable="true"></ngb-rating>
+      <input *ngSwitchCase="formItemType.Color" [formControl]="crudForm.get(formItem.name)" type="color">
+      <input *ngSwitchCase="formItemType.Password" [formControl]="crudForm.get(formItem.name)" type="password"
+        autocomplete="new-password">
+      <textarea *ngSwitchCase="formItemType.TextArea" [formControl]="crudForm.get(formItem.name)" rows="2"
+        cols="20"></textarea>
+      <span *ngSwitchDefault>[Unknown editor type]</span>
+    </ng-container>
+  </label>
 </div>
-<div *ngIf="!passwordsMatch()"><span>Passwords must match</span><br /></div>
 
-<div *ngIf="isCrudItemGroupGroup()">
-  <h4>Inspections: ({{crudItem.inspectionItems.length}})</h4>
+<!-- TODO: create <app-crud-item-inspection-group-form> component to handle this-->
+<div *ngIf="selectTargets">
+  <h4>Inspections: ({{inspectionItems.length}})</h4>
   <table class="table table-bordered table-striped">
     <tr>
       <th>Target Name</th>
       <th>Inspection</th>
     </tr>
-    <tr *ngFor="let inspectionItem of crudItem.inspectionItems">
+    <tr *ngFor="let inspectionItem of inspectionItems.controls">
       <td>
-        <ngb-alert type="info" (close)="removeInspection(inspectionItem.targetId)">{{inspectionItem.targetName}}
+        <ngb-alert type="info" (close)="removeInspectionItem(inspectionItem.get('targetId').value)">{{inspectionItem.get('targetName').value}}
         </ngb-alert>
       </td>
       <td>
-        <app-crud-item-form [crudItem]="inspectionItem" id="{{inspectionItem.targetId}}"></app-crud-item-form>
+        <app-crud-item-form [crudItem]="crudItemService.createCrudItemInspection()" [crudForm]="inspectionItem"
+          id="{{inspectionItem.get('targetId').value}}"></app-crud-item-form>
       </td>
     </tr>
-    <tr *ngIf="targets && objectKeys(targets).length > 1">
+    <tr *ngIf="selectTargets && objectKeys(selectTargets).length > 1">
       <td colspan="2">
         <span>Add target: </span>
-        <select (change)="addInspection($event.target.selectedIndex)">
-          <option *ngFor="let targetId of objectKeys(targets)">
-            {{targets[targetId]}}
+        <select (change)="addInspectionItem($event.target.selectedIndex)">
+          <option *ngFor="let targetId of objectKeys(selectTargets)">
+            {{selectTargets[targetId]}}
           </option>
         </select>
       </td>
