@@ -10,11 +10,11 @@ a website to track farm efficiency
 * The heroku Postgresql addon is used to run liquibase to set up and apply changes to the database.  It was added to jeff-farm-ws with `heroku addons:create heroku-postgresql`.
 
 ## Third-Party Technologies
-* Angular 2+ fronted
+* Angular 2+ frontend
 * Apache Tomcat backend (embedded)
 * Postgresql database
 * Glassfish Jersey REST web services
-* HK2 dependenccy injection
+* HK2 dependency injection
 * Yasson javax.json serialization
 * Junit tests
 * Mockito object mocking test framework
