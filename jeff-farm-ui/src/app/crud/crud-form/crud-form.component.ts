@@ -63,10 +63,6 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   }
 
   onSubmit() {
-    console.log('TODO: Submit');
-    console.log(this.crudItem);
-    console.log(this.crudForm.value);
-
     if (this.formType === FormType.Create) {
       this.working = true;
       this.crudItemService.post(this.crudItem, this.crudForm.value)
