@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service';
-import { CrudItemService, CrudChild } from '../crud/crud-item.service';
+import { CrudItemService } from '../crud/crud-item.service';
 import { User } from './user';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { LoginService } from '../login/login.service';
@@ -25,8 +25,8 @@ export class UserService extends CrudItemService<User> {
     return new User();
   }
 
-  getPluralName(): string {
-    return 'Users';
+  getTypeName(): string {
+    return 'user';
   }
 
   getBaseUrl(): string {

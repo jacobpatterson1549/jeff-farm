@@ -46,6 +46,7 @@ public class FarmResource
 	}
 
 	@GET
+	@Path("list")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getFarmsList()
 	{

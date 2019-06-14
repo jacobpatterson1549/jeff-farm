@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { CrudItemService, CrudChild } from '../crud/crud-item.service';
 import { Hive } from './hive';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
 @Injectable()
-export class HivesService extends CrudItemService<Hive> {
+export class HivesService extends CrudItemService<Hive> { // TOOD: rename to HiveService (same for others)
 
   constructor(
     errorsService: ErrorMessagesService,
@@ -16,26 +16,28 @@ export class HivesService extends CrudItemService<Hive> {
   }
 
   createCrudItem(): Hive {
-    return new Hive(this.getFarmId());
+    return new Hive(+this.getFarmId());
   }
 
-  getPluralName(): string {
-    return 'Hives';
+  getTypeName(): string {
+    return 'hive';
   }
 
   getCrudChildren(): CrudChild[] {
     return [
-      { pluralName: 'Hive Inspections', path: 'hiveInspections' },
+      { name: 'Hive Inspections', path: 'hiveInspections' },
     ];
   }
 
   getBaseUrl(): string {
-
-    return `farms/${this.getFarmId()}/hives`;
+    return 'hives';
   }
 
-  getFarmId(): number {
+  private getFarmId(): string {
+    return localStorage.getItem('farmId');
+  }
 
-    return +this.getRouteParam('farm_id');
+  protected getListHttpParams(): HttpParams {
+    return super.getListHttpParams().append('farmId', this.getFarmId());
   }
 }

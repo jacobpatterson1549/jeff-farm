@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { CrudItemService, CrudChild } from '../crud/crud-item.service';
+import { CrudItemService } from '../crud/crud-item.service';
 import { HiveInspection } from './hive-inspection';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
@@ -16,25 +16,22 @@ export class HiveInspectionsService extends CrudItemService<HiveInspection> {
   }
 
   createCrudItem(): HiveInspection {
-    return new HiveInspection(this.getHiveId());
+    return new HiveInspection(+this.getHiveId());
   }
 
-  getPluralName(): string {
-    return 'Hive Inspections';
+  getTypeName(): string {
+    return 'hive inspections';
   }
 
-  getBaseUrl(): string {
-
-    return `farms/${this.getFarmId()}/hives/${this.getHiveId()}/hiveInspections`;
+  protected getBaseUrl(): string {
+    return '/hives/hiveInspections';
   }
 
-  getFarmId(): number {
-
-    return +this.getRouteParam('farm_id');
+  private getHiveId(): string {
+    return localStorage.getItem('hiveId');
   }
 
-  getHiveId(): number {
-
-    return +this.getRouteParam('hive_id');
+  protected getListHttpParams(): HttpParams {
+    return super.getListHttpParams().append('hiveId', this.getHiveId());
   }
 }

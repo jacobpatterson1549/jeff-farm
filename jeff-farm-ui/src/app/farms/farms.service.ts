@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { CrudItemService, CrudChild } from '../crud/crud-item.service';
 import { Farm } from './farm';
@@ -19,14 +19,14 @@ export class FarmsService extends CrudItemService<Farm> {
     return new Farm();
   }
 
-  getPluralName(): string {
-    return 'Farms';
+  getTypeName(): string {
+    return 'farm';
   }
 
   getCrudChildren(): CrudChild[] {
     return [
-      { pluralName: 'Hives', path: 'hives' },
-      { pluralName: 'Poultry', path: 'poultry' },
+      { name: 'Hives', path: 'hives' },
+      { name: 'Poultry', path: 'poultry' },
     ];
   }
 

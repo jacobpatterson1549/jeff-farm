@@ -12,10 +12,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/farms/{farmId}/hives/{hiveId}/hiveInspections")
+@Path("/hives/inspections")
 public class HiveInspectionResource
 {
 	private final HiveInspectionDao hiveInspectionDao;
@@ -46,8 +47,9 @@ public class HiveInspectionResource
 	}
 
 	@GET
+	@Path("list")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getHiveInspectionsList(@PathParam("hiveId") int hiveId)
+	public Response getHiveInspectionsList(@QueryParam("hiveId") int hiveId)
 	{
 		List<HiveInspection> hiveInspections
 			= hiveInspectionDao.readList(hiveId);

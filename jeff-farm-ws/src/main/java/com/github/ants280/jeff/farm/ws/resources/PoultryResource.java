@@ -12,10 +12,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/farms/{farmId}/poultry")
+@Path("/poultry")
 public class PoultryResource
 {
 	private final PoultryDao poultryDao;
@@ -46,8 +47,9 @@ public class PoultryResource
 	}
 
 	@GET
+	@Path("list")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getPoultryList(@PathParam("farmId") int farmId)
+	public Response getPoultryList(@QueryParam("farmId") int farmId)
 	{
 		List<Poultry> poultryList = poultryDao.readList(farmId);
 

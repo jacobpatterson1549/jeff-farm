@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { PoultryInspectionGroup } from './poultry-inspection-group';
 import { PoultryInspection } from './poultry-inspection';
 import { CrudItemGroupService } from '../crud/crud-item-inspection-group.service';
 import { Poultry } from '../poultry/poultry';
+import { Hive } from '../hives/hive';
 
 @Injectable()
 export class PoultryInspectionGroupService
@@ -19,28 +20,26 @@ export class PoultryInspectionGroupService
   }
 
   createCrudItem(): PoultryInspectionGroup {
-    return new PoultryInspectionGroup(this.getFarmId());
+    return new PoultryInspectionGroup(+this.getPoultryId());
   }
 
   createCrudItemInspection(): PoultryInspection {
     return new PoultryInspection();
   }
 
-  getSingularName(): string {
-    return 'Poultry Inspection Group';
-  }
-
-  getPluralName(): string {
-    return 'Poultry Inspection Groups';
+  getTypeName(): string {
+    return 'poultry inspection groups';
   }
 
   getBaseUrl(): string {
-
-    return `farms/${this.getFarmId()}/poultryInspectionGroups`;
+    return 'poultry/inspectionGroups';
   }
 
-  getFarmId(): number {
+  private getPoultryId(): string {
+    return localStorage.getItem('farmId');
+  }
 
-    return +this.getRouteParam('farm_id');
+  protected getListHttpParams(): HttpParams {
+    return super.getListHttpParams().append('farmId', this.getPoultryId());
   }
 }

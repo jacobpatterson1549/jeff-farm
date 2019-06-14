@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -6,8 +6,8 @@ import { map, catchError } from 'rxjs/operators';
 import { CrudItem } from './crud-item';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
-export interface CrudChild {
-  pluralName: string;
+export interface CrudChild { // TODO: Move to own class
+  name: string;
   path: string;
 }
 
@@ -21,8 +21,6 @@ export abstract class CrudItemService<T extends CrudItem> {
 
   abstract createCrudItem(): T;
 
-  abstract getPluralName(): string;
-
   // The groups visible at the list level for this CrudItem
   getCrudGroups(): CrudChild[] {
     return [];
@@ -33,15 +31,12 @@ export abstract class CrudItemService<T extends CrudItem> {
     return [];
   }
 
-  abstract getBaseUrl(): string;
+  protected abstract getBaseUrl(): string;
+
+  abstract getTypeName(): string;
 
   setRoute(route: ActivatedRoute) {
     this.route = route;
-  }
-
-  getSingularName(): string {
-    const pluralName: string = this.getPluralName();
-    return pluralName.substring(0, pluralName.length - 1);
   }
 
   post(t: T, createdValue: any): Observable<number> {
@@ -53,6 +48,7 @@ export abstract class CrudItemService<T extends CrudItem> {
   }
 
   get(): Observable<T> {
+    localStorage.setItem(`${this.getTypeName()}Id`, this.getId());
     const url = this.getIdUrl();
     return this.http.get<T>(url)
       .pipe(
@@ -62,9 +58,11 @@ export abstract class CrudItemService<T extends CrudItem> {
   }
 
   getList(): Observable<T[]> {
-    return this.http.get<T[]>(this.getBaseUrl())
+    const url = `${this.getBaseUrl()}/list`;
+    const listHttpParams = this.getListHttpParams();
+    return this.http.get<T[]>(url, {params: listHttpParams})
       .pipe(
-        catchError(this.errorMessagesService.handleError<any>('read-list')),
+        catchError(this.errorMessagesService.handleError<any>('list')),
         map((dataList: T[]) => dataList
           .map(data => Object.assign(this.createCrudItem(), data))),
       );
@@ -107,4 +105,9 @@ export abstract class CrudItemService<T extends CrudItem> {
   protected getIdUrl(): string {
     return `${this.getBaseUrl()}/${this.getId()}`;
   }
+
+    // used to specify the parentId in a query param when calling the [GET]/list endpoint.
+    protected getListHttpParams(): HttpParams {
+      return new HttpParams();
+    }
 }
