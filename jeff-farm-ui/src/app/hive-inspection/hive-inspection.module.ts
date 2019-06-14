@@ -4,18 +4,13 @@ import { CommonModule } from '@angular/common';
 
 import { CrudModule } from '../crud/crud.module';
 import { CrudItemService } from '../crud/crud-item.service';
-import { PoultryInspectionGroupService } from './poultry-inspection-group.service';
-import { CrudItemGroupService } from '../crud/crud-item-inspection-group.service';
+import { HiveInspectionService } from './hive-inspection.service';
 
 @NgModule({
   providers: [
     {
-      provide: CrudItemGroupService,
-      useClass: PoultryInspectionGroupService
-    },
-    {
       provide: CrudItemService,
-      useClass: PoultryInspectionGroupService
+      useClass: HiveInspectionService
     },
   ],
   imports: [
@@ -24,4 +19,4 @@ import { CrudItemGroupService } from '../crud/crud-item-inspection-group.service
     RouterModule.forChild([{ path: '', loadChildren: () => import('../crud/crud.module').then(m => m.CrudModule) }]),
   ],
 })
-export class PoultryInspectionGroupsModule { }
+export class HiveInspectionModule { }

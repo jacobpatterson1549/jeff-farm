@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 
 import { CrudModule } from '../crud/crud.module';
 import { CrudItemService } from '../crud/crud-item.service';
-import { HivesService } from './hives.service';
+import { FarmService } from './farm.service';
 
 @NgModule({
   providers: [
     {
       provide: CrudItemService,
-      useClass: HivesService
+      useClass: FarmService
     },
   ],
   imports: [
@@ -19,4 +19,4 @@ import { HivesService } from './hives.service';
     RouterModule.forChild([{ path: '', loadChildren: () => import('../crud/crud.module').then(m => m.CrudModule) }]),
   ],
 })
-export class HivesModule { }
+export class FarmsModule { }

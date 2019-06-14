@@ -25,7 +25,7 @@ export class PoultryService extends CrudItemService<Poultry> {
 
   getCrudGroups(): CrudChild[] {
     return [
-      { name: 'Inspections', path: 'inspections' },
+      { name: 'Inspection', path: 'inspection' },
     ];
   }
 

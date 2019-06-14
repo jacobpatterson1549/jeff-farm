@@ -16,7 +16,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/hives")
+@Path("/hive")
 public class HiveResource
 {
 	private final HiveDao hiveDao;

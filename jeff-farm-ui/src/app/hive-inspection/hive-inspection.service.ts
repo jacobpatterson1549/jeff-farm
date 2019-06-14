@@ -6,7 +6,7 @@ import { HiveInspection } from './hive-inspection';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
 @Injectable()
-export class HiveInspectionsService extends CrudItemService<HiveInspection> {
+export class HiveInspectionService extends CrudItemService<HiveInspection> {
 
   constructor(
     errorsService: ErrorMessagesService,
@@ -24,7 +24,7 @@ export class HiveInspectionsService extends CrudItemService<HiveInspection> {
   }
 
   protected getBaseUrl(): string {
-    return '/hives/hiveInspections';
+    return 'hives/inspection';
   }
 
   private getHiveId(): string {

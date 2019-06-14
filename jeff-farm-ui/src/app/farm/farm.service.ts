@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { CrudItemService, CrudChild } from '../crud/crud-item.service';
-import { Hive } from './hive';
+import { Farm } from './farm';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
 @Injectable()
-export class HivesService extends CrudItemService<Hive> { // TOOD: rename to HiveService (same for others)
+export class FarmService extends CrudItemService<Farm> {
 
   constructor(
     errorsService: ErrorMessagesService,
@@ -15,29 +15,22 @@ export class HivesService extends CrudItemService<Hive> { // TOOD: rename to Hiv
     super(errorsService, httpClient);
   }
 
-  createCrudItem(): Hive {
-    return new Hive(+this.getFarmId());
+  createCrudItem(): Farm {
+    return new Farm();
   }
 
   getTypeName(): string {
-    return 'hive';
+    return 'farm';
   }
 
   getCrudChildren(): CrudChild[] {
     return [
-      { name: 'Hive Inspections', path: 'hiveInspections' },
+      { name: 'Hives', path: 'hive' },
+      { name: 'Poultry', path: 'poultry' },
     ];
   }
 
   getBaseUrl(): string {
-    return 'hives';
-  }
-
-  private getFarmId(): string {
-    return localStorage.getItem('farmId');
-  }
-
-  protected getListHttpParams(): HttpParams {
-    return super.getListHttpParams().append('farmId', this.getFarmId());
+    return 'farm';
   }
 }

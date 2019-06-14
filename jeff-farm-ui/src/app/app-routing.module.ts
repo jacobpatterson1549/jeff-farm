@@ -15,31 +15,31 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'farms/:farm_id/poultry/inspections',
-    loadChildren: () => import('./poultry-inspection-groups/poultry-inspection-groups.module').then(m => m.PoultryInspectionGroupsModule),
+    path: 'farm/:farm_id/poultry/inspection',
+    loadChildren: () => import('./poultry-inspection-group/poultry-inspection-group.module').then(m => m.PoultryInspectionGroupModule),
     canActivate: [AuthGuard],
   },
   {
-    path: 'farms/:farm_id/poultry',
+    path: 'farm/:farm_id/poultry',
     loadChildren: () => import('./poultry/poultry.module').then(m => m.PoultryModule),
     canActivate: [AuthGuard],
   },
   {
-    path: 'farms/:farm_id/hives/:hive_id/hiveInspections',
-    loadChildren: () => import('./hive-inspections/hive-inspections.module').then(m => m.HiveInspectionsModule),
+    path: 'farm/:farm_id/hive/:hive_id/inspection',
+    loadChildren: () => import('./hive-inspection/hive-inspection.module').then(m => m.HiveInspectionModule),
     canActivate: [AuthGuard],
   },
   {
-    path: 'farms/:farm_id/hives',
-    loadChildren: () => import('./hives/hives.module').then(m => m.HivesModule),
+    path: 'farm/:farm_id/hive',
+    loadChildren: () => import('./hive/hive.module').then(m => m.HiveModule),
     canActivate: [AuthGuard],
   },
   {
-    path: 'farms',
-    loadChildren: () => import('./farms/farms.module').then(m => m.FarmsModule),
+    path: 'farm',
+    loadChildren: () => import('./farm/farm.module').then(m => m.FarmsModule),
     canActivate: [AuthGuard],
   },
-  { path: '', redirectTo: '/farms', pathMatch: 'full' },
+  { path: '', redirectTo: '/farm', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 

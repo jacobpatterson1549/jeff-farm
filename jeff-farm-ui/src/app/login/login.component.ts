@@ -55,6 +55,6 @@ export class LoginComponent implements OnInit {
         this.working = false;
         throw error;
       }))
-      .subscribe(_ => this.router.navigate(['/farms']));
+      .subscribe(_ => this.router.navigate(['/farm']));
   }
 }

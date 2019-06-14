@@ -6,7 +6,6 @@ import { PoultryInspectionGroup } from './poultry-inspection-group';
 import { PoultryInspection } from './poultry-inspection';
 import { CrudItemGroupService } from '../crud/crud-item-inspection-group.service';
 import { Poultry } from '../poultry/poultry';
-import { Hive } from '../hives/hive';
 
 @Injectable()
 export class PoultryInspectionGroupService
@@ -28,11 +27,11 @@ export class PoultryInspectionGroupService
   }
 
   getTypeName(): string {
-    return 'poultry inspection groups';
+    return 'poultry inspection group';
   }
 
   getBaseUrl(): string {
-    return 'poultry/inspectionGroups';
+    return 'poultry/inspectionGroup';
   }
 
   private getPoultryId(): string {
