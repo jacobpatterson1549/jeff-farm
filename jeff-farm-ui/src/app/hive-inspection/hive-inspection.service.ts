@@ -24,7 +24,7 @@ export class HiveInspectionService extends CrudItemService<HiveInspection> {
   }
 
   protected getBaseUrl(): string {
-    return 'hives/inspection';
+    return 'hive/inspection';
   }
 
   private getHiveId(): string {
