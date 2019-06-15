@@ -1,8 +1,8 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
-import com.github.ants280.jeff.farm.ws.model.User;
 import com.github.ants280.jeff.farm.ws.Property;
+import com.github.ants280.jeff.farm.ws.model.User;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.ServletException;
