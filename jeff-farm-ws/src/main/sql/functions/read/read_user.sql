@@ -15,7 +15,7 @@ $body$
 		, u.created_date
 		, u.modified_date
 	FROM users AS u
-	WHERE permission_check_farm(set_user_id(user_id), id)
+	WHERE permission_check_user(set_user_id(user_id), id)
 		AND u.id = read_user.id;
 $body$
 LANGUAGE SQL;
