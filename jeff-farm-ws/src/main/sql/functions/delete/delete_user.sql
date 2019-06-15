@@ -13,6 +13,10 @@ $body$
 		AND u.user_name = ur.user_name AND u.id = id;
 
 	DELETE
+    	FROM farm_permissions AS fp
+    	WHERE fp.user_id = delete_user.id;
+
+	DELETE
 	FROM users AS u
 	WHERE u.id = delete_user.id;
 $body$
