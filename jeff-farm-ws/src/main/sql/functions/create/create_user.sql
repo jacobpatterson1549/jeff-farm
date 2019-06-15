@@ -15,12 +15,12 @@ $body$
 			, first_name
 			, last_name
 			)
-		VALUES
-			( user_name
+		SELECT
+			  user_name
 			, create_user.user_password
 			, create_user.first_name
 			, create_user.last_name
-			)
+		WHERE set_user_id(-1) < 0
 		RETURNING id
 	)
 	, new_user_role AS (
