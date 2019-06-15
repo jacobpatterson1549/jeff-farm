@@ -10,5 +10,8 @@ $body$
 	FROM farms AS f
 	WHERE permission_check_farm(set_user_id(user_id), id)
 		AND f.id = delete_farm.id;
+	DELETE
+	FROM farm_permissions AS fp
+	WHERE fp.farm_id = delete_farm.id;
 $body$
 LANGUAGE SQL;
