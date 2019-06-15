@@ -103,7 +103,10 @@ public class UserDao extends CrudItemDao<User>
 	@Override
 	public boolean canDelete(int id)
 	{
-		return true;
+		return this.canDelete("can_delete_user",
+			Collections.singletonList(
+				new IntegerSqlFunctionParameter(User.ID_COLUMN, id)),
+			User.CAN_DELETE_ITEM);
 	}
 
 	@Override

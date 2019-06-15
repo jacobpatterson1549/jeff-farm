@@ -103,7 +103,8 @@ export abstract class CrudItemService<T extends CrudItem> {
   }
 
   protected getIdUrl(): string {
-    return `${this.getBaseUrl()}/${this.getId()}`;
+    const id = this.getId();
+    return this.getBaseUrl().concat(id.length > 0 ? '/' : '').concat('');
   }
 
     // used to specify the parentId in a query param when calling the [GET]/list endpoint.

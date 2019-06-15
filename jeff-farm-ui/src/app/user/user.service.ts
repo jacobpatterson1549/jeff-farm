@@ -42,7 +42,5 @@ export class UserService extends CrudItemService<User> {
     return super.delete().pipe(tap(_ => this.loginService.logout()));
   }
 
-  canDelete(): Observable<boolean> {
-    return of(true);
-  }
+  // canDelete(): // TODO: add /canDelete endpoints for ALL crudItems
 }

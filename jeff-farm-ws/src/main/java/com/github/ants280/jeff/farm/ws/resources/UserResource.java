@@ -59,6 +59,18 @@ public class UserResource
 		return Response.ok().build();
 	}
 
+
+	@GET
+	@Path("canDelete")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response canDeleteUser()
+	{
+		int id = userIdDao.getUserId();
+		boolean canDelete = userDao.canDelete(id);
+
+		return Response.ok(canDelete).build();
+	}
+
 	@GET
 	@Path("logout")
 	public Response logout()
