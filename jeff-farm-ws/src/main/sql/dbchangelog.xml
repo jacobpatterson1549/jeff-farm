@@ -6,10 +6,6 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet id="set_user_id" author="jacobpatterson1549" runOnChange="true">
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="set_user_id.sql"/>
-	</changeSet>
-
 	<changeSet id="tables" author="jacobpatterson1549" runOnChange="true">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/users.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/roles.sql"/>
@@ -35,6 +31,7 @@
 	</changeSet>
 
 	<changeSet id="functions" author="jacobpatterson1549" runOnChange="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/set_user_id.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_hive.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_hive_inspection.sql"/>
