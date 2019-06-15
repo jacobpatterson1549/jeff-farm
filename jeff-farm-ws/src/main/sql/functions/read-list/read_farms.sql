@@ -12,6 +12,7 @@ $body$
 		, f.created_date
 		, f.modified_date
 	FROM farms AS f
-	JOIN farm_permissions AS fp ON fp.user_id = read_farms.user_id;
+	JOIN farm_permissions AS fp ON f.id = fp.farm_id
+	WHERE fp.user_id = read_farms.user_id;
 $body$
 LANGUAGE SQL;
