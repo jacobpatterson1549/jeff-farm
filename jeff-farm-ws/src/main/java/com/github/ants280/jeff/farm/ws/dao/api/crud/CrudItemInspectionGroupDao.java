@@ -156,8 +156,7 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 		String deleteGroupFunctionName,
 		List<SqlFunctionParameter> deleteGroupInParameters,
 		String deleteItemsFunctionName,
-		List<SqlFunctionParameter> deleteItemsInParameters,
-		int userId)
+		List<SqlFunctionParameter> deleteItemsInParameters)
 	{
 		SqlFunctionCall<Void>
 			deleteGroupFunctionCall

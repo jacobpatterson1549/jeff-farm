@@ -25,17 +25,14 @@ public class PoultryInspectionGroupDao
 	extends CrudItemInspectionGroupDao<PoultryInspection, PoultryInspectionGroup>
 {
 	private final PoultryDao poultryDao;
-	private final LoginDao loginDao;
 
 	@Inject
 	public PoultryInspectionGroupDao(
 		DataSource dataSource,
-		PoultryDao poultryDao,
-		LoginDao loginDao)
+		PoultryDao poultryDao)
 	{
-		super(dataSource, loginDao);
+		super(dataSource);
 		this.poultryDao = poultryDao;
-		this.loginDao = loginDao;
 	}
 
 	@Override
@@ -64,8 +61,7 @@ public class PoultryInspectionGroupDao
 				.map(itemParameterMapper)
 				.collect(Collectors.toList()),
 			PoultryInspectionGroup.ID_COLUMN,
-			PoultryInspection.GROUP_ID_COLUMN,
-			loginDao.getUserId());
+			PoultryInspection.GROUP_ID_COLUMN);
 	}
 
 	@Override
@@ -96,7 +92,8 @@ public class PoultryInspectionGroupDao
 
 	@Override
 	public void update(
-		int id, CrudItemInspectionGroupUpdate<PoultryInspection, PoultryInspectionGroup> poultryInspectionGroupUpdate)
+		int id,
+		CrudItemInspectionGroupUpdate<PoultryInspection, PoultryInspectionGroup> poultryInspectionGroupUpdate)
 	{
 		Function<PoultryInspection, List<SqlFunctionParameter>>
 			updateParameterMapper
@@ -108,8 +105,7 @@ public class PoultryInspectionGroupDao
 				poultryInspection.getEggCount()));
 		Function<PoultryInspection, List<SqlFunctionParameter>>
 			addItemParameterMapper
-			= poultryInspection -> Arrays.asList(new IntegerSqlFunctionParameter(
-				PoultryInspection.GROUP_ID_COLUMN,
+			= poultryInspection -> Arrays.asList(new IntegerSqlFunctionParameter(PoultryInspection.GROUP_ID_COLUMN,
 				id),
 			new IntegerSqlFunctionParameter(PoultryInspection.TARGET_ID_COLUMN,
 				poultryInspection.getTargetId()),
@@ -119,15 +115,18 @@ public class PoultryInspectionGroupDao
 				poultryInspection.getEggCount()));
 		Function<Integer, List<SqlFunctionParameter>>
 			deleteItemParameterMapper
-			= itemId -> Collections.singletonList(
-			new IntegerSqlFunctionParameter(PoultryInspection.ID_COLUMN, itemId));
+			= itemId -> Collections.singletonList(new IntegerSqlFunctionParameter(
+			PoultryInspection.ID_COLUMN,
+			itemId));
 		this.executeUpdate("update_poultry_inspection_group",
 			Arrays.asList(new IntegerSqlFunctionParameter(PoultryInspectionGroup.ID_COLUMN,
 					id),
-				new StringSqlFunctionParameter(PoultryInspectionGroup.NOTES_COLUMN,
+				new StringSqlFunctionParameter(
+					PoultryInspectionGroup.NOTES_COLUMN,
 					poultryInspectionGroupUpdate.getGroup().getNotes())),
 			"update_poultry_inspection",
-			poultryInspectionGroupUpdate.getGroup().getInspectionItems()
+			poultryInspectionGroupUpdate.getGroup()
+				.getInspectionItems()
 				.stream()
 				.map(updateParameterMapper)
 				.collect(Collectors.toList()),
@@ -140,8 +139,7 @@ public class PoultryInspectionGroupDao
 			poultryInspectionGroupUpdate.getRemoveItemIds()
 				.stream()
 				.map(deleteItemParameterMapper)
-				.collect(Collectors.toList()),
-			loginDao.getUserId());
+				.collect(Collectors.toList()));
 	}
 
 	@Override
@@ -154,8 +152,7 @@ public class PoultryInspectionGroupDao
 		this.executeDelete("delete_poultry_inspection_group",
 			groupIdInParameterList,
 			"delete_poultry_inspections",
-			groupIdInParameterList,
-			loginDao.getUserId());
+			groupIdInParameterList);
 	}
 
 	@Override
@@ -169,9 +166,7 @@ public class PoultryInspectionGroupDao
 	{
 		List<Poultry> targets = poultryDao.readList(parentId);
 		return targets.stream()
-			.collect(Collectors.toMap(
-				Poultry::getId,
-				Poultry::getName));
+			.collect(Collectors.toMap(Poultry::getId, Poultry::getName));
 	}
 
 	@Override

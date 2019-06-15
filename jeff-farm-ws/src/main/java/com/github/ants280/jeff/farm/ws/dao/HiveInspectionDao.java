@@ -17,13 +17,10 @@ import javax.sql.DataSource;
 @Singleton
 public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 {
-	private final LoginDao loginDao;
-
 	@Inject
-	public HiveInspectionDao(DataSource dataSource, LoginDao loginDao)
+	public HiveInspectionDao(DataSource dataSource)
 	{
 		super(dataSource);
-		this.loginDao = loginDao;
 	}
 
 	@Override
@@ -46,8 +43,7 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_HONEY_COLUMN, hiveInspection.getFramesHoney()),
 						new StringSqlFunctionParameter(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather()),
 						new IntegerSqlFunctionParameter(HiveInspection.TEMPERATURE_F_COLUMN, hiveInspection.getTemperatureF()),
-						new IntegerSqlFunctionParameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph())),
-			loginDao.getUserId());
+						new IntegerSqlFunctionParameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph())));
 	}
 
 	@Override
@@ -88,8 +84,7 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_HONEY_COLUMN, hiveInspection.getFramesHoney()),
 						new StringSqlFunctionParameter(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather()),
 						new IntegerSqlFunctionParameter(HiveInspection.TEMPERATURE_F_COLUMN, hiveInspection.getTemperatureF()),
-						new IntegerSqlFunctionParameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph())),
-				loginDao.getUserId());
+						new IntegerSqlFunctionParameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph())));
 	}
 
 	@Override
@@ -98,8 +93,7 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 		this.executeUpdate(
 				"delete_hive_inspection",
 				Collections.singletonList(
-						new IntegerSqlFunctionParameter(HiveInspection.ID_COLUMN, id)),
-				loginDao.getUserId());
+						new IntegerSqlFunctionParameter(HiveInspection.ID_COLUMN, id)));
 	}
 	
 	@Override
