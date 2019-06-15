@@ -17,14 +17,12 @@ $farm_permissions_audit$
 		INSERT INTO farm_permissions_audit
 			( action_type
 			, user_id
-			, id
 			, fp_farm_id
 			, fp_user_id
 			)
 		VALUES
 			( 'i'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
-			, NEW.id
 			, NEW.farm_id
 			, NEW.user_id
 			);
@@ -49,28 +47,24 @@ $farm_permissions_audit$
 		INSERT INTO farm_permissions_audit
 			( action_type
 			, user_id
-			, id
 			, fp_farm_id
 			, fp_user_id
 			)
 		VALUES
 			( 'b'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
-			, OLD.id
 			, OLD.farm_id
 			, OLD.user_id
 			);
 		INSERT INTO farm_permissions_audit
 			( action_type
 			, user_id
-			, id
 			, fp_farm_id
 			, fp_user_id
 			)
 		VALUES
 			( 'a'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
-			, NEW.id
 			, NEW.farm_id
 			, NEW.user_id
 			);
@@ -95,14 +89,12 @@ $farm_permissions_audit$
 		INSERT INTO farm_permissions_audit
 			( action_type
 			, user_id
-			, id
 			, fp_farm_id
 			, fp_user_id
 			)
 		VALUES
 			( 'd'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
-			, OLD.id
 			, OLD.farm_id
 			, OLD.user_id
 			);
