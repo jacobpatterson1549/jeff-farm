@@ -1,6 +1,13 @@
 package com.github.ants280.jeff.farm.ws;
 
-import com.github.ants280.jeff.farm.ws.resources.*;
+import com.github.ants280.jeff.farm.ws.resources.FarmResource;
+import com.github.ants280.jeff.farm.ws.resources.HiveInspectionResource;
+import com.github.ants280.jeff.farm.ws.resources.HiveResource;
+import com.github.ants280.jeff.farm.ws.resources.LoginResource;
+import com.github.ants280.jeff.farm.ws.resources.PoultryInspectionGroupResource;
+import com.github.ants280.jeff.farm.ws.resources.PoultryResource;
+import com.github.ants280.jeff.farm.ws.resources.RootResource;
+import com.github.ants280.jeff.farm.ws.resources.UserResource;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
