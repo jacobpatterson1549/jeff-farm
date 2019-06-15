@@ -1,5 +1,8 @@
 DROP FUNCTION IF EXISTS read_user_from_user_name;
-CREATE FUNCTION read_user_from_user_name(IN user_name VARCHAR(20))
+CREATE FUNCTION read_user_from_user_name
+	( IN user_id INT -- ignored
+	, IN user_name VARCHAR(20)
+	)
 RETURNS SETOF users
 AS
 $body$
