@@ -1,5 +1,8 @@
 DROP FUNCTION IF EXISTS read_hives;
-CREATE FUNCTION read_hives(IN farm_id INT)
+CREATE FUNCTION read_hives
+	( IN farm_id INT
+	, IN user_id INT
+	)
 RETURNS SETOF hives
 AS
 $body$
@@ -11,6 +14,7 @@ $body$
 		, h.created_date
 		, h.modified_date
 	FROM hives AS h
-	WHERE h.farm_id = read_hives.farm_id;
+	WHERE permission_check_farm(set_user_id(user_id), farm_id)
+		AND h.farm_id = read_hives.farm_id;
 $body$
 LANGUAGE SQL;

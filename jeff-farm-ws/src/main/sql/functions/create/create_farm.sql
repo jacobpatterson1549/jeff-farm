@@ -1,5 +1,7 @@
-CREATE OR REPLACE FUNCTION create_farm
-	( IN name VARCHAR(255)
+DROP FUNCTION IF EXISTS create_farm;
+CREATE FUNCTION create_farm
+	( IN user_id INT
+	, IN name VARCHAR(255)
 	, IN location VARCHAR(255)
 	, OUT id INT
 	)
@@ -9,10 +11,10 @@ $body$
 		( name
 		, location
 		)
-	VALUES
-		( create_farm.name
+	SELECT
+		  create_farm.name
 		, create_farm.location
-		)
+	WHERE permission_check_user(set_user_id(user_id), user_id)
 	RETURNING id;
 $body$
 LANGUAGE SQL;

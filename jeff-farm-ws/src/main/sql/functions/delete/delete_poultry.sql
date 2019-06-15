@@ -1,11 +1,14 @@
-CREATE OR REPLACE FUNCTION delete_poultry
+DROP FUNCTION IF EXISTS  delete_poultry;
+CREATE FUNCTION delete_poultry
 	( IN id INT
+	, IN user_id INT
 	)
 RETURNS VOID
 AS
 $body$
 	DELETE
 	FROM poultry AS h
-	WHERE h.id = delete_poultry.id;
+	WHERE permission_check_poultry(set_user_id(user_id), id)
+		AND h.id = delete_poultry.id;
 $body$
 LANGUAGE SQL;

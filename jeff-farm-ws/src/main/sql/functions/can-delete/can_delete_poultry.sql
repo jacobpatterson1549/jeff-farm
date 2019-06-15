@@ -1,11 +1,14 @@
-CREATE OR REPLACE FUNCTION can_delete_poultry
+DROP FUNCTION IF EXISTS can_delete_poultry;
+ CREATE FUNCTION can_delete_poultry
     ( IN id INT
+    , IN user_id INT
     , OUT can_delete BOOLEAN
 	)
 AS
 $body$
 	SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END
 		FROM poultry_inspections AS pi
-		WHERE pi.target_id = can_delete_poultry.id;
+		WHERE permission_check_poultry(set_user_id(user_id), id)
+			AND pi.target_id = can_delete_poultry.id;
 $body$
 LANGUAGE SQL;

@@ -20,6 +20,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/poultry.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/poultry_inspection_groups.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/poultry_inspections.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/farm_permissions.sql"/>
 	</changeSet>
 
 	<changeSet id="audit-trigger-tables" author="jacobpatterson1549" runOnChange="true">
@@ -30,9 +31,16 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/poultry_audit.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/poultry_inspection_groups_audit.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/poultry_inspections_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/farm_permissions_audit.sql"/>
 	</changeSet>
 
 	<changeSet id="functions" author="jacobpatterson1549" runOnChange="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_farm.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_hive.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_hive_inspection.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_poultry.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_poultry_inspection.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_user.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_user.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_hive.sql"/>

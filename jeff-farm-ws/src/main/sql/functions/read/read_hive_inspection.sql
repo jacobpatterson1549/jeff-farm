@@ -1,5 +1,8 @@
 DROP FUNCTION IF EXISTS read_hive_inspection;
-CREATE FUNCTION read_hive_inspection(IN id INT)
+CREATE FUNCTION read_hive_inspection
+	( IN id INT
+	, IN user_id INT
+	)
 RETURNS SETOF hive_inspections
 AS
 $body$
@@ -23,6 +26,7 @@ $body$
 		, hi.created_date
 		, hi.modified_date
 	FROM hive_inspections AS hi
-WHERE hi.id = read_hive_inspection.id;
+	WHERE permission_check_hive_inspection(set_user_id(user_id), id)
+		AND hi.id = read_hive_inspection.id;
 $body$
 LANGUAGE SQL;

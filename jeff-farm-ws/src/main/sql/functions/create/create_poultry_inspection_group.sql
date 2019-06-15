@@ -1,5 +1,7 @@
-CREATE OR REPLACE FUNCTION create_poultry_inspection_group
-	( IN farm_id INT
+DROP FUNCTION IF EXISTS create_poultry_inspection_group;
+CREATE FUNCTION create_poultry_inspection_group
+	( IN user_id INT
+	, IN farm_id INT
 	, IN notes VARCHAR(255)
 	, OUT id INT
 	)
@@ -13,7 +15,8 @@ $body$
 		  create_poultry_inspection_group.farm_id
 		, create_poultry_inspection_group.notes
 	FROM farms AS f
-	WHERE f.id = create_poultry_inspection_group.farm_id
+	WHERE permission_check_farm(set_user_id(user_id), farm_id)
+		AND f.id = create_poultry_inspection_group.farm_id
 	RETURNING id;
 $body$
 LANGUAGE SQL;

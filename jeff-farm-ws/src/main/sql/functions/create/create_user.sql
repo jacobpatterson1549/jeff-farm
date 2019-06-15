@@ -1,4 +1,5 @@
-CREATE OR REPLACE FUNCTION create_user
+DROP FUNCTION IF EXISTS create_user;
+CREATE FUNCTION create_user
 	( IN user_name VARCHAR(20)
 	, IN user_password VARCHAR(86)
 	, IN first_name VARCHAR(255)

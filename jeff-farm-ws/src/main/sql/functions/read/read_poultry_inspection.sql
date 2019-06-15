@@ -1,5 +1,8 @@
 DROP FUNCTION IF EXISTS read_poultry_inspection;
-CREATE FUNCTION read_poultry_inspection(IN id INT)
+CREATE FUNCTION read_poultry_inspection
+	( IN id INT
+	, IN user_id INT
+	)
 RETURNS TABLE
 	( id INT
 	, group_id INT
@@ -23,6 +26,7 @@ $body$
 		, pi.modified_date
 	FROM poultry_inspections AS pi
 	JOIN poultry AS p ON pi.target_id = p.id
-	WHERE pi.id = read_poultry_inspection.id;
+	WHERE permission_check_poultry_inspection(set_user_id(user_id), read_poultry_inspection.id)
+		AND pi.id = read_poultry_inspection.id;
 $body$
 LANGUAGE SQL;

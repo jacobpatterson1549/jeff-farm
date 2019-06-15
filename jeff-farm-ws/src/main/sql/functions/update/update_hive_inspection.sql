@@ -1,5 +1,7 @@
-CREATE OR REPLACE FUNCTION update_hive_inspection
+DROP FUNCTION IF EXISTS update_hive_inspection;
+CREATE FUNCTION update_hive_inspection
 	( IN id INT
+	, IN user_id INT
 	, IN queen_seen BOOLEAN
 	, IN eggs_seen BOOLEAN
 	, IN laying_pattern_stars INT
@@ -33,6 +35,7 @@ $body$
 			, weather = update_hive_inspection.weather
 			, temperature_f = update_hive_inspection.temperature_f
 			, wind_speed_mph = update_hive_inspection.wind_speed_mph
-		WHERE hi.id = update_hive_inspection.id;
+		WHERE permission_check_hive_inspection(set_user_id(user_id), id)
+			AND hi.id = update_hive_inspection.id;
 $body$
 LANGUAGE SQL;

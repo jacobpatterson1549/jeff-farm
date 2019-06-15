@@ -1,5 +1,8 @@
 DROP FUNCTION IF EXISTS read_poultry;
-CREATE FUNCTION read_poultry(IN id INT)
+CREATE FUNCTION read_poultry
+	( IN id INT
+	, IN user_id INT
+	)
 RETURNS SETOF poultry
 AS
 $body$

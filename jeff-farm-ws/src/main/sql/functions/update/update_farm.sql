@@ -1,5 +1,7 @@
-CREATE OR REPLACE FUNCTION update_farm
+DROP FUNCTION IF EXISTS update_farm;
+CREATE FUNCTION update_farm
 	( IN id INT
+	, IN user_id INT
 	, IN name VARCHAR(255)
 	, IN location VARCHAR(255)
 	)
@@ -10,6 +12,7 @@ $body$
 		SET
 			  name = update_farm.name
 			, location = update_farm.location
-		WHERE f.id = update_farm.id;
+		WHERE permission_check_farm(set_user_id(user_id), id)
+			AND f.id = update_farm.id;
 $body$
 LANGUAGE SQL;
