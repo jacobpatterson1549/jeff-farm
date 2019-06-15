@@ -1,6 +1,7 @@
 package com.github.ants280.jeff.farm.ws.dao.api;
 
 import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
+import com.github.ants280.jeff.farm.ws.dao.UserIdDao;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,10 +13,12 @@ import javax.sql.DataSource;
 public class SqlFunctionDao
 {
 	private final DataSource dataSource;
+	protected final UserIdDao userIdDao;
 
-	public SqlFunctionDao(DataSource dataSource)
+	public SqlFunctionDao(DataSource dataSource, UserIdDao userIdDao)
 	{
 		this.dataSource = dataSource;
+		this.userIdDao = userIdDao;
 	}
 
 	public <A, B, C> C execute(
@@ -62,7 +65,7 @@ public class SqlFunctionDao
 			connection.setAutoCommit(false);
 			return this.executeCalls(connection, resultSupplier, functionCalls);
 		}
-		catch (SQLException ex)
+		catch (Exception ex)
 		{
 			connection.rollback();
 			throw ex;
@@ -80,7 +83,7 @@ public class SqlFunctionDao
 	{
 		for (SqlFunctionCall<?> sqlFunctionCall : sqlFunctionCalls)
 		{
-			execute(connection, sqlFunctionCall);
+			this.execute(connection, sqlFunctionCall);
 		}
 
 		return resultSupplier.get();

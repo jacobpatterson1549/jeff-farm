@@ -4,12 +4,10 @@ import com.github.ants280.jeff.farm.ws.PasswordGenerator;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SimpleCommandSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.crud.CrudItemDao;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.IntegerSqlFunctionParameter;
-import com.github.ants280.jeff.farm.ws.dao.api.parameter.SqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.StringSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.transformer.SimpleResultSetTransformer;
 import com.github.ants280.jeff.farm.ws.model.CrudItem;
 import com.github.ants280.jeff.farm.ws.model.User;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -25,9 +23,12 @@ public class UserDao extends CrudItemDao<User>
 	private final PasswordGenerator passwordGenerator;
 
 	@Inject
-	public UserDao(DataSource dataSource, PasswordGenerator passwordGenerator)
+	public UserDao(
+		DataSource dataSource,
+		PasswordGenerator passwordGenerator,
+		UserIdDao userIdDao)
 	{
-		super(dataSource);
+		super(dataSource, userIdDao);
 
 		this.passwordGenerator = passwordGenerator;
 	}
@@ -35,12 +36,19 @@ public class UserDao extends CrudItemDao<User>
 	@Override
 	public int create(User user)
 	{
-		String
-			password
-			= passwordGenerator.getHashedPassword(user.getPassword());
-
-
-		return this.execute(new CreateUserSqlFunctionCall(user, password));
+		return this.execute(new SimpleCommandSqlFunctionCall<>(
+			"create_user",
+			Arrays.asList(new StringSqlFunctionParameter(User.USER_NAME_COLUMN,
+					user.getUserName()),
+				new StringSqlFunctionParameter(User.PASSWORD_COLUMN,
+					passwordGenerator.getHashedPassword(user.getPassword())),
+				new StringSqlFunctionParameter(User.FIRST_NAME_COLUMN,
+					user.getFirstName()),
+				new StringSqlFunctionParameter(User.LAST_NAME_COLUMN,
+					user.getLastName())),
+			new SimpleResultSetTransformer<>(resultSet -> resultSet.getInt(
+				CrudItem.ID_COLUMN)),
+			null));
 	}
 
 	@Override
@@ -53,9 +61,13 @@ public class UserDao extends CrudItemDao<User>
 
 	public User read(String userName)
 	{
-		return this.executeRead("read_user_from_user_name",
-			Collections.singletonList(new StringSqlFunctionParameter(User.USER_NAME_COLUMN,
-				userName)));
+		return this.execute(new SimpleCommandSqlFunctionCall<>(
+			"read_user_from_user_name",
+			Collections.singletonList(new StringSqlFunctionParameter(
+				User.USER_NAME_COLUMN,
+				userName)),
+			new SimpleResultSetTransformer<>(this::mapRow),
+			null));
 	}
 
 	@Override
@@ -103,40 +115,5 @@ public class UserDao extends CrudItemDao<User>
 			.setLastName(rs.getString(User.LAST_NAME_COLUMN))
 			.setCreatedTimestamp(rs.getTimestamp(User.CREATED_DATE_COLUMN))
 			.setModifiedTimestamp(rs.getTimestamp(User.MODIFIED_DATE_COLUMN));
-	}
-
-	/**
-	 * A SqlFunctionCall which avoids setting the user id.
-	 * This is only needed when creating a user (by someone who is not yet a user).
-	 */
-	private static class CreateUserSqlFunctionCall
-		extends SimpleCommandSqlFunctionCall<Integer>
-	{
-		public CreateUserSqlFunctionCall(User user, String password)
-		{
-			super("create_user",
-				Arrays.asList(new StringSqlFunctionParameter(User.USER_NAME_COLUMN,
-						user.getUserName()),
-					new StringSqlFunctionParameter(User.PASSWORD_COLUMN,
-						password),
-					new StringSqlFunctionParameter(User.FIRST_NAME_COLUMN,
-						user.getFirstName()),
-					new StringSqlFunctionParameter(User.LAST_NAME_COLUMN,
-						user.getLastName())),
-				new SimpleResultSetTransformer<>(resultSet -> resultSet.getInt(
-					CrudItem.ID_COLUMN)));
-		}
-
-		// do not set user id
-		protected void setParameters(
-			PreparedStatement preparedStatement,
-			List<SqlFunctionParameter> inParameters) throws SQLException
-		{
-			int index = 1;
-			for (SqlFunctionParameter inParameter : inParameters)
-			{
-				inParameter.setValue(preparedStatement, index++);
-			}
-		}
 	}
 }

@@ -1,10 +1,13 @@
 package com.github.ants280.jeff.farm.ws.dao.api;
 
 import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
+import com.github.ants280.jeff.farm.ws.dao.UserIdDao;
+import com.github.ants280.jeff.farm.ws.dao.api.call.SimpleCommandSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collections;
 import javax.sql.DataSource;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -23,6 +26,14 @@ public class SqlFunctionDaoTest
 {
 	private SqlFunctionDao sqlFunctionDao;
 	private Connection mockConnection;
+	private UserIdDao mockUserIdDao;
+
+	@SuppressWarnings("unchecked")
+	// (mocking the function call is incorrectly flagged)
+	private static <T> SqlFunctionCall<T> createMockFunctionCall()
+	{
+		return (SqlFunctionCall<T>) mock(SqlFunctionCall.class);
+	}
 
 	@Before
 	public void setUp() throws SQLException
@@ -30,7 +41,9 @@ public class SqlFunctionDaoTest
 		mockConnection = mock(Connection.class);
 		DataSource mockDataSource = mock(DataSource.class);
 		when(mockDataSource.getConnection()).thenReturn(mockConnection);
-		sqlFunctionDao = new SqlFunctionDao(mockDataSource);
+		mockUserIdDao = mock(UserIdDao.class);
+		when(mockUserIdDao.getUserId()).thenReturn(-1);
+		sqlFunctionDao = new SqlFunctionDao(mockDataSource, mockUserIdDao);
 	}
 
 	@Test
@@ -47,12 +60,11 @@ public class SqlFunctionDaoTest
 	}
 
 	@Test
-	public void testCreateReturnMultipleRolledBack() throws SQLException
+	public void testCreateRolledBack() throws SQLException
 	{
 		String exceptionMessage = "call fails for test";
 		SqlFunctionCall<Object> mockFunctionCall = createMockFunctionCall();
-		doThrow(new SqlDaoException(exceptionMessage))
-			.when(mockFunctionCall)
+		doThrow(new SqlDaoException(exceptionMessage)).when(mockFunctionCall)
 			.execute(any(PreparedStatement.class));
 
 		try
@@ -67,10 +79,29 @@ public class SqlFunctionDaoTest
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	// (mocking the function call is incorrectly flagged)
-	private static <T> SqlFunctionCall<T> createMockFunctionCall()
+	@Test
+	public void testCreateRolledBackNoUserId() throws SQLException
 	{
-		return (SqlFunctionCall<T>) mock(SqlFunctionCall.class);
+		String exceptionMessage = "no user id";
+		SqlFunctionCall<Object>
+			mockFunctionCall
+			= new SimpleCommandSqlFunctionCall<>(
+			"sql",
+			Collections.emptyList(),
+			resultSet -> null,
+			mockUserIdDao);
+		doThrow(new RuntimeException(exceptionMessage)).when(mockUserIdDao)
+			.getUserId();
+
+		try
+		{
+			Object output = sqlFunctionDao.execute(mockFunctionCall);
+			fail("Expected exception, but got: " + output);
+		}
+		catch (RuntimeException ex)
+		{
+			assertThat(ex.getMessage(), containsString(exceptionMessage));
+			verify(mockConnection).rollback();
+		}
 	}
 }

@@ -17,9 +17,9 @@ import javax.sql.DataSource;
 public class FarmDao extends CrudItemDao<Farm>
 {
 	@Inject
-	public FarmDao(DataSource dataSource)
+	public FarmDao(DataSource dataSource, UserIdDao userIdDao)
 	{
-		super(dataSource);
+		super(dataSource, userIdDao);
 	}
 
 	@Override

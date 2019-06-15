@@ -29,9 +29,10 @@ public class PoultryInspectionGroupDao
 	@Inject
 	public PoultryInspectionGroupDao(
 		DataSource dataSource,
-		PoultryDao poultryDao)
+		PoultryDao poultryDao,
+		UserIdDao userIdDao)
 	{
-		super(dataSource);
+		super(dataSource, userIdDao);
 		this.poultryDao = poultryDao;
 	}
 

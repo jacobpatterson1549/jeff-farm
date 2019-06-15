@@ -18,9 +18,9 @@ import javax.sql.DataSource;
 public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 {
 	@Inject
-	public HiveInspectionDao(DataSource dataSource)
+	public HiveInspectionDao(DataSource dataSource, UserIdDao userIdDao)
 	{
-		super(dataSource);
+		super(dataSource, userIdDao);
 	}
 
 	@Override

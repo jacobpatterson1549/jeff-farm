@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.dao.api.crud;
 
+import com.github.ants280.jeff.farm.ws.dao.UserIdDao;
 import com.github.ants280.jeff.farm.ws.dao.api.SqlFunctionDao;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SimpleCommandSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
@@ -14,9 +15,9 @@ import javax.sql.DataSource;
 
 public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 {
-	public CrudItemDao(DataSource dataSource)
+	public CrudItemDao(DataSource dataSource, UserIdDao userIdDao)
 	{
-		super(dataSource);
+		super(dataSource, userIdDao);
 	}
 
 	public abstract int create(T entity);
@@ -41,7 +42,8 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 			= new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
 			new SimpleResultSetTransformer<>(resultSet -> resultSet.getInt(
-				CrudItem.ID_COLUMN)));
+				CrudItem.ID_COLUMN)),
+			userIdDao);
 		return this.execute(functionCall);
 	}
 
@@ -51,7 +53,8 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 		SqlFunctionCall<T> functionCall = new SimpleCommandSqlFunctionCall<>(
 			functionName,
 			inParameters,
-			new SimpleResultSetTransformer<>(this::mapRow));
+			new SimpleResultSetTransformer<>(this::mapRow),
+			userIdDao);
 		return this.execute(functionCall);
 	}
 
@@ -62,7 +65,8 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 			functionCall
 			= new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
-			new ListResultSetTransformer<>(this::mapRow));
+			new ListResultSetTransformer<>(this::mapRow),
+			userIdDao);
 		return this.execute(functionCall);
 	}
 
@@ -71,7 +75,8 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 	{
 		SqlFunctionCall<Void> functionCall = new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
-			null);
+			null,
+			userIdDao);
 		this.execute(functionCall);
 	}
 
@@ -85,7 +90,8 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 			= new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
 			new SimpleResultSetTransformer<>(resultSet -> resultSet.getBoolean(
-				outParameterName)));
+				outParameterName)),
+			userIdDao);
 		return this.execute(functionCall);
 	}
 }

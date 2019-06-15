@@ -17,9 +17,9 @@ import javax.sql.DataSource;
 public class PoultryDao extends CrudItemDao<Poultry>
 {
 	@Inject
-	public PoultryDao(DataSource dataSource)
+	public PoultryDao(DataSource dataSource, UserIdDao userIdDao)
 	{
-		super(dataSource);
+		super(dataSource, userIdDao);
 	}
 
 	@Override

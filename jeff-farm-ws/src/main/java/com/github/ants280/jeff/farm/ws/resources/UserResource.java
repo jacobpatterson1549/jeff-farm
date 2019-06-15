@@ -2,6 +2,7 @@ package com.github.ants280.jeff.farm.ws.resources;
 
 import com.github.ants280.jeff.farm.ws.dao.LoginDao;
 import com.github.ants280.jeff.farm.ws.dao.UserDao;
+import com.github.ants280.jeff.farm.ws.dao.UserIdDao;
 import com.github.ants280.jeff.farm.ws.model.User;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -16,12 +17,15 @@ import javax.ws.rs.core.Response;
 @Path("/user")
 public class UserResource
 {
+	private final UserIdDao userIdDao;
 	private final UserDao userDao;
 	private final LoginDao loginDao;
 
 	@Inject
-	public UserResource(UserDao userDao, LoginDao loginDao)
+	public UserResource(
+		UserIdDao userIdDao, UserDao userDao, LoginDao loginDao)
 	{
+		this.userIdDao = userIdDao;
 		this.userDao = userDao;
 		this.loginDao = loginDao;
 	}
@@ -30,7 +34,7 @@ public class UserResource
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUser()
 	{
-		int id = loginDao.getUserId();
+		int id = userIdDao.getUserId();
 		User user = userDao.read(id);
 
 		return Response.ok(user).build();
@@ -40,11 +44,6 @@ public class UserResource
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateUser(User user)
 	{
-		if (user.getId() != loginDao.getUserId())
-		{
-			return Response.status(Response.Status.UNAUTHORIZED).build();
-		}
-
 		userDao.update(user.getId(), user);
 
 		return Response.ok().build();
@@ -54,7 +53,7 @@ public class UserResource
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteUser()
 	{
-		int id = loginDao.getUserId();
+		int id = userIdDao.getUserId();
 		userDao.delete(id);
 
 		return Response.ok().build();
