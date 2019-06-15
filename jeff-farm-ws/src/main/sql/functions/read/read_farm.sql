@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS read_farm;
 CREATE FUNCTION read_farm
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	)
 RETURNS SETOF farms
 AS

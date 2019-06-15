@@ -20,11 +20,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.sql.DataSource;
 
-public abstract class CrudItemInspectionGroupDao
-	<V extends CrudItemInspection<?, V>, T extends CrudItemInspectionGroup<V, T>>
+public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?, V>, T extends CrudItemInspectionGroup<V, T>>
 	extends SqlFunctionDao
 {
-	public CrudItemInspectionGroupDao(DataSource dataSource)
+	public CrudItemInspectionGroupDao(
+		DataSource dataSource)
 	{
 		super(dataSource);
 	}
@@ -35,7 +35,8 @@ public abstract class CrudItemInspectionGroupDao
 
 	public abstract List<T> readList(int parentId);
 
-	public abstract void update(int id, CrudItemInspectionGroupUpdate<V, T> entityUpdate);
+	public abstract void update(
+		int id, CrudItemInspectionGroupUpdate<V, T> entityUpdate);
 
 	public abstract void delete(int id);
 
@@ -53,8 +54,7 @@ public abstract class CrudItemInspectionGroupDao
 		String createItemsFunctionName,
 		List<List<SqlFunctionParameter>> itemInParameters,
 		String groupIdColumnName,
-		String parentIdColumnName,
-		int userId)
+		String parentIdColumnName)
 	{
 		SqlFunctionCall<Integer>
 			createGroupFunctionCall
@@ -68,8 +68,7 @@ public abstract class CrudItemInspectionGroupDao
 			= new BatchCommandSqlFunctionCall(createItemsFunctionName,
 			itemInParameters);
 
-		return this.execute(userId,
-			(a, b) -> a,
+		return this.execute((a, b) -> a,
 			createGroupFunctionCall,
 			createItemsFunctionCall);
 	}
@@ -91,8 +90,7 @@ public abstract class CrudItemInspectionGroupDao
 			readItemsInParameters,
 			new ListResultSetTransformer<>(this::mapItem));
 
-		return this.execute(null,
-			this::addItemsToGroup,
+		return this.execute(this::addItemsToGroup,
 			readGroupFunctionCall,
 			readItemsFunctionCall);
 	}
@@ -114,8 +112,7 @@ public abstract class CrudItemInspectionGroupDao
 			readItemsInParameters,
 			new ListResultSetTransformer<>(this::mapItem));
 
-		return this.execute(null,
-			this::partitionItemsForGroups,
+		return this.execute(this::partitionItemsForGroups,
 			readGroupFunctionCall,
 			readItemsFunctionCall);
 	}
@@ -128,8 +125,7 @@ public abstract class CrudItemInspectionGroupDao
 		String createItemsFunctionName,
 		List<List<SqlFunctionParameter>> createInParameters,
 		String deleteItemsFunctionName,
-		List<List<SqlFunctionParameter>> deleteItemsInParameters,
-		int userId)
+		List<List<SqlFunctionParameter>> deleteItemsInParameters)
 	{
 		SqlFunctionCall<Void>
 			updateGroupFunctionCall
@@ -149,9 +145,7 @@ public abstract class CrudItemInspectionGroupDao
 			= new BatchCommandSqlFunctionCall(deleteItemsFunctionName,
 			deleteItemsInParameters);
 
-		this.execute(
-			userId,
-			updateGroupFunctionCall,
+		this.execute(updateGroupFunctionCall,
 			updateItemsFunctionCall,
 			createItemsFunctionCall,
 			deleteItemsFunctionCall);
@@ -176,9 +170,7 @@ public abstract class CrudItemInspectionGroupDao
 			deleteItemsInParameters,
 			null);
 
-		this.execute(userId,
-			deleteGroupFunctionCall,
-			deleteItemsFunctionCall);
+		this.execute(deleteGroupFunctionCall, deleteItemsFunctionCall);
 	}
 
 	protected boolean canDelete(
@@ -193,7 +185,7 @@ public abstract class CrudItemInspectionGroupDao
 			new SimpleResultSetTransformer<>(resultSet -> resultSet.getBoolean(
 				outParameterName)));
 
-		return this.execute(null, functionCall);
+		return this.execute(functionCall);
 	}
 
 	private T addItemsToGroup(T crudItemGroup, List<V> crudItems)
@@ -208,8 +200,7 @@ public abstract class CrudItemInspectionGroupDao
 	{
 
 		Map<Integer, T> crudItemGroupsById = crudItemGroups.stream()
-			.collect(Collectors.toMap(
-				CrudItemInspectionGroup::getId,
+			.collect(Collectors.toMap(CrudItemInspectionGroup::getId,
 				Function.identity()));
 		Map<Integer, List<V>> crudItemsByGroupId = crudItems.stream()
 			.collect(Collectors.groupingBy(CrudItemInspection::getGroupId));
@@ -235,7 +226,8 @@ public abstract class CrudItemInspectionGroupDao
 		{
 			super(functionCallSql,
 				groupInParameters,
-				new SimpleResultSetTransformer<>(rs -> rs.getInt(groupIdColumnName)));
+				new SimpleResultSetTransformer<>(rs -> rs.getInt(
+					groupIdColumnName)));
 			this.itemInParameters = itemInParameters;
 			this.parentIdColumnName = parentIdColumnName;
 		}

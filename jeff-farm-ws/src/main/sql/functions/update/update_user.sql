@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS update_user;
 CREATE FUNCTION update_user
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	, IN user_password CHAR(86)
 	, IN first_name VARCHAR(255)
 	, IN last_name VARCHAR(255))

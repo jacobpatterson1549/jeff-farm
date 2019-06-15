@@ -34,9 +34,7 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 	protected abstract T mapRow(ResultSet rs) throws SQLException;
 
 	protected int executeCreate(
-		String functionName,
-		List<SqlFunctionParameter> inParameters,
-		int userId)
+		String functionName, List<SqlFunctionParameter> inParameters)
 	{
 		SqlFunctionCall<Integer>
 			functionCall
@@ -44,7 +42,7 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 			inParameters,
 			new SimpleResultSetTransformer<>(resultSet -> resultSet.getInt(
 				CrudItem.ID_COLUMN)));
-		return this.execute(userId, functionCall);
+		return this.execute(functionCall);
 	}
 
 	protected T executeRead(
@@ -54,7 +52,7 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 			functionName,
 			inParameters,
 			new SimpleResultSetTransformer<>(this::mapRow));
-		return this.execute(null, functionCall);
+		return this.execute(functionCall);
 	}
 
 	protected List<T> executeReadList(
@@ -65,18 +63,16 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 			= new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
 			new ListResultSetTransformer<>(this::mapRow));
-		return this.execute(null, functionCall);
+		return this.execute(functionCall);
 	}
 
 	protected void executeUpdate( // and delete
-		String functionName,
-		List<SqlFunctionParameter> inParameters,
-		int userId)
+		String functionName, List<SqlFunctionParameter> inParameters)
 	{
 		SqlFunctionCall<Void> functionCall = new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
 			null);
-		this.execute(userId, functionCall);
+		this.execute(functionCall);
 	}
 
 	protected boolean canDelete(
@@ -90,6 +86,6 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 			inParameters,
 			new SimpleResultSetTransformer<>(resultSet -> resultSet.getBoolean(
 				outParameterName)));
-		return this.execute(null, functionCall);
+		return this.execute(functionCall);
 	}
 }

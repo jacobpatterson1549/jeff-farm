@@ -33,7 +33,7 @@ public class PoultryInspectionGroupDao
 		PoultryDao poultryDao,
 		LoginDao loginDao)
 	{
-		super(dataSource);
+		super(dataSource, loginDao);
 		this.poultryDao = poultryDao;
 		this.loginDao = loginDao;
 	}

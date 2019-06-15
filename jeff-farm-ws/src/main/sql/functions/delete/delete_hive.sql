@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS  delete_hive;
 CREATE FUNCTION delete_hive
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	)
 RETURNS VOID
 AS

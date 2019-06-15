@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS update_hive_inspection;
 CREATE FUNCTION update_hive_inspection
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	, IN queen_seen BOOLEAN
 	, IN eggs_seen BOOLEAN
 	, IN laying_pattern_stars INT

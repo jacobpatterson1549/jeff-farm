@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS update_hive;
 CREATE FUNCTION update_hive
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	, IN name VARCHAR(255)
 	, IN queen_color INT
 	)

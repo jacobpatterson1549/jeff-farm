@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS  delete_hive_inspection;
 CREATE FUNCTION delete_hive_inspection
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	)
 RETURNS VOID
 AS

@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS update_poultry_inspection;
 CREATE FUNCTION update_poultry_inspection
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	, IN bird_count INT
 	, IN egg_count INT
 	)

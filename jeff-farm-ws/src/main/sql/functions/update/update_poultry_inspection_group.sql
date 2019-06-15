@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS update_poultry_inspection_group;
 CREATE FUNCTION update_poultry_inspection_group
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	, IN notes VARCHAR(4095)
 	)
 RETURNS VOID

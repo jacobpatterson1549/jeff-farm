@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS read_poultry_inspection_group;
 CREATE FUNCTION read_poultry_inspection_group
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	)
 RETURNS SETOF poultry_inspection_groups
 AS

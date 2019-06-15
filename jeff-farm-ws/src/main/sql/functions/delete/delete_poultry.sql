@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS  delete_poultry;
 CREATE FUNCTION delete_poultry
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	)
 RETURNS VOID
 AS

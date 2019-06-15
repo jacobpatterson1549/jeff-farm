@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS delete_farm;
  CREATE FUNCTION delete_farm
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	)
 RETURNS VOID
 AS

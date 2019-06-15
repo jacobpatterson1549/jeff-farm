@@ -34,7 +34,7 @@ public class SqlFunctionDaoTest
 		mockConnection = mock(Connection.class);
 		mockDataSource = mock(DataSource.class);
 		when(mockDataSource.getConnection()).thenReturn(mockConnection);
-		sqlFunctionDao = new SqlFunctionDao(mockDataSource);
+		sqlFunctionDao = new SqlFunctionDao(mockDataSource, loginDao);
 	}
 
 	@Test

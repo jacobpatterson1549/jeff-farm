@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS read_poultry_inspection;
 CREATE FUNCTION read_poultry_inspection
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	)
 RETURNS TABLE
 	( id INT

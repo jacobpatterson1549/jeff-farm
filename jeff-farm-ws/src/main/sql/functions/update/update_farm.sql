@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS update_farm;
 CREATE FUNCTION update_farm
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	, IN name VARCHAR(255)
 	, IN location VARCHAR(255)
 	)

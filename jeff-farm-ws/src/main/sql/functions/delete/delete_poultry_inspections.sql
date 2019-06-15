@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS delete_poultry_inspections;
 CREATE FUNCTION delete_poultry_inspections
-	( IN group_id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN group_id INT
 	)
 RETURNS VOID
 AS

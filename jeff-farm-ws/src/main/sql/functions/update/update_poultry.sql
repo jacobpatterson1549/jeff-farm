@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS update_poultry;
 CREATE FUNCTION update_poultry
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	, IN name VARCHAR(255)
 	)
 RETURNS VOID

@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS can_delete_hive;
- CREATE FUNCTION can_delete_hive
-    ( IN id INT
-    , IN user_id INT
+CREATE FUNCTION can_delete_hive
+    ( IN user_id INT
+    , IN id INT
     , OUT can_delete BOOLEAN
 	)
 AS

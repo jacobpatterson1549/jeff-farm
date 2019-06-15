@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS read_user;
 CREATE FUNCTION read_user
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	)
 RETURNS SETOF users
 AS

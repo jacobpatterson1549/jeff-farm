@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS read_hive;
 CREATE FUNCTION read_hive
-	( IN id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN id INT
 	)
 RETURNS SETOF hives
 AS

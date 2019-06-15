@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS read_poultry_list;
 CREATE FUNCTION read_poultry_list
-	( IN farm_id INT
-	, IN user_id INT
+	( IN user_id INT
+	, IN farm_id INT
 	)
 RETURNS SETOF poultry
 AS
