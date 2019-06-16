@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS  delete_hive;
+DROP FUNCTION IF EXISTS delete_hive;
 CREATE FUNCTION delete_hive
 	( IN user_id INT
 	, IN id INT
