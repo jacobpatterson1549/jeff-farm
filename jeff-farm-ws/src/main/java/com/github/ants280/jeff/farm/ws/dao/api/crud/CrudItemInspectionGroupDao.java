@@ -181,7 +181,7 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 			null,
 			userIdDao);
 
-		this.execute(deleteGroupFunctionCall, deleteItemsFunctionCall);
+		this.execute(deleteItemsFunctionCall, deleteGroupFunctionCall);
 	}
 
 	protected boolean canDelete(
