@@ -5,8 +5,10 @@ CREATE TABLE IF NOT EXISTS farm_permissions_audit
 	( audit_id SERIAL PRIMARY KEY
 	, action_type CHAR(1) NOT NULL -- i (insert), b (before update), a (after update), d (delete)
 	, user_id INT NOT NULL
-	, fp_farm_id INT NOT NULL
-	, fp_user_id INT NOT NULL
+	, action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	, id INT
+	, fp_farm_id INT
+	, fp_user_id INT
 	);
 
 
@@ -17,12 +19,14 @@ $farm_permissions_audit$
 		INSERT INTO farm_permissions_audit
 			( action_type
 			, user_id
+			, id
 			, fp_farm_id
 			, fp_user_id
 			)
 		VALUES
 			( 'i'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, NEW.id
 			, NEW.farm_id
 			, NEW.user_id
 			);
@@ -47,24 +51,28 @@ $farm_permissions_audit$
 		INSERT INTO farm_permissions_audit
 			( action_type
 			, user_id
+			, id
 			, fp_farm_id
 			, fp_user_id
 			)
 		VALUES
 			( 'b'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, OLD.id
 			, OLD.farm_id
 			, OLD.user_id
 			);
 		INSERT INTO farm_permissions_audit
 			( action_type
 			, user_id
+			, id
 			, fp_farm_id
 			, fp_user_id
 			)
 		VALUES
 			( 'a'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, NEW.id
 			, NEW.farm_id
 			, NEW.user_id
 			);
@@ -89,12 +97,14 @@ $farm_permissions_audit$
 		INSERT INTO farm_permissions_audit
 			( action_type
 			, user_id
+			, id
 			, fp_farm_id
 			, fp_user_id
 			)
 		VALUES
 			( 'd'
 			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, OLD.id
 			, OLD.farm_id
 			, OLD.user_id
 			);

@@ -1,14 +1,6 @@
 package com.github.ants280.jeff.farm.ws;
 
-import com.github.ants280.jeff.farm.ws.dao.ConnectionDao;
-import com.github.ants280.jeff.farm.ws.dao.FarmDao;
-import com.github.ants280.jeff.farm.ws.dao.HiveDao;
-import com.github.ants280.jeff.farm.ws.dao.HiveInspectionDao;
-import com.github.ants280.jeff.farm.ws.dao.LoginDao;
-import com.github.ants280.jeff.farm.ws.dao.PoultryDao;
-import com.github.ants280.jeff.farm.ws.dao.PoultryInspectionGroupDao;
-import com.github.ants280.jeff.farm.ws.dao.UserDao;
-import com.github.ants280.jeff.farm.ws.dao.UserIdDao;
+import com.github.ants280.jeff.farm.ws.dao.*;
 import javax.inject.Singleton;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -29,6 +21,7 @@ public class InjectionBinder extends AbstractBinder
 		bindAsSingleton(LoginDao.class); // has UserDao
 		bindAsContract(UserIdDao.class); // has LoginDao :p
 		bindAsSingleton(FarmDao.class);
+		bindAsSingleton(FarmPermissionDao.class);
 		bindAsSingleton(HiveDao.class);
 		bindAsSingleton(HiveInspectionDao.class);
 		bindAsSingleton(PoultryDao.class);
