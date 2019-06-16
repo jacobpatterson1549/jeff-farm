@@ -7,10 +7,15 @@ CREATE FUNCTION permission_check_farm
 AS
 $body$
 	BEGIN
-		SELECT CASE WHEN COUNT(*) = 0 THEN FALSE ELSE TRUE END INTO permission_check
+		SELECT EXISTS
+		(
+			SELECT fp.user_id, fp.farm_id
 			FROM farm_permissions AS fp
 			WHERE fp.user_id = permission_check_farm.user_id
-				AND fp.farm_id = permission_check_farm.farm_id;
+				AND fp.farm_id = permission_check_farm.farm_id
+		)
+		INTO permission_check;
+
 		IF NOT permission_check THEN
 			RAISE EXCEPTION 'User % does not have access to farm %.', permission_check_farm.user_id, permission_check_farm.farm_id;
 		END IF;

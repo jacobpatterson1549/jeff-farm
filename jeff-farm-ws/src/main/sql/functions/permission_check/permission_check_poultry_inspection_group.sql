@@ -7,11 +7,16 @@ CREATE FUNCTION permission_check_poultry_inspection_group
 AS
 $body$
 	BEGIN
-		SELECT CASE WHEN COUNT(*) = 0 THEN FALSE ELSE TRUE END INTO permission_check
+		SELECT EXISTS
+		(
+			SELECT fp.user_id, pig.id
 			FROM farm_permissions AS fp
 			JOIN poultry_inspection_groups AS pig ON fp.farm_id = pig.farm_id
 			WHERE fp.user_id = permission_check_poultry_inspection_group.user_id
-				AND pig.id = permission_check_poultry_inspection_group.poultry_inspection_group_id;
+				AND pig.id = permission_check_poultry_inspection_group.poultry_inspection_group_id
+		)
+		INTO permission_check;
+
 		IF NOT permission_check THEN
 			RAISE EXCEPTION 'User % does not have access to poultry inspection group %.', permission_check_poultry_inspection_group.user_id, permission_check_poultry_inspection_group.poultry_inspection_group_id;
 		END IF;

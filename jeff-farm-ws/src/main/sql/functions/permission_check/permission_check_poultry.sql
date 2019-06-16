@@ -7,11 +7,16 @@ CREATE FUNCTION permission_check_poultry
 AS
 $body$
 	BEGIN
-		SELECT CASE WHEN COUNT(*) = 0 THEN FALSE ELSE TRUE END INTO permission_check
+		SELECT EXISTS
+		(
+			SELECT fp.user_id, p.id
 			FROM farm_permissions AS fp
 			JOIN poultry AS p ON fp.farm_id = p.farm_id
 			WHERE fp.user_id = permission_check_poultry.user_id
-				AND p.id = permission_check_poultry.poultry_id;
+				AND p.id = permission_check_poultry.poultry_id
+		)
+		INTO permission_check;
+
 		IF NOT permission_check THEN
 			RAISE EXCEPTION 'User % does not have access to poultry %.', permission_check_poultry.user_id, permission_check_poultry.poultry_id;
 		END IF;

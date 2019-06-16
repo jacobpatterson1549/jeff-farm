@@ -7,10 +7,18 @@ CREATE FUNCTION permission_check_farm_permission
 AS
 $body$
 	BEGIN
-		SELECT CASE WHEN COUNT(*) = 0 THEN FALSE ELSE TRUE END INTO permission_check
-		FROM farm_permissions AS fp
-		WHERE permission_check_farm(permission_check_farm_permission.user_id, fp.farm_id)
-			AND fp.id = permission_check_farm_permission.id;
+		SELECT EXISTS
+		(
+			SELECT fp.user_id, fp.id
+			FROM farm_permissions AS fp
+			WHERE fp.id = permission_check_farm_permission.id
+				AND permission_check_farm(permission_check_farm_permission.user_id, fp.farm_id)
+		)
+		INTO permission_check;
+
+		IF NOT permission_check THEN
+			RAISE EXCEPTION 'User % does not have access to farm permission %.', permission_check_farm_permission.user_id, permission_check_farm_permission.id;
+		END IF;
 	END
 $body$
 LANGUAGE plpgsql;
