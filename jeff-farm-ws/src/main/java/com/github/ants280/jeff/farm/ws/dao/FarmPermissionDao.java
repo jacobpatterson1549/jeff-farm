@@ -26,7 +26,7 @@ public class FarmPermissionDao extends CrudItemDao<FarmPermission>
 	public int create(FarmPermission farmPermission)
 	{
 		return this.executeCreate(
-			"create_farm",
+			"create_farm_permission",
 			Arrays.asList(
 				new IntegerSqlFunctionParameter(FarmPermission.FARM_ID_COLUMN, farmPermission.getFarmId()),
 				new StringSqlFunctionParameter(FarmPermission.USER_NAME_COLUMN, farmPermission.getUserName())));
