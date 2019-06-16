@@ -8,7 +8,7 @@ AS
 $body$
 	SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END
 		FROM farm_permissions AS fp
-		WHERE permission_check_user(set_user_id(user_id), id)
+		WHERE permission_check_user(set_user_id(can_delete_user.user_id), can_delete_user.id)
 			AND fp.user_id = can_delete_user.id
 $body$
 LANGUAGE SQL;

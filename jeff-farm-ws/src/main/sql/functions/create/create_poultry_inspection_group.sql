@@ -15,7 +15,7 @@ $body$
 		  create_poultry_inspection_group.farm_id
 		, create_poultry_inspection_group.notes
 	FROM farms AS f
-	WHERE permission_check_farm(set_user_id(user_id), farm_id)
+	WHERE permission_check_farm(set_user_id(create_poultry_inspection_group.user_id), create_poultry_inspection_group.farm_id)
 		AND f.id = create_poultry_inspection_group.farm_id
 	RETURNING id;
 $body$

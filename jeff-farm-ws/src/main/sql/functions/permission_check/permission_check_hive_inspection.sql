@@ -14,7 +14,7 @@ $body$
 			WHERE fp.user_id = permission_check_hive.user_id
 				AND hi.id = permission_check_hive_inspection.hive_inspection_id;
 		IF NOT permission_check THEN
-			RAISE EXCEPTION 'User % does not have access to hive inspection %.', user_id, hive_inspection_id;
+			RAISE EXCEPTION 'User % does not have access to hive inspection %.', permission_check_hive_inspection.user_id, permission_check_hive_inspection.hive_inspection_id;
 		END IF;
 	END
 $body$

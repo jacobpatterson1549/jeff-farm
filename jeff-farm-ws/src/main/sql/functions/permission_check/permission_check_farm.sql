@@ -12,7 +12,7 @@ $body$
 			WHERE fp.user_id = permission_check_farm.user_id
 				AND fp.farm_id = permission_check_farm.farm_id;
 		IF NOT permission_check THEN
-			RAISE EXCEPTION 'User % does not have access to farm %.', user_id, farm_id;
+			RAISE EXCEPTION 'User % does not have access to farm %.', permission_check_farm.user_id, permission_check_farm.farm_id;
 		END IF;
 	END
 $body$

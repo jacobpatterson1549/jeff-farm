@@ -8,7 +8,7 @@ AS
 $body$
 	DELETE
 	FROM farms AS f
-	WHERE permission_check_farm(set_user_id(user_id), id)
+	WHERE permission_check_farm(set_user_id(delete_farm.user_id), delete_farm.id)
 		AND f.id = delete_farm.id;
 	DELETE
 	FROM farm_permissions AS fp

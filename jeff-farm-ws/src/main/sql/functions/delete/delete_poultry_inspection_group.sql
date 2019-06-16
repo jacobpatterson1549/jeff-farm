@@ -8,7 +8,7 @@ AS
 $body$
 	DELETE
 	FROM poultry_inspection_groups AS pig
-	WHERE permission_check_poultry_inspection_group(set_user_id(user_id), id)
+	WHERE permission_check_poultry_inspection_group(set_user_id(delete_poultry_inspection_group.user_id), delete_poultry_inspection_group.id)
 		AND pig.id = delete_poultry_inspection_group.id;
 $body$
 LANGUAGE SQL;

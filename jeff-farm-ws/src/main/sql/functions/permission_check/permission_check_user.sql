@@ -9,7 +9,7 @@ $body$
 	BEGIN
 		SELECT CASE WHEN user_id = target_user_id THEN TRUE ELSE FALSE END INTO permission_check;
 		IF NOT permission_check THEN
-			RAISE EXCEPTION 'User % does not have access to user %.', user_id, target_user_id;
+			RAISE EXCEPTION 'User % does not have access to user %.', permission_check_user.user_id, permission_check_user.target_user_id;
 		END IF;
 	END
 $body$

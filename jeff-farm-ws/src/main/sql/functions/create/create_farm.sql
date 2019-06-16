@@ -15,7 +15,7 @@ $body$
 		SELECT
 			  create_farm.name
 			, create_farm.location
-		WHERE permission_check_user(set_user_id(user_id), user_id)
+		WHERE permission_check_user(set_user_id(create_farm.user_id), create_farm.user_id)
 		RETURNING id
 	)
 	, new_farm_permission AS (

@@ -9,7 +9,7 @@ $body$
 	DELETE
 	FROM user_roles AS ur
 	USING users AS u
-	WHERE permission_check_user(set_user_id(user_id), delete_user.id)
+	WHERE permission_check_user(set_user_id(delete_user.user_id), delete_user.id)
 		AND u.user_name = ur.user_name AND u.id = delete_user.id;
 
 	DELETE

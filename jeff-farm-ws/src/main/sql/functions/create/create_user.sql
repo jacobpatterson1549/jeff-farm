@@ -20,7 +20,7 @@ $body$
 			, create_user.user_password
 			, create_user.first_name
 			, create_user.last_name
-		WHERE set_user_id(-1) < 0
+		WHERE set_user_id(-1) IS NOT NULL
 		RETURNING id
 	)
 	, new_user_role AS (

@@ -8,7 +8,7 @@ AS
 $body$
 	DELETE
 	FROM hive_inspections AS hi
-	WHERE permission_check_hive_inspection(set_user_id(user_id), id)
+	WHERE permission_check_hive_inspection(set_user_id(delete_hive_inspection.user_id), delete_hive_inspection.id)
 		AND hi.id = delete_hive_inspection.id;
 $body$
 LANGUAGE SQL;

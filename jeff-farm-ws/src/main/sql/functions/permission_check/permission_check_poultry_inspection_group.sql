@@ -13,7 +13,7 @@ $body$
 			WHERE fp.user_id = permission_check_hive.user_id
 				AND pig.id = permission_check_poultry_inspection_group.poultry_inspection_group_id;
 		IF NOT permission_check THEN
-			RAISE EXCEPTION 'User % does not have access to poultry inspection group %.', user_id, poultry_inspection_group_id;
+			RAISE EXCEPTION 'User % does not have access to poultry inspection group %.', permission_check_poultry_inspection_group.user_id, permission_check_poultry_inspection_group.poultry_inspection_group_id;
 		END IF;
 	END
 $body$

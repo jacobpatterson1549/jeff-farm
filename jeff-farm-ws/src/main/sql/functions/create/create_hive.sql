@@ -18,7 +18,7 @@ $body$
 		, create_hive.name
 		, create_hive.queen_color
 	FROM farms AS f
-	WHERE permission_check_farm(set_user_id(user_id), farm_id)
+	WHERE permission_check_farm(set_user_id(create_hive.user_id), create_hive.farm_id)
 		AND f.id = create_hive.farm_id
 	RETURNING id;
 $body$

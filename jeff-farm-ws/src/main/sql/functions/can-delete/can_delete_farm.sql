@@ -8,7 +8,7 @@ AS
 $body$
 	SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END
 		FROM hives AS h
-		WHERE permission_check_farm(set_user_id(user_id), id)
+		WHERE permission_check_farm(set_user_id(user_id), can_delete_farm.id)
 			AND h.farm_id = can_delete_farm.id;
 $body$
 LANGUAGE SQL;

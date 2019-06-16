@@ -13,7 +13,7 @@ $body$
 			WHERE fp.user_id = permission_check_poultry.user_id
 				AND p.id = permission_check_poultry.poultry_id;
 		IF NOT permission_check THEN
-			RAISE EXCEPTION 'User % does not have access to poultry %.', user_id, poultry_id;
+			RAISE EXCEPTION 'User % does not have access to poultry %.', permission_check_poultry.user_id, permission_check_poultry.poultry_id;
 		END IF;
 	END
 $body$

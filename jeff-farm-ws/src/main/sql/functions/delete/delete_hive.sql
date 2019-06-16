@@ -8,7 +8,7 @@ AS
 $body$
 	DELETE
 	FROM hives AS h
-	WHERE permission_check_hive(set_user_id(user_id), id)
+	WHERE permission_check_hive(set_user_id(delete_hive.user_id), delete_hive.id)
 		AND h.id = delete_hive.id;
 $body$
 LANGUAGE SQL;
