@@ -12,7 +12,7 @@ $body$
 		SET
 			  name = update_farm.name
 			, location = update_farm.location
-		WHERE permission_check_farm(set_user_id(user_id), id)
+		WHERE permission_check_farm(set_user_id(update_farm.user_id), update_farm.id)
 			AND f.id = update_farm.id;
 $body$
 LANGUAGE SQL;
