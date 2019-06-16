@@ -9,7 +9,8 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import javax.inject.*;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.sql.DataSource;
 
 @Singleton
@@ -81,6 +82,8 @@ public class FarmPermissionDao extends CrudItemDao<FarmPermission>
 		return new FarmPermission()
 			.setId(rs.getInt(FarmPermission.ID_COLUMN))
 			.setFarmId(rs.getInt(FarmPermission.FARM_ID_COLUMN))
-			.setUserName(rs.getString(FarmPermission.USER_NAME_COLUMN));
+			.setUserName(rs.getString(FarmPermission.USER_NAME_COLUMN))
+			.setCreatedTimestamp(rs.getTimestamp(FarmPermission.CREATED_DATE_COLUMN))
+			.setModifiedTimestamp(rs.getTimestamp(FarmPermission.MODIFIED_DATE_COLUMN));
 	}
 }
