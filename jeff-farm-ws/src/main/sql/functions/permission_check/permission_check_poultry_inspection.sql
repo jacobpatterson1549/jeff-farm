@@ -11,7 +11,7 @@ $body$
 			FROM farm_permissions AS fp
 			JOIN poultry_inspection_groups AS pig ON fp.farm_id = pig.farm_id
 			JOIN poultry_inspections AS pi ON pig.id = pi.group_id
-			WHERE fp.user_id = permission_check_hive.user_id
+			WHERE fp.user_id = permission_check_poultry_inspection.user_id
 				AND pi.id = permission_check_poultry_inspection.poultry_inspection_id;
 		IF NOT permission_check THEN
 			RAISE EXCEPTION 'User % does not have access to poultry inspection %.', permission_check_poultry_inspection.user_id, permission_check_poultry_inspection.poultry_inspection_id;
