@@ -42,7 +42,7 @@ public class FarmDao extends CrudItemDao<Farm>
 	}
 
 	@Override
-	public List<Farm> readList(int parentId)
+	public List<Farm> readList(int parentId) // (user_id provided by SqlFunctionCall)
 	{
 		return this.executeReadList(
 				"read_farms",

@@ -50,7 +50,7 @@ public class FarmResource
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getFarmsList()
 	{
-		List<Farm> farms = farmDao.readList(-1); // TODO limit this by permissions
+		List<Farm> farms = farmDao.readList(-1); // (user_id provided by SqlFunctionCall)
 
 		return Response.ok(farms).build();
 	}
