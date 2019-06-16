@@ -19,7 +19,6 @@ $body$
     	WHERE f.id = create_farm_permission.farm_id
     		AND u.user_name = create_farm_permission.user_name
     		AND permission_check_farm(set_user_id(create_farm_permission.user_id), create_farm_permission.farm_id)
-    		AND permission_check_user(set_user_id(create_farm_permission.user_id), u.id)
     	RETURNING id;
 $body$
 LANGUAGE SQL;
