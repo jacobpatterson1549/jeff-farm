@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS delete_farm_permission_permission;
+DROP FUNCTION IF EXISTS delete_farm_permission;
  CREATE FUNCTION delete_farm_permission
 	( IN user_id INT
 	, IN id INT
