@@ -6,9 +6,12 @@ CREATE FUNCTION delete_poultry_inspections
 RETURNS VOID
 AS
 $body$
-	DELETE
-	FROM poultry_inspections AS pi
-	WHERE permission_check_poultry_inspection(set_user_id(delete_poultry_inspections.user_id), pi.id)
-		AND pi.group_id = delete_poultry_inspections.group_id;
+	BEGIN
+		IF permission_check_poultry_inspection_group(set_user_id(delete_poultry_inspections.user_id), delete_poultry_inspections.group_id) THEN
+			DELETE
+			FROM poultry_inspections AS pi
+			WHERE pi.group_id = delete_poultry_inspections.group_id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

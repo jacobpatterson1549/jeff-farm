@@ -6,9 +6,12 @@ CREATE FUNCTION delete_poultry
 RETURNS VOID
 AS
 $body$
-	DELETE
-	FROM poultry AS h
-	WHERE permission_check_poultry(set_user_id(delete_poultry.user_id), delete_poultry.id)
-		AND h.id = delete_poultry.id;
+	BEGIN
+		IF permission_check_poultry(set_user_id(delete_poultry.user_id), delete_poultry.id) THEN
+			DELETE
+			FROM poultry AS h
+			WHERE h.id = delete_poultry.id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

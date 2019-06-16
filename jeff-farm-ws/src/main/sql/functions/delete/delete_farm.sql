@@ -13,8 +13,7 @@ $body$
 
 	DELETE
 	FROM farms AS f
-	-- TODO: Have OTHER delete scripts call can_delete functions (which should call permission_check functions).
-	WHERE f.id = delete_farm.id; -- (user id and permission check done above)
+	WHERE f.id = delete_farm.id; -- (permission check for user_id done above)
 
 $body$
 LANGUAGE SQL;

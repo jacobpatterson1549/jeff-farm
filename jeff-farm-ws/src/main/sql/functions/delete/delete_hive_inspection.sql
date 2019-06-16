@@ -6,9 +6,12 @@ CREATE FUNCTION delete_hive_inspection
 RETURNS VOID
 AS
 $body$
-	DELETE
-	FROM hive_inspections AS hi
-	WHERE permission_check_hive_inspection(set_user_id(delete_hive_inspection.user_id), delete_hive_inspection.id)
-		AND hi.id = delete_hive_inspection.id;
+	BEGIN
+		IF permission_check_hive_inspection(set_user_id(delete_hive_inspection.user_id), delete_hive_inspection.id) THEN
+			DELETE
+			FROM hive_inspections AS hi
+			WHERE hi.id = delete_hive_inspection.id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;
