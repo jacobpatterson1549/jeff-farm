@@ -6,9 +6,14 @@ CREATE FUNCTION can_delete_user
 	)
 AS
 $body$
-	SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END
-		FROM farm_permissions AS fp
-		WHERE permission_check_user(set_user_id(can_delete_user.user_id), can_delete_user.id)
-			AND fp.user_id = can_delete_user.id
+	SELECT permission_check_user(set_user_id(can_delete_user.user_id), can_delete_user.id)
+		AND NOT EXISTS( -- cannot delete user if they are tho only one with access to a farm
+			SELECT fp.farm_id
+            FROM farm_permissions AS fp
+            JOIN farm_permissions AS fp2 ON fp.farm_id = fp2.farm_id
+            WHERE fp.user_id = can_delete_user.id
+            GROUP BY fp.farm_id
+            HAVING COUNT(*) = 1
+		)
 $body$
 LANGUAGE SQL;
