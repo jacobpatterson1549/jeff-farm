@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { CrudItemService } from '../crud/crud-item.service';
-import { CrudChild } from "../crud/crud-child";
+import { CrudChild } from '../crud/crud-child';
 import { Poultry } from './poultry';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 

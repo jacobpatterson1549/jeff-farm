@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Title } from '@angular/platform-browser';
 
 import { CrudItemService } from '../crud-item.service';
-import { CrudChild } from "../crud-child";
+import { CrudChild } from '../crud-child';
 import { CrudItem } from '../crud-item';
 import { CrudDeleteComponent } from '../crud-delete/crud-delete.component';
 
