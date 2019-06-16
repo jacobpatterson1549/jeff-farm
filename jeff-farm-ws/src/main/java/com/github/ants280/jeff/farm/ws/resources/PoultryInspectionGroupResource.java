@@ -96,7 +96,7 @@ public class PoultryInspectionGroupResource
 	@GET
 	@Path("targets")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getTargets(@PathParam("farmId") int farmId)
+	public Response getTargets(@QueryParam("farmId") int farmId)
 	{
 		Map<Integer, String> targets = poultryInspectionGroupDao.getTargets(
 			farmId);
