@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Title } from '@angular/platform-browser';
 
-import { CrudItemService, CrudChild } from '../crud-item.service';
+import { CrudItemService } from '../crud-item.service';
+import { CrudChild } from "../crud-child";
 import { CrudItem } from '../crud-item';
 import { CrudDeleteComponent } from '../crud-delete/crud-delete.component';
 

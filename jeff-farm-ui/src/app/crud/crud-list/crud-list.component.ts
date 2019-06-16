@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { CrudItemService, CrudChild } from '../crud-item.service';
+import { CrudItemService } from '../crud-item.service';
+import { CrudChild } from "../crud-child";
 import { CrudItem } from '../crud-item';
 
 @Component({

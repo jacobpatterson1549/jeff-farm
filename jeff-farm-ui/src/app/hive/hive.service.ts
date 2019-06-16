@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { CrudItemService, CrudChild } from '../crud/crud-item.service';
+import { CrudItemService } from '../crud/crud-item.service';
+import { CrudChild } from "../crud/crud-child";
 import { Hive } from './hive';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 

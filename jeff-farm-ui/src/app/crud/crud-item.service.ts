@@ -5,11 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 
 import { CrudItem } from './crud-item';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
-
-export interface CrudChild { // TODO: Move to own class
-  name: string;
-  path: string;
-}
+import { CrudChild } from './crud-child';
 
 export abstract class CrudItemService<T extends CrudItem> {
 
