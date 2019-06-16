@@ -11,7 +11,7 @@ $body$
 			FROM farm_permissions AS fp
 			JOIN hives AS h ON fp.farm_id = h.farm_id
 			JOIN hive_inspections AS hi ON h.id = hi.hive_id
-			WHERE fp.user_id = permission_check_hive.user_id
+			WHERE fp.user_id = permission_check_hive_inspection.user_id
 				AND hi.id = permission_check_hive_inspection.hive_inspection_id;
 		IF NOT permission_check THEN
 			RAISE EXCEPTION 'User % does not have access to hive inspection %.', permission_check_hive_inspection.user_id, permission_check_hive_inspection.hive_inspection_id;
