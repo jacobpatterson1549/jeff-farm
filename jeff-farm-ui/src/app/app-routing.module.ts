@@ -35,6 +35,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'farm/:farm_id/permission',
+    loadChildren: () => import('./farm-permission/farm-permission.module').then(m => m.FarmPermissionModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'farm',
     loadChildren: () => import('./farm/farm.module').then(m => m.FarmModule),
     canActivate: [AuthGuard],
