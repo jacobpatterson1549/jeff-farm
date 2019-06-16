@@ -6,10 +6,14 @@ CREATE FUNCTION can_delete_farm_permission
 	)
 AS
 $body$
-	SELECT CASE WHEN COUNT(*) > 1 THEN TRUE ELSE FALSE END
+	SELECT permission_check_farm_permission(set_user_id(can_delete_farm_permission.user_id), can_delete_farm_permission.id)
+		AND
+	(
+		SELECT COUNT(*)
 		FROM farm_permissions AS fp
 		JOIN farm_permissions AS fp2 ON fp.farm_id = fp2.farm_id
-		WHERE permission_check_farm_permission(set_user_id(can_delete_farm_permission.user_id), can_delete_farm_permission.id)
-			AND fp.id = can_delete_farm_permission.id
+		WHERE fp.id = can_delete_farm_permission.id
+	)
+	> 1;
 $body$
 LANGUAGE SQL;

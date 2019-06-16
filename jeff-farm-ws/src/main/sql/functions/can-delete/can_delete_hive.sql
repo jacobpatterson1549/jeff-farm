@@ -6,9 +6,13 @@ CREATE FUNCTION can_delete_hive
 	)
 AS
 $body$
-	SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END
+	SELECT permission_check_hive(set_user_id(can_delete_hive.user_id), can_delete_hive.id)
+		AND
+	NOT EXISTS
+	(
+		SELECT hi.hive_id
 		FROM hive_inspections AS hi
-		WHERE permission_check_hive(set_user_id(can_delete_hive.user_id), can_delete_hive.id)
-			AND hi.hive_id = can_delete_hive.id;
+		WHERE hi.hive_id = can_delete_hive.id
+	);
 $body$
 LANGUAGE SQL;

@@ -6,10 +6,13 @@ CREATE FUNCTION can_delete_farm
 	)
 AS
 $body$
-	SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END
+	SELECT permission_check_farm(set_user_id(can_delete_farm.user_id), can_delete_farm.id)
+		AND
+	NOT EXISTS
+	(
+		SELECT h.farm_id, p.farm_id
 		FROM hives AS h
 		CROSS JOIN poultry AS p
-		WHERE permission_check_farm(set_user_id(can_delete_farm.user_id), can_delete_farm.id)
-			AND can_delete_farm.id IN (h.farm_id, p.farm_id);
+		WHERE can_delete_farm.id IN (h.farm_id, p.farm_id));
 $body$
 LANGUAGE SQL;
