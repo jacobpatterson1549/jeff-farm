@@ -39,11 +39,11 @@ public class SqlDaoException extends SQLException
 
 		do
 		{
-			warningsMessage.append("%nMessage: ")
+			warningsMessage.append("\nMessage: ")
 				.append(warning.getMessage())
-				.append("%nSQLState: ")
+				.append("\nSQLState: ")
 				.append(warning.getSQLState())
-				.append("%nVendor error code: ")
+				.append("\nVendor error code: ")
 				.append(warning.getErrorCode());
 
 			warning = warning.getNextWarning();
