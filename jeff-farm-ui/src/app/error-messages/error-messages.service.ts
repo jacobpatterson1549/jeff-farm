@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
+import { ErrorMessage } from './error-message';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,10 @@ export class ErrorMessagesService {
     private authService: AuthService,
     private router: Router) { }
 
-  messages: string[] = [];
+  errorMessages: ErrorMessage[] = [];
 
   add(message: string) {
-    this.messages.push(message);
-  }
-
-  clear() {
-    this.messages = [];
+    this.errorMessages.push({ date: new Date(), detail: message });
   }
 
   handleError<T>(attemptedTask: string) {
