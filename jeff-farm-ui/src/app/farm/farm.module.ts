@@ -19,4 +19,4 @@ import { FarmService } from './farm.service';
     RouterModule.forChild([{ path: '', loadChildren: () => import('../crud/crud.module').then(m => m.CrudModule) }]),
   ],
 })
-export class FarmsModule { }
+export class FarmModule { }

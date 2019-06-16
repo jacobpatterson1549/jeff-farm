@@ -36,7 +36,7 @@ const routes: Routes = [
   },
   {
     path: 'farm',
-    loadChildren: () => import('./farm/farm.module').then(m => m.FarmsModule),
+    loadChildren: () => import('./farm/farm.module').then(m => m.FarmModule),
     canActivate: [AuthGuard],
   },
   { path: '', redirectTo: '/farm', pathMatch: 'full' },
