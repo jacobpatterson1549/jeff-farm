@@ -20,12 +20,12 @@ public class HiveInspectionTest
 	@Test
 	public void testDeserialize_nullBooleanShouldBeFalse()
 	{
-		// When a hiveInspection is created, the checkboxes are initially false.
 		String serializedHiveInspection = "{\"hiveId\":47,\"queenSeen\":true,\"eggsSeen\":null,\"layingPatternStars\":3,\"temperamentStars\":4,\"queenCells\":1,\"supersedureCells\":2,\"swarmCells\":3,\"combBuildingStars\":2,\"framesSealedBrood\":0,\"framesOpenBrood\":8,\"framesHoney\":6,\"weather\":\"hott\",\"temperatureF\":83,\"windSpeedMph\":6,\"id\":null}";
 
 		HiveInspection hiveInspection = jsonb.fromJson(serializedHiveInspection, HiveInspection.class);
 
 		assertThat(hiveInspection.getQueenSeen(), is(true));
-		assertThat(hiveInspection.getEggsSeen(), is(false));
+		assertThat("When a hiveInspection is created, the checkboxes are initially false.",
+			hiveInspection.getEggsSeen(), is(false));
 	}
 }
