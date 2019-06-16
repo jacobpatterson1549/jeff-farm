@@ -26,7 +26,7 @@ $body$
 		, hi.created_date
 		, hi.modified_date
 	FROM hive_inspections AS hi
-	WHERE permission_check_hive_inspection(set_user_id(user_id), id)
+	WHERE permission_check_hive_inspection(set_user_id(read_hive_inspection.user_id), read_hive_inspection.id)
 		AND hi.id = read_hive_inspection.id;
 $body$
 LANGUAGE SQL;

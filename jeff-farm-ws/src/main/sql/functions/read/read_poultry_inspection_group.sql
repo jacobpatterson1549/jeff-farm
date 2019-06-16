@@ -13,7 +13,7 @@ $body$
 		, pig.created_date
 		, pig.modified_date
 	FROM poultry_inspection_groups AS pig
-	WHERE permission_check_poultry_inspection_group(set_user_id(user_id), id)
+	WHERE permission_check_poultry_inspection_group(set_user_id(read_poultry_inspection_group.user_id), read_poultry_inspection_group.id)
 		AND pig.id = read_poultry_inspection_group.id;
 $body$
 LANGUAGE SQL;

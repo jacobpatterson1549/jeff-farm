@@ -13,7 +13,7 @@ $body$
 		, h.created_date
 		, h.modified_date
 	FROM poultry AS h
-	WHERE permission_check_farm(set_user_id(user_id), farm_id)
+	WHERE permission_check_farm(set_user_id(read_poultry_list.user_id), read_poultry_list.farm_id)
 		AND h.farm_id = read_poultry_list.farm_id;
 $body$
 LANGUAGE SQL;

@@ -14,7 +14,7 @@ $body$
 		, h.created_date
 		, h.modified_date
 	FROM hives AS h
-	WHERE permission_check_farm(set_user_id(user_id), farm_id)
+	WHERE permission_check_farm(set_user_id(read_hives.user_id), read_hives.farm_id)
 		AND h.farm_id = read_hives.farm_id;
 $body$
 LANGUAGE SQL;

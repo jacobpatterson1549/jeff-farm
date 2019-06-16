@@ -26,7 +26,7 @@ $body$
 		, pi.modified_date
 	FROM poultry_inspections AS pi
 	JOIN poultry AS p ON pi.target_id = p.id
-	WHERE permission_check_poultry_inspection(set_user_id(user_id), read_poultry_inspection.id)
+	WHERE permission_check_poultry_inspection(set_user_id(read_poultry_inspection.user_id), read_poultry_inspection.id)
 		AND pi.id = read_poultry_inspection.id;
 $body$
 LANGUAGE SQL;

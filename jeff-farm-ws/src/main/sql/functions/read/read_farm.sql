@@ -13,7 +13,7 @@ $body$
 		, f.created_date
 		, f.modified_date
 	FROM farms AS f
-	WHERE permission_check_farm(set_user_id(user_id), id)
+	WHERE permission_check_farm(set_user_id(read_farm.user_id), read_farm.id)
 		AND f.id = read_farm.id;
 $body$
 LANGUAGE SQL;
