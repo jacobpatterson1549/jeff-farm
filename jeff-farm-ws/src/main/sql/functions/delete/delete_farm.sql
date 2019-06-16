@@ -14,8 +14,6 @@ $body$
 	DELETE
 	FROM farms AS f
 	-- TODO: Have OTHER delete scripts call can_delete functions (which should call permission_check functions).
---	WHERE permission_check_farm(set_user_id(delete_farm.user_id), delete_farm.id)
---		AND f.id = delete_farm.id;
 	WHERE f.id = delete_farm.id; -- (user id and permission check done above)
 
 $body$
