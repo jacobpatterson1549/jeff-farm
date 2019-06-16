@@ -81,8 +81,4 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/can-delete/can_delete_user.sql"/>
 	</changeSet>
 
-	<changeSet id="adhoc_farm_permissions_backfill" author="jacobpatterson1549" runOnChange="true">
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="farm_permissions_backfill.sql"/>
-	</changeSet>
-
 </databaseChangeLog>
