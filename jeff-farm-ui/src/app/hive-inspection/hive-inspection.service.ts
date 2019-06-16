@@ -20,7 +20,7 @@ export class HiveInspectionService extends CrudItemService<HiveInspection> {
   }
 
   getTypeName(): string {
-    return 'hive inspections';
+    return 'hive inspection';
   }
 
   protected getBaseUrl(): string {
