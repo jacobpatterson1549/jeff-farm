@@ -53,7 +53,7 @@ $body$
 		, create_hive_inspection.temperature_f
 		, create_hive_inspection.wind_speed_mph
 	FROM hives AS h
-	WHERE permission_check_hive(set_user_id(create_hive_inspection.user_id), create_hive_inspection.hive_id)
+	WHERE permission_check_hive(set_user_id(create_hive_inspection.user_id), h.id)
 		AND h.id = create_hive_inspection.hive_id
 	RETURNING id;
 $body$
