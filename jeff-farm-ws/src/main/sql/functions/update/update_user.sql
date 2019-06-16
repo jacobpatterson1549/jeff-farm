@@ -13,7 +13,7 @@ $body$
 			  user_password = update_user.user_password
 			, first_name = update_user.first_name
 			, last_name = update_user.last_name
-		WHERE permission_check_user(set_user_id(user_id), id)
-			AND u.id = id;
+		WHERE permission_check_user(set_user_id(user_id), update_user.id)
+			AND u.id = update_user.id;
 $body$
 LANGUAGE SQL;
