@@ -9,7 +9,7 @@ AS
 $body$
 	BEGIN
 		IF permission_check_user(set_user_id(create_farm.user_id), create_farm.user_id) THEN
-			WITH new_farm AS (
+			WITH new_farm (id) AS (
 				INSERT INTO farms
 					( name
 					, location
@@ -17,7 +17,7 @@ $body$
 				SELECT
 					  create_farm.name
 					, create_farm.location
-				RETURNING id
+				RETURNING LASTVAL()
 			)
 			, new_farm_permission AS (
 				INSERT INTO farm_permissions
@@ -29,8 +29,9 @@ $body$
 					, create_farm.user_id
 				FROM new_farm AS f
 			)
-			SELECT id
-			FROM new_farm;
+			SELECT CAST(nf.id AS INT)
+			FROM new_farm AS nf
+			INTO create_farm.id;
 		END IF;
 	END
 $body$

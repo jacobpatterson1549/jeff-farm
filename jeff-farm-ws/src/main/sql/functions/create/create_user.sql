@@ -8,32 +8,35 @@ CREATE FUNCTION create_user
 	)
 AS
 $body$
-	WITH new_user AS (
-		INSERT INTO users
-			( user_name
-			, user_password
-			, first_name
-			, last_name
-			)
-		SELECT
-			  user_name
-			, create_user.user_password
-			, create_user.first_name
-			, create_user.last_name
-		WHERE set_user_id(-1) IS NOT NULL
-		RETURNING id
-	)
-	, new_user_role AS (
-		INSERT INTO user_roles
-			( user_name
-			, role_name
-			)
-		VALUES
-			( create_user.user_name
-			, 'user'
-			)
-	)
-	SELECT id
-	FROM new_user;
+	BEGIN
+		WITH new_user (id) AS (
+			INSERT INTO users
+				( user_name
+				, user_password
+				, first_name
+				, last_name
+				)
+			SELECT
+				  user_name
+				, create_user.user_password
+				, create_user.first_name
+				, create_user.last_name
+			WHERE set_user_id(-1) IS NOT NULL
+			RETURNING LASTVAL()
+		)
+		, new_user_role AS (
+			INSERT INTO user_roles
+				( user_name
+				, role_name
+				)
+			VALUES
+				( create_user.user_name
+				, 'user'
+				)
+		)
+		SELECT CAST(nu.id AS INT)
+		FROM new_user AS nu
+		INTO create_user.id;
+	END;
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;
