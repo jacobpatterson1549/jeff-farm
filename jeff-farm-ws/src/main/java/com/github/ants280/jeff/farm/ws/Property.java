@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 public enum Property
 {
 	USER_ROLE("security.role.user"),
+	ADMIN_ROLE("security.role.admin"),
 	SERVER_SCHEME("server.scheme"),
 	SERVER_HOST("server.host"),
 	SERVER_PORT("server.port"),

@@ -3,6 +3,8 @@ package com.github.ants280.jeff.farm.ws.resources;
 import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.dao.LoginDao;
 import com.github.ants280.jeff.farm.ws.dao.UserDao;
+import com.github.ants280.jeff.farm.ws.dao.UserIdDao;
+import com.github.ants280.jeff.farm.ws.model.LoginSuccess;
 import com.github.ants280.jeff.farm.ws.model.User;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,12 +23,15 @@ public class LoginResource
 {
 	private final LoginDao loginDao;
 	private final UserDao userDao;
+	private final UserIdDao userIdDao;
 
 	@Inject
-	public LoginResource(LoginDao loginDao, UserDao userDao)
+	public LoginResource(
+		LoginDao loginDao, UserDao userDao, UserIdDao userIdDao)
 	{
 		this.loginDao = loginDao;
 		this.userDao = userDao;
+		this.userIdDao = userIdDao;
 	}
 
 	@POST
@@ -37,13 +42,16 @@ public class LoginResource
 		try
 		{
 			loginDao.login(user);
+			LoginSuccess loginSuccess = new LoginSuccess(
+				userIdDao.getUserId(),
+				userIdDao.hasAdimnRole());
+			return Response.ok(loginSuccess).build();
 		}
 		catch (ServletException ex)
 		{
 			throw new JeffFarmWsException(ex.getMessage(), ex);
 		}
 
-		return Response.ok().build();
 	}
 
 	@POST

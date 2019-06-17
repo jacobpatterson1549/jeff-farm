@@ -29,6 +29,7 @@
 		<credential.handler.iterations>1000</credential.handler.iterations>
 		<credential.handler.salt.length>8</credential.handler.salt.length>
 		<security.role.user>user</security.role.user>
+		<security.role.admin>admin</security.role.admin>
 		<!--derived properties (potentially overwritten by production profile-->
 		<site.origin>http://localhost:4200</site.origin>
 		<server.scheme>http</server.scheme>

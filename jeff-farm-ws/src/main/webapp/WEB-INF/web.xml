@@ -71,6 +71,7 @@
 	</security-constraint>
 	<security-role>
 		<role-name>${security.role.user}</role-name>
+		<role-name>${security.role.admin}</role-name>
 	</security-role>
 
 </web-app>

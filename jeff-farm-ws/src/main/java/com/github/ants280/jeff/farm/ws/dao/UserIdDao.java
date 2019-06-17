@@ -1,8 +1,10 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
+import com.github.ants280.jeff.farm.ws.Property;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.Context;
 
 @Singleton
@@ -19,13 +21,28 @@ public class UserIdDao
 
 	public int getUserId()
 	{
-		return (int) request.getSession(false)
+		return (int) this.getCurrentSession()
 			.getAttribute(USER_ID_SESSION_ATTRIBUTE);
 	}
 
 	public void setUserId(int userId)
 	{
-		request.getSession(false)
+		this.getCurrentSession()
 			.setAttribute(USER_ID_SESSION_ATTRIBUTE, userId);
+	}
+
+	public boolean hasUserRole()
+	{
+		return request.isUserInRole(Property.USER_ROLE.getValue());
+	}
+
+	public boolean hasAdimnRole()
+	{
+		return request.isUserInRole(Property.ADMIN_ROLE.getValue());
+	}
+
+	private HttpSession getCurrentSession()
+	{
+		return request.getSession(false);
 	}
 }

@@ -71,9 +71,11 @@ public class UserDao extends CrudItemDao<User>
 	}
 
 	@Override
-	public List<User> readList(int parentId)
+	public List<User> readList(int parentId) // (user_id provided by SqlFunctionCall)
 	{
-		throw new IllegalArgumentException("Not allowed");
+		return this.executeReadList(
+			"read_users",
+			Collections.emptyList());
 	}
 
 	@Override

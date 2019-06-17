@@ -1,7 +1,6 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
-import com.github.ants280.jeff.farm.ws.Property;
 import com.github.ants280.jeff.farm.ws.model.User;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -41,14 +40,14 @@ public class LoginDao
 		
 		// The session MUST be crated before the login call.
 		// See org.apache.catalina.authenticator.AuthenticatorBase.register()
-		HttpSession session = request.getSession(true);
+		request.getSession(true);
 
 		request.login(user.getUserName(), user.getPassword());
 
 		User actualUser = userDao.read(user.getUserName());
 		userIdDao.setUserId(actualUser.getId());
 
-		if (!request.isUserInRole(Property.USER_ROLE.getValue()))
+		if (!userIdDao.hasUserRole())
 		{
 			throw new JeffFarmWsException("No access");
 		}

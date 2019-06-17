@@ -3,13 +3,16 @@ package com.github.ants280.jeff.farm.ws.resources;
 import com.github.ants280.jeff.farm.ws.dao.LoginDao;
 import com.github.ants280.jeff.farm.ws.dao.UserDao;
 import com.github.ants280.jeff.farm.ws.dao.UserIdDao;
+import com.github.ants280.jeff.farm.ws.model.Farm;
 import com.github.ants280.jeff.farm.ws.model.User;
+import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -31,29 +34,40 @@ public class UserResource
 	}
 
 	@GET
+	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getUser()
+	public Response getUser(@PathParam("id") int id)
 	{
-		int id = userIdDao.getUserId();
 		User user = userDao.read(id);
 
 		return Response.ok(user).build();
 	}
 
 	@PUT
+	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateUser(User user)
+	public Response updateUser(@PathParam("id") int id, User user)
 	{
-		userDao.update(user.getId(), user);
+		userDao.update(id, user);
 
 		return Response.ok().build();
 	}
 
-	@DELETE
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteUser()
+	@GET
+	@Path("list")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getFarmsList()
 	{
-		int id = userIdDao.getUserId();
+		List<User> users = userDao.readList(-1); // (user_id provided by SqlFunctionCall)
+
+		return Response.ok(users).build();
+	}
+
+	@DELETE
+	@Path("{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response deleteUser(@PathParam("id") int id)
+	{
 		userDao.delete(id);
 
 		return Response.ok().build();
@@ -61,11 +75,10 @@ public class UserResource
 
 
 	@GET
-	@Path("canDelete")
+	@Path("{id}/canDelete")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response canDeleteUser()
+	public Response canDeleteUser(@PathParam("id") int id)
 	{
-		int id = userIdDao.getUserId();
 		boolean canDelete = userDao.canDelete(id);
 
 		return Response.ok(canDelete).build();
