@@ -79,7 +79,7 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 						new IntegerSqlFunctionParameter(HiveInspection.SUPERSEDURE_CELLS_COLUMN, hiveInspection.getSupersedureCells()),
 						new IntegerSqlFunctionParameter(HiveInspection.SWARM_CELLS_COLUMN, hiveInspection.getSwarmCells()),
 						new IntegerSqlFunctionParameter(HiveInspection.COMB_BUILDING_STARS_COLUMN, hiveInspection.getCombBuildingStars()),
-						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_SEALED_BROOD_COLUMN, hiveInspection.getFramesOpenBrood()),
+						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_SEALED_BROOD_COLUMN, hiveInspection.getFramesSealedBrood()),
 						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_OPEN_BROOD_COLUMN, hiveInspection.getFramesOpenBrood()),
 						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_HONEY_COLUMN, hiveInspection.getFramesHoney()),
 						new StringSqlFunctionParameter(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather()),
