@@ -6,15 +6,19 @@ CREATE FUNCTION read_hives
 RETURNS SETOF hives
 AS
 $body$
-	SELECT
-		  h.id
-		, h.farm_id
-		, h.name
-		, h.queen_color
-		, h.created_date
-		, h.modified_date
-	FROM hives AS h
-	WHERE permission_check_farm(set_user_id(read_hives.user_id), read_hives.farm_id)
-		AND h.farm_id = read_hives.farm_id;
+	BEGIN
+		IF permission_check_farm(set_user_id(read_hives.user_id), read_hives.farm_id) THEN
+			RETURN QUERY
+			SELECT
+				  h.id
+				, h.farm_id
+				, h.name
+				, h.queen_color
+				, h.created_date
+				, h.modified_date
+			FROM hives AS h
+			WHERE h.farm_id = read_hives.farm_id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

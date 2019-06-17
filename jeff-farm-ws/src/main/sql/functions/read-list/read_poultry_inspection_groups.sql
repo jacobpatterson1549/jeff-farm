@@ -6,14 +6,18 @@ CREATE FUNCTION read_poultry_inspection_groups
 RETURNS SETOF poultry_inspection_groups
 AS
 $body$
-	SELECT
-		  pig.id
-		, pig.farm_id
-		, pig.notes
-		, pig.created_date
-		, pig.modified_date
-	FROM poultry_inspection_groups AS pig
-	WHERE permission_check_farm(set_user_id(read_poultry_inspection_groups.user_id), read_poultry_inspection_groups.farm_id)
-		AND pig.farm_id = read_poultry_inspection_groups.farm_id;
+	BEGIN
+		IF permission_check_farm(set_user_id(read_poultry_inspection_groups.user_id), read_poultry_inspection_groups.farm_id) THEN
+			RETURN QUERY
+			SELECT
+				  pig.id
+				, pig.farm_id
+				, pig.notes
+				, pig.created_date
+				, pig.modified_date
+			FROM poultry_inspection_groups AS pig
+			WHERE pig.farm_id = read_poultry_inspection_groups.farm_id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;
