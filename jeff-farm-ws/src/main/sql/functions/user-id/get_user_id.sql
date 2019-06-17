@@ -5,6 +5,11 @@ CREATE OR REPLACE FUNCTION get_user_id
 RETURNS INT
 AS
 $body$
-	SELECT CAST(current_setting('jeff_farm_ws.user_id') AS INT);
+	BEGIN
+		RETURN
+		(
+			SELECT CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+		);
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

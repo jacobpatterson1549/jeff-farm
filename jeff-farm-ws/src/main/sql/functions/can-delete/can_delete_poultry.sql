@@ -6,13 +6,16 @@ CREATE FUNCTION can_delete_poultry
 	)
 AS
 $body$
-	SELECT permission_check_poultry(set_user_id(can_delete_poultry.user_id), can_delete_poultry.id)
-		AND
-	NOT EXISTS
-	(
-		SELECT pi.target_id
-		FROM poultry_inspections AS pi
-		WHERE pi.target_id = can_delete_poultry.id
-	);
+	BEGIN
+		SELECT permission_check_poultry(set_user_id(can_delete_poultry.user_id), can_delete_poultry.id)
+			AND
+		NOT EXISTS
+		(
+			SELECT pi.target_id
+			FROM poultry_inspections AS pi
+			WHERE pi.target_id = can_delete_poultry.id
+		)
+		INTO can_delete_poultry.can_delete;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

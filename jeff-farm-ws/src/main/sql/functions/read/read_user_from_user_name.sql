@@ -5,15 +5,18 @@ CREATE FUNCTION read_user_from_user_name
 RETURNS SETOF users
 AS
 $body$
-	SELECT
-		  u.id
-		, u.user_name
-		, NULL -- password
-		, u.first_name
-		, u.last_name
-		, u.created_date
-		, u.modified_date
-	FROM users AS u
-	WHERE u.user_name = read_user_from_user_name.user_name;
+	BEGIN
+		RETURN QUERY
+		SELECT
+			  u.id
+			, u.user_name
+			, CAST(NULL AS CHAR(86)) -- password
+			, u.first_name
+			, u.last_name
+			, u.created_date
+			, u.modified_date
+		FROM users AS u
+		WHERE u.user_name = read_user_from_user_name.user_name;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

@@ -6,16 +6,19 @@ CREATE FUNCTION can_delete_user
 	)
 AS
 $body$
-	SELECT permission_check_user(set_user_id(can_delete_user.user_id), can_delete_user.id)
-	AND
-	NOT EXISTS
-	(
-		SELECT fp.farm_id
-		FROM farm_permissions AS fp
-		JOIN farm_permissions AS fp2 ON fp.farm_id = fp2.farm_id
-		WHERE fp.user_id = can_delete_user.id
-		GROUP BY fp.farm_id
-		HAVING COUNT(*) = 1
-	);
+	BEGIN
+		SELECT permission_check_user(set_user_id(can_delete_user.user_id), can_delete_user.id)
+			AND
+		NOT EXISTS
+		(
+				SELECT fp.farm_id
+				FROM farm_permissions AS fp
+				JOIN farm_permissions AS fp2 ON fp.farm_id = fp2.farm_id
+				WHERE fp.user_id = can_delete_user.id
+				GROUP BY fp.farm_id
+				HAVING COUNT(*) = 1
+		)
+		INTO can_delete_user.can_delete;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

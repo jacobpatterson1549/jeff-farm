@@ -6,14 +6,16 @@ DROP FUNCTION IF EXISTS delete_farm;
 RETURNS VOID
 AS
 $body$
-	DELETE
-	FROM farm_permissions AS fp
-	WHERE permission_check_farm_permission(set_user_id(delete_farm.user_id), fp.id)
-		AND fp.farm_id = delete_farm.id;
+	BEGIN
+		IF permission_check_farm(set_user_id(delete_farm.user_id), delete_farm.id) THEN
+			DELETE
+			FROM farm_permissions AS fp
+			WHERE fp.farm_id = delete_farm.id;
 
-	DELETE
-	FROM farms AS f
-	WHERE f.id = delete_farm.id; -- (permission check for user_id done above)
-
+			DELETE
+			FROM farms AS f
+			WHERE f.id = delete_farm.id; -- (permission check for user_id done above)
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

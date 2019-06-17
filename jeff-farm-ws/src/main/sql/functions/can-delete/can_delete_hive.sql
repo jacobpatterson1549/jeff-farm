@@ -6,13 +6,16 @@ CREATE FUNCTION can_delete_hive
 	)
 AS
 $body$
-	SELECT permission_check_hive(set_user_id(can_delete_hive.user_id), can_delete_hive.id)
-		AND
-	NOT EXISTS
-	(
-		SELECT hi.hive_id
-		FROM hive_inspections AS hi
-		WHERE hi.hive_id = can_delete_hive.id
-	);
+	BEGIN
+		SELECT permission_check_hive(set_user_id(can_delete_hive.user_id), can_delete_hive.id)
+			AND
+		NOT EXISTS
+		(
+			SELECT hi.hive_id
+			FROM hive_inspections AS hi
+			WHERE hi.hive_id = can_delete_hive.id
+		)
+		into can_delete_hive.can_delete;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

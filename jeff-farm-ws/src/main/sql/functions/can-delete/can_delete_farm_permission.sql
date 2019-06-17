@@ -6,14 +6,17 @@ CREATE FUNCTION can_delete_farm_permission
 	)
 AS
 $body$
-	SELECT permission_check_farm_permission(set_user_id(can_delete_farm_permission.user_id), can_delete_farm_permission.id)
-		AND
-	(
-		SELECT COUNT(*)
-		FROM farm_permissions AS fp
-		JOIN farm_permissions AS fp2 ON fp.farm_id = fp2.farm_id
-		WHERE fp.id = can_delete_farm_permission.id
-	)
-	> 1;
+	BEGIN
+		SELECT permission_check_farm_permission(set_user_id(can_delete_farm_permission.user_id), can_delete_farm_permission.id)
+			AND
+		(
+			SELECT COUNT(*)
+			FROM farm_permissions AS fp
+			JOIN farm_permissions AS fp2 ON fp.farm_id = fp2.farm_id
+			WHERE fp.id = can_delete_farm_permission.id
+		)
+		> 1
+		INTO can_delete_farm_permission.can_delete;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;
