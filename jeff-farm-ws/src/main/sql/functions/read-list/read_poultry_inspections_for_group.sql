@@ -1,13 +1,13 @@
-DROP FUNCTION IF EXISTS read_poultry_inspections;
-CREATE FUNCTION read_poultry_inspections
+DROP FUNCTION IF EXISTS read_poultry_inspections_for_group;
+CREATE FUNCTION read_poultry_inspections_for_group
 	( IN user_id INT
-	, IN farm_id INT
+	, IN group_id INT
 	)
 RETURNS SETOF poultry_inspections_readonly
 AS
 $body$
 	BEGIN
-		IF permission_check_farm(set_user_id(read_poultry_inspections.user_id), read_poultry_inspections.farm_id) THEN
+		IF permission_check_poultry_inspection_group(set_user_id(read_poultry_inspections_for_group.user_id), read_poultry_inspections_for_group.group_id) THEN
 			RETURN QUERY
 			SELECT
 				  pi.id
@@ -20,7 +20,7 @@ $body$
 				, pi.modified_date
 			FROM poultry_inspections AS pi
 			JOIN poultry AS p ON pi.target_id = p.id
-			WHERE p.farm_id = read_poultry_inspections.farm_id;
+			WHERE pi.group_id = read_poultry_inspections_for_group.group_id;
 		END IF;
 	END
 $body$

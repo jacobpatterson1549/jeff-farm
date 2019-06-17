@@ -43,7 +43,7 @@ public class PoultryInspectionGroupDao
 			itemParameterMapper
 			= poultryInspection -> Arrays.asList(new IntegerSqlFunctionParameter(
 				PoultryInspection.GROUP_ID_COLUMN,
-				poultryInspection.getGroupId()), // is set by executeCreate()
+				-1), // is reset by executeCreate()
 			new IntegerSqlFunctionParameter(PoultryInspection.TARGET_ID_COLUMN,
 				poultryInspection.getTargetId()),
 			new IntegerSqlFunctionParameter(PoultryInspection.BIRD_COUNT_COLUMN,
@@ -70,25 +70,25 @@ public class PoultryInspectionGroupDao
 	{
 		return this.executeRead("read_poultry_inspection_group",
 			Collections.singletonList(new IntegerSqlFunctionParameter(
-				PoultryInspection.ID_COLUMN,
+				PoultryInspectionGroup.ID_COLUMN,
 				id)),
-			"read_poultry_inspections",
+			"read_poultry_inspections_for_group",
 			Collections.singletonList(new IntegerSqlFunctionParameter(
 				PoultryInspection.GROUP_ID_COLUMN,
 				id)));
 	}
 
 	@Override
-	public List<PoultryInspectionGroup> readList(int parentId)
+	public List<PoultryInspectionGroup> readList(int farm_id)
 	{
 		return this.executeReadList("read_poultry_inspection_groups",
 			Collections.singletonList(new IntegerSqlFunctionParameter(
 				PoultryInspectionGroup.ID_COLUMN,
-				parentId)),
-			"read_poultry_inspections",
+				farm_id)),
+			"read_poultry_inspections_for_farm",
 			Collections.singletonList(new IntegerSqlFunctionParameter(
-				PoultryInspectionGroup.FARM_ID_COLUMN,
-				parentId)));
+				PoultryInspectionGroup.ID_COLUMN,
+				farm_id)));
 	}
 
 	@Override
