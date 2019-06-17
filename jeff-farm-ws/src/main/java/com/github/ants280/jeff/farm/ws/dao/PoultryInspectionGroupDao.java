@@ -43,7 +43,7 @@ public class PoultryInspectionGroupDao
 			itemParameterMapper
 			= poultryInspection -> Arrays.asList(new IntegerSqlFunctionParameter(
 				PoultryInspection.GROUP_ID_COLUMN,
-				poultryInspection.getGroupId()),
+				poultryInspection.getGroupId()), // is set by executeCreate()
 			new IntegerSqlFunctionParameter(PoultryInspection.TARGET_ID_COLUMN,
 				poultryInspection.getTargetId()),
 			new IntegerSqlFunctionParameter(PoultryInspection.BIRD_COUNT_COLUMN,
