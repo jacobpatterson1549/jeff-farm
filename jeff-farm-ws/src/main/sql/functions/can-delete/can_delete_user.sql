@@ -9,7 +9,7 @@ $body$
 	SELECT permission_check_user(set_user_id(can_delete_user.user_id), can_delete_user.id)
 	AND
 	NOT EXISTS
-	( -- cannot delete user if they are tho only one with access to a farm
+	( -- cannot delete user if they are the only one with access to a farm TODO: add this info to ui
 		SELECT fp.farm_id
 		FROM farm_permissions AS fp
 		JOIN farm_permissions AS fp2 ON fp.farm_id = fp2.farm_id
