@@ -87,7 +87,7 @@ public class PoultryInspectionGroupDao
 				parentId)),
 			"read_poultry_inspections",
 			Collections.singletonList(new IntegerSqlFunctionParameter(
-				PoultryInspection.GROUP_ID_COLUMN,
+				PoultryInspectionGroup.FARM_ID_COLUMN,
 				parentId)));
 	}
 
