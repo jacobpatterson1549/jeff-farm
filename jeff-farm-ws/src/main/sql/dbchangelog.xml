@@ -19,6 +19,12 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/farm_permissions.sql"/>
 	</changeSet>
 
+	<changeSet id="readonlytables" author="jacobpatterson1549" runOnChange="true">
+		<comment>Tables used as return types of functions.</comment>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="readonly-tables/farm_permissions_readonly.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="readonly-tables/poultry_inspections_readonly.sql"/>
+	</changeSet>
+
 	<changeSet id="audit-trigger-tables" author="jacobpatterson1549" runOnChange="true">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/users_audit.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/farms_audit.sql"/>

@@ -6,14 +6,18 @@ CREATE FUNCTION read_poultry
 RETURNS SETOF poultry
 AS
 $body$
-	SELECT
-		  h.id
-		, h.farm_id
-		, h.name
-		, h.created_date
-		, h.modified_date
-	FROM poultry AS h
-	WHERE permission_check_poultry(set_user_id(read_poultry.user_id), read_poultry.id)
-		AND h.id = read_poultry.id;
+	BEGIN
+		IF permission_check_poultry(set_user_id(read_poultry.user_id), read_poultry.id) THEN
+			RETURN QUERY
+			SELECT
+				  h.id
+				, h.farm_id
+				, h.name
+				, h.created_date
+				, h.modified_date
+			FROM poultry AS h
+			WHERE h.id = read_poultry.id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;
