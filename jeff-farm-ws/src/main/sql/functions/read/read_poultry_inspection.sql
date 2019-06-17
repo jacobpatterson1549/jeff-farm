@@ -3,7 +3,7 @@ CREATE FUNCTION read_poultry_inspection
 	( IN user_id INT
 	, IN id INT
 	)
-RETURNS SETOF poultry_inspection_readonly
+RETURNS SETOF poultry_inspections_readonly
 AS
 $body$
 	BEGIN
