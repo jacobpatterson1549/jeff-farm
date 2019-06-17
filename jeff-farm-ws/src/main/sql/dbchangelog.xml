@@ -7,6 +7,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
 	<changeSet id="tables" author="jacobpatterson1549" runOnChange="true">
+		<comment>Order of files important for setting up foreign keys.</comment>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/users.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/roles.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/user_roles.sql"/>
@@ -19,7 +20,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/farm_permissions.sql"/>
 	</changeSet>
 
-	<changeSet id="readonlytables" author="jacobpatterson1549" runOnChange="true">
+	<changeSet id="readonly-tables" author="jacobpatterson1549" runOnChange="true">
 		<comment>Tables used as return types of functions.</comment>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="readonly-tables/farm_permissions_readonly.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="readonly-tables/poultry_inspections_readonly.sql"/>
@@ -36,8 +37,11 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/farm_permissions_audit.sql"/>
 	</changeSet>
 
-	<changeSet id="functions" author="jacobpatterson1549" runOnChange="true"> <!-- TODO: separate changesets, with comments about ordering (permission_checks first, can_deletes before deletes... -->
+	<changeSet id="set_user" author="jacobpatterson1549" runOnChange="true">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/set_user_id.sql"/>
+	</changeSet>
+
+	<changeSet id="functions/permission_check" author="jacobpatterson1549" runOnChange="true">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_farm_permission.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_hive.sql"/>
@@ -46,11 +50,17 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_poultry_inspection.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_poultry_inspection_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_user.sql"/>
+	</changeSet>
+
+	<changeSet id="functions/can-delete" author="jacobpatterson1549" runOnChange="true">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/can-delete/can_delete_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/can-delete/can_delete_farm_permission.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/can-delete/can_delete_hive.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/can-delete/can_delete_poultry.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/can-delete/can_delete_user.sql"/>
+	</changeSet>
+
+	<changeSet id="functions/create" author="jacobpatterson1549" runOnChange="true">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_user.sql"/> <!-- TODO: reorder these files to be in directory order -->
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_farm_permission.sql"/>
@@ -60,6 +70,9 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_poultry_inspection_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_poultry_inspection.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_user_from_user_name.sql"/>
+	</changeSet>
+
+	<changeSet id="functions/read" author="jacobpatterson1549" runOnChange="true">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_user.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_farm_permission.sql"/>
@@ -68,6 +81,9 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_poultry.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_poultry_inspection_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_poultry_inspection.sql"/>
+	</changeSet>
+
+	<changeSet id="functions/read-list" author="jacobpatterson1549" runOnChange="true">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_farms.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_farm_permissions.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_hives.sql"/>
@@ -76,6 +92,9 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_poultry_inspections_for_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_poultry_inspections_for_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_poultry_inspection_groups.sql"/>
+	</changeSet>
+
+	<changeSet id="functions/update" author="jacobpatterson1549" runOnChange="true">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_user.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_hive.sql"/>
@@ -83,6 +102,10 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_poultry.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_poultry_inspection_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_poultry_inspection.sql"/>
+	</changeSet>
+
+	<changeSet id="functions/delete" author="jacobpatterson1549" runOnChange="true">
+		<comment>Use can-delete functions for permission checking.</comment>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_user.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_farm_permission.sql"/>
