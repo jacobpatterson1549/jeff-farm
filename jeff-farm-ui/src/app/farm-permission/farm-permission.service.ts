@@ -38,4 +38,8 @@ export class FarmPermissionService extends CrudItemService<FarmPermission> {
   get canUpdate(): boolean {
     return false;
   }
+
+  get canDeleteMessage(): string {
+    return 'Cannot delete farm permission because user is the only user with permission to one or more farms.';
+  }
 }
