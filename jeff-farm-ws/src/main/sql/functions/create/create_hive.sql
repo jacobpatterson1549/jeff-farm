@@ -21,7 +21,8 @@ $body$
 				, create_hive.queen_color
 			FROM farms AS f
 			WHERE f.id = create_hive.farm_id
-			RETURNING id;
+			RETURNING LASTVAL()
+			INTO create_hive.id;
 		END IF;
 	END
 $body$

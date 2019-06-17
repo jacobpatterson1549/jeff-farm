@@ -20,7 +20,8 @@ $body$
 			CROSS JOIN users AS u
 			WHERE f.id = create_farm_permission.farm_id
 				AND u.user_name = create_farm_permission.user_name
-			RETURNING LASTVAL();
+			RETURNING LASTVAL()
+			INTO create_farm_permission.id;
 		END IF;
 	END
 $body$

@@ -18,7 +18,8 @@ $body$
 				, create_poultry_inspection_group.notes
 			FROM farms AS f
 			WHERE f.id = create_poultry_inspection_group.farm_id
-			RETURNING id;
+			RETURNING LASTVAL()
+			INTO create_poultry_inspection_group.id;
 		END IF;
 	END
 $body$

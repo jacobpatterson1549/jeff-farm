@@ -26,7 +26,8 @@ $body$
 			JOIN poultry AS p ON create_poultry_inspection.target_id = p.id
 			WHERE pig.id = create_poultry_inspection.group_id
 				AND pig.farm_id = p.farm_id
-			RETURNING id;
+			RETURNING LASTVAL()
+			INTO create_poultry_inspection.id;
 		END IF;
 	END
 $body$

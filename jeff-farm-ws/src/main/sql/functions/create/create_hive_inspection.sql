@@ -56,7 +56,8 @@ $body$
 				, create_hive_inspection.wind_speed_mph
 			FROM hives AS h
 			WHERE h.id = create_hive_inspection.hive_id
-			RETURNING id;
+			RETURNING LASTVAL()
+			INTO create_hive_inspection.id;
 		END IF;
 	END
 $body$

@@ -18,7 +18,8 @@ $body$
 				, create_poultry.name
 			FROM farms AS f
 			WHERE f.id = create_poultry.farm_id
-			RETURNING id;
+			RETURNING LASTVAL()
+			INTO create_poultry.id;
 		END IF;
 	END
 $body$
