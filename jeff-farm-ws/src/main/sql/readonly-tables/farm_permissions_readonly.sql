@@ -3,10 +3,8 @@
 
 CREATE TABLE IF NOT EXISTS farm_permissions_readonly
 	( id INT
-	, group_id INT
-	, target_id INT
-	, bird_count INT
-	, egg_count INT
+	, farm_id INT
+	, user_name VARCHAR(20)
 	, created_date TIMESTAMP
 	, modified_date TIMESTAMP
 	);

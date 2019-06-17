@@ -11,8 +11,8 @@ $body$
 			RETURN QUERY
 			SELECT
 				  fp.id
-				, CAST(fp.farm_id AS VARCHAR(20))
-				, u.user_name
+				, fp.farm_id
+				, CAST(u.user_name AS VARCHAR(20))
 				, fp.created_date
 				, fp.modified_date
 			FROM farm_permissions AS fp

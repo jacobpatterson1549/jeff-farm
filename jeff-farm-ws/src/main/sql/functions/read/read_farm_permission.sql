@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS read_farm_permission;
 CREATE FUNCTION read_farm_permission
 	( IN user_id INT
-	, IN farm_permission_id INT
+	, IN id INT
 	)
 RETURNS SETOF farm_permissions_readonly
 AS
@@ -12,7 +12,7 @@ $body$
 			SELECT
 				  fp.id
 				, fp.farm_id
-				, u.user_name
+				, CAST(u.user_name AS VARCHAR(20))
 				, fp.created_date
 				, fp.modified_date
 			FROM farm_permissions AS fp
