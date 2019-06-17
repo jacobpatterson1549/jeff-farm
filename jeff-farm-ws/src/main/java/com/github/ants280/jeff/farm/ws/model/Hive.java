@@ -11,7 +11,7 @@ public class Hive extends CrudItem<Hive>
 	public static final String QUEEN_COLOR_COLUMN = "queen_color";
 	private static final Predicate<String>
 		IS_VALID_QUEEN_COLOR_PREDICATE
-		= Pattern.compile("^#[0-9a-fA-F]{6}$").asPredicate();
+		= Pattern.compile("^#[0-9a-fA-F]{6}$").asPredicate(); // must be same on ui
 	private int farmId;
 	private String name;
 	private String queenColor;

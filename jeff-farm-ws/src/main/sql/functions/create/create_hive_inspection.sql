@@ -1,5 +1,7 @@
-CREATE OR REPLACE FUNCTION create_hive_inspection
-	( IN hive_id INT
+DROP FUNCTION IF EXISTS create_hive_inspection;
+CREATE FUNCTION create_hive_inspection
+	( IN user_id INT
+	, IN hive_id INT
 	, IN queen_seen BOOLEAN
 	, IN eggs_seen BOOLEAN
 	, IN laying_pattern_stars INT
@@ -17,41 +19,46 @@ CREATE OR REPLACE FUNCTION create_hive_inspection
 	, OUT id INT)
 AS
 $body$
-	INSERT INTO hive_inspections
-		( hive_id
-		, queen_seen
-		, eggs_seen
-		, laying_pattern_stars
-		, temperament_stars
-		, queen_cells
-		, supersedure_cells
-		, swarm_cells
-		, comb_building_stars
-		, frames_sealed_brood
-		, frames_open_brood
-		, frames_honey
-		, weather
-		, temperature_f
-		, wind_speed_mph
-		)
-	SELECT 
-		  create_hive_inspection.hive_id
-		, create_hive_inspection.queen_seen
-		, create_hive_inspection.eggs_seen
-		, create_hive_inspection.laying_pattern_stars
-		, create_hive_inspection.temperament_stars
-		, create_hive_inspection.queen_cells
-		, create_hive_inspection.supersedure_cells
-		, create_hive_inspection.swarm_cells
-		, create_hive_inspection.comb_building_stars
-		, create_hive_inspection.frames_sealed_brood
-		, create_hive_inspection.frames_open_brood
-		, create_hive_inspection.frames_honey
-		, create_hive_inspection.weather
-		, create_hive_inspection.temperature_f
-		, create_hive_inspection.wind_speed_mph
-	FROM hives AS h
-	WHERE h.id = create_hive_inspection.hive_id
-	RETURNING id;
+	BEGIN
+		IF permission_check_hive(set_user_id(create_hive_inspection.user_id), create_hive_inspection.hive_id) THEN
+			INSERT INTO hive_inspections
+				( hive_id
+				, queen_seen
+				, eggs_seen
+				, laying_pattern_stars
+				, temperament_stars
+				, queen_cells
+				, supersedure_cells
+				, swarm_cells
+				, comb_building_stars
+				, frames_sealed_brood
+				, frames_open_brood
+				, frames_honey
+				, weather
+				, temperature_f
+				, wind_speed_mph
+				)
+			SELECT
+				  create_hive_inspection.hive_id
+				, create_hive_inspection.queen_seen
+				, create_hive_inspection.eggs_seen
+				, create_hive_inspection.laying_pattern_stars
+				, create_hive_inspection.temperament_stars
+				, create_hive_inspection.queen_cells
+				, create_hive_inspection.supersedure_cells
+				, create_hive_inspection.swarm_cells
+				, create_hive_inspection.comb_building_stars
+				, create_hive_inspection.frames_sealed_brood
+				, create_hive_inspection.frames_open_brood
+				, create_hive_inspection.frames_honey
+				, create_hive_inspection.weather
+				, create_hive_inspection.temperature_f
+				, create_hive_inspection.wind_speed_mph
+			FROM hives AS h
+			WHERE h.id = create_hive_inspection.hive_id
+			RETURNING LASTVAL()
+			INTO create_hive_inspection.id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

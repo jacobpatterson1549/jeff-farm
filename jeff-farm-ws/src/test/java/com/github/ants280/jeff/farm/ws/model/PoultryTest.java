@@ -21,13 +21,13 @@ public class PoultryTest
 	@Test
 	public void testDeserialize_idNotSet()
 	{
-		// When a crudItem is created, it is sent with a null id.
 		String serializedPoultry = "{\"farmId\":17,\"name\":\"robbin\",\"id\":null}";
 
 		Poultry poultry = jsonb.fromJson(serializedPoultry, Poultry.class);
 
 		assertThat(poultry.getFarmId(), is(17));
 		assertThat(poultry.getName(), is("robbin"));
-		assertThat(poultry.getId(), is(nullValue()));
+		assertThat("When a crudItem is created, it is sent with a null id.",
+			poultry.getId(), is(nullValue()));
 	}
 }

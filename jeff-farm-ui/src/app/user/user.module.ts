@@ -15,6 +15,12 @@ import { CrudItemService } from '../crud/crud-item.service';
   ],
   imports: [
     CommonModule,
+    /*
+     * TODO: Admin feature: UserModule should inherit from CrudModule and use that routing (delete UserRoutingModule)
+     *       Should not be able to create users there (plumb property through like crudItemService.canUpdate,
+     *        should use login module).
+     *       Should only be able to see user list if admin user (otherwise, redirect to )
+     */
     UserRoutingModule,
     CrudModule,
   ]

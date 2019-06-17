@@ -33,6 +33,11 @@ export class FormItem {
                     Validators.min(0),
                     Validators.max(5),
                 ];
+            case FormItemType.Color:
+                return [
+                    Validators.required,
+                    Validators.pattern('^#[0-9a-fA-F]{6}$'), // must be same on server
+                ];
             case FormItemType.Boolean:
             case FormItemType.TextArea:
                 return [];

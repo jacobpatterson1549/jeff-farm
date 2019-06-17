@@ -16,13 +16,10 @@ import javax.sql.DataSource;
 @Singleton
 public class PoultryDao extends CrudItemDao<Poultry>
 {
-	private final LoginDao loginDao;
-
 	@Inject
-	public PoultryDao(DataSource dataSource, LoginDao loginDao)
+	public PoultryDao(DataSource dataSource, UserIdDao userIdDao)
 	{
-		super(dataSource);
-		this.loginDao = loginDao;
+		super(dataSource, userIdDao);
 	}
 
 	@Override
@@ -32,8 +29,7 @@ public class PoultryDao extends CrudItemDao<Poultry>
 			"create_poultry",
 			Arrays.asList(
 				new IntegerSqlFunctionParameter(Poultry.FARM_ID_COLUMN, poultry.getFarmId()),
-				new StringSqlFunctionParameter(Poultry.NAME_COLUMN, poultry.getName())),
-			loginDao.getUserId());
+				new StringSqlFunctionParameter(Poultry.NAME_COLUMN, poultry.getName())));
 	}
 
 	@Override
@@ -50,7 +46,7 @@ public class PoultryDao extends CrudItemDao<Poultry>
 	{
 		return this.executeReadList(
 			"read_poultry_list",
-			Arrays.asList(
+			Collections.singletonList(
 				new IntegerSqlFunctionParameter(Poultry.FARM_ID_COLUMN, parentId)));
 	}
 
@@ -61,8 +57,7 @@ public class PoultryDao extends CrudItemDao<Poultry>
 			"update_poultry",
 			Arrays.asList(
 				new IntegerSqlFunctionParameter(Poultry.ID_COLUMN, id),
-				new StringSqlFunctionParameter(Poultry.NAME_COLUMN, poultry.getName())),
-			loginDao.getUserId());
+				new StringSqlFunctionParameter(Poultry.NAME_COLUMN, poultry.getName())));
 	}
 
 	@Override
@@ -71,8 +66,7 @@ public class PoultryDao extends CrudItemDao<Poultry>
 		this.executeUpdate(
 			"delete_poultry",
 			Collections.singletonList(
-				new IntegerSqlFunctionParameter(Poultry.ID_COLUMN, id)),
-			loginDao.getUserId());
+				new IntegerSqlFunctionParameter(Poultry.ID_COLUMN, id)));
 	}
 
 	@Override

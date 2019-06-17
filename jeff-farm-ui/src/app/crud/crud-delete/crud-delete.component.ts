@@ -20,7 +20,7 @@ export class CrudDeleteComponent<T extends CrudItem> {
     private router: Router,
     private crudItemService: CrudItemService<T>) {
 
-    this.type = this.crudItemService.getSingularName();
+    this.type = this.crudItemService.getTypeName();
   }
 
   cancel() {

@@ -32,7 +32,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   ngOnInit() {
     this.formType = this.computeFormType();
     this.submitValue = (this.formType === FormType.Update) ? 'Update' : 'Submit';
-    this.titleService.setTitle(`${(this.formType === FormType.Update) ? 'Update' : 'Create'} ${this.crudItemService.getSingularName()}`);
+    this.titleService.setTitle(`${(this.formType === FormType.Update) ? 'Update' : 'Create'} ${this.crudItemService.getTypeName()}`);
     this.initCrudItem(this.formType)
       .subscribe((crudItem: T) => {
         this.crudItem = crudItem;

@@ -55,9 +55,9 @@ public class HiveInspection extends CrudItem<HiveInspection>
 		return queenSeen;
 	}
 
-	public HiveInspection setQueenSeen(boolean queenSeen)
+	public HiveInspection setQueenSeen(Boolean queenSeen)
 	{
-		this.queenSeen = queenSeen;
+		this.queenSeen = Boolean.TRUE.equals(queenSeen);
 		return this;
 	}
 
@@ -66,9 +66,9 @@ public class HiveInspection extends CrudItem<HiveInspection>
 		return eggsSeen;
 	}
 
-	public HiveInspection setEggsSeen(boolean eggsSeen)
+	public HiveInspection setEggsSeen(Boolean eggsSeen)
 	{
-		this.eggsSeen = eggsSeen;
+		this.eggsSeen = Boolean.TRUE.equals(eggsSeen);
 		return this;
 	}
 

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { CrudItemService, CrudChild } from '../crud/crud-item.service';
+import { CrudItemService } from '../crud/crud-item.service';
+import { CrudChild } from '../crud/crud-child';
 import { Poultry } from './poultry';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
@@ -16,30 +17,28 @@ export class PoultryService extends CrudItemService<Poultry> {
   }
 
   createCrudItem(): Poultry {
-    return new Poultry(this.getFarmId());
+    return new Poultry(+this.getFarmId());
   }
 
-  getSingularName(): string {
-    return 'Poultry';
-  }
-
-  getPluralName(): string {
-    return 'Poultry';
+  getTypeName(): string {
+    return 'poultry';
   }
 
   getCrudGroups(): CrudChild[] {
     return [
-      { pluralName: 'Inspections', path: 'inspections' },
+      { name: 'Inspection', path: 'inspection' },
     ];
   }
 
   getBaseUrl(): string {
-
-    return `farms/${this.getFarmId()}/poultry`;
+    return 'poultry';
   }
 
-  getFarmId(): number {
+  getFarmId(): string {
+    return localStorage.getItem('farmId');
+  }
 
-    return +this.getRouteParam('farm_id');
+  protected getListHttpParams(): HttpParams {
+    return super.getListHttpParams().append('farmId', this.getFarmId());
   }
 }

@@ -16,13 +16,10 @@ import javax.sql.DataSource;
 @Singleton
 public class HiveDao extends CrudItemDao<Hive>
 {
-	private final LoginDao loginDao;
-
 	@Inject
-	public HiveDao(DataSource dataSource, LoginDao loginDao)
+	public HiveDao(DataSource dataSource, UserIdDao userIdDao)
 	{
-		super(dataSource);
-		this.loginDao = loginDao;
+		super(dataSource, userIdDao);
 	}
 
 	@Override
@@ -31,11 +28,9 @@ public class HiveDao extends CrudItemDao<Hive>
 		return this.executeCreate(
 				"create_hive",
 				Arrays.asList(
-						// BUG!  the farmId (parentId) needs to be validated when creating any crudItem
 						new IntegerSqlFunctionParameter(Hive.FARM_ID_COLUMN, hive.getFarmId()),
 						new StringSqlFunctionParameter(Hive.NAME_COLUMN, hive.getName()),
-						new IntegerSqlFunctionParameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger())),
-			loginDao.getUserId());
+						new IntegerSqlFunctionParameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger())));
 	}
 
 	@Override
@@ -64,8 +59,7 @@ public class HiveDao extends CrudItemDao<Hive>
 				Arrays.asList(
 						new IntegerSqlFunctionParameter(Hive.ID_COLUMN, id),
 						new StringSqlFunctionParameter(Hive.NAME_COLUMN, hive.getName()),
-						new IntegerSqlFunctionParameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger())),
-				loginDao.getUserId());
+						new IntegerSqlFunctionParameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger())));
 	}
 
 	@Override
@@ -74,8 +68,7 @@ public class HiveDao extends CrudItemDao<Hive>
 		this.executeUpdate(
 				"delete_hive",
 				Collections.singletonList(
-						new IntegerSqlFunctionParameter(Hive.ID_COLUMN, id)),
-				loginDao.getUserId());
+						new IntegerSqlFunctionParameter(Hive.ID_COLUMN, id)));
 	}
 	
 	@Override

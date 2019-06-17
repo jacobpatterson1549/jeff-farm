@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.dao.api.crud;
 
+import com.github.ants280.jeff.farm.ws.dao.UserIdDao;
 import com.github.ants280.jeff.farm.ws.dao.api.SqlFunctionDao;
 import com.github.ants280.jeff.farm.ws.dao.api.call.BatchCommandSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SimpleCommandSqlFunctionCall;
@@ -20,13 +21,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.sql.DataSource;
 
-public abstract class CrudItemInspectionGroupDao
-	<V extends CrudItemInspection<?, V>, T extends CrudItemInspectionGroup<V, T>>
+public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?, V>, T extends CrudItemInspectionGroup<V, T>>
 	extends SqlFunctionDao
 {
-	public CrudItemInspectionGroupDao(DataSource dataSource)
+	public CrudItemInspectionGroupDao(DataSource dataSource, UserIdDao userIdDao)
 	{
-		super(dataSource);
+		super(dataSource, userIdDao);
 	}
 
 	public abstract int create(T entity);
@@ -35,7 +35,8 @@ public abstract class CrudItemInspectionGroupDao
 
 	public abstract List<T> readList(int parentId);
 
-	public abstract void update(int id, CrudItemInspectionGroupUpdate<V, T> entityUpdate);
+	public abstract void update(
+		int id, CrudItemInspectionGroupUpdate<V, T> entityUpdate);
 
 	public abstract void delete(int id);
 
@@ -53,8 +54,7 @@ public abstract class CrudItemInspectionGroupDao
 		String createItemsFunctionName,
 		List<List<SqlFunctionParameter>> itemInParameters,
 		String groupIdColumnName,
-		String parentIdColumnName,
-		int userId)
+		String parentIdColumnName)
 	{
 		SqlFunctionCall<Integer>
 			createGroupFunctionCall
@@ -62,14 +62,15 @@ public abstract class CrudItemInspectionGroupDao
 			groupInParameters,
 			itemInParameters,
 			groupIdColumnName,
-			parentIdColumnName);
+			parentIdColumnName,
+			userIdDao);
 		SqlFunctionCall<Void>
 			createItemsFunctionCall
 			= new BatchCommandSqlFunctionCall(createItemsFunctionName,
-			itemInParameters);
+			itemInParameters,
+			userIdDao);
 
-		return this.execute(userId,
-			(a, b) -> a,
+		return this.execute((a, b) -> a,
 			createGroupFunctionCall,
 			createItemsFunctionCall);
 	}
@@ -84,15 +85,16 @@ public abstract class CrudItemInspectionGroupDao
 			readGroupFunctionCall
 			= new SimpleCommandSqlFunctionCall<>(readGroupFunctionName,
 			readGroupInParameters,
-			new SimpleResultSetTransformer<>(this::mapGroup));
+			new SimpleResultSetTransformer<>(this::mapGroup),
+			userIdDao);
 		SqlFunctionCall<List<V>>
 			readItemsFunctionCall
 			= new SimpleCommandSqlFunctionCall<>(readItemsFunctionName,
 			readItemsInParameters,
-			new ListResultSetTransformer<>(this::mapItem));
+			new ListResultSetTransformer<>(this::mapItem),
+			userIdDao);
 
-		return this.execute(null,
-			this::addItemsToGroup,
+		return this.execute(this::addItemsToGroup,
 			readGroupFunctionCall,
 			readItemsFunctionCall);
 	}
@@ -107,15 +109,16 @@ public abstract class CrudItemInspectionGroupDao
 			readGroupFunctionCall
 			= new SimpleCommandSqlFunctionCall<>(readGroupFunctionName,
 			readGroupInParameters,
-			new ListResultSetTransformer<>(this::mapGroup));
+			new ListResultSetTransformer<>(this::mapGroup),
+			userIdDao);
 		SqlFunctionCall<List<V>>
 			readItemsFunctionCall
 			= new SimpleCommandSqlFunctionCall<>(readItemsFunctionName,
 			readItemsInParameters,
-			new ListResultSetTransformer<>(this::mapItem));
+			new ListResultSetTransformer<>(this::mapItem),
+			userIdDao);
 
-		return this.execute(null,
-			this::partitionItemsForGroups,
+		return this.execute(this::partitionItemsForGroups,
 			readGroupFunctionCall,
 			readItemsFunctionCall);
 	}
@@ -128,30 +131,31 @@ public abstract class CrudItemInspectionGroupDao
 		String createItemsFunctionName,
 		List<List<SqlFunctionParameter>> createInParameters,
 		String deleteItemsFunctionName,
-		List<List<SqlFunctionParameter>> deleteItemsInParameters,
-		int userId)
+		List<List<SqlFunctionParameter>> deleteItemsInParameters)
 	{
 		SqlFunctionCall<Void>
 			updateGroupFunctionCall
 			= new SimpleCommandSqlFunctionCall<>(updateGroupFunctionName,
 			groupInParameters,
-			null);
+			null,
+			userIdDao);
 		SqlFunctionCall<Void>
 			updateItemsFunctionCall
 			= new BatchCommandSqlFunctionCall(updateItemsFunctionName,
-			itemInParameters);
+			itemInParameters,
+			userIdDao);
 		SqlFunctionCall<Void>
 			createItemsFunctionCall
 			= new BatchCommandSqlFunctionCall(createItemsFunctionName,
-			createInParameters);
+			createInParameters,
+			userIdDao);
 		SqlFunctionCall<Void>
 			deleteItemsFunctionCall
 			= new BatchCommandSqlFunctionCall(deleteItemsFunctionName,
-			deleteItemsInParameters);
+			deleteItemsInParameters,
+			userIdDao);
 
-		this.execute(
-			userId,
-			updateGroupFunctionCall,
+		this.execute(updateGroupFunctionCall,
 			updateItemsFunctionCall,
 			createItemsFunctionCall,
 			deleteItemsFunctionCall);
@@ -162,23 +166,22 @@ public abstract class CrudItemInspectionGroupDao
 		String deleteGroupFunctionName,
 		List<SqlFunctionParameter> deleteGroupInParameters,
 		String deleteItemsFunctionName,
-		List<SqlFunctionParameter> deleteItemsInParameters,
-		int userId)
+		List<SqlFunctionParameter> deleteItemsInParameters)
 	{
 		SqlFunctionCall<Void>
 			deleteGroupFunctionCall
 			= new SimpleCommandSqlFunctionCall<>(deleteGroupFunctionName,
 			deleteGroupInParameters,
-			null);
+			null,
+			userIdDao);
 		SqlFunctionCall<Void>
 			deleteItemsFunctionCall
 			= new SimpleCommandSqlFunctionCall<>(deleteItemsFunctionName,
 			deleteItemsInParameters,
-			null);
+			null,
+			userIdDao);
 
-		this.execute(userId,
-			deleteGroupFunctionCall,
-			deleteItemsFunctionCall);
+		this.execute(deleteItemsFunctionCall, deleteGroupFunctionCall);
 	}
 
 	protected boolean canDelete(
@@ -191,9 +194,10 @@ public abstract class CrudItemInspectionGroupDao
 			= new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
 			new SimpleResultSetTransformer<>(resultSet -> resultSet.getBoolean(
-				outParameterName)));
+				outParameterName)),
+			userIdDao);
 
-		return this.execute(null, functionCall);
+		return this.execute(functionCall);
 	}
 
 	private T addItemsToGroup(T crudItemGroup, List<V> crudItems)
@@ -208,8 +212,7 @@ public abstract class CrudItemInspectionGroupDao
 	{
 
 		Map<Integer, T> crudItemGroupsById = crudItemGroups.stream()
-			.collect(Collectors.toMap(
-				CrudItemInspectionGroup::getId,
+			.collect(Collectors.toMap(CrudItemInspectionGroup::getId,
 				Function.identity()));
 		Map<Integer, List<V>> crudItemsByGroupId = crudItems.stream()
 			.collect(Collectors.groupingBy(CrudItemInspection::getGroupId));
@@ -231,11 +234,14 @@ public abstract class CrudItemInspectionGroupDao
 			List<SqlFunctionParameter> groupInParameters,
 			List<List<SqlFunctionParameter>> itemInParameters,
 			String groupIdColumnName,
-			String parentIdColumnName)
+			String parentIdColumnName,
+			UserIdDao userIdDao)
 		{
 			super(functionCallSql,
 				groupInParameters,
-				new SimpleResultSetTransformer<>(rs -> rs.getInt(groupIdColumnName)));
+				new SimpleResultSetTransformer<>(rs -> rs.getInt(
+					groupIdColumnName)),
+				userIdDao);
 			this.itemInParameters = itemInParameters;
 			this.parentIdColumnName = parentIdColumnName;
 		}

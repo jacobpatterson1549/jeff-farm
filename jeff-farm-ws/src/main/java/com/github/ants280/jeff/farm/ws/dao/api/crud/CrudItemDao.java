@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.dao.api.crud;
 
+import com.github.ants280.jeff.farm.ws.dao.UserIdDao;
 import com.github.ants280.jeff.farm.ws.dao.api.SqlFunctionDao;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SimpleCommandSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
@@ -14,9 +15,9 @@ import javax.sql.DataSource;
 
 public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 {
-	public CrudItemDao(DataSource dataSource)
+	public CrudItemDao(DataSource dataSource, UserIdDao userIdDao)
 	{
-		super(dataSource);
+		super(dataSource, userIdDao);
 	}
 
 	public abstract int create(T entity);
@@ -34,17 +35,16 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 	protected abstract T mapRow(ResultSet rs) throws SQLException;
 
 	protected int executeCreate(
-		String functionName,
-		List<SqlFunctionParameter> inParameters,
-		int userId)
+		String functionName, List<SqlFunctionParameter> inParameters)
 	{
 		SqlFunctionCall<Integer>
 			functionCall
 			= new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
 			new SimpleResultSetTransformer<>(resultSet -> resultSet.getInt(
-				CrudItem.ID_COLUMN)));
-		return this.execute(userId, functionCall);
+				CrudItem.ID_COLUMN)),
+			userIdDao);
+		return this.execute(functionCall);
 	}
 
 	protected T executeRead(
@@ -53,8 +53,9 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 		SqlFunctionCall<T> functionCall = new SimpleCommandSqlFunctionCall<>(
 			functionName,
 			inParameters,
-			new SimpleResultSetTransformer<>(this::mapRow));
-		return this.execute(null, functionCall);
+			new SimpleResultSetTransformer<>(this::mapRow),
+			userIdDao);
+		return this.execute(functionCall);
 	}
 
 	protected List<T> executeReadList(
@@ -64,19 +65,19 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 			functionCall
 			= new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
-			new ListResultSetTransformer<>(this::mapRow));
-		return this.execute(null, functionCall);
+			new ListResultSetTransformer<>(this::mapRow),
+			userIdDao);
+		return this.execute(functionCall);
 	}
 
 	protected void executeUpdate( // and delete
-		String functionName,
-		List<SqlFunctionParameter> inParameters,
-		int userId)
+		String functionName, List<SqlFunctionParameter> inParameters)
 	{
 		SqlFunctionCall<Void> functionCall = new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
-			null);
-		this.execute(userId, functionCall);
+			null,
+			userIdDao);
+		this.execute(functionCall);
 	}
 
 	protected boolean canDelete(
@@ -89,7 +90,8 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 			= new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
 			new SimpleResultSetTransformer<>(resultSet -> resultSet.getBoolean(
-				outParameterName)));
-		return this.execute(null, functionCall);
+				outParameterName)),
+			userIdDao);
+		return this.execute(functionCall);
 	}
 }

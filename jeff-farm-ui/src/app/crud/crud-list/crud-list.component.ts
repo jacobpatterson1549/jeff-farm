@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { CrudItemService, CrudChild } from '../crud-item.service';
+import { CrudItemService } from '../crud-item.service';
+import { CrudChild } from '../crud-child';
 import { CrudItem } from '../crud-item';
 
 @Component({
@@ -24,8 +25,8 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
 
   ngOnInit() {
     this.crudChildren = this.crudItemService.getCrudGroups();
-    this.crudItemName = this.crudItemService.getSingularName();
-    this.titleService.setTitle(`${this.crudItemService.getPluralName()} List`);
+    this.crudItemName = this.crudItemService.getTypeName();
+    this.titleService.setTitle(`${this.crudItemName} List`);
 
     this.getItems();
   }

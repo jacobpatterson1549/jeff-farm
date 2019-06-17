@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.dao.api.call;
 
+import com.github.ants280.jeff.farm.ws.dao.UserIdDao;
 import com.github.ants280.jeff.farm.ws.dao.api.SqlDaoException;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.SqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.transformer.ResultSetTransformer;
@@ -18,9 +19,10 @@ public class SimpleCommandSqlFunctionCall<T> extends SqlFunctionCall<T>
 	public SimpleCommandSqlFunctionCall(
 		String functionCallSql,
 		List<SqlFunctionParameter> inParameters,
-		ResultSetTransformer<T> resultSetTransformer)
+		ResultSetTransformer<T> resultSetTransformer,
+		UserIdDao userIdDao)
 	{
-		super(functionCallSql, inParameters.size());
+		super(functionCallSql, inParameters.size(), userIdDao);
 		this.inParameters = inParameters;
 		this.resultSetTransformer = resultSetTransformer;
 		this.result = null;

@@ -1,12 +1,17 @@
 DROP FUNCTION IF EXISTS delete_poultry_inspection;
-CREATE OR REPLACE FUNCTION delete_poultry_inspection
-	( IN id INT
+CREATE FUNCTION delete_poultry_inspection
+	( IN user_id INT
+	, IN id INT
 	)
 RETURNS VOID
 AS
 $body$
-	DELETE
-	FROM poultry_inspections AS pi
-	WHERE pi.id = delete_poultry_inspection.id;
+	BEGIN
+		IF permission_check_poultry_inspection(set_user_id(delete_poultry_inspection.user_id), delete_poultry_inspection.id) THEN
+			DELETE
+			FROM poultry_inspections AS pi
+			WHERE pi.id = delete_poultry_inspection.id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

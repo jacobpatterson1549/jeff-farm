@@ -15,7 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/farms")
+@Path("/farm")
 public class FarmResource
 {
 	private final FarmDao farmDao;
@@ -46,10 +46,11 @@ public class FarmResource
 	}
 
 	@GET
+	@Path("list")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getFarmsList()
 	{
-		List<Farm> farms = farmDao.readList(-1); // TODO limit this by permissions
+		List<Farm> farms = farmDao.readList(-1); // (user_id provided by SqlFunctionCall)
 
 		return Response.ok(farms).build();
 	}

@@ -1,11 +1,10 @@
 package com.github.ants280.jeff.farm.ws;
 
 import com.github.ants280.jeff.farm.ws.resources.*;
-import java.util.HashSet;
-import java.util.Set;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
-import org.glassfish.jersey.jsonb.JsonBindingFeature;
+import java.util.*;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import org.glassfish.jersey.jsonb.*;
 
 @ApplicationPath("/")
 public class ApplicationConfig extends Application
@@ -20,6 +19,7 @@ public class ApplicationConfig extends Application
 		resources.add(UserResource.class);
 		resources.add(RootResource.class);
 		resources.add(FarmResource.class);
+		resources.add(FarmPermissionResource.class);
 		resources.add(HiveResource.class);
 		resources.add(HiveInspectionResource.class);
 		resources.add(PoultryResource.class);

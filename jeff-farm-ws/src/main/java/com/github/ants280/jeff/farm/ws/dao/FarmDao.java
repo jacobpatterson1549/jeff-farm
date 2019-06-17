@@ -16,13 +16,10 @@ import javax.sql.DataSource;
 @Singleton
 public class FarmDao extends CrudItemDao<Farm>
 {
-	private final LoginDao loginDao;
-
 	@Inject
-	public FarmDao(DataSource dataSource, LoginDao loginDao)
+	public FarmDao(DataSource dataSource, UserIdDao userIdDao)
 	{
-		super(dataSource);
-		this.loginDao = loginDao;
+		super(dataSource, userIdDao);
 	}
 
 	@Override
@@ -32,8 +29,7 @@ public class FarmDao extends CrudItemDao<Farm>
 				"create_farm",
 				Arrays.asList(
 						new StringSqlFunctionParameter(Farm.NAME_COLUMN, farm.getName()),
-						new StringSqlFunctionParameter(Farm.LOCATION_COLUMN, farm.getLocation())),
-			loginDao.getUserId());
+						new StringSqlFunctionParameter(Farm.LOCATION_COLUMN, farm.getLocation())));
 	}
 
 	@Override
@@ -46,7 +42,7 @@ public class FarmDao extends CrudItemDao<Farm>
 	}
 
 	@Override
-	public List<Farm> readList(int parentId)
+	public List<Farm> readList(int parentId) // (user_id provided by SqlFunctionCall)
 	{
 		return this.executeReadList(
 				"read_farms",
@@ -61,8 +57,7 @@ public class FarmDao extends CrudItemDao<Farm>
 				Arrays.asList(
 						new IntegerSqlFunctionParameter(Farm.ID_COLUMN, id),
 						new StringSqlFunctionParameter(Farm.NAME_COLUMN, farm.getName()),
-						new StringSqlFunctionParameter(Farm.LOCATION_COLUMN, farm.getLocation())),
-				loginDao.getUserId());
+						new StringSqlFunctionParameter(Farm.LOCATION_COLUMN, farm.getLocation())));
 	}
 
 	@Override
@@ -71,8 +66,7 @@ public class FarmDao extends CrudItemDao<Farm>
 		this.executeUpdate(
 				"delete_farm",
 				Collections.singletonList(
-						new IntegerSqlFunctionParameter(Farm.ID_COLUMN, id)),
-				loginDao.getUserId());
+						new IntegerSqlFunctionParameter(Farm.ID_COLUMN, id)));
 	}
 	
 	@Override

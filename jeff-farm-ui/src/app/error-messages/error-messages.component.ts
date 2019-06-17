@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ErrorMessagesService } from './error-messages.service';
+import { ErrorMessage } from './error-message';
 
 @Component({
   selector: 'app-error-messages',
@@ -9,7 +10,7 @@ export class ErrorMessagesComponent {
 
   constructor(public errorMessagesService: ErrorMessagesService) { }
 
-  close(index: number) {
-    this.errorMessagesService.messages.splice(index, 1);
+  get errorMessages(): ErrorMessage[] {
+    return this.errorMessagesService.errorMessages;
   }
 }

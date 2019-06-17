@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.dao.api.call;
 
+import com.github.ants280.jeff.farm.ws.dao.UserIdDao;
 import com.github.ants280.jeff.farm.ws.dao.api.SqlDaoException;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.SqlFunctionParameter;
 import java.sql.PreparedStatement;
@@ -12,11 +13,13 @@ public class BatchCommandSqlFunctionCall extends SqlFunctionCall<Void>
 
 	public BatchCommandSqlFunctionCall(
 		String functionCallSql,
-		List<List<SqlFunctionParameter>> inParametersList)
+		List<List<SqlFunctionParameter>> inParametersList,
+		UserIdDao userIdDao)
 	{
 		super(
 			functionCallSql,
-			inParametersList.isEmpty() ? 0 : inParametersList.get(0).size());
+			inParametersList.isEmpty() ? 0 : inParametersList.get(0).size(),
+			userIdDao);
 		this.inParametersList = inParametersList;
 	}
 

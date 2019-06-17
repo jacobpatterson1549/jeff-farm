@@ -17,13 +17,10 @@ import javax.sql.DataSource;
 @Singleton
 public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 {
-	private final LoginDao loginDao;
-
 	@Inject
-	public HiveInspectionDao(DataSource dataSource, LoginDao loginDao)
+	public HiveInspectionDao(DataSource dataSource, UserIdDao userIdDao)
 	{
-		super(dataSource);
-		this.loginDao = loginDao;
+		super(dataSource, userIdDao);
 	}
 
 	@Override
@@ -46,8 +43,7 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_HONEY_COLUMN, hiveInspection.getFramesHoney()),
 						new StringSqlFunctionParameter(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather()),
 						new IntegerSqlFunctionParameter(HiveInspection.TEMPERATURE_F_COLUMN, hiveInspection.getTemperatureF()),
-						new IntegerSqlFunctionParameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph())),
-			loginDao.getUserId());
+						new IntegerSqlFunctionParameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph())));
 	}
 
 	@Override
@@ -83,13 +79,12 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 						new IntegerSqlFunctionParameter(HiveInspection.SUPERSEDURE_CELLS_COLUMN, hiveInspection.getSupersedureCells()),
 						new IntegerSqlFunctionParameter(HiveInspection.SWARM_CELLS_COLUMN, hiveInspection.getSwarmCells()),
 						new IntegerSqlFunctionParameter(HiveInspection.COMB_BUILDING_STARS_COLUMN, hiveInspection.getCombBuildingStars()),
-						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_SEALED_BROOD_COLUMN, hiveInspection.getFramesOpenBrood()),
+						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_SEALED_BROOD_COLUMN, hiveInspection.getFramesSealedBrood()),
 						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_OPEN_BROOD_COLUMN, hiveInspection.getFramesOpenBrood()),
 						new IntegerSqlFunctionParameter(HiveInspection.FRAMES_HONEY_COLUMN, hiveInspection.getFramesHoney()),
 						new StringSqlFunctionParameter(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather()),
 						new IntegerSqlFunctionParameter(HiveInspection.TEMPERATURE_F_COLUMN, hiveInspection.getTemperatureF()),
-						new IntegerSqlFunctionParameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph())),
-				loginDao.getUserId());
+						new IntegerSqlFunctionParameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph())));
 	}
 
 	@Override
@@ -98,8 +93,7 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 		this.executeUpdate(
 				"delete_hive_inspection",
 				Collections.singletonList(
-						new IntegerSqlFunctionParameter(HiveInspection.ID_COLUMN, id)),
-				loginDao.getUserId());
+						new IntegerSqlFunctionParameter(HiveInspection.ID_COLUMN, id)));
 	}
 	
 	@Override
