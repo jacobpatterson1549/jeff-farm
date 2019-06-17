@@ -12,7 +12,7 @@ $body$
 			SELECT
 				  u.id
 				, u.user_name
-				, NULL -- password
+				, CAST(NULL AS CHAR(86)) -- password
 				, u.first_name
 				, u.last_name
 				, u.created_date
