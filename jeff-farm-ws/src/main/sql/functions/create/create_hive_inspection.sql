@@ -20,7 +20,7 @@ CREATE FUNCTION create_hive_inspection
 AS
 $body$
 	BEGIN
-		IF permission_check_hive(set_user_id(create_hive_inspection.user_id), h.id) THEN
+		IF permission_check_hive(set_user_id(create_hive_inspection.user_id), create_hive_inspection.hive_id) THEN
 			INSERT INTO hive_inspections
 				( hive_id
 				, queen_seen
