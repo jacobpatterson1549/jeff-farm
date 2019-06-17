@@ -7,16 +7,19 @@ CREATE FUNCTION create_poultry_inspection_group
 	)
 AS
 $body$
-	INSERT INTO poultry_inspection_groups
-		( farm_id
-		, notes
-		)
-	SELECT
-		  create_poultry_inspection_group.farm_id
-		, create_poultry_inspection_group.notes
-	FROM farms AS f
-	WHERE permission_check_farm(set_user_id(create_poultry_inspection_group.user_id), create_poultry_inspection_group.farm_id)
-		AND f.id = create_poultry_inspection_group.farm_id
-	RETURNING id;
+	BEGIN
+		IF permission_check_farm(set_user_id(create_poultry_inspection_group.user_id), create_poultry_inspection_group.farm_id) THEN
+			INSERT INTO poultry_inspection_groups
+				( farm_id
+				, notes
+				)
+			SELECT
+				  create_poultry_inspection_group.farm_id
+				, create_poultry_inspection_group.notes
+			FROM farms AS f
+			WHERE f.id = create_poultry_inspection_group.farm_id
+			RETURNING id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

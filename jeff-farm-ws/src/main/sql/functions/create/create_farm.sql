@@ -7,28 +7,31 @@ CREATE FUNCTION create_farm
 	)
 AS
 $body$
-	WITH new_farm AS (
-		INSERT INTO farms
-			( name
-			, location
+	BEGIN
+		IF permission_check_user(set_user_id(create_farm.user_id), create_farm.user_id) THEN
+			WITH new_farm AS (
+				INSERT INTO farms
+					( name
+					, location
+					)
+				SELECT
+					  create_farm.name
+					, create_farm.location
+				RETURNING id
 			)
-		SELECT
-			  create_farm.name
-			, create_farm.location
-		WHERE permission_check_user(set_user_id(create_farm.user_id), create_farm.user_id)
-		RETURNING id
-	)
-	, new_farm_permission AS (
-		INSERT INTO farm_permissions
-			( farm_id
-			, user_id
+			, new_farm_permission AS (
+				INSERT INTO farm_permissions
+					( farm_id
+					, user_id
+					)
+				SELECT
+					 f.id
+					, create_farm.user_id
+				FROM new_farm AS f
 			)
-		SELECT
-			 f.id
-			, create_farm.user_id
-		FROM new_farm AS f
-	)
-	SELECT id
-	FROM new_farm;
+			SELECT id
+			FROM new_farm;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

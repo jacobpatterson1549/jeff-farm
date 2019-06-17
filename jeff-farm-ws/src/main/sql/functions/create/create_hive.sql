@@ -8,18 +8,21 @@ CREATE FUNCTION create_hive
 	)
 AS
 $body$
-	INSERT INTO hives
-		( farm_id
-		, name
-		, queen_color
-		)
-	SELECT
-		  create_hive.farm_id
-		, create_hive.name
-		, create_hive.queen_color
-	FROM farms AS f
-	WHERE permission_check_farm(set_user_id(create_hive.user_id), create_hive.farm_id)
-		AND f.id = create_hive.farm_id
-	RETURNING id;
+	BEGIN
+		IF permission_check_farm(set_user_id(create_hive.user_id), create_hive.farm_id) THEN
+			INSERT INTO hives
+				( farm_id
+				, name
+				, queen_color
+				)
+			SELECT
+				  create_hive.farm_id
+				, create_hive.name
+				, create_hive.queen_color
+			FROM farms AS f
+			WHERE f.id = create_hive.farm_id
+			RETURNING id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;
