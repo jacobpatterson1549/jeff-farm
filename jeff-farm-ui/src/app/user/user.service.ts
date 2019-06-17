@@ -43,4 +43,7 @@ export class UserService extends CrudItemService<User> {
   }
 
   // canDelete(): // TODO: add /canDelete endpoints for ALL crudItems
+  get canDeleteMessage(): string {
+    return 'Cannot delete user because it is the only user with permission to one or more farms.';
+  }
 }

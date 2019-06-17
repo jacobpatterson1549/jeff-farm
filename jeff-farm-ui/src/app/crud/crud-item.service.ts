@@ -111,4 +111,8 @@ export abstract class CrudItemService<T extends CrudItem> {
   get canUpdate(): boolean {
     return true;
   }
+
+  get canDeleteMessage(): string {
+    return `Cannot delete ${this.getTypeName()} because it has children or is in a group.`;
+  }
 }

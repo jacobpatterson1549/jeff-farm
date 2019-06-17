@@ -3,7 +3,7 @@
   <button type="button" class="btn btn-secondary" *ngIf="crudItemService.canUpdate" routerLink="update">Update</button>
   <button type="button" class="btn btn-secondary" #deleteButton [disabled]="!canDelete"
     (click)="deleteCrudItem()">Delete</button>
-  <div [hidden]="!deleteButton.disabled">Cannot delete {{crudItemSingularName}} because it has children or is in a group.</div>
+  <div [hidden]="!deleteButton.disabled">{{crudItemService.canDeleteMessage}}</div>
   <div *ngIf="crudChildren.length > 0">
     <h4>Child items:</h4>
     <ul>
