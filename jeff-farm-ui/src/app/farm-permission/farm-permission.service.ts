@@ -34,4 +34,8 @@ export class FarmPermissionService extends CrudItemService<FarmPermission> {
   protected getListHttpParams(): HttpParams {
     return super.getListHttpParams().append('farmId', this.getFarmId());
   }
+
+  get canUpdate(): boolean {
+    return false;
+  }
 }
