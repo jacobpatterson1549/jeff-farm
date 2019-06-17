@@ -37,8 +37,8 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/farm_permissions_audit.sql"/>
 	</changeSet>
 
-	<changeSet id="set_user" author="jacobpatterson1549" runOnChange="true">
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/set_user_id.sql"/>
+	<changeSet id="functions/user-id" author="jacobpatterson1549" runOnChange="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/user-id/set_user_id.sql"/>
 	</changeSet>
 
 	<changeSet id="functions/permission_check" author="jacobpatterson1549" runOnChange="true">
