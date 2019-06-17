@@ -7,10 +7,13 @@ CREATE FUNCTION update_poultry_inspection_group
 RETURNS VOID
 AS
 $body$
-	UPDATE poultry_inspection_groups AS pig
-		SET
-			  notes = update_poultry_inspection_group.notes
-		WHERE permission_check_poultry_inspection_group(set_user_id(user_id), id)
-			AND pig.id = update_poultry_inspection_group.id;
+	BEGIN
+		IF permission_check_poultry_inspection_group(set_user_id(user_id), update_poultry_inspection_group.id) THEN
+			UPDATE poultry_inspection_groups AS pig
+				SET
+					  notes = update_poultry_inspection_group.notes
+				WHERE pig.id = update_poultry_inspection_group.id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

@@ -8,12 +8,15 @@ CREATE FUNCTION update_user
 RETURNS VOID
 AS
 $body$
-	UPDATE users AS u
-		SET
-			  user_password = update_user.user_password
-			, first_name = update_user.first_name
-			, last_name = update_user.last_name
-		WHERE permission_check_user(set_user_id(user_id), update_user.id)
-			AND u.id = update_user.id;
+	BEGIN
+		IF permission_check_user(set_user_id(user_id), update_user.id) THEN
+			UPDATE users AS u
+				SET
+					  user_password = update_user.user_password
+					, first_name = update_user.first_name
+					, last_name = update_user.last_name
+				WHERE u.id = update_user.id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

@@ -8,11 +8,14 @@ CREATE FUNCTION update_farm
 RETURNS VOID
 AS
 $body$
-	UPDATE farms AS f
-		SET
-			  name = update_farm.name
-			, location = update_farm.location
-		WHERE permission_check_farm(set_user_id(update_farm.user_id), update_farm.id)
-			AND f.id = update_farm.id;
+	BEGIN
+		IF permission_check_farm(set_user_id(update_farm.user_id), update_farm.id) THEN
+			UPDATE farms AS f
+				SET
+					  name = update_farm.name
+					, location = update_farm.location
+				WHERE f.id = update_farm.id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;

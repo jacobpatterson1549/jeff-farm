@@ -8,11 +8,14 @@ CREATE FUNCTION update_hive
 RETURNS VOID
 AS
 $body$
-	UPDATE hives AS h
-		SET
-			  name = update_hive.name
-			, queen_color = update_hive.queen_color
-		WHERE permission_check_hive(set_user_id(user_id), id)
-			AND h.id = update_hive.id;
+	BEGIN
+		IF permission_check_hive(set_user_id(user_id), update_hive.id) THEN
+			UPDATE hives AS h
+				SET
+					  name = update_hive.name
+					, queen_color = update_hive.queen_color
+				WHERE h.id = update_hive.id;
+		END IF;
+	END
 $body$
-LANGUAGE SQL;
+LANGUAGE plpgsql;
