@@ -25,7 +25,7 @@ $poultry_inspection_groups_audit$
 			)
 		VALUES
 			( 'i'
-			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, get_user_id()
 			, NEW.id
 			, NEW.farm_id
 			, NEW.notes
@@ -56,7 +56,7 @@ $poultry_inspection_groups_audit$
 			)
 		VALUES
 			( 'b'
-			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, get_user_id()
 			, OLD.id
 			, OLD.notes
 			);
@@ -68,7 +68,7 @@ $poultry_inspection_groups_audit$
 			)
 		VALUES
 			( 'a'
-			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, get_user_id()
 			, NEW.id
 			, NEW.notes
 			);
@@ -98,7 +98,7 @@ $poultry_inspection_groups_audit$
 			)
 		VALUES
 			( 'd'
-			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, get_user_id()
 			, OLD.id
 			, OLD.notes
 			);

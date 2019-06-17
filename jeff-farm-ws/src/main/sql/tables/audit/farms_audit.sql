@@ -25,7 +25,7 @@ $farms_audit$
 			)
 		VALUES
 			( 'i'
-			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, get_user_id()
 			, NEW.id
 			, NEW.name
 			, NEW.location
@@ -57,7 +57,7 @@ $farms_audit$
 			)
 		VALUES
 			( 'b'
-			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, get_user_id()
 			, OLD.id
 			, OLD.name
 			, OLD.location
@@ -71,7 +71,7 @@ $farms_audit$
 			)
 		VALUES
 			( 'a'
-			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, get_user_id()
 			, NEW.id
 			, NEW.name
 			, NEW.location
@@ -103,7 +103,7 @@ $farms_audit$
 			)
 		VALUES
 			( 'd'
-			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, get_user_id()
 			, OLD.id
 			, OLD.name
 			, OLD.location

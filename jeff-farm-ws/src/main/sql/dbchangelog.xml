@@ -38,6 +38,7 @@
 	</changeSet>
 
 	<changeSet id="functions/user-id" author="jacobpatterson1549" runOnChange="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/user-id/get_user_id.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/user-id/set_user_id.sql"/>
 	</changeSet>
 

@@ -27,7 +27,7 @@ $hives_audit$
 			)
 		VALUES
 			( 'i'
-			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, get_user_id()
 			, NEW.id
 			, NEW.farm_id
 			, NEW.name
@@ -60,7 +60,7 @@ $hives_audit$
 			)
 		VALUES
 			( 'b'
-			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, get_user_id()
 			, OLD.id
 			, OLD.name
 			, OLD.queen_color
@@ -74,7 +74,7 @@ $hives_audit$
 			)
 		VALUES
 			( 'a'
-			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, get_user_id()
 			, NEW.id
 			, NEW.name
 			, NEW.queen_color
@@ -106,7 +106,7 @@ $hives_audit$
 			)
 		VALUES
 			( 'd'
-			, CAST(current_setting('jeff_farm_ws.user_id') AS INT)
+			, get_user_id()
 			, OLD.id
 			, OLD.name
 			, OLD.queen_color
