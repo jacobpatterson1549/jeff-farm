@@ -18,8 +18,7 @@ export abstract class CrudItem {
 
     getDisplayFieldNames(includeDates: boolean): string[] {
         let displayFieldNames: string[] = this.getFormItems()
-            .map(formItem => formItem.name)
-            .filter(formItemName => !formItemName.endsWith('Id')); // TODO: is this needed?
+            .map(formItem => formItem.name);
         if (includeDates) {
            displayFieldNames = displayFieldNames.concat(CrudItem.ITEM_NAMES);
         }
