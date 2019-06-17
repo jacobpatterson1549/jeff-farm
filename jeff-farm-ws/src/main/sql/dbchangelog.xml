@@ -20,21 +20,21 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/farm_permissions.sql"/>
 	</changeSet>
 
-	<changeSet id="readonly-tables" author="jacobpatterson1549" runOnChange="true">
+	<changeSet id="tables/readonly" author="jacobpatterson1549" runOnChange="true">
 		<comment>Tables used as return types of functions.</comment>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="readonly-tables/farm_permissions_readonly.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="readonly-tables/poultry_inspections_readonly.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/readonly/farm_permissions_readonly.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/readonly/poultry_inspections_readonly.sql"/>
 	</changeSet>
 
-	<changeSet id="audit-trigger-tables" author="jacobpatterson1549" runOnChange="true">
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/users_audit.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/farms_audit.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/hives_audit.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/hive_inspections_audit.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/poultry_audit.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/poultry_inspection_groups_audit.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/poultry_inspections_audit.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="audit-trigger-tables/farm_permissions_audit.sql"/>
+	<changeSet id="tables/audit-trigger" author="jacobpatterson1549" runOnChange="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/users_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/farms_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/hives_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/hive_inspections_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/poultry_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/poultry_inspection_groups_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/poultry_inspections_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/farm_permissions_audit.sql"/>
 	</changeSet>
 
 	<changeSet id="set_user" author="jacobpatterson1549" runOnChange="true">
