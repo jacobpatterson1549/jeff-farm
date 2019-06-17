@@ -28,6 +28,7 @@ $body$
 					, eggs_seen = update_hive_inspection.eggs_seen
 					, laying_pattern_stars = update_hive_inspection.laying_pattern_stars
 					, temperament_stars = update_hive_inspection.temperament_stars
+					, queen_cells = update_hive_inspection.queen_cells
 					, supersedure_cells = update_hive_inspection.supersedure_cells
 					, swarm_cells = update_hive_inspection.swarm_cells
 					, comb_building_stars = update_hive_inspection.comb_building_stars
