@@ -8,7 +8,6 @@ import { CrudItem } from '../crud-item';
 import { CrudDeleteComponent } from '../crud-delete/crud-delete.component';
 
 @Component({
-  // TODO: add selector to all components.  It is very helpful for debugging.
   templateUrl: './crud-view.component.html',
 })
 export class CrudViewComponent<T extends CrudItem> implements OnInit {
