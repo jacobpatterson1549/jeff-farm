@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AuthService } from '../auth/auth.service';
-import { catchError, timeout } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 import { LoginService } from './login.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   templateUrl: './login.component.html',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
   working = true;
   serverRunning = false;
   showServerConnected = true;
+  production = environment.production;
 
   constructor(
     private titleService: Title,
