@@ -6,6 +6,10 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
+	<changeSet id="adhoc_remove_user_roles_unique_constraint" author="jacobpatterson1549" runOnChange="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="adhoc_remove_user_roles_unique_constraint.sql"/>
+	</changeSet>
+
 	<changeSet id="tables" author="jacobpatterson1549" runOnChange="true">
 		<comment>Order of files important for setting up foreign keys.</comment>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/users.sql"/>
@@ -40,9 +44,11 @@
 	<changeSet id="functions/user-id" author="jacobpatterson1549" runOnChange="true">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/user-id/get_user_id.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/user-id/set_user_id.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/user-id/is_admin_user.sql"/>
 	</changeSet>
 
 	<changeSet id="functions/permission_check" author="jacobpatterson1549" runOnChange="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_admin_user.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_farm_permission.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_hive.sql"/>
@@ -93,6 +99,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_poultry_inspections_for_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_poultry_inspections_for_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_poultry_list.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_users.sql"/>
 	</changeSet>
 
 	<changeSet id="functions/update" author="jacobpatterson1549" runOnChange="true">

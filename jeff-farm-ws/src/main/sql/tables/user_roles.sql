@@ -1,7 +1,7 @@
 -- DROP TABLE user_roles;
 
 CREATE TABLE IF NOT EXISTS user_roles
-	( user_name VARCHAR(20) UNIQUE NOT NULL
+	( user_name VARCHAR(20) NOT NULL
 	, role_name VARCHAR(20) NOT NULL
 
 	, FOREIGN KEY (user_name)
