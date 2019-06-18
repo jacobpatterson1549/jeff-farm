@@ -19,13 +19,13 @@
 
 <!-- TODO: create <app-crud-item-inspection-group-form> component to handle this-->
 <div *ngIf="selectTargets">
-  <h4 [formGroup]="inspectionItems">Inspections:</h4>
+  <h4 [formGroup]="getInspectionItems()">Inspections:</h4>
   <table class="table table-bordered table-striped">
     <tr>
       <th>Target Name</th>
       <th>Inspection</th>
     </tr>
-    <tr *ngFor="let inspectionItem of inspectionItems.controls">
+    <tr *ngFor="let inspectionItem of getInspectionItems().controls">
       <td>
         <ngb-alert type="info" (close)="removeInspectionItem(inspectionItem.get('targetId').value)">{{inspectionItem.get('targetName').value}}
         </ngb-alert>
