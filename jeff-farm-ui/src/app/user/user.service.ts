@@ -43,6 +43,6 @@ export class UserService extends CrudItemService<User> {
   }
 
   getId(): string {
-    return this.authService.getUserId();
+    return super.getId() || this.authService.getUserId();
   }
 }
