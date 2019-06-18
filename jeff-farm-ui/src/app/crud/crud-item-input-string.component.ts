@@ -6,7 +6,6 @@ import { FormControl } from '@angular/forms';
     template: `<input
     type="text"
     [formControl]="control"
-    [autocomplete]="isUserName ? 'username' : null"
     >`,
 })
 export class CrudItemInputStringComponent {

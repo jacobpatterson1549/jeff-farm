@@ -17,7 +17,7 @@
           [control]="crudForm.get(formItem.name)"></app-crud-item-input-password>
         <app-crud-item-input-text-area [id]="i" *ngSwitchCase="formItemType.TextArea"
           [control]="crudForm.get(formItem.name)"></app-crud-item-input-text-area>
-        <input [id]="i" *ngSwitchDefault type="text" disabled="true" value="[Unknown editor type]">
+        <span [id]="i" *ngSwitchDefault>[Unknown editor type]</span>
       </td>
     </tr>
   </tbody>

@@ -6,7 +6,6 @@ import { FormControl } from '@angular/forms';
     template: `<input
     type="password"
     [formControl]="control"
-    [autocomplete]="new-password"
     >`,
 })
 export class CrudItemInputPasswordComponent {
