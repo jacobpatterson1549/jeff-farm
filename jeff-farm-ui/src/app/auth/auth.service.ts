@@ -14,7 +14,7 @@ export class AuthService {
   }
 
   isAdminUser(): boolean {
-    return Boolean(localStorage.getItem(this.ADMIN_USER_KEY));
+    return localStorage.getItem(this.ADMIN_USER_KEY) === String(true);
   }
 
   clearCredentials() {
