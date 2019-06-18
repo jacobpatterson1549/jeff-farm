@@ -13,7 +13,3 @@ label {
 .serverOffline {
   color: red;
 }
-
-*.ng-invalid:not(form) {
-  border: 1px solid red;
-}
