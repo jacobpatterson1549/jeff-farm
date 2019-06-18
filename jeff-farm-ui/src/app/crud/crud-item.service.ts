@@ -89,8 +89,9 @@ export abstract class CrudItemService<T extends CrudItem> {
   }
 
   protected getRouteParam(paramName: string): string {
-    const param: string = this.route == null ? null : this.route.snapshot.paramMap.get(paramName); // TODO : cean this up
-    return param;
+    return this.route == null
+      ? null
+      : this.route.snapshot.paramMap.get(paramName);
   }
 
   protected getId(): string {
