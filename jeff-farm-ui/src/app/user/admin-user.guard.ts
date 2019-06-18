@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
@@ -9,7 +9,9 @@ import { AuthService } from '../auth/auth.service';
 })
 export class AdminUserGuard implements CanActivate, CanActivateChild {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private route: ActivatedRoute,
+    private authService: AuthService) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -26,9 +28,9 @@ export class AdminUserGuard implements CanActivate, CanActivateChild {
   }
 
   canContinue(next: ActivatedRouteSnapshot): boolean {
-    // if (next.url = '/user')
-    // TODO:  block if ((url='/user/list' && !this.authService.isAdminUser())
-    //                 || (url.startsWith(/user/{id} && (this.authService.isAdminUser() || {id} == this.authService.getUserId())
-    return true;
+    if (this.authService.isAdminUser()
+      || this.authService.getUserId() === this.route.snapshot.paramMap.get('id')) {
+      return true;
+    }
   }
 }
