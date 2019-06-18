@@ -9,7 +9,7 @@ describe('AuthService', () => {
         authService = new AuthService();
     });
 
-    it('should NOT be an admin user before logging in', () => {
+    it('should not be an admin user before logging in', () => {
         const isAdminUser: boolean = authService.isAdminUser();
         expect(isAdminUser).toBeFalsy();
     });
@@ -21,14 +21,14 @@ describe('AuthService', () => {
         expect(isAdminUser).toBeTruthy();
     });
 
-    it('should NOT be an admin user if one is not provided.', () => {
+    it('should not be an admin user if one is not provided.', () => {
         const loginSuccess: LoginSuccess = { adminUser: false, userId: 1 };
         authService.setLoggedIn(loginSuccess);
         const isAdminUser: boolean = authService.isAdminUser();
         expect(isAdminUser).toBeFalsy();
     });
 
-    it('should NOT be an admin user after logging out', () => {
+    it('should not be an admin user after logging out', () => {
         const loginSuccess: LoginSuccess = { adminUser: true, userId: 1 };
         authService.setLoggedIn(loginSuccess);
         authService.clearCredentials();
@@ -36,7 +36,7 @@ describe('AuthService', () => {
         expect(isAdminUser).toBeFalsy();
     });
 
-    it('should NOT be logged in before logging in', () => {
+    it('should not be logged in before logging in', () => {
         const isLoggedIn: boolean = authService.isLoggedIn();
         expect(isLoggedIn).toBeFalsy();
     });
@@ -48,7 +48,7 @@ describe('AuthService', () => {
         expect(isLoggedIn).toBeTruthy();
     });
 
-    it('should NOT be logged in after logging out', () => {
+    it('should not be logged in after logging out', () => {
         const loginSuccess: LoginSuccess = { adminUser: false, userId: 198 };
         authService.setLoggedIn(loginSuccess);
         authService.clearCredentials();
@@ -60,7 +60,7 @@ describe('AuthService', () => {
         const userId: string = authService.getUserId();
         expect(userId).toBeNull();
     });
-    
+
     it('should not have a user id before logging in', () => {
         const loginSuccess: LoginSuccess = { adminUser: false, userId: 198 };
         authService.setLoggedIn(loginSuccess);
