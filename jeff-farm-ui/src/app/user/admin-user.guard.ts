@@ -1,34 +1,23 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, CanActivateChild, RouterStateSnapshot } from '@angular/router';
 
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminUserGuard implements CanActivate, CanActivateChild {
+export class AdminUserGuard implements CanActivateChild {
 
-  constructor(
-    private route: ActivatedRoute,
-    private authService: AuthService) { }
+  constructor(private authService: AuthService) { }
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivateChild(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (state.url === '/user') {
+      return this.authService.isAdminUser();
+    }
 
-    return this.canContinue(next);
-  }
-
-  canActivateChild( // TODO: is this used?
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
-    return this.canActivate(next, state);
-  }
-
-  canContinue(next: ActivatedRouteSnapshot): boolean {
-    return this.authService.isAdminUser()
-      || this.authService.getUserId() === this.route.snapshot.paramMap.get('id');
+    const id: string = next.paramMap.get('id');
+    return id == null // not loaded yet
+      || id === this.authService.getUserId()
+      || this.authService.isAdminUser();
   }
 }

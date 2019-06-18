@@ -13,7 +13,8 @@ const routes: Routes = [
   {
     path: 'user',
     loadChildren: () => import('./user/user.module').then(m => m.UserModule),
-    canActivate: [AuthGuard, AdminUserGuard],
+    canActivate: [AuthGuard],
+    canActivateChild: [AdminUserGuard],
   },
   {
     path: 'farm/:farm_id/poultry/inspection',
