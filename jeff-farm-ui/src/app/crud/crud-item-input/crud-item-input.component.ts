@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, QueryList, ViewChildren, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormArray, AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { FormGroup, FormArray, AbstractControl, FormBuilder } from '@angular/forms';
 
 import { FormItem, FormItemType } from '../form-item';
 import { CrudItem } from '../crud-item';
@@ -7,11 +7,11 @@ import { CrudItemService } from '../crud-item.service';
 import { CrudItemGroupService } from '../crud-item-inspection-group.service';
 
 @Component({
-  selector: 'app-crud-item-form',
-  templateUrl: './crud-item-form.component.html',
-  styleUrls: ['./crud-item-form.component.css']
+  selector: 'app-crud-item-input',
+  templateUrl: './crud-item-input.component.html',
+  styleUrls: ['./crud-item-input.component.css']
 })
-export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
+export class CrudItemInputComponent<T extends CrudItem> implements OnInit {
 
   @Input()
   crudItem: T;
@@ -21,7 +21,7 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
   formItemType = FormItemType; // used for the ngSwitch in the template
   selectTargets;
   objectKeys = Object.keys; // used in the template
-  @ViewChildren(CrudItemFormComponent) groupEditors: QueryList<CrudItemFormComponent<T>>;
+  @ViewChildren(CrudItemInputComponent) groupEditors: QueryList<CrudItemInputComponent<T>>;
 
   constructor(
     private fb: FormBuilder,

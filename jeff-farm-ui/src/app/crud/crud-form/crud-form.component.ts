@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 import { CrudItemService } from '../crud-item.service';
 import { CrudItem } from '../crud-item';
 import { FormType } from '../form-type';
-import { CrudItemFormComponent } from '../crud-item-form/crud-item-form.component';
+import { CrudItemInputComponent } from '../crud-item-input/crud-item-input.component';
 
 @Component({
   templateUrl: './crud-form.component.html',
@@ -20,7 +20,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
   formType: FormType;
   submitValue: string;
   working = false;
-  @ViewChild(CrudItemFormComponent, { static: false }) editor: CrudItemFormComponent<T>;
+  @ViewChild(CrudItemInputComponent, { static: false }) editor: CrudItemInputComponent<T>;
 
   constructor(
     private titleService: Title,

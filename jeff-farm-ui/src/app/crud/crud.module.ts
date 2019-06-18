@@ -14,7 +14,7 @@ import { CrudDeleteComponent } from './crud-delete/crud-delete.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerModule } from '../spinner/spinner.module';
 import { CrudItemViewComponent } from './crud-item-view/crud-item-view.component';
-import { CrudItemFormComponent } from './crud-item-form/crud-item-form.component';
+import { CrudItemInputComponent } from './crud-item-input/crud-item-input.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { CrudItemFormComponent } from './crud-item-form/crud-item-form.component
     CrudFormComponent,
     CrudDeleteComponent,
     CrudItemViewComponent,
-    CrudItemFormComponent,
+    CrudItemInputComponent,
   ],
   imports: [
     CommonModule,
@@ -44,7 +44,7 @@ import { CrudItemFormComponent } from './crud-item-form/crud-item-form.component
   entryComponents: [
     CrudDeleteComponent,
     CrudItemViewComponent,
-    CrudItemFormComponent,
+    CrudItemInputComponent,
   ]
 })
 export class CrudModule { }

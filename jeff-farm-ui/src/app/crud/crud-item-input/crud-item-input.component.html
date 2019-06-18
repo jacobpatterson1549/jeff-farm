@@ -17,22 +17,22 @@
   </label>
 </div>
 
-<!-- TODO: create <app-crud-item-inspection-group-form> component to handle this-->
+<!-- TODO: create app-crud-item-inspection-group-form component to handle this-->
 <div *ngIf="selectTargets">
-  <h4 [formGroup]="inspectionItems">Inspections:</h4>
+  <h4 [formGroup]="getInspectionItems()">Inspections:</h4>
   <table class="table table-bordered table-striped">
     <tr>
       <th>Target Name</th>
       <th>Inspection</th>
     </tr>
-    <tr *ngFor="let inspectionItem of inspectionItems.controls">
+    <tr *ngFor="let inspectionItem of getInspectionItems().controls">
       <td>
         <ngb-alert type="info" (close)="removeInspectionItem(inspectionItem.get('targetId').value)">{{inspectionItem.get('targetName').value}}
         </ngb-alert>
       </td>
       <td>
-        <app-crud-item-form [crudItem]="crudItemService.createCrudItemInspection()" [crudForm]="inspectionItem"
-          id="{{inspectionItem.get('targetId').value}}"></app-crud-item-form>
+        <app-crud-item-input [crudItem]="crudItemService.createCrudItemInspection()" [crudForm]="inspectionItem"
+          id="{{inspectionItem.get('targetId').value}}"></app-crud-item-input>
       </td>
     </tr>
     <tr *ngIf="selectTargets && objectKeys(selectTargets).length > 1">
