@@ -43,8 +43,8 @@ public class LoginResource
 		{
 			loginDao.login(user);
 			LoginSuccess loginSuccess = new LoginSuccess(
-				userIdDao.getUserId(),
-				userIdDao.hasAdimnRole());
+				userIdDao.hasAdimnRole(),
+				userIdDao.getUserId());
 			return Response.ok(loginSuccess).build();
 		}
 		catch (ServletException ex)

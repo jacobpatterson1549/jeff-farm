@@ -2,22 +2,22 @@ package com.github.ants280.jeff.farm.ws.model;
 
 public class LoginSuccess
 {
+	private final boolean adminUser;
 	private final int userId;
-	private final boolean isAdminUser;
 
-	public LoginSuccess(int userId, boolean isAdminUser)
+	public LoginSuccess(boolean adminUser, int userId)
 	{
+		this.adminUser = adminUser;
 		this.userId = userId;
-		this.isAdminUser = isAdminUser;
+	}
+
+	public boolean getAdminUser()
+	{
+		return adminUser;
 	}
 
 	public int getUserId()
 	{
 		return userId;
-	}
-
-	public boolean isAdminUser()
-	{
-		return isAdminUser;
 	}
 }
