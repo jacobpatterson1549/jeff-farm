@@ -38,7 +38,7 @@ export class UserService extends CrudItemService<User> {
     return super.delete().pipe(tap(_ => this.loginService.logout()));
   }
 
-  get canDeleteMessage(): string { // TODO: get rid of all properties -> they are confusing and slow down the site.
+  getCanDeleteMessage(): string {
     return 'Cannot delete user because it is the only user with permission to one or more farms.';
   }
 

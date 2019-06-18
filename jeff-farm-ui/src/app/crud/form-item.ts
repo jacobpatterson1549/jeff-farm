@@ -21,7 +21,7 @@ export class FormItem {
         this.value = value;
     }
 
-    get validatorFns(): ValidatorFn[] {
+    getValidatorFns(): ValidatorFn[] {
         switch (this.type) {
             case FormItemType.String:
             case FormItemType.Integer:

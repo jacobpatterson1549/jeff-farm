@@ -1,8 +1,8 @@
-<div *ngIf="errorMessages.length">
-  <p *ngFor="let errorMessage of errorMessages; let i = index">
-    <ngb-alert type="danger" (close)="errorMessages.splice(i, 1)">
+<div *ngIf="getErrorMessages().length">
+  <p *ngFor="let errorMessage of getErrorMessages(); let i = index">
+    <ngb-alert type="danger" (close)="getErrorMessages().splice(i, 1)">
       <span>{{errorMessage.date | date:'mediumTime'}}: {{errorMessage.detail}}</span>
     </ngb-alert>
   </p>
-  <button type="button" class="btn btn-secondary" (click)="errorMessages.splice(0, errorMessages.length)">Clear</button>
+  <button type="button" class="btn btn-secondary" (click)="getErrorMessages().splice(0, getErrorMessages().length)">Clear</button>
 </div>

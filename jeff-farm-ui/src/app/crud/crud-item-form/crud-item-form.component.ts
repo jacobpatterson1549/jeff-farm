@@ -30,7 +30,7 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
   ngOnInit() {
     this.formItems = this.crudItem.getFormItems();
 
-    if (this.inspectionItems != null && this.crudItemService instanceof CrudItemGroupService) {
+    if (this.getInspectionItems() != null && this.crudItemService instanceof CrudItemGroupService) {
       this.crudItemService.getTargets()
         .subscribe((targets: Map<number, string>) => {
           this.selectTargets = {};
@@ -38,7 +38,7 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
           for (const [targetId, targetName] of Object.entries(targets)) {
             this.selectTargets[+targetId] = targetName;
           }
-          this.inspectionItems.controls
+          this.getInspectionItems().controls
             .forEach((inspectionItem: AbstractControl) => {
               const targetId: number = inspectionItem.get('targetId').value;
               delete this.selectTargets[targetId];
@@ -47,13 +47,13 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
     }
   }
 
-  get inspectionItems(): FormArray {
+  getInspectionItems(): FormArray {
     return this.crudForm.get('inspectionItems') as FormArray;
   }
 
   addInspectionItem(targetIndex: number) {
     if (targetIndex > 0 // not blank item
-      && this.inspectionItems != null
+      && this.getInspectionItems() != null
       && this.crudItemService instanceof CrudItemGroupService) {
       const inspectionItem: FormGroup = this.crudItemService.createCrudItemInspection().getFormGroup(this.fb);
       const addTargetId: number = +Object.keys(this.selectTargets)[targetIndex];
@@ -62,18 +62,18 @@ export class CrudItemFormComponent<T extends CrudItem> implements OnInit {
         targetName: this.selectTargets[addTargetId]
       });
       delete this.selectTargets[addTargetId];
-      this.inspectionItems.push(inspectionItem);
+      this.getInspectionItems().push(inspectionItem);
     }
   }
 
   removeInspectionItem(removeTargetIdStr: string) {
-    if (this.inspectionItems != null) {
+    if (this.getInspectionItems() != null) {
       const targeremoveTargetId = +removeTargetIdStr;
-      for (let i = 0; i < this.inspectionItems.length; i++) {
-        const inspectionItem: FormGroup = this.inspectionItems.at(i) as FormGroup;
+      for (let i = 0; i < this.getInspectionItems().length; i++) {
+        const inspectionItem: FormGroup = this.getInspectionItems().at(i) as FormGroup;
         if (inspectionItem.get('targetId').value === targeremoveTargetId) {
           this.selectTargets[targeremoveTargetId] = inspectionItem.get('targetName').value;
-          this.inspectionItems.removeAt(i);
+          this.getInspectionItems().removeAt(i);
           break;
         }
       }

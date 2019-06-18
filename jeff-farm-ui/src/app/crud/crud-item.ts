@@ -31,7 +31,7 @@ export abstract class CrudItem {
             formItem.name,
             fb.control(
                 formItem.value,
-                formItem.validatorFns)));
+                formItem.getValidatorFns())));
         formGroup.addControl('id', fb.control(this.id));
         return formGroup;
     }

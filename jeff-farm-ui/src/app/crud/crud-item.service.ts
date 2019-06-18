@@ -100,11 +100,11 @@ export abstract class CrudItemService<T extends CrudItem> {
 
   protected abstract getParentId(): string;
 
-  get canUpdate(): boolean {
+  getCanUpdate(): boolean {
     return true;
   }
 
-  get canDeleteMessage(): string {
+  getCanDeleteMessage(): string {
     return `Cannot delete ${this.getTypeName()} because it has children or is in a group.`;
   }
 

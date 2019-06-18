@@ -10,7 +10,7 @@ export class ErrorMessagesComponent {
 
   constructor(public errorMessagesService: ErrorMessagesService) { }
 
-  get errorMessages(): ErrorMessage[] {
+  getErrorMessages(): ErrorMessage[] {
     return this.errorMessagesService.errorMessages;
   }
 }

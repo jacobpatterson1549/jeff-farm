@@ -1,9 +1,9 @@
 <div *ngIf="crudItem">
   <app-crud-item-view [crudItem]="crudItem"></app-crud-item-view>
-  <button type="button" class="btn btn-secondary" *ngIf="crudItemService.canUpdate" routerLink="update">Update</button>
+  <button type="button" class="btn btn-secondary" *ngIf="canUpdate" routerLink="update">Update</button>
   <button type="button" class="btn btn-secondary" #deleteButton [disabled]="!canDelete"
     (click)="deleteCrudItem()">Delete</button>
-  <div [hidden]="!deleteButton.disabled">{{crudItemService.canDeleteMessage}}</div>
+  <div [hidden]="!deleteButton.disabled">{{canDeleteMessage}}</div>
   <div *ngIf="crudChildren.length > 0">
     <h4>Child items:</h4>
     <ul>
