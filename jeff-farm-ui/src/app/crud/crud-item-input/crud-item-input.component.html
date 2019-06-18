@@ -1,49 +1,60 @@
-<div *ngFor="let formItem of formItems" class="formItem">
-  <label>{{formItem.name | titlecase}}
-    <ng-container [ngSwitch]="formItem.type" class="formItemInput">
-      <input *ngSwitchCase="formItemType.String" [formControl]="crudForm.get(formItem.name)" type="text"
-        [autocomplete]="formItem.name == 'userName' ? 'username' : null">
-      <input *ngSwitchCase="formItemType.Boolean" [formControl]="crudForm.get(formItem.name)" type="checkbox">
-      <input *ngSwitchCase="formItemType.Integer" [formControl]="crudForm.get(formItem.name)" type="number">
-      <ngb-rating *ngSwitchCase="formItemType.Stars" [formControl]="crudForm.get(formItem.name)" max="5"
-        resettable="true"></ngb-rating>
-      <input *ngSwitchCase="formItemType.Color" [formControl]="crudForm.get(formItem.name)" type="color">
-      <input *ngSwitchCase="formItemType.Password" [formControl]="crudForm.get(formItem.name)" type="password"
-        autocomplete="new-password">
-      <textarea *ngSwitchCase="formItemType.TextArea" [formControl]="crudForm.get(formItem.name)" rows="2"
-        cols="20"></textarea>
-      <span *ngSwitchDefault>[Unknown editor type]</span>
-    </ng-container>
-  </label>
-</div>
+<table class="table table-bordered table-striped">
+  <tbody>
+    <tr *ngFor="let formItem of formItems; index as i" class="formItem">
+      <td><label [for]="i">{{formItem.name | titlecase}}</label></td>
+      <td [ngSwitch]="formItem.type" class="formItemInput">
+        <input [id]="i" *ngSwitchCase="formItemType.String" [formControl]="crudForm.get(formItem.name)" type="text"
+          [autocomplete]="formItem.name == 'userName' ? 'username' : null">
+        <input [id]="i" *ngSwitchCase="formItemType.Boolean" [formControl]="crudForm.get(formItem.name)"
+          type="checkbox">
+        <input [id]="i" *ngSwitchCase="formItemType.Integer" [formControl]="crudForm.get(formItem.name)" type="number">
+        <ngb-rating [id]="i" *ngSwitchCase="formItemType.Stars" [formControl]="crudForm.get(formItem.name)" max="5"
+          resettable="true"></ngb-rating>
+        <input [id]="i" *ngSwitchCase="formItemType.Color" [formControl]="crudForm.get(formItem.name)" type="color">
+        <input [id]="i" *ngSwitchCase="formItemType.Password" [formControl]="crudForm.get(formItem.name)"
+          type="password" autocomplete="new-password">
+        <textarea [id]="i" *ngSwitchCase="formItemType.TextArea" [formControl]="crudForm.get(formItem.name)" rows="2"
+          cols="20"></textarea>
+        <input [id]="i" *ngSwitchDefault type="text" disabled="true" value="[Unknown editor type]">
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- TODO: create app-crud-item-inspection-group-form component to handle this-->
 <div *ngIf="selectTargets">
   <h4 [formGroup]="getInspectionItems()">Inspections:</h4>
   <table class="table table-bordered table-striped">
-    <tr>
-      <th>Target Name</th>
-      <th>Inspection</th>
-    </tr>
-    <tr *ngFor="let inspectionItem of getInspectionItems().controls">
-      <td>
-        <ngb-alert type="info" (close)="removeInspectionItem(inspectionItem.get('targetId').value)">{{inspectionItem.get('targetName').value}}
-        </ngb-alert>
-      </td>
-      <td>
-        <app-crud-item-input [crudItem]="crudItemService.createCrudItemInspection()" [crudForm]="inspectionItem"
-          id="{{inspectionItem.get('targetId').value}}"></app-crud-item-input>
-      </td>
-    </tr>
-    <tr *ngIf="selectTargets && objectKeys(selectTargets).length > 1">
-      <td colspan="2">
-        <span>Add target: </span>
-        <select (change)="addInspectionItem($event.target.selectedIndex)">
-          <option *ngFor="let targetId of objectKeys(selectTargets)">
-            {{selectTargets[targetId]}}
-          </option>
-        </select>
-      </td>
-    </tr>
+    <thead>
+      <tr>
+        <th>Target Name</th>
+        <th>Inspection</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let inspectionItem of getInspectionItems().controls">
+        <td>
+          <ngb-alert type="info" (close)="removeInspectionItem(inspectionItem.get('targetId').value)">
+            {{inspectionItem.get('targetName').value}}
+          </ngb-alert>
+        </td>
+        <td>
+          <app-crud-item-input [crudItem]="crudItemService.createCrudItemInspection()" [crudForm]="inspectionItem"
+            id="{{inspectionItem.get('targetId').value}}"></app-crud-item-input>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr *ngIf="selectTargets && objectKeys(selectTargets).length > 1">
+        <td colspan="2">
+          <span>Add target: </span>
+          <select (change)="addInspectionItem($event.target.selectedIndex)">
+            <option *ngFor="let targetId of objectKeys(selectTargets)">
+              {{selectTargets[targetId]}}
+            </option>
+          </select>
+        </td>
+      </tr>
+    </tfoot>
   </table>
 </div>
