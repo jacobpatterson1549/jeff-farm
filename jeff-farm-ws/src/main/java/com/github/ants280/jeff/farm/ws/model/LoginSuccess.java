@@ -10,4 +10,14 @@ public class LoginSuccess
 		this.userId = userId;
 		this.isAdminUser = isAdminUser;
 	}
+
+	public int getUserId()
+	{
+		return userId;
+	}
+
+	public boolean isAdminUser()
+	{
+		return isAdminUser;
+	}
 }
