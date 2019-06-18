@@ -26,7 +26,7 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 
 	public abstract List<T> readList(int parentId);
 
-	public abstract void update(int id, T entity);
+	public abstract void update(T entity);
 
 	public abstract void delete(int id);
 

@@ -65,12 +65,12 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 	}
 
 	@Override
-	public void update(int id, HiveInspection hiveInspection)
+	public void update(HiveInspection hiveInspection)
 	{
 		this.executeUpdate(
 				"update_hive_inspection",
 				Arrays.asList(
-						new IntegerSqlFunctionParameter(HiveInspection.ID_COLUMN, id),
+						new IntegerSqlFunctionParameter(HiveInspection.ID_COLUMN, hiveInspection.getId()),
 						new BooleanSqlFunctionParameter(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.getQueenSeen()),
 						new BooleanSqlFunctionParameter(HiveInspection.EGGS_SEEN_COLUMN, hiveInspection.getEggsSeen()),
 						new IntegerSqlFunctionParameter(HiveInspection.LAYING_PATTERN_STARS_COLUMN, hiveInspection.getLayingPatternStars()),

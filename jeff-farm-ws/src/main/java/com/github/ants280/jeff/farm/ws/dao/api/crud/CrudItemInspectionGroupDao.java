@@ -36,7 +36,7 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 	public abstract List<T> readList(int parentId);
 
 	public abstract void update(
-		int id, CrudItemInspectionGroupUpdate<V, T> entityUpdate);
+		CrudItemInspectionGroupUpdate<V, T> entityUpdate);
 
 	public abstract void delete(int id);
 

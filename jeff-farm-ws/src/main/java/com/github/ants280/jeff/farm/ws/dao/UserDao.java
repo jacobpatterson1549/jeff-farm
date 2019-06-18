@@ -79,14 +79,14 @@ public class UserDao extends CrudItemDao<User>
 	}
 
 	@Override
-	public void update(int id, User user)
+	public void update(User user)
 	{
 		String
 			password
 			= passwordGenerator.getHashedPassword(user.getPassword());
 
 		this.executeUpdate("update_user",
-			Arrays.asList(new IntegerSqlFunctionParameter(User.ID_COLUMN, id),
+			Arrays.asList(new IntegerSqlFunctionParameter(User.ID_COLUMN, user.getId()),
 				new StringSqlFunctionParameter(User.PASSWORD_COLUMN, password),
 				new StringSqlFunctionParameter(User.FIRST_NAME_COLUMN,
 					user.getFirstName()),

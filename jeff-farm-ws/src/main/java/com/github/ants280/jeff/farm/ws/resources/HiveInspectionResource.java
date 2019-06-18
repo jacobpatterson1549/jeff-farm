@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
+import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.dao.HiveInspectionDao;
 import com.github.ants280.jeff.farm.ws.model.HiveInspection;
 import java.util.List;
@@ -64,7 +65,12 @@ public class HiveInspectionResource
 		@PathParam("id") int id,
 		HiveInspection hiveInspection)
 	{
-		hiveInspectionDao.update(id, hiveInspection);
+		if (id != hiveInspection.getId())
+		{
+			throw new JeffFarmWsException("Id must be same as CrudItem id.");
+		}
+
+		hiveInspectionDao.update(hiveInspection);
 
 		return Response.ok().build();
 	}

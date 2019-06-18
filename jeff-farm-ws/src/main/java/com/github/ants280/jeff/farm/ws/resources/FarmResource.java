@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
+import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.dao.FarmDao;
 import com.github.ants280.jeff.farm.ws.model.Farm;
 import java.util.List;
@@ -60,7 +61,12 @@ public class FarmResource
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateFarm(@PathParam("id") int id, Farm farm)
 	{
-		farmDao.update(id, farm);
+		if (id != farm.getId())
+		{
+			throw new JeffFarmWsException("Id must be same as CrudItem id.");
+		}
+
+		farmDao.update(farm);
 
 		return Response.ok().build();
 	}

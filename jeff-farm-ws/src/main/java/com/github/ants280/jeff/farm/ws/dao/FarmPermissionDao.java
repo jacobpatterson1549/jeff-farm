@@ -52,8 +52,7 @@ public class FarmPermissionDao extends CrudItemDao<FarmPermission>
 	}
 
 	@Override
-	public void update(
-		int id, FarmPermission farmPermission)
+	public void update(FarmPermission farmPermission)
 	{
 		throw new UnsupportedOperationException("Cannot update FarmPermission.  Delete it instead.");
 	}

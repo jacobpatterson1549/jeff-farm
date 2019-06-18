@@ -50,12 +50,12 @@ public class FarmDao extends CrudItemDao<Farm>
 	}
 
 	@Override
-	public void update(int id, Farm farm)
+	public void update(Farm farm)
 	{
 		this.executeUpdate(
 				"update_farm",
 				Arrays.asList(
-						new IntegerSqlFunctionParameter(Farm.ID_COLUMN, id),
+						new IntegerSqlFunctionParameter(Farm.ID_COLUMN, farm.getId()),
 						new StringSqlFunctionParameter(Farm.NAME_COLUMN, farm.getName()),
 						new StringSqlFunctionParameter(Farm.LOCATION_COLUMN, farm.getLocation())));
 	}

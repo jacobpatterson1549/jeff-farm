@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
+import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.dao.LoginDao;
 import com.github.ants280.jeff.farm.ws.dao.UserDao;
 import com.github.ants280.jeff.farm.ws.model.User;
@@ -43,7 +44,12 @@ public class UserResource
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateUser(@PathParam("id") int id, User user)
 	{
-		userDao.update(id, user);
+		if (id != user.getId())
+		{
+			throw new JeffFarmWsException("Id must be same as CrudItem id.");
+		}
+
+		userDao.update(user);
 
 		return Response.ok().build();
 	}

@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
+import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.dao.PoultryDao;
 import com.github.ants280.jeff.farm.ws.model.Poultry;
 import java.util.List;
@@ -61,7 +62,12 @@ public class PoultryResource
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updatePoultry(@PathParam("id") int id, Poultry poultry)
 	{
-		poultryDao.update(id, poultry);
+		if (id != poultry.getId())
+		{
+			throw new JeffFarmWsException("Id must be same as CrudItem id.");
+		}
+
+		poultryDao.update(poultry);
 
 		return Response.ok().build();
 	}

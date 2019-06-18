@@ -51,12 +51,12 @@ public class PoultryDao extends CrudItemDao<Poultry>
 	}
 
 	@Override
-	public void update(int id, Poultry poultry)
+	public void update(Poultry poultry)
 	{
 		this.executeUpdate(
 			"update_poultry",
 			Arrays.asList(
-				new IntegerSqlFunctionParameter(Poultry.ID_COLUMN, id),
+				new IntegerSqlFunctionParameter(Poultry.ID_COLUMN, poultry.getId()),
 				new StringSqlFunctionParameter(Poultry.NAME_COLUMN, poultry.getName())));
 	}
 

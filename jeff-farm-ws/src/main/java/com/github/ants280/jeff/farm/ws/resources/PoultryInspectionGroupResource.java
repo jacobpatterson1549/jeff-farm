@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
+import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.dao.PoultryInspectionGroupDao;
 import com.github.ants280.jeff.farm.ws.model.PoultryInspectionGroup;
 import com.github.ants280.jeff.farm.ws.model.PoultryInspectionGroupUpdate;
@@ -67,7 +68,12 @@ public class PoultryInspectionGroupResource
 		PoultryInspectionGroupUpdate poultryInspectionGroupUpdate
 		)
 	{
-		poultryInspectionGroupDao.update(id, poultryInspectionGroupUpdate);
+		if (id != poultryInspectionGroupUpdate.getGroup().getId())
+		{
+			throw new JeffFarmWsException("Id must be same as CrudItem id.");
+		}
+
+		poultryInspectionGroupDao.update(poultryInspectionGroupUpdate);
 
 		return Response.ok().build();
 	}

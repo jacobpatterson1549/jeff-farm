@@ -52,12 +52,12 @@ public class HiveDao extends CrudItemDao<Hive>
 	}
 
 	@Override
-	public void update(int id, Hive hive)
+	public void update(Hive hive)
 	{
 		this.executeUpdate(
 				"update_hive",
 				Arrays.asList(
-						new IntegerSqlFunctionParameter(Hive.ID_COLUMN, id),
+						new IntegerSqlFunctionParameter(Hive.ID_COLUMN, hive.getId()),
 						new StringSqlFunctionParameter(Hive.NAME_COLUMN, hive.getName()),
 						new IntegerSqlFunctionParameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger())));
 	}
@@ -70,7 +70,7 @@ public class HiveDao extends CrudItemDao<Hive>
 				Collections.singletonList(
 						new IntegerSqlFunctionParameter(Hive.ID_COLUMN, id)));
 	}
-	
+
 	@Override
 	public boolean canDelete(int id)
 	{

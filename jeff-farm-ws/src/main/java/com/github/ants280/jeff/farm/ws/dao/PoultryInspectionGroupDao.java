@@ -93,7 +93,6 @@ public class PoultryInspectionGroupDao
 
 	@Override
 	public void update(
-		int id,
 		CrudItemInspectionGroupUpdate<PoultryInspection, PoultryInspectionGroup> poultryInspectionGroupUpdate)
 	{
 		Function<PoultryInspection, List<SqlFunctionParameter>>
@@ -107,7 +106,7 @@ public class PoultryInspectionGroupDao
 		Function<PoultryInspection, List<SqlFunctionParameter>>
 			addItemParameterMapper
 			= poultryInspection -> Arrays.asList(new IntegerSqlFunctionParameter(PoultryInspection.GROUP_ID_COLUMN,
-				id),
+				poultryInspectionGroupUpdate.getGroup().getId()),
 			new IntegerSqlFunctionParameter(PoultryInspection.TARGET_ID_COLUMN,
 				poultryInspection.getTargetId()),
 			new IntegerSqlFunctionParameter(PoultryInspection.BIRD_COUNT_COLUMN,
@@ -121,7 +120,7 @@ public class PoultryInspectionGroupDao
 			itemId));
 		this.executeUpdate("update_poultry_inspection_group",
 			Arrays.asList(new IntegerSqlFunctionParameter(PoultryInspectionGroup.ID_COLUMN,
-					id),
+					poultryInspectionGroupUpdate.getGroup().getId()),
 				new StringSqlFunctionParameter(
 					PoultryInspectionGroup.NOTES_COLUMN,
 					poultryInspectionGroupUpdate.getGroup().getNotes())),
@@ -131,7 +130,7 @@ public class PoultryInspectionGroupDao
 				.stream()
 				.map(updateParameterMapper)
 				.collect(Collectors.toList()),
-			"create_poultry_inspection",
+			"n",
 			poultryInspectionGroupUpdate.getAddItems()
 				.stream()
 				.map(addItemParameterMapper)
