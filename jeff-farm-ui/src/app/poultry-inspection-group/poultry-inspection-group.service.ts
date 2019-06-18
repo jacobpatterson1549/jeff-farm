@@ -19,7 +19,7 @@ export class PoultryInspectionGroupService
   }
 
   createCrudItem(): PoultryInspectionGroup {
-    return new PoultryInspectionGroup(+this.getFarmId());
+    return new PoultryInspectionGroup(+this.getParentId());
   }
 
   createCrudItemInspection(): PoultryInspection {
@@ -34,11 +34,7 @@ export class PoultryInspectionGroupService
     return 'poultry/inspectionGroup';
   }
 
-  private getFarmId(): string {
+  protected getParentId(): string {
     return this.getRouteParam('farm_id');
-  }
-
-  protected getListHttpParams(): HttpParams {
-    return super.getListHttpParams().append('farmId', this.getFarmId());
   }
 }

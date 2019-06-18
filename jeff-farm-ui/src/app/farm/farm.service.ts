@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { CrudItemService } from '../crud/crud-item.service';
 import { CrudChild } from '../crud/crud-child';
@@ -34,5 +34,9 @@ export class FarmService extends CrudItemService<Farm> {
 
   getBaseUrl(): string {
     return 'farm';
+  }
+
+  protected getParentId(): string {
+    return '';
   }
 }

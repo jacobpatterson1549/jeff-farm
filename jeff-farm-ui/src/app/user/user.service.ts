@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service';
@@ -52,5 +52,9 @@ export class UserService extends CrudItemService<User> {
       viewStepsToParent++;
     }
     return viewStepsToParent;
+  }
+
+  protected getParentId(): string {
+    return '';
   }
 }

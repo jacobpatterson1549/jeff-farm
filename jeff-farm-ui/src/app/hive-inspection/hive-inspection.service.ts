@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { CrudItemService } from '../crud/crud-item.service';
 import { HiveInspection } from './hive-inspection';
@@ -16,7 +16,7 @@ export class HiveInspectionService extends CrudItemService<HiveInspection> {
   }
 
   createCrudItem(): HiveInspection {
-    return new HiveInspection(+this.getHiveId());
+    return new HiveInspection(+this.getParentId());
   }
 
   getTypeName(): string {
@@ -27,11 +27,7 @@ export class HiveInspectionService extends CrudItemService<HiveInspection> {
     return 'hive/inspection';
   }
 
-  private getHiveId(): string {
+  protected getParentId(): string {
     return this.getRouteParam('hive_id');
-  }
-
-  protected getListHttpParams(): HttpParams {
-    return super.getListHttpParams().append('hiveId', this.getHiveId());
   }
 }

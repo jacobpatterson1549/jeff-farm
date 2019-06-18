@@ -45,7 +45,7 @@ export abstract class CrudItemService<T extends CrudItem> {
   }
 
   get(): Observable<T> {
-    const url = this.getIdUrl();
+    const url = `${this.getBaseUrl()}/${this.getId()}`;
     return this.http.get<T>(url)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('read')),
@@ -54,9 +54,8 @@ export abstract class CrudItemService<T extends CrudItem> {
   }
 
   getList(): Observable<T[]> {
-    const url = `${this.getBaseUrl()}/list`;
-    const listHttpParams = this.getListHttpParams();
-    return this.http.get<T[]>(url, {params: listHttpParams})
+    const url = `${this.getBaseUrl()}/list/${this.getParentId()}`;
+    return this.http.get<T[]>(url)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('list')),
         map((dataList: T[]) => dataList
@@ -74,7 +73,7 @@ export abstract class CrudItemService<T extends CrudItem> {
   }
 
   delete(): Observable<object> {
-    const url = this.getIdUrl();
+    const url = `${this.getBaseUrl()}/${this.getId()}`;
     return this.http.delete(url)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('delete')),
@@ -82,7 +81,7 @@ export abstract class CrudItemService<T extends CrudItem> {
   }
 
   canDelete(): Observable<boolean> {
-    const url = `${this.getIdUrl()}/canDelete`;
+    const url = `${this.getBaseUrl()}/${this.getId()}/canDelete`;
     return this.http.get<boolean>(url)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('can-delete')),
@@ -98,15 +97,7 @@ export abstract class CrudItemService<T extends CrudItem> {
     return this.getRouteParam('id');
   }
 
-  protected getIdUrl(): string {
-    const id = this.getId();
-    return `${this.getBaseUrl()}/${this.getId()}`;
-  }
-
-  // used to specify the parentId in a query param when calling the [GET]/list endpoint.
-  protected getListHttpParams(): HttpParams {
-    return new HttpParams();
-  }
+  protected abstract getParentId(): string;
 
   get canUpdate(): boolean {
     return true;

@@ -11,7 +11,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -46,11 +45,11 @@ public class FarmPermissionResource
 	}
 
 	@GET
-	@Path("list")
+	@Path("list/{parentId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFarmPermissionsList(@QueryParam("farmId") int farmId)
+	public Response getFarmPermissionsList(@PathParam("parentId") int parentId)
 	{
-		List<FarmPermission> farmPermissions = farmPermissionDao.readList(farmId);
+		List<FarmPermission> farmPermissions = farmPermissionDao.readList(parentId);
 
 		return Response.ok(farmPermissions).build();
 	}

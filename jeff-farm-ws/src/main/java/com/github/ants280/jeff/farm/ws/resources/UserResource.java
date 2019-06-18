@@ -1,6 +1,5 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
-import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.dao.LoginDao;
 import com.github.ants280.jeff.farm.ws.dao.UserDao;
 import com.github.ants280.jeff.farm.ws.model.User;

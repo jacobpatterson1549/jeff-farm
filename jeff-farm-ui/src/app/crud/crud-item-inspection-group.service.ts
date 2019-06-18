@@ -55,9 +55,8 @@ export abstract class CrudItemGroupService<U extends CrudItem, V extends CrudIte
   }
 
   getTargets(): Observable<Map<number, string>> {
-    const url = `${this.getBaseUrl()}/targets`;
-    const listHttpParams = this.getListHttpParams();
-    return this.http.get<Map<number, string>>(url, {params: listHttpParams})
+    const url = `${this.getBaseUrl()}/targets/${this.getParentId()}`;
+    return this.http.get<Map<number, string>>(url)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('targets')),
       );

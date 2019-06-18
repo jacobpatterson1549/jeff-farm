@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { CrudItemService } from '../crud/crud-item.service';
 import { CrudChild } from '../crud/crud-child';
@@ -17,7 +17,7 @@ export class PoultryService extends CrudItemService<Poultry> {
   }
 
   createCrudItem(): Poultry {
-    return new Poultry(+this.getFarmId());
+    return new Poultry(+this.getParentId());
   }
 
   getTypeName(): string {
@@ -34,11 +34,7 @@ export class PoultryService extends CrudItemService<Poultry> {
     return 'poultry';
   }
 
-  getFarmId(): string {
+  protected getParentId(): string {
     return this.getRouteParam('farm_id');
-  }
-
-  protected getListHttpParams(): HttpParams {
-    return super.getListHttpParams().append('farmId', this.getFarmId());
   }
 }

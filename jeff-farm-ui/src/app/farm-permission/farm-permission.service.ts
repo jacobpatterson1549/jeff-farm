@@ -16,7 +16,7 @@ export class FarmPermissionService extends CrudItemService<FarmPermission> {
   }
 
   createCrudItem(): FarmPermission {
-    return new FarmPermission(+this.getFarmId());
+    return new FarmPermission(+this.getParentId());
   }
 
   getTypeName(): string {
@@ -27,19 +27,11 @@ export class FarmPermissionService extends CrudItemService<FarmPermission> {
     return 'farm/permission';
   }
 
-  private getFarmId(): string {
+  protected getParentId(): string {
     return this.getRouteParam('farm_id');
-  }
-
-  protected getListHttpParams(): HttpParams {
-    return super.getListHttpParams().append('farmId', this.getFarmId());
   }
 
   get canUpdate(): boolean {
     return false;
-  }
-
-  get canDeleteMessage(): string {
-    return 'Cannot delete farm permission because user is the only user with permission to one or more farms.';
   }
 }

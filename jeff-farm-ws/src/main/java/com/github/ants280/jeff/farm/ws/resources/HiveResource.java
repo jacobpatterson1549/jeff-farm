@@ -1,6 +1,5 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
-import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.dao.HiveDao;
 import com.github.ants280.jeff.farm.ws.model.Hive;
 import java.util.List;
@@ -13,7 +12,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -48,11 +46,11 @@ public class HiveResource
 	}
 
 	@GET
-	@Path("list")
+	@Path("list/{parentId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getHivesList(@QueryParam("farmId") int farmId)
+	public Response getHivesList(@PathParam("parentId") int parentId)
 	{
-		List<Hive> hives = hiveDao.readList(farmId);
+		List<Hive> hives = hiveDao.readList(parentId);
 
 		return Response.ok(hives).build();
 	}

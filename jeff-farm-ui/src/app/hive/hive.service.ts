@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { CrudItemService } from '../crud/crud-item.service';
-import { CrudChild } from "../crud/crud-child";
+import { CrudChild } from '../crud/crud-child';
 import { Hive } from './hive';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 
@@ -17,7 +17,7 @@ export class HiveService extends CrudItemService<Hive> {
   }
 
   createCrudItem(): Hive {
-    return new Hive(+this.getFarmId());
+    return new Hive(+this.getParentId());
   }
 
   getTypeName(): string {
@@ -34,11 +34,7 @@ export class HiveService extends CrudItemService<Hive> {
     return 'hive';
   }
 
-  private getFarmId(): string {
+  protected getParentId(): string {
     return this.getRouteParam('farm_id');
-  }
-
-  protected getListHttpParams(): HttpParams {
-    return super.getListHttpParams().append('farmId', this.getFarmId());
   }
 }

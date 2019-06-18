@@ -1,6 +1,5 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
-import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.dao.PoultryInspectionGroupDao;
 import com.github.ants280.jeff.farm.ws.model.PoultryInspectionGroup;
 import com.github.ants280.jeff.farm.ws.model.PoultryInspectionGroupUpdate;
@@ -15,7 +14,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -50,12 +48,12 @@ public class PoultryInspectionGroupResource
 	}
 
 	@GET
-	@Path("list")
+	@Path("list/{parentId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getPoultryList(@QueryParam("farmId") int farmId)
+	public Response getPoultryList(@PathParam("parentId") int parentId)
 	{
 		List<PoultryInspectionGroup> poultryInspectionGroups
-			= poultryInspectionGroupDao.readList(farmId);
+			= poultryInspectionGroupDao.readList(parentId);
 
 		return Response.ok(poultryInspectionGroups).build();
 	}
@@ -92,12 +90,12 @@ public class PoultryInspectionGroupResource
 
 
 	@GET
-	@Path("targets")
+	@Path("targets/parentId")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getTargets(@QueryParam("farmId") int farmId)
+	public Response getTargets(@PathParam("parentId") int parentId)
 	{
 		Map<Integer, String> targets = poultryInspectionGroupDao.getTargets(
-			farmId);
+			parentId);
 
 		return Response.ok(targets).build();
 	}
