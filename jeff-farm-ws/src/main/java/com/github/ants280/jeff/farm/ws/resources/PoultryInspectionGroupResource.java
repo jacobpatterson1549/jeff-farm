@@ -90,7 +90,7 @@ public class PoultryInspectionGroupResource
 
 
 	@GET
-	@Path("targets/parentId")
+	@Path("targets/{parentId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getTargets(@PathParam("parentId") int parentId)
 	{
