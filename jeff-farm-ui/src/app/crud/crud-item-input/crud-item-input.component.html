@@ -3,8 +3,8 @@
     <tr *ngFor="let formItem of formItems; index as i" class="formItem">
       <td><label [for]="i">{{formItem.name | titlecase}}</label></td>
       <td [ngSwitch]="formItem.type" class="formItemInput">
-        <input [id]="i" *ngSwitchCase="formItemType.String" [formControl]="crudForm.get(formItem.name)" type="text"
-          [autocomplete]="formItem.name == 'userName' ? 'username' : null">
+        <app-crud-item-input-string [id]="i" *ngSwitchCase="formItemType.String" [control]="crudForm.get(formItem.name)"
+          [isUserName]="formItem.name == 'userName'"></app-crud-item-input-string>
         <input [id]="i" *ngSwitchCase="formItemType.Boolean" [formControl]="crudForm.get(formItem.name)"
           type="checkbox">
         <input [id]="i" *ngSwitchCase="formItemType.Integer" [formControl]="crudForm.get(formItem.name)" type="number">

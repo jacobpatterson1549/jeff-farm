@@ -15,6 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerModule } from '../spinner/spinner.module';
 import { CrudItemViewComponent } from './crud-item-view/crud-item-view.component';
 import { CrudItemInputComponent } from './crud-item-input/crud-item-input.component';
+import { CrudItemInputStringComponent } from './crud-item-input-string.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { CrudItemInputComponent } from './crud-item-input/crud-item-input.compon
     CrudDeleteComponent,
     CrudItemViewComponent,
     CrudItemInputComponent,
+    CrudItemInputStringComponent,
   ],
   imports: [
     CommonModule,
