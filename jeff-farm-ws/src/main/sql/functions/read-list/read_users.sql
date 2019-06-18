@@ -6,7 +6,7 @@ RETURNS SETOF users
 AS
 $body$
 	BEGIN
-		IF permission_check_farm(set_user_id(read_users.user_id), read_users.farm_id) THEN
+		IF permission_check_admin_user(set_user_id(read_users.user_id)) THEN
 			RETURN QUERY
 			SELECT
 				  u.id
