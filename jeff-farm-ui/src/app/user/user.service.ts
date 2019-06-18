@@ -41,4 +41,8 @@ export class UserService extends CrudItemService<User> {
   get canDeleteMessage(): string { // TODO: get rid of all properties -> they are confusing and slow down the site.
     return 'Cannot delete user because it is the only user with permission to one or more farms.';
   }
+
+  getId(): string {
+    return this.authService.getUserId();
+  }
 }

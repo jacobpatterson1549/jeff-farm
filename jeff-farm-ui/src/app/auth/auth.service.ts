@@ -9,8 +9,8 @@ export class AuthService {
   private readonly USER_ID_KEY: string = 'userId';
   private readonly IS_ADMIN_USER_KEY: string = 'isAdminUser';
 
-  getUserId(): number {
-    return +localStorage.getItem(this.USER_ID_KEY);
+  getUserId(): string {
+    return localStorage.getItem(this.USER_ID_KEY);
   }
 
   isAdminUser(): boolean {
@@ -29,6 +29,6 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.getUserId() > 0;
+    return +this.getUserId() > 0;
   }
 }

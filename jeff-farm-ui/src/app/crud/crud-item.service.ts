@@ -94,12 +94,12 @@ export abstract class CrudItemService<T extends CrudItem> {
   }
 
   getId(): string {
-    return this.getRouteParam('id') || '';
+    return this.getRouteParam('id');
   }
 
   protected getIdUrl(): string {
     const id = this.getId();
-    return this.getBaseUrl().concat(id.length > 0 ? '/' : '').concat(id);
+    return `${this.getBaseUrl()}/${this.getId()}`;
   }
 
   // used to specify the parentId in a query param when calling the [GET]/list endpoint.
