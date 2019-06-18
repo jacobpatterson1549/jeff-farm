@@ -28,9 +28,7 @@ export class AdminUserGuard implements CanActivate, CanActivateChild {
   }
 
   canContinue(next: ActivatedRouteSnapshot): boolean {
-    if (this.authService.isAdminUser()
-      || this.authService.getUserId() === this.route.snapshot.paramMap.get('id')) {
-      return true;
-    }
+    return this.authService.isAdminUser()
+      || this.authService.getUserId() === this.route.snapshot.paramMap.get('id');
   }
 }
