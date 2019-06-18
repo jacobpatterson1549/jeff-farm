@@ -2,14 +2,12 @@ import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
-    selector: 'app-crud-item-input-string',
+    selector: 'app-crud-item-input-color',
     template: `<input
-    type="text"
+    type="color"
     [formControl]="control"
-    [autocomplete]="isUserName ? 'username' : null"
     >`,
 })
-export class CrudItemInputStringComponent {
+export class CrudItemInputColorComponent {
     @Input() control: FormControl;
-    @Input() isUserName: boolean;
 }

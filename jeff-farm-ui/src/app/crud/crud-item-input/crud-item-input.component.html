@@ -5,16 +5,18 @@
       <td [ngSwitch]="formItem.type" class="formItemInput">
         <app-crud-item-input-string [id]="i" *ngSwitchCase="formItemType.String" [control]="crudForm.get(formItem.name)"
           [isUserName]="formItem.name == 'userName'"></app-crud-item-input-string>
-        <input [id]="i" *ngSwitchCase="formItemType.Boolean" [formControl]="crudForm.get(formItem.name)"
-          type="checkbox">
-        <input [id]="i" *ngSwitchCase="formItemType.Integer" [formControl]="crudForm.get(formItem.name)" type="number">
-        <ngb-rating [id]="i" *ngSwitchCase="formItemType.Stars" [formControl]="crudForm.get(formItem.name)" max="5"
-          resettable="true"></ngb-rating>
-        <input [id]="i" *ngSwitchCase="formItemType.Color" [formControl]="crudForm.get(formItem.name)" type="color">
-        <input [id]="i" *ngSwitchCase="formItemType.Password" [formControl]="crudForm.get(formItem.name)"
-          type="password" autocomplete="new-password">
-        <textarea [id]="i" *ngSwitchCase="formItemType.TextArea" [formControl]="crudForm.get(formItem.name)" rows="2"
-          cols="20"></textarea>
+        <app-crud-item-input-boolean [id]="i" *ngSwitchCase="formItemType.Boolean"
+          [control]="crudForm.get(formItem.name)"></app-crud-item-input-boolean>
+        <app-crud-item-input-integer [id]="i" *ngSwitchCase="formItemType.Integer"
+          [control]="crudForm.get(formItem.name)"></app-crud-item-input-integer>
+        <app-crud-item-input-stars [id]="i" *ngSwitchCase="formItemType.Stars" [control]="crudForm.get(formItem.name)">
+        </app-crud-item-input-stars>
+        <app-crud-item-input-color [id]="i" *ngSwitchCase="formItemType.Color" [control]="crudForm.get(formItem.name)">
+        </app-crud-item-input-color>
+        <app-crud-item-input-password [id]="i" *ngSwitchCase="formItemType.Password"
+          [control]="crudForm.get(formItem.name)"></app-crud-item-input-password>
+        <app-crud-item-input-text-area [id]="i" *ngSwitchCase="formItemType.TextArea"
+          [control]="crudForm.get(formItem.name)"></app-crud-item-input-text-area>
         <input [id]="i" *ngSwitchDefault type="text" disabled="true" value="[Unknown editor type]">
       </td>
     </tr>

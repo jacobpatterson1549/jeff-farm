@@ -2,14 +2,13 @@ import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
-    selector: 'app-crud-item-input-string',
+    selector: 'app-crud-item-input-password',
     template: `<input
-    type="text"
+    type="password"
     [formControl]="control"
-    [autocomplete]="isUserName ? 'username' : null"
+    [autocomplete]="new-password"
     >`,
 })
-export class CrudItemInputStringComponent {
+export class CrudItemInputPasswordComponent {
     @Input() control: FormControl;
-    @Input() isUserName: boolean;
 }
