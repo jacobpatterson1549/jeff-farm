@@ -1,4 +1,3 @@
-import { TestBed, async } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 import { LoginSuccess } from '../login/login-success';
 
