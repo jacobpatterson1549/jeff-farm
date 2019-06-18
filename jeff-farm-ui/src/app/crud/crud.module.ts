@@ -13,7 +13,6 @@ import { LoginStatusModule } from '../login-status/login-status.module';
 import { CrudDeleteComponent } from './crud-delete/crud-delete.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerModule } from '../spinner/spinner.module';
-import { CrudItemViewComponent } from './crud-item-view/crud-item-view.component';
 import { CrudItemInputComponent } from './crud-item-input/crud-item-input.component';
 import { CrudItemInputStringComponent } from './crud-item-input-string.component';
 import { CrudItemInputBooleanComponent } from './crud-item-input-boolean.component';
@@ -32,7 +31,6 @@ import { CrudItemInputTextAreaComponent } from './crud-item-input-text-area.comp
     CrudViewComponent,
     CrudFormComponent,
     CrudDeleteComponent,
-    CrudItemViewComponent,
     CrudItemInputComponent,
     CrudItemInputStringComponent,
     CrudItemInputBooleanComponent,
@@ -57,7 +55,6 @@ import { CrudItemInputTextAreaComponent } from './crud-item-input-text-area.comp
   ],
   entryComponents: [
     CrudDeleteComponent,
-    CrudItemViewComponent,
     CrudItemInputComponent,
   ]
 })
