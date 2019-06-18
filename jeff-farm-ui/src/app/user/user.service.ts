@@ -33,10 +33,6 @@ export class UserService extends CrudItemService<User> {
     return this.authService.isLoggedIn() ? 'user' : 'login/create';
   }
 
-  getList(): Observable<User[]> {
-    throw new Error('Not Allowed');
-  }
-
   delete(): Observable<object> {
 
     return super.delete().pipe(tap(_ => this.loginService.logout()));

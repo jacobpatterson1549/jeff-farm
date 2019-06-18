@@ -6,6 +6,7 @@ import { catchError, tap, map } from 'rxjs/operators';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { User } from '../user/user';
 import { AuthService } from '../auth/auth.service';
+import { LoginSuccess } from './login-success';
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +18,15 @@ export class LoginService {
     private errorMessagesService: ErrorMessagesService,
     private httpClient: HttpClient) { }
 
-  login(username: string, password: string): Observable<string> {
+  login(username: string, password: string): Observable<LoginSuccess> {
     const user: User = new User();
     user.userName = username;
     user.password = password;
 
-    return this.httpClient.post<string>('login', user)
+    return this.httpClient.post<LoginSuccess>('login', user)
       .pipe(
-        catchError(this.errorMessagesService.handleError<any>('login')),
-        tap(_ => this.authService.setLoggedIn()),
+        catchError(this.errorMessagesService.handleError<LoginSuccess>('login')),
+        tap((loginSuccess: LoginSuccess) => this.authService.setLoggedIn(loginSuccess)),
       );
   }
 

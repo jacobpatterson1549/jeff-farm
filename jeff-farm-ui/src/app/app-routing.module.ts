@@ -3,6 +3,7 @@ import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
 import { PageNotFoundComponent } from './page-not-found.component';
 import { AuthGuard } from './auth/auth.guard';
+import { AdminUserGuard } from './user/admin-user.guard';
 
 const routes: Routes = [
   {
@@ -12,7 +13,7 @@ const routes: Routes = [
   {
     path: 'user',
     loadChildren: () => import('./user/user.module').then(m => m.UserModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminUserGuard],
   },
   {
     path: 'farm/:farm_id/poultry/inspection',
