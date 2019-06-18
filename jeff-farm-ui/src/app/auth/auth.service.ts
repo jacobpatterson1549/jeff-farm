@@ -6,7 +6,7 @@ import { LoginSuccess } from '../login/login-success';
 })
 export class AuthService {
 
-  private readonly USER_ID_KEY: string = 'isAdminUser';
+  private readonly USER_ID_KEY: string = 'userId';
   private readonly IS_ADMIN_USER_KEY: string = 'isAdminUser';
 
   getUserId(): number {
