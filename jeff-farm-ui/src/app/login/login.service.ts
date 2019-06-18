@@ -26,7 +26,6 @@ export class LoginService {
     return this.httpClient.post<LoginSuccess>('login', user)
       .pipe(
         catchError(this.errorMessagesService.handleError<LoginSuccess>('login')),
-        tap((loginSuccess: LoginSuccess) => this.authService.setLoggedIn(loginSuccess)),
       );
   }
 

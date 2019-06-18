@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 
 import { LoginService } from './login.service';
 import { environment } from 'src/environments/environment';
+import { LoginSuccess } from './login-success';
 
 @Component({
   templateUrl: './login.component.html',
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private titleService: Title,
-    authService: AuthService,
+    private authService: AuthService,
     private loginService: LoginService,
     private router: Router) {
 
@@ -57,6 +58,9 @@ export class LoginComponent implements OnInit {
         this.working = false;
         throw error;
       }))
-      .subscribe(_ => this.router.navigate(['/farm']));
+      .subscribe((loginSuccess: LoginSuccess) => {
+        this.authService.setLoggedIn(loginSuccess);
+        this.router.navigate(['/farm']);
+      });
   }
 }
