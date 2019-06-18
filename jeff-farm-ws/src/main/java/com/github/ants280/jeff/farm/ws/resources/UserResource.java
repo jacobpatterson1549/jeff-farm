@@ -40,15 +40,9 @@ public class UserResource
 	}
 
 	@PUT
-	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateUser(@PathParam("id") int id, User user)
+	public Response updateUser(User user)
 	{
-		if (id != user.getId())
-		{
-			throw new JeffFarmWsException("Id must be same as CrudItem id.");
-		}
-
 		userDao.update(user);
 
 		return Response.ok().build();

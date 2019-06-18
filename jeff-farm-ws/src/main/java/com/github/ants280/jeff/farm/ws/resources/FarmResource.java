@@ -57,15 +57,9 @@ public class FarmResource
 	}
 
 	@PUT
-	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateFarm(@PathParam("id") int id, Farm farm)
+	public Response updateFarm(Farm farm)
 	{
-		if (id != farm.getId())
-		{
-			throw new JeffFarmWsException("Id must be same as CrudItem id.");
-		}
-
 		farmDao.update(farm);
 
 		return Response.ok().build();

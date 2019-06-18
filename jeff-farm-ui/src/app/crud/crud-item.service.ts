@@ -37,7 +37,8 @@ export abstract class CrudItemService<T extends CrudItem> {
 
   post(t: T, createdValue: any): Observable<number> {
     Object.assign(t, createdValue);
-    return this.http.post<number>(this.getBaseUrl(), t)
+    const url = this.getBaseUrl();
+    return this.http.post<number>(url, t)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('create')),
       );
@@ -65,7 +66,7 @@ export abstract class CrudItemService<T extends CrudItem> {
 
   put(t: T, updatedValue: any): Observable<object> {
     Object.assign(t, updatedValue);
-    const url = this.getIdUrl();
+    const url = this.getBaseUrl();
     return this.http.put(url, t)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('update')),

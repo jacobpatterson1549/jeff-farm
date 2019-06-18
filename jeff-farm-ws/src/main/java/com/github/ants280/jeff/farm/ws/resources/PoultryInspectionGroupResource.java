@@ -61,18 +61,10 @@ public class PoultryInspectionGroupResource
 	}
 
 	@PUT
-	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updatePoultryInspectionGroup(
-		@PathParam("id") int id,
-		PoultryInspectionGroupUpdate poultryInspectionGroupUpdate
-		)
+		PoultryInspectionGroupUpdate poultryInspectionGroupUpdate)
 	{
-		if (id != poultryInspectionGroupUpdate.getGroup().getId())
-		{
-			throw new JeffFarmWsException("Id must be same as CrudItem id.");
-		}
-
 		poultryInspectionGroupDao.update(poultryInspectionGroupUpdate);
 
 		return Response.ok().build();

@@ -58,15 +58,9 @@ public class HiveResource
 	}
 
 	@PUT
-	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateHive(@PathParam("id") int id, Hive hive)
+	public Response updateHive(Hive hive)
 	{
-		if (id != hive.getId())
-		{
-			throw new JeffFarmWsException("Id must be same as CrudItem id.");
-		}
-
 		hiveDao.update(hive);
 
 		return Response.ok().build();

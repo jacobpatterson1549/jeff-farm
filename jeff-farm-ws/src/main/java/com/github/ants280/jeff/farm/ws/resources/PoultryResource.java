@@ -58,15 +58,9 @@ public class PoultryResource
 	}
 
 	@PUT
-	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updatePoultry(@PathParam("id") int id, Poultry poultry)
+	public Response updatePoultry(Poultry poultry)
 	{
-		if (id != poultry.getId())
-		{
-			throw new JeffFarmWsException("Id must be same as CrudItem id.");
-		}
-
 		poultryDao.update(poultry);
 
 		return Response.ok().build();

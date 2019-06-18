@@ -47,7 +47,7 @@ export abstract class CrudItemGroupService<U extends CrudItem, V extends CrudIte
     }
     Object.assign(t, updatedValue);
     const inspectionGroupUpdate: CrudItemInspectionGroupUpdate<V, T> = new CrudItemInspectionGroupUpdate(t, addItems, removeItemIds);
-    const url = this.getIdUrl();
+    const url = this.getBaseUrl();
     return this.http.put(url, inspectionGroupUpdate)
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('update')),
