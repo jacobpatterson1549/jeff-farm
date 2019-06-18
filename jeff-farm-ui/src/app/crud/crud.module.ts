@@ -39,7 +39,6 @@ import { CrudItemFormComponent } from './crud-item-form/crud-item-form.component
   ],
   exports: [
     CommonModule,
-    FormsModule,
     CrudHomeComponent,
   ],
   entryComponents: [

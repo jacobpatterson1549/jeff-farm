@@ -1,15 +1,15 @@
 <button type="button" class="btn btn-secondary" routerLink="create">Create User</button>
 
-<form (ngSubmit)="submitForm()" ngNativeValidate>
+<form (ngSubmit)="submitForm()" [formGroup]="loginForm" ngNativeValidate>
 
   <div>
     <label for="username">Username</label>
-    <input name="username" type="text" autocomplete="username" required [(ngModel)]="username">
+    <input id="username" formControlName="userName" type="text" autocomplete="username" required>
   </div>
 
   <div>
     <label for="password">Password</label>
-    <input name="password" type="password" autocomplete="current-password" required [(ngModel)]="password">
+    <input name="password" formControlName="password" type="password" autocomplete="current-password" required>
   </div>
 
   <button class="btn btn-primary" [disabled]="working || (!serverRunning && production)" type="submit">Submit</button>

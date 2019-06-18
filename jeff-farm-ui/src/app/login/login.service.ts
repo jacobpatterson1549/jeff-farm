@@ -18,11 +18,7 @@ export class LoginService {
     private errorMessagesService: ErrorMessagesService,
     private httpClient: HttpClient) { }
 
-  login(username: string, password: string): Observable<LoginSuccess> {
-    const user: User = new User();
-    user.userName = username;
-    user.password = password;
-
+  login(user: User): Observable<LoginSuccess> {
     return this.httpClient.post<LoginSuccess>('login', user)
       .pipe(
         catchError(this.errorMessagesService.handleError<LoginSuccess>('login')),
