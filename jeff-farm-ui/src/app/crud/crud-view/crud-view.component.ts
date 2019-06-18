@@ -16,6 +16,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   canDelete = false;
   crudChildren: CrudChild[];
   crudItemSingularName: string;
+  stepsToParent: number;
 
   constructor(
     private titleService: Title,
@@ -33,6 +34,7 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
 
     this.crudItemService.canDelete()
       .subscribe((canDelete: boolean) => this.canDelete = canDelete);
+    this.stepsToParent = this.crudItemService.getViewStepsToParent();
   }
 
   deleteCrudItem() {

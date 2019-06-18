@@ -45,4 +45,12 @@ export class UserService extends CrudItemService<User> {
   getId(): string {
     return super.getId() || this.authService.getUserId();
   }
+
+  getViewStepsToParent(): number {
+    let viewStepsToParent: number = super.getViewStepsToParent();
+    if (!this.authService.isAdminUser()) {
+      viewStepsToParent++;
+    }
+    return viewStepsToParent;
+  }
 }

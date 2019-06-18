@@ -114,4 +114,8 @@ export abstract class CrudItemService<T extends CrudItem> {
   get canDeleteMessage(): string {
     return `Cannot delete ${this.getTypeName()} because it has children or is in a group.`;
   }
+
+  getViewStepsToParent(): number {
+    return 2; // The view is nested inside the CrudDetailComponent, but the visual parent is CrudHomeComponent
+  }
 }
