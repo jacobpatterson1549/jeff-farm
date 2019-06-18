@@ -19,15 +19,12 @@ import javax.ws.rs.core.Response;
 @Path("/user")
 public class UserResource
 {
-	private final UserIdDao userIdDao;
 	private final UserDao userDao;
 	private final LoginDao loginDao;
 
 	@Inject
-	public UserResource(
-		UserIdDao userIdDao, UserDao userDao, LoginDao loginDao)
+	public UserResource(UserDao userDao, LoginDao loginDao)
 	{
-		this.userIdDao = userIdDao;
 		this.userDao = userDao;
 		this.loginDao = loginDao;
 	}
@@ -55,7 +52,7 @@ public class UserResource
 	@GET
 	@Path("list")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFarmsList()
+	public Response getUsersList()
 	{
 		List<User> users = userDao.readList(-1); // (user_id provided by SqlFunctionCall)
 
