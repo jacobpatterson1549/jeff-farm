@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap, map, catchError } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
 
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { CrudItemInspectionGroup } from './crud-item-inspection-group';
@@ -12,11 +12,11 @@ import { CrudItemInspectionGroupUpdate } from './crud-item-inspection-group-upda
 export abstract class CrudItemGroupService<U extends CrudItem, V extends CrudItemInspection<U>, T extends CrudItemInspectionGroup<V>>
   extends CrudItemService<T> {
 
-  constructor(
-    errorMessagesService: ErrorMessagesService,
-    http: HttpClient) {
-    super(errorMessagesService, http);
-  }
+    constructor(
+      errorMessagesService: ErrorMessagesService,
+      http: HttpClient) {
+      super(errorMessagesService, http);
+    }
 
   abstract createCrudItemInspection(): V;
 

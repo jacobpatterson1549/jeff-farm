@@ -10,10 +10,9 @@ import { ErrorMessagesService } from '../error-messages/error-messages.service';
 export class PoultryService extends CrudItemService<Poultry> {
 
   constructor(
-    errorsService: ErrorMessagesService,
-    httpClient: HttpClient) {
-
-    super(errorsService, httpClient);
+    errorMessagesService: ErrorMessagesService,
+    http: HttpClient) {
+    super(errorMessagesService, http);
   }
 
   createCrudItem(): Poultry {

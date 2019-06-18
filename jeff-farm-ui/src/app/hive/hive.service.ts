@@ -10,10 +10,9 @@ import { ErrorMessagesService } from '../error-messages/error-messages.service';
 export class HiveService extends CrudItemService<Hive> {
 
   constructor(
-    errorsService: ErrorMessagesService,
-    httpClient: HttpClient) {
-
-    super(errorsService, httpClient);
+    errorMessagesService: ErrorMessagesService,
+    http: HttpClient) {
+    super(errorMessagesService, http);
   }
 
   createCrudItem(): Hive {

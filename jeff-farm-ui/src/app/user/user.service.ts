@@ -15,10 +15,9 @@ export class UserService extends CrudItemService<User> {
   constructor(
     private authService: AuthService,
     private loginService: LoginService,
-    errorsService: ErrorMessagesService,
-    httpClient: HttpClient) {
-
-    super(errorsService, httpClient);
+    errorMessagesService: ErrorMessagesService,
+    http: HttpClient) {
+    super(errorMessagesService, http);
   }
 
   createCrudItem(): User {
