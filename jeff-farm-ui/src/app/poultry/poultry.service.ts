@@ -30,7 +30,7 @@ export class PoultryService extends CrudItemService<Poultry> {
     ];
   }
 
-  getBaseUrl(): string {
+  protected getBaseUrl(): string {
     return 'poultry';
   }
 

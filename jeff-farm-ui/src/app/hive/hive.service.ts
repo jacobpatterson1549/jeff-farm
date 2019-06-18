@@ -30,7 +30,7 @@ export class HiveService extends CrudItemService<Hive> {
     ];
   }
 
-  getBaseUrl(): string {
+  protected getBaseUrl(): string {
     return 'hive';
   }
 

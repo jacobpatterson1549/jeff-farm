@@ -30,7 +30,7 @@ export class PoultryInspectionGroupService
     return 'poultry inspection group';
   }
 
-  getBaseUrl(): string {
+  protected getBaseUrl(): string {
     return 'poultry/inspectionGroup';
   }
 

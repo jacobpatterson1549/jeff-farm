@@ -93,7 +93,7 @@ export abstract class CrudItemService<T extends CrudItem> {
     return param;
   }
 
-  getId(): string {
+  protected getId(): string {
     return this.getRouteParam('id');
   }
 

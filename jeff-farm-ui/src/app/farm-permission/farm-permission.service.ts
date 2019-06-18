@@ -23,7 +23,7 @@ export class FarmPermissionService extends CrudItemService<FarmPermission> {
     return 'farm permission';
   }
 
-   getBaseUrl(): string {
+  protected getBaseUrl(): string {
     return 'farm/permission';
   }
 

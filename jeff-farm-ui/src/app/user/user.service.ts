@@ -29,7 +29,7 @@ export class UserService extends CrudItemService<User> {
     return 'user';
   }
 
-  getBaseUrl(): string {
+  protected getBaseUrl(): string {
     return this.authService.isLoggedIn() ? 'user' : 'login/create';
   }
 
@@ -42,7 +42,8 @@ export class UserService extends CrudItemService<User> {
     return 'Cannot delete user because it is the only user with permission to one or more farms.';
   }
 
-  getId(): string {
+  protected getId(): string {
+    // if we are not in the UserModule, getId() returns null.
     return super.getId() || this.authService.getUserId();
   }
 

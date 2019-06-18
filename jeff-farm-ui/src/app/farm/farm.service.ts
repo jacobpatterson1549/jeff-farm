@@ -32,7 +32,7 @@ export class FarmService extends CrudItemService<Farm> {
     ];
   }
 
-  getBaseUrl(): string {
+  protected getBaseUrl(): string {
     return 'farm';
   }
 
