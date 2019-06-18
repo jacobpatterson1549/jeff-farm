@@ -18,7 +18,6 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   canDelete = false;
   canDeleteMessage: string;
   crudChildren: CrudChild[];
-  crudItemSingularName: string;
   stepsToParent: number;
   canUpdate: boolean;
 
@@ -30,13 +29,12 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
 
   ngOnInit() {
     this.crudChildren = this.crudItemService.getCrudChildren();
-    this.crudItemSingularName = this.crudItemService.getTypeName();
     this.crudItemService.get()
     .subscribe((crudItem: T) => {
       this.crudItem = crudItem;
       this.crudForm = crudItem.getFormGroup(this.fb);
       this.crudForm.disable(); // <-- this makes the crud-view different from the crud-form (in addition to the form)
-      this.titleService.setTitle(`${this.crudItemSingularName} ${crudItem.getDisplayValue()} details`);
+      this.titleService.setTitle(`${this.crudItemService.getTypeName()} ${crudItem.getDisplayValue()} details`);
       });
 
     this.crudItemService.canDelete()
