@@ -35,7 +35,7 @@ export class PoultryService extends CrudItemService<Poultry> {
   }
 
   getFarmId(): string {
-    return localStorage.getItem('farmId');
+    return this.getRouteParam('farm_id');
   }
 
   protected getListHttpParams(): HttpParams {

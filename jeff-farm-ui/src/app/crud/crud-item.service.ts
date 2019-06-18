@@ -44,7 +44,6 @@ export abstract class CrudItemService<T extends CrudItem> {
   }
 
   get(): Observable<T> {
-    localStorage.setItem(`${this.getTypeName()}Id`, this.getId());
     const url = this.getIdUrl();
     return this.http.get<T>(url)
       .pipe(

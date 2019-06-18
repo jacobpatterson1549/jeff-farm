@@ -28,7 +28,7 @@ export class HiveInspectionService extends CrudItemService<HiveInspection> {
   }
 
   private getHiveId(): string {
-    return localStorage.getItem('hiveId');
+    return this.getRouteParam('hive_id');
   }
 
   protected getListHttpParams(): HttpParams {
