@@ -23,40 +23,6 @@
   </tbody>
 </table>
 
-<!-- TODO: create app-crud-item-inspection-group-form component to handle this-->
-<div *ngIf="selectTargets">
-  <h4 [formGroup]="getInspectionItems()">Inspections:</h4>
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Target Name</th>
-        <th>Inspection</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let inspectionItem of getInspectionItems().controls">
-        <td>
-          <ngb-alert type="info" (close)="removeInspectionItem(inspectionItem.get('targetId').value)">
-            {{inspectionItem.get('targetName').value}}
-          </ngb-alert>
-        </td>
-        <td>
-          <app-crud-item-input [crudItem]="crudItemService.createCrudItemInspection()" [crudForm]="inspectionItem"
-            id="{{inspectionItem.get('targetId').value}}"></app-crud-item-input>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr *ngIf="selectTargets && objectKeys(selectTargets).length > 1">
-        <td colspan="2">
-          <span>Add target: </span>
-          <select (change)="addInspectionItem($event.target.selectedIndex)">
-            <option *ngFor="let targetId of objectKeys(selectTargets)">
-              {{selectTargets[targetId]}}
-            </option>
-          </select>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+<div *ngIf="inspectionItems">
+  <app-crud-item-inspection-group-input [inspectionItems]="inspectionItems"></app-crud-item-inspection-group-input>
 </div>

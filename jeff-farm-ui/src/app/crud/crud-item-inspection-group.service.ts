@@ -9,14 +9,16 @@ import { CrudItemService } from './crud-item.service';
 import { CrudItemInspection } from './crud-item-inspection';
 import { CrudItemInspectionGroupUpdate } from './crud-item-inspection-group-update';
 
-export abstract class CrudItemGroupService<U extends CrudItem, V extends CrudItemInspection<U>, T extends CrudItemInspectionGroup<V>>
+export abstract class CrudItemGroupService<
+  U extends CrudItem, V extends CrudItemInspection<U>,
+  T extends CrudItemInspectionGroup<V>>
   extends CrudItemService<T> {
 
-    constructor(
-      errorMessagesService: ErrorMessagesService,
-      http: HttpClient) {
-      super(errorMessagesService, http);
-    }
+  constructor(
+    errorMessagesService: ErrorMessagesService,
+    http: HttpClient) {
+    super(errorMessagesService, http);
+  }
 
   abstract createCrudItemInspection(): V;
 

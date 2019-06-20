@@ -130,7 +130,7 @@ public class PoultryInspectionGroupDao
 				.stream()
 				.map(updateParameterMapper)
 				.collect(Collectors.toList()),
-			"n",
+			"create_poultry_inspection",
 			poultryInspectionGroupUpdate.getAddItems()
 				.stream()
 				.map(addItemParameterMapper)
