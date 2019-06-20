@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-crud-item-inspection-group-input',
   templateUrl: './crud-item-inspection-group-input.component.html',
-  styleUrls: ['./crud-item-inspection-group-input.component.css']
 })
 export class CrudItemInspectionGroupInputComponent<
   U extends CrudItem, V extends CrudItemInspection<U>,

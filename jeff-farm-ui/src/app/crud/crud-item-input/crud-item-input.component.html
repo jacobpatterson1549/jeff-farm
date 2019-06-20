@@ -1,8 +1,9 @@
 <table class="table table-bordered table-striped">
   <tbody>
     <tr *ngFor="let formItem of formItems; index as i" class="formItem">
-      <td><label [for]="i">{{formItem.name | titlecase}}</label></td>
-      <td [ngSwitch]="formItem.type" class="formItemInput">
+      <td>
+      <label [for]="i">{{formItem.name | titlecase}}</label>
+      <ng-container [ngSwitch]="formItem.type" class="formItemInput">
         <app-crud-item-input-string [id]="i" *ngSwitchCase="formItemType.String" [control]="crudForm.get(formItem.name)"
           [isUserName]="formItem.name == 'userName'"></app-crud-item-input-string>
         <app-crud-item-input-boolean [id]="i" *ngSwitchCase="formItemType.Boolean"
@@ -18,7 +19,8 @@
         <app-crud-item-input-text-area [id]="i" *ngSwitchCase="formItemType.TextArea"
           [control]="crudForm.get(formItem.name)"></app-crud-item-input-text-area>
         <span [id]="i" *ngSwitchDefault>[Unknown editor type]</span>
-      </td>
+      </ng-container>
+    </td>
     </tr>
   </tbody>
 </table>
