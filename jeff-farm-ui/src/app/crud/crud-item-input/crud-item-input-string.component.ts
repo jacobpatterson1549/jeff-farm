@@ -3,9 +3,11 @@ import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-crud-item-input-string',
-    template: `<span *ngIf="control.disabled; else enabled">{{control.value}}</span>
+    template: `
+    <label [for]="name">{{name | titlecase}}</label>
+    <span *ngIf="control.disabled; else enabled">{{control.value}}</span>
     <ng-template #enabled>
-    <input
+    <input [id]="name"
     type="text"
     [formControl]="control"
     >
@@ -13,5 +15,6 @@ import { FormControl } from '@angular/forms';
 })
 export class CrudItemInputStringComponent {
     @Input() control: FormControl;
+    @Input() name: string;
     @Input() isUserName: boolean;
 }

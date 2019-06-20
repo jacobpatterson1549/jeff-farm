@@ -6,14 +6,15 @@
     margin: .2em;
 }
 
-th,
-td {
+label {
+    display: inline-block;
+    width: 10em;
     text-align: right;
+    margin-right: 1em;
 }
 
-th+th,
-td+td {
-    text-align: left;
+input {
+    width: 10em;
 }
 
 *.ng-invalid:not(form) {

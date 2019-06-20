@@ -1,29 +1,27 @@
-<table class="table table-bordered table-striped">
-  <tbody>
-    <tr *ngFor="let formItem of formItems; index as i" class="formItem">
-      <td>
-      <label [for]="i">{{formItem.name | titlecase}}</label>
-      <ng-container [ngSwitch]="formItem.type" class="formItemInput">
-        <app-crud-item-input-string [id]="i" *ngSwitchCase="formItemType.String" [control]="crudForm.get(formItem.name)"
-          [isUserName]="formItem.name == 'userName'"></app-crud-item-input-string>
-        <app-crud-item-input-boolean [id]="i" *ngSwitchCase="formItemType.Boolean"
-          [control]="crudForm.get(formItem.name)"></app-crud-item-input-boolean>
-        <app-crud-item-input-integer [id]="i" *ngSwitchCase="formItemType.Integer"
-          [control]="crudForm.get(formItem.name)"></app-crud-item-input-integer>
-        <app-crud-item-input-stars [id]="i" *ngSwitchCase="formItemType.Stars" [control]="crudForm.get(formItem.name)">
-        </app-crud-item-input-stars>
-        <app-crud-item-input-color [id]="i" *ngSwitchCase="formItemType.Color" [control]="crudForm.get(formItem.name)">
-        </app-crud-item-input-color>
-        <app-crud-item-input-password [id]="i" *ngSwitchCase="formItemType.Password"
-          [control]="crudForm.get(formItem.name)"></app-crud-item-input-password>
-        <app-crud-item-input-text-area [id]="i" *ngSwitchCase="formItemType.TextArea"
-          [control]="crudForm.get(formItem.name)"></app-crud-item-input-text-area>
-        <span [id]="i" *ngSwitchDefault>[Unknown editor type]</span>
-      </ng-container>
-    </td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-striped">
+  <p *ngFor="let formItem of formItems; index as i" class="formItem">
+    <ng-container [ngSwitch]="formItem.type" class="formItemInput">
+      <app-crud-item-input-string [id]="i" *ngSwitchCase="formItemType.String" [control]="crudForm.get(formItem.name)"
+        [name]="formItem.name" [isUserName]="formItem.name == 'userName'">
+      </app-crud-item-input-string>
+      <app-crud-item-input-boolean [id]="i" *ngSwitchCase="formItemType.Boolean" [control]="crudForm.get(formItem.name)"
+        [name]="formItem.name"></app-crud-item-input-boolean>
+      <app-crud-item-input-integer [id]="i" *ngSwitchCase="formItemType.Integer" [control]="crudForm.get(formItem.name)"
+        [name]="formItem.name"></app-crud-item-input-integer>
+      <app-crud-item-input-stars [id]="i" *ngSwitchCase="formItemType.Stars" [control]="crudForm.get(formItem.name)"
+        [name]="formItem.name">
+      </app-crud-item-input-stars>
+      <app-crud-item-input-color [id]="i" *ngSwitchCase="formItemType.Color" [control]="crudForm.get(formItem.name)"
+        [name]="formItem.name">
+      </app-crud-item-input-color>
+      <app-crud-item-input-password [id]="i" *ngSwitchCase="formItemType.Password"
+        [control]="crudForm.get(formItem.name)" [name]="formItem.name"></app-crud-item-input-password>
+      <app-crud-item-input-text-area [id]="i" *ngSwitchCase="formItemType.TextArea"
+        [control]="crudForm.get(formItem.name)" [name]="formItem.name"></app-crud-item-input-text-area>
+      <span [id]="i" *ngSwitchDefault>[Unknown editor type]</span>
+    </ng-container>
+  </p>
+</div>
 
 <div *ngIf="inspectionItems">
   <app-crud-item-inspection-group-input [inspectionItems]="inspectionItems"></app-crud-item-inspection-group-input>
