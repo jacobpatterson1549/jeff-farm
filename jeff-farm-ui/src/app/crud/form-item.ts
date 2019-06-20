@@ -1,4 +1,4 @@
-import { Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { Validators, AbstractControl, ValidatorFn, FormBuilder, FormGroup, ValidationErrors } from '@angular/forms';
 
 export enum FormItemType {
     String,
@@ -9,6 +9,12 @@ export enum FormItemType {
     Password,
     TextArea,
 }
+
+const passwordsEqualValidator: ValidatorFn = (group: FormGroup): ValidationErrors | null => {
+    const password1 = group.get('password1');
+    const password2 = group.get('password2');
+    return password1 && password2 && password1.value !== password2.value ? { passwordsDifferent: true } : null;
+};
 
 export class FormItem {
     public name: string;
@@ -21,7 +27,7 @@ export class FormItem {
         this.value = value;
     }
 
-    getValidatorFns(): ValidatorFn[] {
+    private getValidatorFns(): ValidatorFn[] {
         switch (this.type) {
             case FormItemType.String:
             case FormItemType.Integer:
@@ -43,6 +49,24 @@ export class FormItem {
                 return [];
             default:
                 throw new Error(`ValidatorsFns not set up for ${this.type}.`);
+        }
+    }
+
+    addTo(formGroup: FormGroup, fb: FormBuilder) {
+        formGroup.addControl(this.name, this.createControl(fb));
+    }
+
+    createControl(fb: FormBuilder): AbstractControl {
+        switch (this.type) {
+            case FormItemType.Password:
+                return fb.group({
+                    password1: fb.control('', this.getValidatorFns()),
+                    password2: fb.control('', this.getValidatorFns()),
+                }, { validators: passwordsEqualValidator });
+            default:
+                return fb.control(
+                    this.value,
+                    this.getValidatorFns());
         }
     }
 }

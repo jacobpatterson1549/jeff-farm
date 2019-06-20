@@ -1,5 +1,5 @@
 import { FormItem, FormItemType } from './form-item';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 export abstract class CrudItem {
 
@@ -20,18 +20,14 @@ export abstract class CrudItem {
         let displayFieldNames: string[] = this.getFormItems()
             .map(formItem => formItem.name);
         if (includeDates) {
-           displayFieldNames = displayFieldNames.concat(CrudItem.ITEM_NAMES);
+            displayFieldNames = displayFieldNames.concat(CrudItem.ITEM_NAMES);
         }
         return displayFieldNames;
     }
 
     getFormGroup(fb: FormBuilder): FormGroup {
         const formGroup: FormGroup = new FormGroup({});
-        this.getFormItems().forEach((formItem: FormItem) => formGroup.addControl(
-            formItem.name,
-            fb.control(
-                formItem.value,
-                formItem.getValidatorFns())));
+        this.getFormItems().forEach((formItem: FormItem) => formGroup.addControl(formItem.name, formItem.createControl(fb)));
         formGroup.addControl('id', fb.control(this.id));
         return formGroup;
     }
