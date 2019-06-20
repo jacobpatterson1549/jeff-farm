@@ -6,10 +6,6 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet id="adhoc_remove_user_roles_unique_constraint" author="jacobpatterson1549" runOnChange="true">
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="adhoc_remove_user_roles_unique_constraint.sql"/>
-	</changeSet>
-
 	<changeSet id="tables" author="jacobpatterson1549" runOnChange="true">
 		<comment>Order of files important for setting up foreign keys.</comment>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/users.sql"/>
