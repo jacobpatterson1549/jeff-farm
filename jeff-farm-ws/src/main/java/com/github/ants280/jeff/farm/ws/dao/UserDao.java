@@ -2,12 +2,14 @@ package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.PasswordGenerator;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SimpleCommandSqlFunctionCall;
+import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.crud.CrudItemDao;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.IntegerSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.StringSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.transformer.SimpleResultSetTransformer;
 import com.github.ants280.jeff.farm.ws.model.CrudItem;
 import com.github.ants280.jeff.farm.ws.model.User;
+import com.github.ants280.jeff.farm.ws.model.UserPasswordReplacement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -36,8 +38,7 @@ public class UserDao extends CrudItemDao<User>
 	@Override
 	public int create(User user)
 	{
-		return this.execute(new SimpleCommandSqlFunctionCall<>(
-			"create_user",
+		return this.execute(new SimpleCommandSqlFunctionCall<>("create_user",
 			Arrays.asList(new StringSqlFunctionParameter(User.USER_NAME_COLUMN,
 					user.getUserName()),
 				new StringSqlFunctionParameter(User.PASSWORD_COLUMN,
@@ -63,8 +64,7 @@ public class UserDao extends CrudItemDao<User>
 	{
 		return this.execute(new SimpleCommandSqlFunctionCall<>(
 			"read_user_from_user_name",
-			Collections.singletonList(new StringSqlFunctionParameter(
-				User.USER_NAME_COLUMN,
+			Collections.singletonList(new StringSqlFunctionParameter(User.USER_NAME_COLUMN,
 				userName)),
 			new SimpleResultSetTransformer<>(this::mapRow),
 			null));
@@ -73,26 +73,40 @@ public class UserDao extends CrudItemDao<User>
 	@Override
 	public List<User> readList(int parentId) // (user_id provided by SqlFunctionCall)
 	{
-		return this.executeReadList(
-			"read_users",
-			Collections.emptyList());
+		return this.executeReadList("read_users", Collections.emptyList());
 	}
 
 	@Override
 	public void update(User user)
 	{
-		String
-			password
-			= passwordGenerator.getHashedPassword(user.getPassword());
-
-		this.executeUpdate("update_user",
-			Arrays.asList(new IntegerSqlFunctionParameter(User.ID_COLUMN, user.getId()),
-				new StringSqlFunctionParameter(User.PASSWORD_COLUMN, password),
-				new StringSqlFunctionParameter(User.FIRST_NAME_COLUMN,
-					user.getFirstName()),
-				new StringSqlFunctionParameter(User.LAST_NAME_COLUMN,
-					user.getLastName())));
+		this.executeUpdate("update_user", Arrays.asList(
+			new IntegerSqlFunctionParameter(User.ID_COLUMN, user.getId()),
+			new StringSqlFunctionParameter(User.FIRST_NAME_COLUMN,
+				user.getFirstName()),
+			new StringSqlFunctionParameter(User.LAST_NAME_COLUMN,
+				user.getLastName())));
 	}
+
+	public boolean updatePassword(UserPasswordReplacement userPasswordReplacement)
+	{
+		String
+			oldPassword
+			= passwordGenerator.getHashedPassword(userPasswordReplacement.getOldPassword());
+		String
+			newPassword
+			= passwordGenerator.getHashedPassword(userPasswordReplacement.getNewPassword());
+
+		SqlFunctionCall<Boolean> functionCall = new SimpleCommandSqlFunctionCall<>(
+			"update_user_password",
+			Arrays.asList(
+				new IntegerSqlFunctionParameter(UserPasswordReplacement.USER_ID_COLUMN, userPasswordReplacement.getUserId()),
+				new StringSqlFunctionParameter(UserPasswordReplacement.OLD_PASSWORD_COLUMN, oldPassword),
+				new StringSqlFunctionParameter(UserPasswordReplacement.NEW_PASSWORD_COLUMN, newPassword)),
+			new SimpleResultSetTransformer<>(resultSet -> resultSet.getBoolean(UserPasswordReplacement.PASSWORD_UPDATED_OUT_VALUE)),
+			userIdDao);
+		return this.execute(functionCall);
+	}
+
 
 	@Override
 	public void delete(int id)
@@ -106,8 +120,9 @@ public class UserDao extends CrudItemDao<User>
 	public boolean canDelete(int id)
 	{
 		return this.canDelete("can_delete_user",
-			Collections.singletonList(
-				new IntegerSqlFunctionParameter(User.ID_COLUMN, id)),
+			Collections.singletonList(new IntegerSqlFunctionParameter(
+				User.ID_COLUMN,
+				id)),
 			User.CAN_DELETE_ITEM);
 	}
 

@@ -106,6 +106,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_poultry_inspection.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_poultry_inspection_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_user.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_user_password.sql"/>
 	</changeSet>
 
 	<changeSet id="functions/delete" author="jacobpatterson1549" runOnChange="true">

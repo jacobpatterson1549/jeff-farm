@@ -3,6 +3,7 @@ package com.github.ants280.jeff.farm.ws.resources;
 import com.github.ants280.jeff.farm.ws.dao.LoginDao;
 import com.github.ants280.jeff.farm.ws.dao.UserDao;
 import com.github.ants280.jeff.farm.ws.model.User;
+import com.github.ants280.jeff.farm.ws.model.UserPasswordReplacement;
 import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -45,6 +46,16 @@ public class UserResource
 		userDao.update(user);
 
 		return Response.ok().build();
+	}
+
+	@PUT
+	@Path("password")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response updatePassword(UserPasswordReplacement userPasswordReplacement)
+	{
+		boolean passwordUpdated = userDao.updatePassword(userPasswordReplacement);
+
+		return Response.ok(passwordUpdated).build();
 	}
 
 	@GET
