@@ -9,7 +9,7 @@
 
   <div>
     <label for="password">Password</label>
-    <input name="password" formControlName="password" type="password" autocomplete="current-password" required>
+    <input id="password" formControlName="password" type="password" autocomplete="current-password" required>
   </div>
 
   <button class="btn btn-primary" [disabled]="working || (!serverRunning && production)" type="submit">Submit</button>
