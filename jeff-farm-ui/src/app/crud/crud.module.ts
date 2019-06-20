@@ -15,13 +15,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerModule } from '../spinner/spinner.module';
 import { CrudItemInputComponent } from './crud-item-input/crud-item-input.component';
 import { CrudItemInspectionGroupInputComponent } from './crud-item-inspection-group-input/crud-item-inspection-group-input.component';
-import { CrudItemInputStringComponent } from './crud-item-input-string.component';
-import { CrudItemInputBooleanComponent } from './crud-item-input-boolean.component';
-import { CrudItemInputIntegerComponent } from './crud-item-input-integer.component';
-import { CrudItemInputStarsComponent } from './crud-item-input-stars.component';
-import { CrudItemInputColorComponent } from './crud-item-input-color.component';
-import { CrudItemInputPasswordComponent } from './crud-item-input-password.component';
-import { CrudItemInputTextAreaComponent } from './crud-item-input-text-area.component';
+import { CrudItemInputStringComponent } from './crud-item-input/crud-item-input-string.component';
+import { CrudItemInputBooleanComponent } from './crud-item-input/crud-item-input-boolean.component';
+import { CrudItemInputIntegerComponent } from './crud-item-input/crud-item-input-integer.component';
+import { CrudItemInputStarsComponent } from './crud-item-input/crud-item-input-stars.component';
+import { CrudItemInputColorComponent } from './crud-item-input/crud-item-input-color.component';
+import { CrudItemInputPasswordComponent } from './crud-item-input/crud-item-input-password.component';
+import { CrudItemInputTextAreaComponent } from './crud-item-input/crud-item-input-text-area.component';
 
 @NgModule({
   declarations: [
