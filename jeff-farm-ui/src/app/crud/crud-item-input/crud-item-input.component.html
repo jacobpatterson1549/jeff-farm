@@ -2,7 +2,7 @@
   <p *ngFor="let formItem of formItems; index as i" class="formItem">
     <ng-container [ngSwitch]="formItem.type" class="formItemInput">
       <app-crud-item-input-string [id]="i" *ngSwitchCase="formItemType.String" [control]="crudForm.get(formItem.name)"
-        [name]="formItem.name" [isUserName]="formItem.name == 'userName'">
+        [name]="formItem.name">
       </app-crud-item-input-string>
       <app-crud-item-input-boolean [id]="i" *ngSwitchCase="formItemType.Boolean" [control]="crudForm.get(formItem.name)"
         [name]="formItem.name"></app-crud-item-input-boolean>
