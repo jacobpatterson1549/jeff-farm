@@ -8,7 +8,7 @@ RETURNS VOID
 AS
 $body$
 	BEGIN
-		IF permission_check_poultry_inspection_group(set_user_id(user_id), update_poultry_inspection_group.id) THEN
+		IF permission_check_poultry_inspection_group(set_user_id(update_poultry_inspection_group.user_id), update_poultry_inspection_group.id) THEN
 			UPDATE poultry_inspection_groups AS pig
 				SET
 					  notes = update_poultry_inspection_group.notes

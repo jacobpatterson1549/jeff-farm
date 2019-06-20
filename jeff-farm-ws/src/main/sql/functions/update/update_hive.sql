@@ -9,7 +9,7 @@ RETURNS VOID
 AS
 $body$
 	BEGIN
-		IF permission_check_hive(set_user_id(user_id), update_hive.id) THEN
+		IF permission_check_hive(set_user_id(update_hive.user_id), update_hive.id) THEN
 			UPDATE hives AS h
 				SET
 					  name = update_hive.name

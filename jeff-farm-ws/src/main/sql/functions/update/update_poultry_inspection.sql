@@ -9,7 +9,7 @@ RETURNS VOID
 AS
 $body$
 	BEGIN
-		IF permission_check_poultry_inspection(set_user_id(user_id), update_poultry_inspection.id) THEN
+		IF permission_check_poultry_inspection(set_user_id(update_poultry_inspection.user_id), update_poultry_inspection.id) THEN
 			UPDATE poultry_inspections AS h
 				SET
 					  bird_count = update_poultry_inspection.bird_count

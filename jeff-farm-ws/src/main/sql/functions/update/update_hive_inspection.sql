@@ -21,7 +21,7 @@ RETURNS VOID
 AS
 $body$
 	BEGIN
-		IF permission_check_hive_inspection(set_user_id(user_id), update_hive_inspection.id) THEN
+		IF permission_check_hive_inspection(set_user_id(update_hive_inspection.user_id), update_hive_inspection.id) THEN
 			UPDATE hive_inspections AS hi
 				SET
 					  queen_seen = update_hive_inspection.queen_seen

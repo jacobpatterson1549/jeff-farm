@@ -4,12 +4,13 @@ CREATE FUNCTION update_user
 	, IN id INT
 	, IN user_password CHAR(86)
 	, IN first_name VARCHAR(255)
-	, IN last_name VARCHAR(255))
+	, IN last_name VARCHAR(255)
+	)
 RETURNS VOID
 AS
 $body$
 	BEGIN
-		IF permission_check_user(set_user_id(user_id), update_user.id) THEN
+		IF permission_check_user(set_user_id(update_user.user_id), update_user.id) THEN
 			UPDATE users AS u
 				SET
 					  user_password = update_user.user_password

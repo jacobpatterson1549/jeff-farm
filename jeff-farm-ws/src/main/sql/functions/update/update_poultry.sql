@@ -8,7 +8,7 @@ RETURNS VOID
 AS
 $body$
 	BEGIN
-		IF permission_check_poultry(set_user_id(user_id), update_poultry.id) THEN
+		IF permission_check_poultry(set_user_id(update_poultry.user_id), update_poultry.id) THEN
 			UPDATE poultry AS h
 				SET
 					  name = update_poultry.name
