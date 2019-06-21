@@ -4,12 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { PoultryInspectionGroup } from './poultry-inspection-group';
 import { PoultryInspection } from './poultry-inspection';
-import { CrudItemGroupService } from '../crud/crud-item-inspection-group.service';
+import { CrudItemInspectionGroupService } from '../crud/crud-item-inspection-group.service';
 import { Poultry } from '../poultry/poultry';
 
 @Injectable()
 export class PoultryInspectionGroupService
-  extends CrudItemGroupService<Poultry, PoultryInspection, PoultryInspectionGroup> {
+  extends CrudItemInspectionGroupService<Poultry, PoultryInspection, PoultryInspectionGroup> {
 
     constructor(
       errorMessagesService: ErrorMessagesService,

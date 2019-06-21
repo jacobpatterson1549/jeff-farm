@@ -9,7 +9,7 @@ import { CrudItemService } from './crud-item.service';
 import { CrudItemInspection } from './crud-item-inspection';
 import { CrudItemInspectionGroupUpdate } from './crud-item-inspection-group-update';
 
-export abstract class CrudItemGroupService<
+export abstract class CrudItemInspectionGroupService<
   U extends CrudItem, V extends CrudItemInspection<U>,
   T extends CrudItemInspectionGroup<V>>
   extends CrudItemService<T> {

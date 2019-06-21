@@ -3,7 +3,7 @@ import { FormGroup, FormArray, AbstractControl, FormBuilder } from '@angular/for
 
 import { FormItemType, FormItem } from '../form-item';
 import { CrudItem } from '../crud-item';
-import { CrudItemGroupService } from '../crud-item-inspection-group.service';
+import { CrudItemInspectionGroupService } from '../crud-item-inspection-group.service';
 import { CrudItemInspectionGroup } from '../crud-item-inspection-group';
 import { CrudItemInspection } from '../crud-item-inspection';
 import { CrudItemInputComponent } from '../crud-item-input/crud-item-input.component';
@@ -29,13 +29,13 @@ export class CrudItemInspectionGroupInputComponent<
   constructor(
     route: ActivatedRoute,
     private fb: FormBuilder,
-    private crudItemGroupService: CrudItemGroupService<U, V, T>) {
-    this.crudItemGroupService.setRoute(route); // TODO: why is this needed?
+    private crudItemInspectionGroupService: CrudItemInspectionGroupService<U, V, T>) {
+    this.crudItemInspectionGroupService.setRoute(route); // TODO: why is this needed?
   }
 
   ngOnInit() {
-    this.formItems = this.crudItemGroupService.createCrudItemInspection().getFormItems();
-    this.crudItemGroupService.getTargets()
+    this.formItems = this.crudItemInspectionGroupService.createCrudItemInspection().getFormItems();
+    this.crudItemInspectionGroupService.getTargets()
       .subscribe((targets: Map<number, string>) => {
         this.selectTargets = {};
         this.selectTargets[0] = ' ';
@@ -53,8 +53,8 @@ export class CrudItemInspectionGroupInputComponent<
   addInspectionItem(targetIndex: number) {
     if (targetIndex > 0 // not blank item
       && this.inspectionItems != null
-      && this.crudItemGroupService instanceof CrudItemGroupService) {
-      const inspectionItem: FormGroup = this.crudItemGroupService.createCrudItemInspection().getFormGroup(this.fb);
+      && this.crudItemInspectionGroupService instanceof CrudItemInspectionGroupService) {
+      const inspectionItem: FormGroup = this.crudItemInspectionGroupService.createCrudItemInspection().getFormGroup(this.fb);
       const addTargetId: number = +Object.keys(this.selectTargets)[targetIndex];
       inspectionItem.patchValue({
         targetId: addTargetId,
