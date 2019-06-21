@@ -140,6 +140,9 @@ public class UserDao extends CrudItemDao<User>
 	}
 
 	private static class PasswordCheckingSqlFunctionCall // TODO: investigate combining with CrudItemInspectionGroupDao.ParentIdSettingSqlFunctionCall
+		// [continued]: maybe call it "SideEffectSqlFunctionCall"
+		//              --> User it to ensure a username is for a real user before calling
+		//                  create_farm_permission (if not, throw a JeffFarmWsException)
 		extends SimpleCommandSqlFunctionCall<String>
 	{
 		private static final String FUNCTION_NAME = "read_user_encrypted_password";
