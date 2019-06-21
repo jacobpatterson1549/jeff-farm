@@ -33,7 +33,7 @@ class PasswordFormGroup extends FormGroup {
     type="password"
     formControlName="password2"
     >
-    <div *ngIf="!control.valid" class="notMatching">Passwords Must Match</div>
+    <div *ngIf="passwordGroup.dirty && !passwordGroup.valid" class="notMatching">Passwords Must Match</div>
     </ng-template>
     </div>`,
     styles: [
