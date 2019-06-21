@@ -53,7 +53,7 @@ public class UserDaoTest
 	}
 
 	@Test
-	public void updatePassword() throws SQLException
+	public void testUpdatePassword() throws SQLException
 	{
 		Connection mockConnection = mock(Connection.class);
 		PreparedStatement mockPreparedStatement = mock(PreparedStatement.class);
