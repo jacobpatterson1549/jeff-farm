@@ -17,7 +17,11 @@ public class SimpleResultSetTransformer<T> implements ResultSetTransformer<T>
 	@Override
 	public T transform(ResultSet resultSet) throws SQLException
 	{
-		resultSet.next();
+		if (!resultSet.next())
+		{
+			return null;
+		}
+
 		T result = crudItemRowMapper.getValue(resultSet);
 
 		if (resultSet.next())

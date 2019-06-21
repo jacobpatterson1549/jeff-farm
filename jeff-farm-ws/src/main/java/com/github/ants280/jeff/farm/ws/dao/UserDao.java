@@ -51,7 +51,7 @@ public class UserDao extends CrudItemDao<User>
 					user.getLastName())),
 			new SimpleResultSetTransformer<>(resultSet -> resultSet.getInt(
 				CrudItem.ID_COLUMN)),
-			null));
+			null));  // unchecked create
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class UserDao extends CrudItemDao<User>
 			Collections.singletonList(new StringSqlFunctionParameter(User.USER_NAME_COLUMN,
 				userName)),
 			new SimpleResultSetTransformer<>(this::mapRow),
-			null));
+			null));  // unchecked read
 	}
 
 	@Override

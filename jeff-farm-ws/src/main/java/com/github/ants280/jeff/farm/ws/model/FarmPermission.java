@@ -4,6 +4,7 @@ public class FarmPermission extends CrudItem<FarmPermission>
 {
 	public static final String FARM_ID_COLUMN = "farm_id";
 	public static final String USER_NAME_COLUMN = "user_name";
+	public static final String USER_ID_COLUMN = "permission_user_id";
 	private int farmId;
 	private String userName;
 

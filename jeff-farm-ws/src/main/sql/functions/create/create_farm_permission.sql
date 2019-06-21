@@ -2,7 +2,7 @@ DROP FUNCTION IF EXISTS create_farm_permission;
 CREATE FUNCTION create_farm_permission
 	( IN user_id INT
 	, IN farm_id INT
-	, IN user_name VARCHAR(20) -- the user to ad the permission for
+	, IN permission_user_id INT -- the user to ad the permission for
 	, OUT id INT
 	)
 AS
@@ -19,7 +19,7 @@ $body$
 			FROM farms AS f
 			CROSS JOIN users AS u
 			WHERE f.id = create_farm_permission.farm_id
-				AND u.user_name = create_farm_permission.user_name
+				AND u.id = create_farm_permission.permission_user_id
 			RETURNING LASTVAL()
 			INTO create_farm_permission.id;
 		END IF;

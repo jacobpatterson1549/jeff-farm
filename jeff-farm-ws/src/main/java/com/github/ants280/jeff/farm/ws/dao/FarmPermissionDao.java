@@ -1,9 +1,17 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
+import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
+import com.github.ants280.jeff.farm.ws.dao.api.call.SideEffectSqlFunctionCall;
+import com.github.ants280.jeff.farm.ws.dao.api.call.SimpleCommandSqlFunctionCall;
+import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.crud.CrudItemDao;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.IntegerSqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.parameter.SqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.StringSqlFunctionParameter;
+import com.github.ants280.jeff.farm.ws.dao.api.transformer.SimpleResultSetTransformer;
+import com.github.ants280.jeff.farm.ws.model.CrudItem;
 import com.github.ants280.jeff.farm.ws.model.FarmPermission;
+import com.github.ants280.jeff.farm.ws.model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -26,11 +34,29 @@ public class FarmPermissionDao extends CrudItemDao<FarmPermission>
 	@Override
 	public int create(FarmPermission farmPermission)
 	{
-		return this.executeCreate(
-			"create_farm_permission",
-			Arrays.asList(
-				new IntegerSqlFunctionParameter(FarmPermission.FARM_ID_COLUMN, farmPermission.getFarmId()),
-				new StringSqlFunctionParameter(FarmPermission.USER_NAME_COLUMN, farmPermission.getUserName())));
+		List<SqlFunctionParameter> createFarmPermissionInParameters = Arrays.asList(
+			new IntegerSqlFunctionParameter(FarmPermission.FARM_ID_COLUMN, farmPermission.getFarmId()),
+			new IntegerSqlFunctionParameter(FarmPermission.USER_ID_COLUMN, -1)); // filled in below
+		SqlFunctionCall<Integer> userNameCheckingFunctionCall
+			= new SideEffectSqlFunctionCall<>(
+				"read_user_from_user_name",
+				Collections.singletonList(new StringSqlFunctionParameter(
+					User.USER_NAME_COLUMN,
+					farmPermission.getUserName())),
+				new SimpleResultSetTransformer<>(rs -> rs.getInt(User.ID_COLUMN)),
+				userId -> this.setUserId(userId, createFarmPermissionInParameters),
+				null); // unchecked read
+		SqlFunctionCall<Integer>
+			createFunctionCall
+			= new SimpleCommandSqlFunctionCall<>("create_farm_permission",
+			createFarmPermissionInParameters,
+			new SimpleResultSetTransformer<>(resultSet -> resultSet.getInt(
+				CrudItem.ID_COLUMN)),
+			userIdDao);
+		return this.execute(
+			(userId, createdFarmPermissionId) -> createdFarmPermissionId,
+			userNameCheckingFunctionCall,
+			createFunctionCall);
 	}
 
 	@Override
@@ -84,5 +110,20 @@ public class FarmPermissionDao extends CrudItemDao<FarmPermission>
 			.setUserName(rs.getString(FarmPermission.USER_NAME_COLUMN))
 			.setCreatedTimestamp(rs.getTimestamp(FarmPermission.CREATED_DATE_COLUMN))
 			.setModifiedTimestamp(rs.getTimestamp(FarmPermission.MODIFIED_DATE_COLUMN));
+	}
+
+	private void setUserId(Integer userId, List<SqlFunctionParameter> createFarmPermissionInParameters)
+	{
+		if (userId == null)
+		{
+			throw new JeffFarmWsException("No user with username.");
+		}
+
+		createFarmPermissionInParameters.stream()
+			.filter(sqlFunctionParameter -> sqlFunctionParameter.getName()
+				.equals(FarmPermission.USER_ID_COLUMN)
+				&& sqlFunctionParameter instanceof IntegerSqlFunctionParameter)
+			.map(sqlFunctionParameter -> (IntegerSqlFunctionParameter) sqlFunctionParameter)
+			.forEach(sqlFunctionParameter -> sqlFunctionParameter.setValue(userId));
 	}
 }
