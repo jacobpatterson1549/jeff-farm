@@ -53,9 +53,9 @@ public class UserResource
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updatePassword(UserPasswordReplacement userPasswordReplacement)
 	{
-		boolean passwordUpdated = userDao.updatePassword(userPasswordReplacement);
+		userDao.updatePassword(userPasswordReplacement);
 
-		return Response.ok(passwordUpdated).build();
+		return Response.ok().build();
 	}
 
 	@GET

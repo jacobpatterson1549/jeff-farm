@@ -87,7 +87,7 @@ public class UserDao extends CrudItemDao<User>
 				user.getLastName())));
 	}
 
-	public boolean updatePassword(UserPasswordReplacement userPasswordReplacement)
+	public void updatePassword(UserPasswordReplacement userPasswordReplacement)
 	{
 		String
 			oldPassword
@@ -96,15 +96,10 @@ public class UserDao extends CrudItemDao<User>
 			newPassword
 			= passwordGenerator.getHashedPassword(userPasswordReplacement.getNewPassword());
 
-		SqlFunctionCall<Boolean> functionCall = new SimpleCommandSqlFunctionCall<>(
-			"update_user_password",
-			Arrays.asList(
-				new IntegerSqlFunctionParameter(UserPasswordReplacement.ID_COLUMN, userPasswordReplacement.getId()),
-				new StringSqlFunctionParameter(UserPasswordReplacement.OLD_PASSWORD_COLUMN, oldPassword),
-				new StringSqlFunctionParameter(UserPasswordReplacement.NEW_PASSWORD_COLUMN, newPassword)),
-			new SimpleResultSetTransformer<>(resultSet -> resultSet.getBoolean(UserPasswordReplacement.PASSWORD_UPDATED_OUT_VALUE)),
-			userIdDao);
-		return this.execute(functionCall);
+		this.executeUpdate("update_user_password", Arrays.asList(
+			new IntegerSqlFunctionParameter(UserPasswordReplacement.ID_COLUMN, userPasswordReplacement.getId()),
+			new StringSqlFunctionParameter(UserPasswordReplacement.OLD_PASSWORD_COLUMN, oldPassword),
+			new StringSqlFunctionParameter(UserPasswordReplacement.NEW_PASSWORD_COLUMN, newPassword)));
 	}
 
 

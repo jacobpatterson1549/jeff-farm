@@ -4,8 +4,8 @@ CREATE FUNCTION update_user_password
 	, IN id INT
 	, IN old_user_password VARCHAR(86)
 	, IN new_user_password VARCHAR(86)
-	, OUT user_password_updated BOOLEAN
 	)
+RETURNS VOID
 AS
 $body$
 	BEGIN
@@ -15,7 +15,9 @@ $body$
 				WHERE u.id = update_user_password.id
 					AND (u.user_password = update_user_password.old_user_password
 						OR is_admin_user(update_user_password.user_id));
-			SELECT FOUND INTO update_user_password.user_password_updated;
+			IF NOT FOUND THEN
+				RAISE EXCEPTION 'Incorrect old password';
+			END IF;
 		END IF;
 	END
 $body$

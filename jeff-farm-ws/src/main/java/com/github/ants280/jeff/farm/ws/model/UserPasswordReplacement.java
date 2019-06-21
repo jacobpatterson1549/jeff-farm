@@ -4,7 +4,6 @@ public class UserPasswordReplacement extends CrudItem<UserPasswordReplacement>
 {
 	public static final String OLD_PASSWORD_COLUMN = "old_user_password";
 	public static final String NEW_PASSWORD_COLUMN = "new_user_password";
-	public static final String PASSWORD_UPDATED_OUT_VALUE = "user_password_updated";
 	private String oldPassword;
 	private String newPassword;
 

@@ -48,7 +48,7 @@ export class UserService extends CrudItemService<User> {
       : super.put(user, updatedValue);
   }
 
-  private putPassword(userPasswordReplacement: UserPasswordReplacement): Observable<boolean> {
+  private putPassword(userPasswordReplacement: UserPasswordReplacement): Observable<any> {
     const url = `${this.getBaseUrl()}/${this.getId()}/password`;
     return this.http.put(url, userPasswordReplacement)
       .pipe(
