@@ -3,7 +3,7 @@ import { FormItem, FormItemType } from '../crud/form-item';
 
 export class UserPasswordReplacement extends User {
 
-    oldPassword: string;
+    currentPassword: string;
     newPassword: string;
 
     constructor(id: number) {
@@ -13,7 +13,7 @@ export class UserPasswordReplacement extends User {
 
     getFormItems(): FormItem[] {
         return [
-            new FormItem('oldPassword', FormItemType.Password, this.oldPassword),
+            new FormItem('currentPassword', FormItemType.Password, this.currentPassword),
             new FormItem('newPassword', FormItemType.Password, this.newPassword),
         ];
     }
