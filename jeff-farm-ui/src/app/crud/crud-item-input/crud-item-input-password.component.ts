@@ -27,6 +27,7 @@ class PasswordFormGroup extends FormGroup {
     type="password"
     formControlName="password1"
     >
+    <br/>
     <label [for]="name+'-confirm'">{{name | titlecase}} (confirm)</label>
     <input [id]="name+'-confirm'"
     type="password"
@@ -35,7 +36,9 @@ class PasswordFormGroup extends FormGroup {
     <div *ngIf="!control.valid" class="notMatching">Passwords Must Match</div>
     </ng-template>
     </div>`,
-    styles: ['.notMatching { color: red; }']
+    styles: [
+        '.notMatching { color: red; }',
+    ]
 })
 export class CrudItemInputPasswordComponent implements OnInit {
     @Input() control: FormControl;
