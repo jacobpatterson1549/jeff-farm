@@ -76,12 +76,12 @@ public class UserDaoTest
 		{
 			userDao.updatePassword(passwordReplacement);
 
-			assertThat("expected to succeed, but did not",
+			assertThat("Expected to fail, but did not.",
 				expectedUpdateSuccess, is(true));
 		}
 		catch (JeffFarmWsException ex)
 		{
-			assertThat("expected to fail, but did not: " + ex.getMessage(),
+			assertThat("Expected to succeed, but did not: " + ex.getMessage(),
 				expectedUpdateSuccess, is(false));
 		}
 
