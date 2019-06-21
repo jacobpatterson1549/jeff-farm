@@ -2,6 +2,7 @@ package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.PasswordGenerator;
+import com.github.ants280.jeff.farm.ws.dao.api.call.SideEffectSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SimpleCommandSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.crud.CrudItemDao;
@@ -11,7 +12,6 @@ import com.github.ants280.jeff.farm.ws.dao.api.transformer.SimpleResultSetTransf
 import com.github.ants280.jeff.farm.ws.model.CrudItem;
 import com.github.ants280.jeff.farm.ws.model.User;
 import com.github.ants280.jeff.farm.ws.model.UserPasswordReplacement;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -91,10 +91,8 @@ public class UserDao extends CrudItemDao<User>
 
 	public void updatePassword(UserPasswordReplacement userPasswordReplacement)
 	{
-		SqlFunctionCall passwordCheckingFunctionCall = new PasswordCheckingSqlFunctionCall(
-			userPasswordReplacement.getOldPassword(),
-			passwordGenerator,
-			userIdDao);
+		SqlFunctionCall passwordCheckingFunctionCall = this.createPasswordCheckingCall(
+			userPasswordReplacement.getOldPassword());
 		SqlFunctionCall updatePasswordFunctionCall = new SimpleCommandSqlFunctionCall<>(
 			"update_user_password",
 			Arrays.asList(
@@ -138,45 +136,22 @@ public class UserDao extends CrudItemDao<User>
 			.setModifiedTimestamp(rs.getTimestamp(User.MODIFIED_DATE_COLUMN));
 	}
 
-	private static class PasswordCheckingSqlFunctionCall // TODO: investigate combining with CrudItemInspectionGroupDao.ParentIdSettingSqlFunctionCall
-		// [continued]: maybe call it "SideEffectSqlFunctionCall"
-		//              --> User it to ensure a username is for a real user before calling
-		//                  create_farm_permission (if not, throw a JeffFarmWsException)
-		extends SimpleCommandSqlFunctionCall<String>
+	private SqlFunctionCall<String> createPasswordCheckingCall(String password)
 	{
-		private static final String FUNCTION_NAME = "read_user_encrypted_password";
-		private final String password;
-		private final PasswordGenerator passwordGenerator;
+		String FUNCTION_NAME = "read_user_encrypted_password";
+		return new SideEffectSqlFunctionCall<>(FUNCTION_NAME,
+			Collections.singletonList(new IntegerSqlFunctionParameter(User.ID_COLUMN,
+				userIdDao.getUserId())), // (the current user)
+			new SimpleResultSetTransformer<>(rs -> rs.getString(FUNCTION_NAME)),
+			encryptedUserPassword -> this.checkPassword(password, encryptedUserPassword),
+			userIdDao);
+	}
 
-		public PasswordCheckingSqlFunctionCall(
-			String password,
-			PasswordGenerator passwordGenerator,
-			UserIdDao userIdDao)
+	private void checkPassword(String password, String encryptedUserPassword)
+	{
+		if (!passwordGenerator.isStoredPassword(password, encryptedUserPassword))
 		{
-			super(
-				FUNCTION_NAME,
-				Collections.singletonList(new IntegerSqlFunctionParameter(
-					User.ID_COLUMN,
-					userIdDao.getUserId())), // (the current user)
-				new SimpleResultSetTransformer<>(rs -> rs.getString(
-					FUNCTION_NAME)),
-				userIdDao);
-			this.password = password;
-			this.passwordGenerator = passwordGenerator;
-		}
-
-		@Override
-		public void execute(PreparedStatement preparedStatement)
-			throws SQLException
-		{
-			super.execute(preparedStatement);
-			String encryptedUserPassword = this.getResult();
-
-			// Note that this may take some time while the connection is open:
-			if (!passwordGenerator.isStoredPassword(password, encryptedUserPassword))
-			{
-				throw new JeffFarmWsException("Incorrect old password.");
-			}
+			throw new JeffFarmWsException("Incorrect old password.");
 		}
 	}
 }

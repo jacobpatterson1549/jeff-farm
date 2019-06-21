@@ -3,6 +3,7 @@ package com.github.ants280.jeff.farm.ws.dao.api.crud;
 import com.github.ants280.jeff.farm.ws.dao.UserIdDao;
 import com.github.ants280.jeff.farm.ws.dao.api.SqlFunctionDao;
 import com.github.ants280.jeff.farm.ws.dao.api.call.BatchCommandSqlFunctionCall;
+import com.github.ants280.jeff.farm.ws.dao.api.call.SideEffectSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SimpleCommandSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.IntegerSqlFunctionParameter;
@@ -12,7 +13,6 @@ import com.github.ants280.jeff.farm.ws.dao.api.transformer.SimpleResultSetTransf
 import com.github.ants280.jeff.farm.ws.model.CrudItemInspection;
 import com.github.ants280.jeff.farm.ws.model.CrudItemInspectionGroup;
 import com.github.ants280.jeff.farm.ws.model.CrudItemInspectionGroupUpdate;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -56,14 +56,14 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 		String groupIdColumnName,
 		String parentIdColumnName)
 	{
-		SqlFunctionCall<Integer>
-			createGroupFunctionCall
-			= new ParentIdSettingSqlFunctionCall(createGroupFunctionName,
-			groupInParameters,
-			itemInParameters,
-			groupIdColumnName,
-			parentIdColumnName,
-			userIdDao);
+		SqlFunctionCall<Integer> createGroupFunctionCall
+			= new SideEffectSqlFunctionCall<>(
+				createGroupFunctionName,
+				groupInParameters,
+					new SimpleResultSetTransformer<>(rs -> rs.getInt(
+				groupIdColumnName)),
+				parentId -> this.setParentId(parentId, itemInParameters, parentIdColumnName),
+				userIdDao);
 		SqlFunctionCall<Void>
 			createItemsFunctionCall
 			= new BatchCommandSqlFunctionCall(createItemsFunctionName,
@@ -223,45 +223,19 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 		return crudItemGroups;
 	}
 
-	private static class ParentIdSettingSqlFunctionCall
-		extends SimpleCommandSqlFunctionCall<Integer>
+	private void setParentId(
+		Integer parentId,
+		List<List<SqlFunctionParameter>> itemInParameters,
+		String parentIdColumnName)
 	{
-		private final List<List<SqlFunctionParameter>> itemInParameters;
-		private final String parentIdColumnName;
-
-		public ParentIdSettingSqlFunctionCall(
-			String functionCallSql,
-			List<SqlFunctionParameter> groupInParameters,
-			List<List<SqlFunctionParameter>> itemInParameters,
-			String groupIdColumnName,
-			String parentIdColumnName,
-			UserIdDao userIdDao)
-		{
-			super(functionCallSql,
-				groupInParameters,
-				new SimpleResultSetTransformer<>(rs -> rs.getInt(
-					groupIdColumnName)),
-				userIdDao);
-			this.itemInParameters = itemInParameters;
-			this.parentIdColumnName = parentIdColumnName;
-		}
-
-		@Override
-		public void execute(PreparedStatement preparedStatement)
-			throws SQLException
-		{
-			super.execute(preparedStatement);
-			Integer parentId = this.getResult();
-
-			// set the parentId in the itemInParameters
-			itemInParameters.stream()
-				.flatMap(List::stream)
-				.filter(sqlFunctionParameter -> sqlFunctionParameter.getName()
-					.equals(parentIdColumnName)
-					&& sqlFunctionParameter instanceof IntegerSqlFunctionParameter)
-				.map(sqlFunctionParameter -> (IntegerSqlFunctionParameter) sqlFunctionParameter)
-				.forEach(sqlFunctionParameter -> sqlFunctionParameter.setValue(
-					parentId));
-		}
+		// set the parentId in the itemInParameters
+		itemInParameters.stream()
+			.flatMap(List::stream)
+			.filter(sqlFunctionParameter -> sqlFunctionParameter.getName()
+				.equals(parentIdColumnName)
+				&& sqlFunctionParameter instanceof IntegerSqlFunctionParameter)
+			.map(sqlFunctionParameter -> (IntegerSqlFunctionParameter) sqlFunctionParameter)
+			.forEach(sqlFunctionParameter -> sqlFunctionParameter.setValue(
+				parentId));
 	}
 }
