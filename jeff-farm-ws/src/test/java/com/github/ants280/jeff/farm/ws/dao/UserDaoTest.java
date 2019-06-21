@@ -1,0 +1,93 @@
+package com.github.ants280.jeff.farm.ws.dao;
+
+import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
+import com.github.ants280.jeff.farm.ws.PasswordGenerator;
+import com.github.ants280.jeff.farm.ws.model.UserPasswordReplacement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+import javax.sql.DataSource;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
+
+@RunWith(Parameterized.class)
+public class UserDaoTest
+{
+	private final boolean isAdmin;
+	private final boolean oldPasswordCorrect;
+	private final boolean expectedUpdateSuccess;
+	private final DataSource mockDataSource;
+	private final PasswordGenerator mockPasswordGenerator;
+	private final UserIdDao mockUserIdDao;
+	private final UserDao userDao;
+
+	public UserDaoTest(
+		boolean isAdmin,
+		boolean oldPasswordCorrect,
+		boolean expectedUpdateSuccess)
+	{
+		this.isAdmin = isAdmin;
+		this.oldPasswordCorrect = oldPasswordCorrect;
+		this.expectedUpdateSuccess = expectedUpdateSuccess;
+		this.mockDataSource = mock(DataSource.class);
+		this.mockPasswordGenerator = mock(PasswordGenerator.class);
+		this.mockUserIdDao = mock(UserIdDao.class);
+		this.userDao = new UserDao(mockDataSource, mockPasswordGenerator, mockUserIdDao);
+	}
+
+	@Parameterized.Parameters(name = "{index}: isAdmin:{0}, oldPasswordCorrect:{1}")
+	public static Iterable<Object[]> data()
+	{
+		return Arrays.asList(
+			new Object[]{true, true, true},
+			new Object[]{true, false, true},
+			new Object[]{false, true, true},
+			new Object[]{false, false, false});
+	}
+
+	@Test
+	public void updatePassword() throws SQLException
+	{
+		Connection mockConnection = mock(Connection.class);
+		PreparedStatement mockPreparedStatement = mock(PreparedStatement.class);
+		ResultSet mockResultSet = mock(ResultSet.class);
+		when(mockDataSource.getConnection()).thenReturn(mockConnection);
+		when(mockUserIdDao.getUserId()).thenReturn(104);
+		when(mockUserIdDao.hasAdimnRole()).thenReturn(isAdmin);
+		when(mockPasswordGenerator.isStoredPassword("old password", "encrypted old password")).thenReturn(oldPasswordCorrect);
+		when(mockConnection.prepareStatement(any(String.class))).thenReturn(mockPreparedStatement);
+		when(mockPreparedStatement.execute()).thenReturn(true);
+		when(mockPreparedStatement.getResultSet()).thenReturn(mockResultSet);
+		when(mockResultSet.next()).thenReturn(true, false);
+		when(mockResultSet.getString(any(String.class))).thenReturn("encrypted old password");
+		UserPasswordReplacement passwordReplacement = new UserPasswordReplacement()
+			.setId(104)
+			.setOldPassword("old password")
+			.setNewPassword("new password");
+
+		try
+		{
+			userDao.updatePassword(passwordReplacement);
+
+			assertThat("expected to succeed, but did not",
+				expectedUpdateSuccess, is(true));
+		}
+		catch (JeffFarmWsException ex)
+		{
+			assertThat("expected to fail, but did not: " + ex.getMessage(),
+				expectedUpdateSuccess, is(false));
+		}
+
+		verify(mockConnection, times(!isAdmin && !oldPasswordCorrect ? 1 : 2)).prepareStatement(any(String.class));
+		verify(mockPasswordGenerator, times(isAdmin ? 0 : 1)).isStoredPassword("old password", "encrypted old password");
+		verify(mockUserIdDao, times(1)).hasAdimnRole();
+		verify(mockPasswordGenerator, times(1)).getHashedPassword("new password");
+	}
+}

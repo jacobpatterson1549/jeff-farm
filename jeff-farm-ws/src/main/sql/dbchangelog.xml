@@ -83,6 +83,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_poultry_inspection.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_poultry_inspection_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_user.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_user_encrypted_password.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_user_from_user_name.sql"/>
 	</changeSet>
 

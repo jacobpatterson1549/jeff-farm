@@ -2,8 +2,6 @@ package com.github.ants280.jeff.farm.ws.model;
 
 public class UserPasswordReplacement extends CrudItem<UserPasswordReplacement>
 {
-	public static final String OLD_PASSWORD_COLUMN = "old_user_password";
-	public static final String NEW_PASSWORD_COLUMN = "new_user_password";
 	private String oldPassword;
 	private String newPassword;
 

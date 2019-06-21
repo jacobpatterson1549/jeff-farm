@@ -39,4 +39,9 @@ public class PasswordGenerator
 	{
 		return credentialHandler.mutate(password);
 	}
+
+	public boolean isStoredPassword(String passwordPlaintext, String encryptedPassword)
+	{
+		return credentialHandler.matches(passwordPlaintext, encryptedPassword);
+	}
 }
