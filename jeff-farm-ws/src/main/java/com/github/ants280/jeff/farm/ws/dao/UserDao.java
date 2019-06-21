@@ -92,7 +92,6 @@ public class UserDao extends CrudItemDao<User>
 	public void updatePassword(UserPasswordReplacement userPasswordReplacement)
 	{
 		SqlFunctionCall passwordCheckingFunctionCall = new PasswordCheckingSqlFunctionCall(
-			userPasswordReplacement.getId(),
 			userPasswordReplacement.getOldPassword(),
 			passwordGenerator,
 			userIdDao);
@@ -148,10 +147,8 @@ public class UserDao extends CrudItemDao<User>
 		private static final String FUNCTION_NAME = "read_user_encrypted_password";
 		private final String password;
 		private final PasswordGenerator passwordGenerator;
-		private final UserIdDao userIdDao;
 
 		public PasswordCheckingSqlFunctionCall(
-			int userId,
 			String password,
 			PasswordGenerator passwordGenerator,
 			UserIdDao userIdDao)
@@ -160,13 +157,12 @@ public class UserDao extends CrudItemDao<User>
 				FUNCTION_NAME,
 				Collections.singletonList(new IntegerSqlFunctionParameter(
 					User.ID_COLUMN,
-					userId)),
+					userIdDao.getUserId())), // (the current user)
 				new SimpleResultSetTransformer<>(rs -> rs.getString(
 					FUNCTION_NAME)),
 				userIdDao);
 			this.password = password;
 			this.passwordGenerator = passwordGenerator;
-			this.userIdDao = userIdDao;
 		}
 
 		@Override
@@ -176,9 +172,8 @@ public class UserDao extends CrudItemDao<User>
 			super.execute(preparedStatement);
 			String encryptedUserPassword = this.getResult();
 
-			if (!userIdDao.hasAdimnRole()
-				// Note that this may take some time while the connection is open:
-				&& !passwordGenerator.isStoredPassword(password, encryptedUserPassword))
+			// Note that this may take some time while the connection is open:
+			if (!passwordGenerator.isStoredPassword(password, encryptedUserPassword))
 			{
 				throw new JeffFarmWsException("Incorrect old password.");
 			}

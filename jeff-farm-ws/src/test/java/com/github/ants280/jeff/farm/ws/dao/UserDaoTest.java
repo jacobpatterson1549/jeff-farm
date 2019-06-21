@@ -47,7 +47,7 @@ public class UserDaoTest
 	{
 		return Arrays.asList(
 			new Object[]{true, true, true},
-			new Object[]{true, false, true},
+			new Object[]{true, false, false},
 			new Object[]{false, true, true},
 			new Object[]{false, false, false});
 	}
@@ -60,7 +60,6 @@ public class UserDaoTest
 		ResultSet mockResultSet = mock(ResultSet.class);
 		when(mockDataSource.getConnection()).thenReturn(mockConnection);
 		when(mockUserIdDao.getUserId()).thenReturn(104);
-		when(mockUserIdDao.hasAdimnRole()).thenReturn(isAdmin);
 		when(mockPasswordGenerator.isStoredPassword("old password", "encrypted old password")).thenReturn(oldPasswordCorrect);
 		when(mockConnection.prepareStatement(any(String.class))).thenReturn(mockPreparedStatement);
 		when(mockPreparedStatement.execute()).thenReturn(true);
@@ -85,9 +84,9 @@ public class UserDaoTest
 				expectedUpdateSuccess, is(false));
 		}
 
-		verify(mockConnection, times(!isAdmin && !oldPasswordCorrect ? 1 : 2)).prepareStatement(any(String.class));
-		verify(mockPasswordGenerator, times(isAdmin ? 0 : 1)).isStoredPassword("old password", "encrypted old password");
-		verify(mockUserIdDao, times(1)).hasAdimnRole();
+		verify(mockConnection, times(oldPasswordCorrect ? 2 : 1)).prepareStatement(any(String.class));
+		verify(mockPasswordGenerator, times(1)).isStoredPassword("old password", "encrypted old password");
+		verify(mockUserIdDao, times(0)).hasAdimnRole(); // relic of old version, should not be checked by code (because the CURRENT user id need always be checked)
 		verify(mockPasswordGenerator, times(1)).getHashedPassword("new password");
 	}
 }
