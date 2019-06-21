@@ -1,5 +1,5 @@
-<div *ngIf="crudItem">
-  <app-crud-item-input [crudItem]="crudItem" [crudForm]="crudForm"></app-crud-item-input>
+<div *ngIf="formItems && crudForm">
+  <app-crud-item-input [formItems]="formItems" [crudForm]="crudForm"></app-crud-item-input>
   <button type="button" class="btn btn-secondary" *ngIf="canUpdate" routerLink="update">Update</button>
   <button type="button" class="btn btn-secondary" #deleteButton [disabled]="!canDelete"
     (click)="deleteCrudItem()">Delete</button>

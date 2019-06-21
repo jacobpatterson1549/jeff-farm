@@ -99,7 +99,7 @@ public class UserDao extends CrudItemDao<User>
 		SqlFunctionCall<Boolean> functionCall = new SimpleCommandSqlFunctionCall<>(
 			"update_user_password",
 			Arrays.asList(
-				new IntegerSqlFunctionParameter(UserPasswordReplacement.USER_ID_COLUMN, userPasswordReplacement.getUserId()),
+				new IntegerSqlFunctionParameter(UserPasswordReplacement.ID_COLUMN, userPasswordReplacement.getId()),
 				new StringSqlFunctionParameter(UserPasswordReplacement.OLD_PASSWORD_COLUMN, oldPassword),
 				new StringSqlFunctionParameter(UserPasswordReplacement.NEW_PASSWORD_COLUMN, newPassword)),
 			new SimpleResultSetTransformer<>(resultSet -> resultSet.getBoolean(UserPasswordReplacement.PASSWORD_UPDATED_OUT_VALUE)),

@@ -2,8 +2,8 @@ DROP FUNCTION IF EXISTS update_user_password;
 CREATE FUNCTION update_user_password
 	( IN user_id INT
 	, IN id INT
-	, IN old_user_password CHAR(86)
-	, IN new_user_password CHAR(86)
+	, IN old_user_password VARCHAR(86)
+	, IN new_user_password VARCHAR(86)
 	, OUT user_password_updated BOOLEAN
 	)
 AS

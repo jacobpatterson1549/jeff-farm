@@ -7,6 +7,7 @@ import { CrudChild } from '../crud-child';
 import { CrudItem } from '../crud-item';
 import { CrudDeleteComponent } from '../crud-delete/crud-delete.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormItem } from '../form-item';
 
 @Component({
   templateUrl: './crud-view.component.html',
@@ -14,6 +15,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class CrudViewComponent<T extends CrudItem> implements OnInit {
 
   crudItem: T;
+  formItems: FormItem[];
   crudForm: FormGroup;
   canDelete = false;
   canDeleteMessage: string;
@@ -32,7 +34,8 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
     this.crudItemService.get()
     .subscribe((crudItem: T) => {
       this.crudItem = crudItem;
-      this.crudForm = crudItem.getFormGroup(this.fb);
+      this.formItems = this.crudItemService.getFormItems(this.crudItem);
+      this.crudForm = this.crudItemService.getCrudForm(this.crudItem, this.fb);
       this.crudForm.disable(); // <-- this makes the crud-view different from the crud-form (in addition to the form)
       this.titleService.setTitle(`${this.crudItemService.getTypeName()} ${crudItem.getDisplayValue()} details`);
       });

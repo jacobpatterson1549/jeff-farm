@@ -26,7 +26,7 @@ export abstract class CrudItem {
     }
 
     getFormGroup(fb: FormBuilder): FormGroup {
-        const formGroup: FormGroup = new FormGroup({});
+        const formGroup: FormGroup = fb.group({});
         this.getFormItems().forEach((formItem: FormItem) => formGroup.addControl(formItem.name, formItem.createControl(fb)));
         formGroup.addControl('id', fb.control(this.id));
         return formGroup;

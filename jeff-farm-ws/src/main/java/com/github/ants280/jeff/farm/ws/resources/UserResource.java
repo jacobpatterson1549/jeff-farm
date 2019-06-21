@@ -49,7 +49,7 @@ public class UserResource
 	}
 
 	@PUT
-	@Path("password")
+	@Path("{id}/password")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updatePassword(UserPasswordReplacement userPasswordReplacement)
 	{

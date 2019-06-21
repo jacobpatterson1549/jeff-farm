@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from './user.service';
 import { CrudModule } from '../crud/crud.module';
 import { CrudItemService } from '../crud/crud-item.service';
+import { UserRoutingModule } from './user-routing.module';
 
 @NgModule({
   providers: [
@@ -17,6 +18,7 @@ import { CrudItemService } from '../crud/crud-item.service';
     CommonModule,
     CrudModule,
     RouterModule.forChild([{ path: '', loadChildren: () => import('../crud/crud.module').then(m => m.CrudModule) }]),
-  ]
+    UserRoutingModule,
+  ],
 })
 export class UserModule { }

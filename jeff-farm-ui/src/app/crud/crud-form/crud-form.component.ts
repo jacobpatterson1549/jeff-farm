@@ -9,6 +9,7 @@ import { CrudItemService } from '../crud-item.service';
 import { CrudItem } from '../crud-item';
 import { FormType } from '../form-type';
 import { CrudItemInputComponent } from '../crud-item-input/crud-item-input.component';
+import { FormItem } from '../form-item';
 
 @Component({
   templateUrl: './crud-form.component.html',
@@ -16,6 +17,7 @@ import { CrudItemInputComponent } from '../crud-item-input/crud-item-input.compo
 export class CrudFormComponent<T extends CrudItem> implements OnInit {
 
   crudItem: T;
+  formItems: FormItem[];
   crudForm: FormGroup;
   formType: FormType;
   submitValue: string;
@@ -36,7 +38,8 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
     this.initCrudItem(this.formType)
       .subscribe((crudItem: T) => {
         this.crudItem = crudItem;
-        this.crudForm = crudItem.getFormGroup(this.fb);
+        this.formItems = this.crudItemService.getFormItems(this.crudItem);
+        this.crudForm = this.crudItemService.getCrudForm(this.crudItem, this.fb);
       });
   }
 
@@ -56,6 +59,7 @@ export class CrudFormComponent<T extends CrudItem> implements OnInit {
       case 'create':
         return FormType.Create;
       case 'update':
+      case 'password':
         return FormType.Update;
       default:
         throw new Error(`Unknown endPath: ${endPath}.  Could not set FormType`);

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormBuilder } from '@angular/forms';
 
-import { FormItemType } from '../form-item';
+import { FormItemType, FormItem } from '../form-item';
 import { CrudItem } from '../crud-item';
 import { CrudItemGroupService } from '../crud-item-inspection-group.service';
 import { CrudItemInspectionGroup } from '../crud-item-inspection-group';
@@ -20,6 +20,7 @@ export class CrudItemInspectionGroupInputComponent<
 
   @Input()
   inspectionItems: FormArray;
+  formItems: FormItem[];
   formItemType = FormItemType; // used for the ngSwitch in the template
   selectTargets: object;
   objectKeys = Object.keys; // used in the template
@@ -33,6 +34,7 @@ export class CrudItemInspectionGroupInputComponent<
   }
 
   ngOnInit() {
+    this.formItems = this.crudItemGroupService.createCrudItemInspection().getFormItems();
     this.crudItemGroupService.getTargets()
       .subscribe((targets: Map<number, string>) => {
         this.selectTargets = {};

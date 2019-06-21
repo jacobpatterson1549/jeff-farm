@@ -5,7 +5,7 @@ import { AuthService } from '../auth/auth.service';
 import { catchError } from 'rxjs/operators';
 
 import { LoginService } from './login.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { LoginSuccess } from './login-success';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -50,8 +50,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm =  this.fb.group({
-      userName: ['', Validators.required],
-      password: ['', Validators.required],
+      userName: this.fb.control('', Validators.required),
+      password: this.fb.control('', Validators.required),
     });
     this.titleService.setTitle('Login');
   }

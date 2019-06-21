@@ -6,6 +6,8 @@ import { map, catchError } from 'rxjs/operators';
 import { CrudItem } from './crud-item';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { CrudChild } from './crud-child';
+import { FormBuilder } from '@angular/forms';
+import { FormItem } from './form-item';
 
 export abstract class CrudItemService<T extends CrudItem> {
 
@@ -63,7 +65,7 @@ export abstract class CrudItemService<T extends CrudItem> {
       );
   }
 
-  put(t: T, updatedValue: any): Observable<object> {
+  put(t: T, updatedValue: any): Observable<any> {
     Object.assign(t, updatedValue);
     const url = this.getBaseUrl();
     return this.http.put(url, t)
@@ -72,7 +74,7 @@ export abstract class CrudItemService<T extends CrudItem> {
       );
   }
 
-  delete(): Observable<object> {
+  delete(): Observable<any> {
     const url = `${this.getBaseUrl()}/${this.getId()}`;
     return this.http.delete(url)
       .pipe(
@@ -110,5 +112,13 @@ export abstract class CrudItemService<T extends CrudItem> {
 
   getViewStepsToParent(): number {
     return 2; // The view is nested inside the CrudDetailComponent, but the visual parent is CrudHomeComponent
+  }
+
+  getFormItems(crudItem: T): FormItem[] {
+    return crudItem.getFormItems();
+  }
+
+  getCrudForm(crudItem: T, fb: FormBuilder) {
+    return crudItem.getFormGroup(fb);
   }
 }

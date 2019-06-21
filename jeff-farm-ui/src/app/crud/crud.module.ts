@@ -53,7 +53,11 @@ import { CrudItemInputTextAreaComponent } from './crud-item-input/crud-item-inpu
   ],
   exports: [
     CommonModule,
+    ReactiveFormsModule,
+    SpinnerModule,
+    NavigationComponent,
     CrudHomeComponent,
+    CrudItemInputComponent,
   ],
   entryComponents: [
     CrudDeleteComponent,

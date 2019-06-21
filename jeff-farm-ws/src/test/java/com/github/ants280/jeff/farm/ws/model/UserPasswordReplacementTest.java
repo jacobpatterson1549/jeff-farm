@@ -20,8 +20,11 @@ public class UserPasswordReplacementTest
 	@Test
 	public void testSerialize()
 	{
-		UserPasswordReplacement userPasswordReplacement = new UserPasswordReplacement(61, "apple", "B4n4n4");
-		String expectedValue = "{\"newPassword\":\"B4n4n4\",\"oldPassword\":\"apple\",\"userId\":61}";
+		UserPasswordReplacement userPasswordReplacement = new UserPasswordReplacement()
+			.setId(61)
+			.setOldPassword("apple")
+			.setNewPassword("B4n4n4");
+		String expectedValue = "{\"id\":61,\"newPassword\":\"B4n4n4\",\"oldPassword\":\"apple\"}";
 
 		String actualValue = jsonb.toJson(userPasswordReplacement);
 

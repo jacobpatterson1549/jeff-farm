@@ -1,10 +1,25 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+
+class PasswordFormGroup extends FormGroup {
+    constructor(passwordControl: FormControl, fb: FormBuilder) {
+        super({
+            password1: fb.control('', Validators.required),
+            password2: fb.control('', Validators.required),
+        }, { validators: (group: FormGroup): ValidationErrors | null => {
+            const password1 = group.get('password1');
+            const password2 = group.get('password2');
+            const sameValues: boolean = password1 && password2 && password1.value === password2.value;
+            passwordControl.setValue(sameValues ? password1.value : null);
+            return sameValues ? null : { passwordsDifferent: true };
+        } });
+    }
+}
 
 @Component({
     selector: 'app-crud-item-input-password',
     template: `
-    <div [formGroup]="control">
+    <div [formGroup]="passwordGroup">
     <label [for]="name">{{name | titlecase}}</label>
     <span *ngIf="control.disabled; else enabled">{{control.value}}</span>
     <ng-template #enabled>
@@ -22,7 +37,14 @@ import { FormGroup } from '@angular/forms';
     </div>`,
     styles: ['.notMatching { color: red; }']
 })
-export class CrudItemInputPasswordComponent {
-    @Input() control: FormGroup;
+export class CrudItemInputPasswordComponent implements OnInit {
+    @Input() control: FormControl;
     @Input() name: string;
+    passwordGroup: FormGroup;
+
+    constructor(private fb: FormBuilder) { }
+
+    ngOnInit(): void {
+        this.passwordGroup = new PasswordFormGroup(this.control, this.fb);
+    }
 }

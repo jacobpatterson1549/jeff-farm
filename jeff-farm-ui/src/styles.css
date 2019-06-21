@@ -17,6 +17,6 @@ input {
     width: 10em;
 }
 
-*.ng-invalid:not(form,div) {
+*.ng-invalid:not(form) {
     border: 1px solid red;
 }

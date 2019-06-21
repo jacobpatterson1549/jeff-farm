@@ -11,15 +11,13 @@ import { CrudItem } from '../crud-item';
 export class CrudItemInputComponent<T extends CrudItem> implements OnInit {
 
   @Input()
-  crudItem: T;
+  formItems: FormItem[];
   @Input()
   crudForm: FormGroup;
-  formItems: FormItem[];
   formItemType = FormItemType; // used for the ngSwitch in the template
   inspectionItems: FormArray;
 
   ngOnInit() {
-    this.formItems = this.crudItem.getFormItems();
     this.inspectionItems = this.crudForm.get('inspectionItems') as FormArray;
   }
 }
