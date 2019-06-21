@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 public class UserDaoTest
 {
 	private final boolean isAdmin;
-	private final boolean oldPasswordCorrect;
+	private final boolean currentPasswordCorrect;
 	private final boolean expectedUpdateSuccess;
 	private final DataSource mockDataSource;
 	private final PasswordGenerator mockPasswordGenerator;
@@ -30,11 +30,11 @@ public class UserDaoTest
 
 	public UserDaoTest(
 		boolean isAdmin,
-		boolean oldPasswordCorrect,
+		boolean currentPasswordCorrect,
 		boolean expectedUpdateSuccess)
 	{
 		this.isAdmin = isAdmin;
-		this.oldPasswordCorrect = oldPasswordCorrect;
+		this.currentPasswordCorrect = currentPasswordCorrect;
 		this.expectedUpdateSuccess = expectedUpdateSuccess;
 		this.mockDataSource = mock(DataSource.class);
 		this.mockPasswordGenerator = mock(PasswordGenerator.class);
@@ -42,7 +42,7 @@ public class UserDaoTest
 		this.userDao = new UserDao(mockDataSource, mockPasswordGenerator, mockUserIdDao);
 	}
 
-	@Parameterized.Parameters(name = "{index}: isAdmin:{0}, oldPasswordCorrect:{1}")
+	@Parameterized.Parameters(name = "{index}: isAdmin:{0}, currentPasswordCorrect:{1}")
 	public static Iterable<Object[]> data()
 	{
 		return Arrays.asList(
@@ -60,15 +60,16 @@ public class UserDaoTest
 		ResultSet mockResultSet = mock(ResultSet.class);
 		when(mockDataSource.getConnection()).thenReturn(mockConnection);
 		when(mockUserIdDao.getUserId()).thenReturn(104);
-		when(mockPasswordGenerator.isStoredPassword("old password", "encrypted old password")).thenReturn(oldPasswordCorrect);
+		when(mockUserIdDao.hasAdimnRole()).thenReturn(isAdmin);
+		when(mockPasswordGenerator.isStoredPassword("current password", "encrypted current password")).thenReturn(currentPasswordCorrect);
 		when(mockConnection.prepareStatement(any(String.class))).thenReturn(mockPreparedStatement);
 		when(mockPreparedStatement.execute()).thenReturn(true);
 		when(mockPreparedStatement.getResultSet()).thenReturn(mockResultSet);
 		when(mockResultSet.next()).thenReturn(true, false);
-		when(mockResultSet.getString(any(String.class))).thenReturn("encrypted old password");
+		when(mockResultSet.getString(any(String.class))).thenReturn("encrypted current password");
 		UserPasswordReplacement passwordReplacement = new UserPasswordReplacement()
 			.setId(104)
-			.setOldPassword("old password")
+			.setCurrentPassword("current password")
 			.setNewPassword("new password");
 
 		try
@@ -84,8 +85,8 @@ public class UserDaoTest
 				expectedUpdateSuccess, is(false));
 		}
 
-		verify(mockConnection, times(oldPasswordCorrect ? 2 : 1)).prepareStatement(any(String.class));
-		verify(mockPasswordGenerator, times(1)).isStoredPassword("old password", "encrypted old password");
+		verify(mockConnection, times(currentPasswordCorrect ? 2 : 1)).prepareStatement(any(String.class));
+		verify(mockPasswordGenerator, times(1)).isStoredPassword("current password", "encrypted current password");
 		verify(mockUserIdDao, times(0)).hasAdimnRole(); // relic of old version, should not be checked by code (because the CURRENT user id need always be checked)
 		verify(mockPasswordGenerator, times(1)).getHashedPassword("new password");
 	}

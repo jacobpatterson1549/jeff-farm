@@ -2,7 +2,7 @@ package com.github.ants280.jeff.farm.ws.model;
 
 public class UserPasswordReplacement extends CrudItem<UserPasswordReplacement>
 {
-	private String oldPassword;
+	private String currentPassword;
 	private String newPassword;
 
 	@Override
@@ -11,14 +11,14 @@ public class UserPasswordReplacement extends CrudItem<UserPasswordReplacement>
 		return this;
 	}
 
-	public String getOldPassword()
+	public String getCurrentPassword()
 	{
-		return oldPassword;
+		return currentPassword;
 	}
 
-	public UserPasswordReplacement setOldPassword(String oldPassword)
+	public UserPasswordReplacement setCurrentPassword(String currentPassword)
 	{
-		this.oldPassword = oldPassword;
+		this.currentPassword = currentPassword;
 		return this;
 	}
 

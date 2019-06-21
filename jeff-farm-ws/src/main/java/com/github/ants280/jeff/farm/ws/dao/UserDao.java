@@ -92,7 +92,7 @@ public class UserDao extends CrudItemDao<User>
 	public void updatePassword(UserPasswordReplacement userPasswordReplacement)
 	{
 		SqlFunctionCall passwordCheckingFunctionCall = this.createPasswordCheckingCall(
-			userPasswordReplacement.getOldPassword());
+			userPasswordReplacement.getCurrentPassword());
 		SqlFunctionCall updatePasswordFunctionCall = new SimpleCommandSqlFunctionCall<>(
 			"update_user_password",
 			Arrays.asList(
@@ -151,7 +151,7 @@ public class UserDao extends CrudItemDao<User>
 	{
 		if (!passwordGenerator.isStoredPassword(password, encryptedUserPassword))
 		{
-			throw new JeffFarmWsException("Incorrect old password.");
+			throw new JeffFarmWsException("Incorrect current password.");
 		}
 	}
 }

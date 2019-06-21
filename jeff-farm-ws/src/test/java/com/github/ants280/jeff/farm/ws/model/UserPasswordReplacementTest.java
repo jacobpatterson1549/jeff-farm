@@ -22,9 +22,9 @@ public class UserPasswordReplacementTest
 	{
 		UserPasswordReplacement userPasswordReplacement = new UserPasswordReplacement()
 			.setId(61)
-			.setOldPassword("apple")
+			.setCurrentPassword("apple")
 			.setNewPassword("B4n4n4");
-		String expectedValue = "{\"id\":61,\"newPassword\":\"B4n4n4\",\"oldPassword\":\"apple\"}";
+		String expectedValue = "{\"id\":61,\"currentPassword\":\"apple\",\"newPassword\":\"B4n4n4\"}";
 
 		String actualValue = jsonb.toJson(userPasswordReplacement);
 
