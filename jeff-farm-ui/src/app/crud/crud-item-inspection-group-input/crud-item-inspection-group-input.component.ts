@@ -36,19 +36,19 @@ export class CrudItemInspectionGroupInputComponent<
   ngOnInit() {
     this.formItems = this.crudItemInspectionGroupService.createCrudItemInspection().getFormItems();
     if (this.inspectionItems.enabled) {
-    this.crudItemInspectionGroupService.getTargets()
-      .subscribe((targets: Map<number, string>) => {
-        this.selectTargets = {};
-        this.selectTargets[0] = ' ';
-        for (const [targetId, targetName] of Object.entries(targets)) {
-          this.selectTargets[+targetId] = targetName;
-        }
-        this.inspectionItems.controls
-          .forEach((inspectionItem: AbstractControl) => {
-            const targetId: number = inspectionItem.get('targetId').value;
-            delete this.selectTargets[targetId];
-          });
-      });
+      this.crudItemInspectionGroupService.getTargets()
+        .subscribe((targets: Map<number, string>) => {
+          this.selectTargets = {};
+          this.selectTargets[0] = ' ';
+          for (const [targetId, targetName] of Object.entries(targets)) {
+            this.selectTargets[+targetId] = targetName;
+          }
+          this.inspectionItems.controls
+            .forEach((inspectionItem: AbstractControl) => {
+              const targetId: number = inspectionItem.get('targetId').value;
+              delete this.selectTargets[targetId];
+            });
+        });
     }
   }
 
