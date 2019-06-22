@@ -37,10 +37,10 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/farm_permissions_audit.sql"/>
 	</changeSet>
 
-	<changeSet id="functions/user-id" author="jacobpatterson1549" runOnChange="true">
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/user-id/get_user_id.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/user-id/set_user_id.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/user-id/is_admin_user.sql"/>
+	<changeSet id="functions/misc" author="jacobpatterson1549" runOnChange="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/misc/get_user_id.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/misc/set_user_id.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/misc/is_admin_user.sql"/>
 	</changeSet>
 
 	<changeSet id="functions/permission_check" author="jacobpatterson1549" runOnChange="true">
