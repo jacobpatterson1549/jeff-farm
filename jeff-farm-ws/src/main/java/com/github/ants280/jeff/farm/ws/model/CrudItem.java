@@ -18,6 +18,7 @@ public abstract class CrudItem<T extends CrudItem<T>>
 		.withLocale(Locale.getDefault())
 		.withZone(TimeZone.getDefault().toZoneId());
 	private Integer id;
+	private Integer parentId;
 	private String createdDate;
 	private String modifiedDate;
 
@@ -38,6 +39,17 @@ public abstract class CrudItem<T extends CrudItem<T>>
 	public T setId(Integer id)
 	{
 		this.id = id;
+		return getThis();
+	}
+
+	public Integer getParentId()
+	{
+		return parentId;
+	}
+
+	public T setParentId(Integer parentId)
+	{
+		this.parentId = parentId;
 		return getThis();
 	}
 

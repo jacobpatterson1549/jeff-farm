@@ -88,9 +88,8 @@ public class PoultryInspectionGroupResource
 		return Response.ok(canDelete).build();
 	}
 
-
 	@GET
-	@Path("targets/{parentId}")
+	@Path("targets/{parentId}") // TODO: delete endpoint.  Should request poultry/list/{parentId}
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getTargets(@PathParam("parentId") int parentId)
 	{

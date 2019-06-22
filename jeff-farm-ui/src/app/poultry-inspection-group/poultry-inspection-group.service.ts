@@ -22,7 +22,7 @@ export class PoultryInspectionGroupService
   }
 
   createCrudItemInspection(): PoultryInspection {
-    return new PoultryInspection();
+    return new PoultryInspection(+this.getParentId());
   }
 
   getTypeName(): string {

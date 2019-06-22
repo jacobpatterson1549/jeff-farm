@@ -21,12 +21,12 @@ public class FarmPermissionTest
 	{
 		FarmPermission farmPermission = new FarmPermission()
 			.setId(243)
-			.setFarmId(14)
+			.setParentId(14)
 			.setUserName("Jacob");
 
 		String json = jsonb.toJson(farmPermission);
 
 		assertThat("Nonexistent createdDate, modifiedDate should not be serialized.",
-			json, is("{\"id\":243,\"farmId\":14,\"userName\":\"Jacob\"}"));
+			json, is("{\"id\":243,\"parentId\":14,\"userName\":\"Jacob\"}"));
 	}
 }

@@ -2,7 +2,7 @@ package com.github.ants280.jeff.farm.ws.model;
 
 public class HiveInspection extends CrudItem<HiveInspection>
 {
-	public static final String HIVE_ID_COLUMN = "hive_id";
+	public static final String HIVE_ID_COLUMN = "hive_id";  // parent column
 	public static final String QUEEN_SEEN_COLUMN = "queen_seen";
 	public static final String EGGS_SEEN_COLUMN = "eggs_seen";
 	public static final String LAYING_PATTERN_STARS_COLUMN = "laying_pattern_stars";
@@ -17,7 +17,6 @@ public class HiveInspection extends CrudItem<HiveInspection>
 	public static final String WEATHER_COLUMN = "weather";
 	public static final String TEMPERATURE_F_COLUMN = "temperature_f";
 	public static final String WIND_SPEED_MPH_COLUMN = "wind_speed_mph";
-	private int hiveId;
 	private boolean queenSeen;
 	private boolean eggsSeen;
 	private int layingPatternStars;
@@ -36,17 +35,6 @@ public class HiveInspection extends CrudItem<HiveInspection>
 	@Override
 	protected HiveInspection getThis()
 	{
-		return this;
-	}
-
-	public int getHiveId()
-	{
-		return hiveId;
-	}
-
-	public HiveInspection setHiveId(int hiveId)
-	{
-		this.hiveId = hiveId;
 		return this;
 	}
 

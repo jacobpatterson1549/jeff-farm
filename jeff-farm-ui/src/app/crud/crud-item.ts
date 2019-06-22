@@ -7,11 +7,14 @@ export abstract class CrudItem {
     protected static readonly ITEM_NAMES = ['createdDate', 'modifiedDate'];
 
     public id: number;
+    public parentId: number;
     public createdDate: string;
     public modifiedDate: string;
     public displayValue: string;
 
-    constructor() { }
+    constructor(parentId: number) {
+        this.parentId = parentId;
+    }
 
     abstract getFormItems(): FormItem[];
 
@@ -31,6 +34,7 @@ export abstract class CrudItem {
         this.getFormItems().forEach((formItem: FormItem) =>
             formGroup.addControl(formItem.name, formItem.createControl(fb)));
         formGroup.addControl('id', fb.control(this.id));
+        // ParentId is not added because it never changes.
         return formGroup;
     }
 

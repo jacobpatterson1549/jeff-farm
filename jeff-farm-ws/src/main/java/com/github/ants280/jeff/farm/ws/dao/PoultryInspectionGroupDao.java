@@ -55,7 +55,7 @@ public class PoultryInspectionGroupDao
 		return this.executeCreate("create_poultry_inspection_group",
 			Arrays.asList(new IntegerSqlFunctionParameter(
 					PoultryInspectionGroup.FARM_ID_COLUMN,
-					poultryInspectionGroup.getFarmId()),
+					poultryInspectionGroup.getParentId()),
 				new StringSqlFunctionParameter(PoultryInspectionGroup.NOTES_COLUMN,
 					poultryInspectionGroup.getNotes())),
 			"create_poultry_inspection",
@@ -174,7 +174,7 @@ public class PoultryInspectionGroupDao
 	{
 		return new PoultryInspectionGroup().setId(rs.getInt(
 			PoultryInspectionGroup.ID_COLUMN))
-			.setFarmId(rs.getInt(PoultryInspectionGroup.FARM_ID_COLUMN))
+			.setParentId(rs.getInt(PoultryInspectionGroup.FARM_ID_COLUMN))
 			.setNotes(rs.getString(PoultryInspectionGroup.NOTES_COLUMN))
 			.setCreatedTimestamp(rs.getTimestamp(PoultryInspectionGroup.CREATED_DATE_COLUMN))
 			.setModifiedTimestamp(rs.getTimestamp(PoultryInspectionGroup.MODIFIED_DATE_COLUMN));
@@ -184,7 +184,7 @@ public class PoultryInspectionGroupDao
 	public PoultryInspection mapItem(ResultSet rs) throws SQLException
 	{
 		return new PoultryInspection().setId(rs.getInt(PoultryInspection.ID_COLUMN))
-			.setGroupId(rs.getInt(PoultryInspection.GROUP_ID_COLUMN))
+			.setParentId(rs.getInt(PoultryInspection.GROUP_ID_COLUMN))
 			.setTargetId(rs.getInt(PoultryInspection.TARGET_ID_COLUMN))
 			.setTargetName(rs.getString(PoultryInspection.TARGET_NAME_COLUMN))
 			.setBirdCount(rs.getInt(PoultryInspection.BIRD_COUNT_COLUMN))

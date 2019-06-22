@@ -1,6 +1,4 @@
-import {
-    AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CrudItem } from './crud-item';
 import { CrudItemInspection } from './crud-item-inspection';
@@ -11,8 +9,8 @@ export abstract class CrudItemInspectionGroup
 
     public inspectionItems: V[] = [];
 
-    constructor() {
-        super();
+    constructor(parentId: number) {
+        super(parentId);
     }
 
     getFormGroup(fb: FormBuilder): FormGroup {

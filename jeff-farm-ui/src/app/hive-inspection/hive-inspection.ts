@@ -3,7 +3,6 @@ import { FormItem, FormItemType } from '../crud/form-item';
 
 export class HiveInspection extends CrudItem {
 
-    private hiveId: number;
     private queenSeen: boolean;
     private eggsSeen: boolean;
     private layingPatternStars: number;
@@ -20,8 +19,7 @@ export class HiveInspection extends CrudItem {
     private windSpeedMph: number;
 
     constructor(hiveId: number) {
-        super();
-        this.hiveId = hiveId;
+        super(hiveId);
     }
 
     getFormItems(): FormItem[] {

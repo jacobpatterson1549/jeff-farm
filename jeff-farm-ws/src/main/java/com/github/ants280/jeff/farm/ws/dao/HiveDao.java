@@ -28,7 +28,7 @@ public class HiveDao extends CrudItemDao<Hive>
 		return this.executeCreate(
 				"create_hive",
 				Arrays.asList(
-						new IntegerSqlFunctionParameter(Hive.FARM_ID_COLUMN, hive.getFarmId()),
+						new IntegerSqlFunctionParameter(Hive.FARM_ID_COLUMN, hive.getParentId()),
 						new StringSqlFunctionParameter(Hive.NAME_COLUMN, hive.getName()),
 						new IntegerSqlFunctionParameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger())));
 	}
@@ -85,7 +85,7 @@ public class HiveDao extends CrudItemDao<Hive>
 	{
 		return new Hive()
 				.setId(rs.getInt(Hive.ID_COLUMN))
-				.setFarmId(rs.getInt(Hive.FARM_ID_COLUMN))
+				.setParentId(rs.getInt(Hive.FARM_ID_COLUMN))
 				.setName(rs.getString(Hive.NAME_COLUMN))
 				.setQueenColorInteger(rs.getInt(Hive.QUEEN_COLOR_COLUMN))
 				.setCreatedTimestamp(rs.getTimestamp(Hive.CREATED_DATE_COLUMN))

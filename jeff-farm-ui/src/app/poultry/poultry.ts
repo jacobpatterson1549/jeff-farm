@@ -3,12 +3,10 @@ import { FormItem, FormItemType } from '../crud/form-item';
 
 export class Poultry extends CrudItem {
 
-    public farmId: number;
     public name: string;
 
     constructor(farmId: number) {
-        super();
-        this.farmId = farmId;
+        super(farmId);
     }
 
     getFormItems(): FormItem[] {

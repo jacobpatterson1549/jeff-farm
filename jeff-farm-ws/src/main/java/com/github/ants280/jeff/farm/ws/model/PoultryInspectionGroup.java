@@ -5,10 +5,9 @@ import java.util.List;
 public class PoultryInspectionGroup
 	extends CrudItemInspectionGroup<PoultryInspection, PoultryInspectionGroup>
 {
-	public static final String FARM_ID_COLUMN = "farm_id";
+	public static final String FARM_ID_COLUMN = "farm_id"; // parent column
 	public static final String NOTES_COLUMN = "notes";
 	private List<PoultryInspection> items;
-	private int farmId;
 	private String notes;
 
 	@Override
@@ -27,17 +26,6 @@ public class PoultryInspectionGroup
 	public PoultryInspectionGroup setInspectionItems(List<PoultryInspection> items)
 	{
 		this.items = items;
-		return this;
-	}
-
-	public int getFarmId()
-	{
-		return farmId;
-	}
-
-	public PoultryInspectionGroup setFarmId(int farmId)
-	{
-		this.farmId = farmId;
 		return this;
 	}
 

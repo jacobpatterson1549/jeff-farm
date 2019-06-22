@@ -215,7 +215,7 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 			.collect(Collectors.toMap(CrudItemInspectionGroup::getId,
 				Function.identity()));
 		Map<Integer, List<V>> crudItemsByGroupId = crudItems.stream()
-			.collect(Collectors.groupingBy(CrudItemInspection::getGroupId));
+			.collect(Collectors.groupingBy(CrudItemInspection::getParentId));
 
 		crudItemGroupsById.forEach((id, crudItemGroup) -> crudItemGroup.setInspectionItems(
 			crudItemsByGroupId.get(id)));

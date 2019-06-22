@@ -7,7 +7,7 @@ export class Farm extends CrudItem {
     public location: string;
 
     constructor() {
-        super();
+        super(-1); // Farms have no parent.
     }
 
     getFormItems(): FormItem[] {

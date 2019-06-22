@@ -35,7 +35,7 @@ public class FarmPermissionDaoTest
 		when(mockResultSet.getString(any(String.class))).thenReturn("encrypted current password");
 		FarmPermissionDao farmPermissionDao = new FarmPermissionDao(mockDataSource, mockUserIdDao);
 		FarmPermission farmPermission = new FarmPermission()
-			.setFarmId(14)
+			.setParentId(14)
 			.setUserName("fred");
 
 		try

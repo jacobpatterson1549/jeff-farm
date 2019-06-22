@@ -6,20 +6,8 @@ public abstract class CrudItemInspection<V extends CrudItem, T extends CrudItemI
 	public static final String GROUP_ID_COLUMN = "group_id";
 	public static final String TARGET_ID_COLUMN = "target_id";
 	public static final String TARGET_NAME_COLUMN = "target_name";
-	private int groupId;
 	private int targetId;
 	private String targetName;
-
-	public int getGroupId()
-	{
-		return groupId;
-	}
-
-	public T setGroupId(int groupId)
-	{
-		this.groupId = groupId;
-		return getThis();
-	}
 
 	public int getTargetId()
 	{

@@ -28,12 +28,12 @@ public class HiveTest
 		int queenColor = 0xFF0000; // red
 		Hive hive = new Hive()
 				.setId(id)
-				.setFarmId(farmId)
+				.setParentId(farmId)
 				.setName(name)
 				.setQueenColorInteger(queenColor);
 		
 		assertThat(hive.getId(), is(id));
-		assertThat(hive.getFarmId(), is(farmId));
+		assertThat(hive.getParentId(), is(farmId));
 		assertThat(hive.getName(), is(name));
 		assertThat(hive.getQueenColorInteger(), is(queenColor));
 		assertThat(hive.getQueenColor(), is("#ff0000")); // [special string conversion for ui]
@@ -42,12 +42,12 @@ public class HiveTest
 	@Test
 	public void testDeserialize_minimal()
 	{
-		String serializedFarm = "{\"id\":2,\"farmId\":3,\"name\":\"name2\",\"queenColor\":\"#ff0000\"}";
+		String serializedFarm = "{\"id\":2,\"parentId\":3,\"name\":\"name2\",\"queenColor\":\"#ff0000\"}";
 
 		Hive hive = jsonb.fromJson(serializedFarm, Hive.class);
 
 		assertThat(hive.getId(), is(2));
-		assertThat(hive.getFarmId(), is(3));
+		assertThat(hive.getParentId(), is(3));
 		assertThat("name2", hive.getName(), is("name2"));
 		assertThat( hive.getQueenColor(), is("#ff0000"));
 		assertThat(hive.getCreatedDate(), is(nullValue()));

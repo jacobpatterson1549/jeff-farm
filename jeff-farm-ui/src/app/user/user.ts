@@ -9,7 +9,7 @@ export class User extends CrudItem {
     public lastName: string;
 
     constructor() {
-        super();
+        super(-1); // Users have no parent.
     }
 
     getFormItems(): FormItem[] {

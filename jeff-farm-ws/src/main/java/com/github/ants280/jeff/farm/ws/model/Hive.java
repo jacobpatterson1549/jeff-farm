@@ -6,30 +6,18 @@ import javax.json.bind.annotation.JsonbTransient;
 
 public class Hive extends CrudItem<Hive>
 {
-	public static final String FARM_ID_COLUMN = "farm_id";
+	public static final String FARM_ID_COLUMN = "farm_id"; // parent column
 	public static final String NAME_COLUMN = "name";
 	public static final String QUEEN_COLOR_COLUMN = "queen_color";
 	private static final Predicate<String>
 		IS_VALID_QUEEN_COLOR_PREDICATE
 		= Pattern.compile("^#[0-9a-fA-F]{6}$").asPredicate(); // must be same on ui
-	private int farmId;
 	private String name;
 	private String queenColor;
 
 	@Override
 	protected Hive getThis()
 	{
-		return this;
-	}
-
-	public int getFarmId()
-	{
-		return farmId;
-	}
-
-	public Hive setFarmId(int farmId)
-	{
-		this.farmId = farmId;
 		return this;
 	}
 

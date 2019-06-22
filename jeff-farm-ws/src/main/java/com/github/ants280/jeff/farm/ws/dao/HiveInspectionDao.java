@@ -29,7 +29,7 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 		return this.executeCreate(
 				"create_hive_inspection",
 				Arrays.asList(
-						new IntegerSqlFunctionParameter(HiveInspection.HIVE_ID_COLUMN, hiveInspection.getHiveId()),
+						new IntegerSqlFunctionParameter(HiveInspection.HIVE_ID_COLUMN, hiveInspection.getParentId()),
 						new BooleanSqlFunctionParameter(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.getQueenSeen()),
 						new BooleanSqlFunctionParameter(HiveInspection.EGGS_SEEN_COLUMN, hiveInspection.getEggsSeen()),
 						new IntegerSqlFunctionParameter(HiveInspection.LAYING_PATTERN_STARS_COLUMN, hiveInspection.getLayingPatternStars()),
@@ -107,7 +107,7 @@ public class HiveInspectionDao extends CrudItemDao<HiveInspection>
 	{
 		return new HiveInspection()
 				.setId(rs.getInt(HiveInspection.ID_COLUMN))
-				.setHiveId(rs.getInt(HiveInspection.HIVE_ID_COLUMN))
+				.setParentId(rs.getInt(HiveInspection.HIVE_ID_COLUMN))
 				.setQueenSeen(rs.getBoolean(HiveInspection.QUEEN_SEEN_COLUMN))
 				.setEggsSeen(rs.getBoolean(HiveInspection.EGGS_SEEN_COLUMN))
 				.setLayingPatternStars(rs.getInt(HiveInspection.LAYING_PATTERN_STARS_COLUMN))

@@ -20,16 +20,18 @@ public class PoultryInspectionGroupUpdateTest
 	@Test
 	public void testDeserialize_basic()
 	{
-		String serializedFarm = "{\"group\":{\"inspectionItems\":[{\"id\":8,\"groupId\":18,\"targetId\":5,\"targetName\":\"duck\",\"birdCount\":10,\"eggCount\":20}],\"farmId\":14,\"id\":18,\"notes\":\"myNotes\"},\"addItems\":[{\"targetId\":6,\"targetName\":\"chicken\",\"birdCount\":3,\"eggCount\":4}],\"removeItemIds\":[9]}";
+		String serializedFarm = "{\"group\":{\"inspectionItems\":[{\"id\":8,\"parentId\":18,\"targetId\":5,\"targetName\":\"duck\",\"birdCount\":10,\"eggCount\":20}],\"parentId\":14,\"id\":18,\"notes\":\"myNotes\"}"
+			+ ",\"addItems\":[{\"targetId\":6,\"targetName\":\"chicken\",\"birdCount\":3,\"eggCount\":4}]"
+			+ ",\"removeItemIds\":[9]}";
 
 		PoultryInspectionGroupUpdate
 			pigUpdate = jsonb.fromJson(serializedFarm, PoultryInspectionGroupUpdate.class);
 
-		assertThat(pigUpdate.getGroup().getFarmId(), is(14));
+		assertThat(pigUpdate.getGroup().getParentId(), is(14));
 		assertThat(pigUpdate.getGroup().getNotes(), is("myNotes"));
 		assertThat(pigUpdate.getGroup().getInspectionItems().size(), is(1));
 		assertThat(pigUpdate.getGroup().getInspectionItems().get(0).getId(), is(8));
-		assertThat(pigUpdate.getGroup().getInspectionItems().get(0).getGroupId(), is(18));
+		assertThat(pigUpdate.getGroup().getInspectionItems().get(0).getParentId(), is(18));
 		assertThat(pigUpdate.getGroup().getInspectionItems().get(0).getTargetId(), is(5));
 		assertThat(pigUpdate.getGroup().getInspectionItems().get(0).getTargetName(), is("duck")); // not used, but worth checking
 		assertThat(pigUpdate.getGroup().getInspectionItems().get(0).getBirdCount(), is(10));
