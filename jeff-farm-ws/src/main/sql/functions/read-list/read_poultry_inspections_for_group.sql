@@ -20,7 +20,8 @@ $body$
 				, pi.modified_date
 			FROM poultry_inspections AS pi
 			JOIN poultry AS p ON pi.target_id = p.id
-			WHERE pi.group_id = read_poultry_inspections_for_group.group_id;
+			WHERE pi.group_id = read_poultry_inspections_for_group.group_id
+			ORDER BY pi.created_date DESC;
 		END IF;
 	END
 $body$

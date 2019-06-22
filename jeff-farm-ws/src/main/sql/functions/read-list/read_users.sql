@@ -16,7 +16,8 @@ $body$
 				, u.last_name
 				, u.created_date
 				, u.modified_date
-			FROM users AS u;
+			FROM users AS u
+			ORDER BY u.created_date DESC;
 		END IF;
 	END
 $body$

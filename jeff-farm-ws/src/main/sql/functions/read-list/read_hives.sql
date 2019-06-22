@@ -17,7 +17,8 @@ $body$
 				, h.created_date
 				, h.modified_date
 			FROM hives AS h
-			WHERE h.farm_id = read_hives.farm_id;
+			WHERE h.farm_id = read_hives.farm_id
+			ORDER BY h.created_date DESC;
 		END IF;
 	END
 $body$

@@ -16,7 +16,8 @@ $body$
 				, pig.created_date
 				, pig.modified_date
 			FROM poultry_inspection_groups AS pig
-			WHERE pig.farm_id = read_poultry_inspection_groups.farm_id;
+			WHERE pig.farm_id = read_poultry_inspection_groups.farm_id
+			ORDER BY pig.created_date DESC;
 		END IF;
 	END
 $body$

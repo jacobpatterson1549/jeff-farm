@@ -16,7 +16,8 @@ $body$
 				, h.created_date
 				, h.modified_date
 			FROM poultry AS h
-			WHERE h.farm_id = read_poultry_list.farm_id;
+			WHERE h.farm_id = read_poultry_list.farm_id
+			ORDER BY h.created_date DESC;
 		END IF;
 	END
 $body$

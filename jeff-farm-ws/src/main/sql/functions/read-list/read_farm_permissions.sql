@@ -17,7 +17,8 @@ $body$
 				, fp.modified_date
 			FROM farm_permissions AS fp
 			JOIN users AS u ON fp.user_id = u.id
-			WHERE fp.farm_id = read_farm_permissions.farm_id;
+			WHERE fp.farm_id = read_farm_permissions.farm_id
+			ORDER BY fp.created_date DESC;
 		END IF;
 	END
 $body$
