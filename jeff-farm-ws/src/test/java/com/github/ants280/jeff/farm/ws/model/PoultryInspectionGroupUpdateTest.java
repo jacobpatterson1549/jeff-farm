@@ -34,12 +34,12 @@ public class PoultryInspectionGroupUpdateTest
 		assertThat(pigUpdate.getGroup().getInspectionItems().get(0).getTargetName(), is("duck")); // not used, but worth checking
 		assertThat(pigUpdate.getGroup().getInspectionItems().get(0).getBirdCount(), is(10));
 		assertThat(pigUpdate.getGroup().getInspectionItems().get(0).getEggCount(), is(20));
-		assertThat(pigUpdate.getAddItems().size(), is(1));
-		assertThat(pigUpdate.getAddItems().get(0).getTargetId(), is(6));
-		assertThat(pigUpdate.getAddItems().get(0).getTargetName(), is("chicken")); // not used, but worth checking
-		assertThat(pigUpdate.getAddItems().get(0).getBirdCount(), is(3));
-		assertThat(pigUpdate.getAddItems().get(0).getEggCount(), is(4));
-		assertThat(pigUpdate.getRemoveItemIds().size(), is(1));
-		assertThat(pigUpdate.getRemoveItemIds().get(0), is(9));
+		assertThat(pigUpdate.getAddItems().length, is(1));
+		assertThat(pigUpdate.getAddItems()[0].getTargetId(), is(6));
+		assertThat(pigUpdate.getAddItems()[0].getTargetName(), is("chicken")); // not used, but worth checking
+		assertThat(pigUpdate.getAddItems()[0].getBirdCount(), is(3));
+		assertThat(pigUpdate.getAddItems()[0].getEggCount(), is(4));
+		assertThat(pigUpdate.getRemoveItemIds().length, is(1));
+		assertThat(pigUpdate.getRemoveItemIds()[0], is(9));
 	}
 }

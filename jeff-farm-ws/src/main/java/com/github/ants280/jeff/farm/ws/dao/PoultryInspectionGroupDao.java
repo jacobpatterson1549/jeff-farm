@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.sql.DataSource;
@@ -132,14 +133,11 @@ public class PoultryInspectionGroupDao
 				.map(updateParameterMapper)
 				.collect(Collectors.toList()),
 			"create_poultry_inspection",
-			poultryInspectionGroupUpdate.getAddItems()
-				.stream()
+			Arrays.stream(poultryInspectionGroupUpdate.getAddItems())
 				.map(addItemParameterMapper)
 				.collect(Collectors.toList()),
 			"delete_poultry_inspection",
-			poultryInspectionGroupUpdate.getRemoveItemIds()
-				.stream()
-				.mapToInt(Integer::intValue)
+			IntStream.of(poultryInspectionGroupUpdate.getRemoveItemIds())
 				.mapToObj(deleteItemParameterMapper)
 				.collect(Collectors.toList()));
 	}
