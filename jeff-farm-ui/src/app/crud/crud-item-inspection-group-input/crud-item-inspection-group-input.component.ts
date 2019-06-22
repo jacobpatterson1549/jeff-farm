@@ -30,7 +30,7 @@ export class CrudItemInspectionGroupInputComponent<
     route: ActivatedRoute,
     private fb: FormBuilder,
     private crudItemInspectionGroupService: CrudItemInspectionGroupService<U, V, T>) {
-    this.crudItemInspectionGroupService.setRoute(route); // TODO: why is this needed?
+    this.crudItemInspectionGroupService.setRoute(route);
   }
 
   ngOnInit() {
