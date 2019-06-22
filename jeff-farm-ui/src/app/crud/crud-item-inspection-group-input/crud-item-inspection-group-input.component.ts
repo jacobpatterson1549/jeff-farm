@@ -22,7 +22,7 @@ export class CrudItemInspectionGroupInputComponent<
   inspectionItems: FormArray;
   formItems: FormItem[];
   formItemType = FormItemType; // used for the ngSwitch in the template
-  selectTargets: object;
+  selectTargets: object = {};
   objectKeys = Object.keys; // used in the template
   @ViewChildren(CrudItemInputComponent) groupEditors: QueryList<CrudItemInputComponent<T>>;
 
@@ -35,6 +35,7 @@ export class CrudItemInspectionGroupInputComponent<
 
   ngOnInit() {
     this.formItems = this.crudItemInspectionGroupService.createCrudItemInspection().getFormItems();
+    if (this.inspectionItems.enabled) {
     this.crudItemInspectionGroupService.getTargets()
       .subscribe((targets: Map<number, string>) => {
         this.selectTargets = {};
@@ -48,6 +49,7 @@ export class CrudItemInspectionGroupInputComponent<
             delete this.selectTargets[targetId];
           });
       });
+    }
   }
 
   addInspectionItem(targetIndex: number) {
