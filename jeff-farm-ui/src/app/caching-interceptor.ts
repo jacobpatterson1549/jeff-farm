@@ -4,13 +4,16 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 
 import { CachingService } from './caching.service';
+import { CrudItem } from './crud/crud-item';
+import { CrudItemInspectionGroupUpdate } from './crud/crud-item-inspection-group-update';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CachingInterceptor implements HttpInterceptor {
 
-    constructor(private cachingService: CachingService) { }
+    constructor(
+        private cachingService: CachingService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         switch (req.method) {
@@ -18,15 +21,43 @@ export class CachingInterceptor implements HttpInterceptor {
                 return this.cachingService.handle(req, next);
             case 'POST':
             case 'PUT':
+                this.clearCache(`${req.url}/${this.getId(req.body)}`, this.getParentId(req.body));
+                break;
             case 'DELETE':
-                this.cachingService.remove(req.url);
-                const parentUrl = req.url.substr(0, req.url.lastIndexOf('/'));
-                this.cachingService.remove(parentUrl);
-                const grandParentUrl = parentUrl.substr(0, parentUrl.lastIndexOf('/'));
-                this.cachingService.remove(grandParentUrl);
-                return next.handle(req);
+                this.clearCache(req.url, this.getParentId(req.body));
+                break;
             default:
-                return next.handle(req);
+                break;
         }
+        return next.handle(req);
+    }
+
+    private clearCache(idUrl: string, parentId: number) {
+        this.cachingService.remove(idUrl);
+        const canDeleteUrl = `${idUrl}/canDelete`;
+        this.cachingService.remove(canDeleteUrl);
+        const parentUrl = idUrl.substr(0, idUrl.lastIndexOf('/'));
+        this.cachingService.remove(parentUrl);
+        const listUrl = `${parentUrl}/list/${parentId}`;
+        this.cachingService.remove(listUrl);
+        const targetsUrl = `${parentUrl}/inspectionGroup/targets/${parentId}`;
+        this.cachingService.remove(targetsUrl);
+    }
+
+    private getId(body: any): number {
+        if (body instanceof CrudItem) {
+            return body.id;
+        }
+        if (body instanceof CrudItemInspectionGroupUpdate) {
+            return body.group.id;
+        }
+        return null;
+    }
+
+    private getParentId(body: any): number {
+        if (body instanceof CrudItem) {
+            return body.parentId;
+        }
+        return null;
     }
 }
