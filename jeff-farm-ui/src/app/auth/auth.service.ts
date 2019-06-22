@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoginSuccess } from '../login/login-success';
+import { CachingService } from '../caching.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,13 @@ export class AuthService {
     return localStorage.getItem(this.ADMIN_USER_KEY) === String(true);
   }
 
+  constructor(
+    private cachingService: CachingService) { }
+
   clearCredentials() {
     localStorage.removeItem(this.USER_ID_KEY);
     localStorage.removeItem(this.ADMIN_USER_KEY);
+    this.cachingService.clear();
   }
 
   setLoggedIn(loginSuccess: LoginSuccess) {
