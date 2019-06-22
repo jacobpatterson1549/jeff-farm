@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -113,7 +114,7 @@ public class PoultryInspectionGroupDao
 				poultryInspection.getBirdCount()),
 			new IntegerSqlFunctionParameter(PoultryInspection.EGG_COUNT_COLUMN,
 				poultryInspection.getEggCount()));
-		Function<Integer, List<SqlFunctionParameter>>
+		IntFunction<List<SqlFunctionParameter>>
 			deleteItemParameterMapper
 			= itemId -> Collections.singletonList(new IntegerSqlFunctionParameter(
 			PoultryInspection.ID_COLUMN,
@@ -138,7 +139,8 @@ public class PoultryInspectionGroupDao
 			"delete_poultry_inspection",
 			poultryInspectionGroupUpdate.getRemoveItemIds()
 				.stream()
-				.map(deleteItemParameterMapper)
+				.mapToInt(Integer::intValue)
+				.mapToObj(deleteItemParameterMapper)
 				.collect(Collectors.toList()));
 	}
 
