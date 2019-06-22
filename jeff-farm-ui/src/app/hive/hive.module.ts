@@ -16,7 +16,10 @@ import { HiveService } from './hive.service';
   imports: [
     CommonModule,
     CrudModule,
-    RouterModule.forChild([{ path: '', loadChildren: () => import('../crud/crud.module').then(m => m.CrudModule) }]),
+    RouterModule.forChild([{
+      path: '', loadChildren: () => import('../crud/crud.module')
+        .then(m => m.CrudModule)
+    }]),
   ],
 })
 export class HiveModule { }

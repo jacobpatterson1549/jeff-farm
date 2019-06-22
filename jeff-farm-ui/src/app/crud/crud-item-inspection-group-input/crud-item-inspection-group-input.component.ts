@@ -54,7 +54,8 @@ export class CrudItemInspectionGroupInputComponent<
     if (targetIndex > 0 // not blank item
       && this.inspectionItems != null
       && this.crudItemInspectionGroupService instanceof CrudItemInspectionGroupService) {
-      const inspectionItem: FormGroup = this.crudItemInspectionGroupService.createCrudItemInspection().getFormGroup(this.fb);
+      const inspectionItem: FormGroup = this.crudItemInspectionGroupService
+        .createCrudItemInspection().getFormGroup(this.fb);
       const addTargetId: number = +Object.keys(this.selectTargets)[targetIndex];
       inspectionItem.patchValue({
         targetId: addTargetId,

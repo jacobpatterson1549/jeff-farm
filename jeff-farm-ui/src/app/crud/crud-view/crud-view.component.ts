@@ -32,12 +32,13 @@ export class CrudViewComponent<T extends CrudItem> implements OnInit {
   ngOnInit() {
     this.crudChildren = this.crudItemService.getCrudChildren();
     this.crudItemService.get()
-    .subscribe((crudItem: T) => {
-      this.crudItem = crudItem;
-      this.formItems = this.crudItemService.getFormItems(this.crudItem);
-      this.crudForm = this.crudItemService.getCrudForm(this.crudItem, this.fb);
-      this.crudForm.disable(); // <-- this makes the crud-view different from the crud-form (in addition to the form)
-      this.titleService.setTitle(`${this.crudItemService.getTypeName()} ${crudItem.getDisplayValue()} details`);
+      .subscribe((crudItem: T) => {
+        this.crudItem = crudItem;
+        this.formItems = this.crudItemService.getFormItems(this.crudItem);
+        this.crudForm = this.crudItemService.getCrudForm(this.crudItem, this.fb);
+        this.crudForm.disable(); // This makes the crud-view different from the crud-form.
+        this.titleService.setTitle(
+          `${this.crudItemService.getTypeName()} ${crudItem.getDisplayValue()} details`);
       });
 
     this.crudItemService.canDelete()

@@ -17,7 +17,10 @@ import { UserService } from './user.service';
   imports: [
     CommonModule,
     CrudModule,
-    RouterModule.forChild([{ path: '', loadChildren: () => import('../crud/crud.module').then(m => m.CrudModule) }]),
+    RouterModule.forChild([{
+      path: '', loadChildren: () => import('../crud/crud.module')
+        .then(m => m.CrudModule)
+    }]),
     UserRoutingModule,
   ],
 })

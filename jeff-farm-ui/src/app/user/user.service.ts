@@ -90,7 +90,8 @@ export class UserService extends CrudItemService<User> {
       const formItems: FormItem[] = super.getFormItems(crudItem);
       if (!this.isRouteLoginCreate()) {
         return formItems
-          .filter((formItem: FormItem) => formItem.name !== 'userName' && formItem.name !== 'password');
+          .filter((formItem: FormItem) =>
+            formItem.name !== 'userName' && formItem.name !== 'password');
       }
       return formItems;
     }

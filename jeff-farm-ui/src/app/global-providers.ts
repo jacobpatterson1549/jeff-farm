@@ -9,6 +9,6 @@ import { HostInterceptor } from './host-interceptor';
 export const GlobalProviders = [
     { provide: HTTP_INTERCEPTORS, useClass: HostInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true }, // should be last interceptor
+    { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true }, // should be last
     { provide: ErrorHandler, useClass: ErrorMessagesHandler },
 ];

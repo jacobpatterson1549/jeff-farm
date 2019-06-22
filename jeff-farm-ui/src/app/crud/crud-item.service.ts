@@ -112,7 +112,8 @@ export abstract class CrudItemService<T extends CrudItem> {
   }
 
   getViewStepsToParent(): number {
-    return 2; // The view is nested inside the CrudDetailComponent, but the visual parent is CrudHomeComponent
+    // The view is inside the CrudDetailComponent, but the visual parent is CrudHomeComponent
+    return 2;
   }
 
   getFormItems(crudItem: T): FormItem[] {

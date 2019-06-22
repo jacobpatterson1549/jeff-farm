@@ -43,13 +43,15 @@ export abstract class CrudItemInspectionGroupService<
     const removeItemIds: number[] = [];
     for (let i = t.inspectionItems.length - 1; i >= 0; i--) {
       const inspectionItem: V = t.inspectionItems[i];
-      if (!updatedValue.inspectionItems.find(updatedInspectionItem => updatedInspectionItem.id === inspectionItem.id)) {
+      if (!updatedValue.inspectionItems.find(updatedInspectionItem =>
+        updatedInspectionItem.id === inspectionItem.id)) {
         removeItemIds.push(inspectionItem.id);
         t.inspectionItems.splice(i, 1);
       }
     }
     Object.assign(t, updatedValue);
-    const inspectionGroupUpdate: CrudItemInspectionGroupUpdate<V, T> = new CrudItemInspectionGroupUpdate(t, addItems, removeItemIds);
+    const inspectionGroupUpdate: CrudItemInspectionGroupUpdate<V, T>
+      = new CrudItemInspectionGroupUpdate(t, addItems, removeItemIds);
     const url = this.getBaseUrl();
     return this.http.put(url, inspectionGroupUpdate)
       .pipe(

@@ -21,7 +21,10 @@ import { PoultryInspectionGroupService } from './poultry-inspection-group.servic
   imports: [
     CommonModule,
     CrudModule,
-    RouterModule.forChild([{ path: '', loadChildren: () => import('../crud/crud.module').then(m => m.CrudModule) }]),
+    RouterModule.forChild([{
+      path: '', loadChildren: () => import('../crud/crud.module')
+        .then(m => m.CrudModule)
+    }]),
   ],
 })
 export class PoultryInspectionGroupModule { }

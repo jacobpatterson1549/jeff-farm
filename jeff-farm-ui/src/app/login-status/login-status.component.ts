@@ -34,7 +34,9 @@ export class LoginStatusComponent implements OnInit {
   }
 
   viewAccount() {
-    const viewAccountUrl = this.authService.isAdminUser() ? '/user' : `/user/${this.authService.getUserId()}`;
+    const viewAccountUrl = this.authService.isAdminUser()
+      ? '/user'
+      : `/user/${this.authService.getUserId()}`;
     this.router.navigate([viewAccountUrl]);
   }
 

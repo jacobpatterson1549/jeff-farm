@@ -13,7 +13,8 @@ const routes: Routes = [
             {
                 path: 'create',
                 component: CrudFormComponent,
-                data: { redirectToParent: true }, // go to parent when creating a user rather than /login/{id}
+                // Go to parent when creating a user rather than /login/{id} :
+                data: { redirectToParent: true },
             },
             { path: '', component: LoginComponent },
         ],

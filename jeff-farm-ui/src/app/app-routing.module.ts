@@ -18,7 +18,8 @@ const routes: Routes = [
   },
   {
     path: 'farm/:farm_id/poultry/inspection',
-    loadChildren: () => import('./poultry-inspection-group/poultry-inspection-group.module').then(m => m.PoultryInspectionGroupModule),
+    loadChildren: () => import('./poultry-inspection-group/poultry-inspection-group.module')
+      .then(m => m.PoultryInspectionGroupModule),
     canActivate: [AuthGuard],
   },
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
   },
   {
     path: 'farm/:farm_id/hive/:hive_id/inspection',
-    loadChildren: () => import('./hive-inspection/hive-inspection.module').then(m => m.HiveInspectionModule),
+    loadChildren: () => import('./hive-inspection/hive-inspection.module')
+      .then(m => m.HiveInspectionModule),
     canActivate: [AuthGuard],
   },
   {
@@ -38,7 +40,8 @@ const routes: Routes = [
   },
   {
     path: 'farm/:farm_id/permission',
-    loadChildren: () => import('./farm-permission/farm-permission.module').then(m => m.FarmPermissionModule),
+    loadChildren: () => import('./farm-permission/farm-permission.module')
+      .then(m => m.FarmPermissionModule),
     canActivate: [AuthGuard],
   },
   {

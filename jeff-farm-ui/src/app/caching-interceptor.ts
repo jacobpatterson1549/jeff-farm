@@ -24,9 +24,7 @@ export class CachingInterceptor implements HttpInterceptor {
                 this.cachingService.remove(parentUrl);
                 const grandParentUrl = parentUrl.substr(0, parentUrl.lastIndexOf('/'));
                 this.cachingService.remove(grandParentUrl);
-
                 return next.handle(req);
-
             default:
                 return next.handle(req);
         }
