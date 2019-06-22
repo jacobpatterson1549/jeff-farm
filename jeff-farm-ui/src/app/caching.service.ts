@@ -43,7 +43,7 @@ export class CachingService {
     }
 
     private removeDeep(key: string, map: Map<string, any>) {
-        for (const k of map.keys()) {
+        for (const k of Array.from(map.keys())) {
             if (k.startsWith(key)) {
                 map.delete(k);
             }
