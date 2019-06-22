@@ -138,11 +138,11 @@ public class UserDao extends CrudItemDao<User>
 
 	private SqlFunctionCall<String> createPasswordCheckingCall(String password)
 	{
-		String FUNCTION_NAME = "read_user_encrypted_password";
-		return new SideEffectSqlFunctionCall<>(FUNCTION_NAME,
+		String functionName = "read_user_encrypted_password";
+		return new SideEffectSqlFunctionCall<>(functionName,
 			Collections.singletonList(new IntegerSqlFunctionParameter(User.ID_COLUMN,
 				userIdDao.getUserId())), // (the current user)
-			new SimpleResultSetTransformer<>(rs -> rs.getString(FUNCTION_NAME)),
+			new SimpleResultSetTransformer<>(rs -> rs.getString(functionName)),
 			encryptedUserPassword -> this.checkPassword(password, encryptedUserPassword),
 			userIdDao);
 	}

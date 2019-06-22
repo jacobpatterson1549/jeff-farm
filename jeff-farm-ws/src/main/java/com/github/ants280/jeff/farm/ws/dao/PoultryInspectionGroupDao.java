@@ -79,16 +79,16 @@ public class PoultryInspectionGroupDao
 	}
 
 	@Override
-	public List<PoultryInspectionGroup> readList(int farm_id)
+	public List<PoultryInspectionGroup> readList(int farmId)
 	{
 		return this.executeReadList("read_poultry_inspection_groups",
 			Collections.singletonList(new IntegerSqlFunctionParameter(
 				PoultryInspectionGroup.ID_COLUMN,
-				farm_id)),
+				farmId)),
 			"read_poultry_inspections_for_farm",
 			Collections.singletonList(new IntegerSqlFunctionParameter(
 				PoultryInspectionGroup.ID_COLUMN,
-				farm_id)));
+				farmId)));
 	}
 
 	@Override
