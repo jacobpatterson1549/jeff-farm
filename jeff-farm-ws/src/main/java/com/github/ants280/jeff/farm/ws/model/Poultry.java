@@ -4,7 +4,6 @@ public class Poultry extends CrudItem<Poultry>
 {
 	public static final String FARM_ID_COLUMN = "farm_id"; // parent column
 	public static final String NAME_COLUMN = "name";
-	private int farmId;
 	private String name;
 
 	@Override
