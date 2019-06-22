@@ -1,11 +1,14 @@
+import { CachingService } from '../caching.service';
 import { LoginSuccess } from '../login/login-success';
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
     let authService: AuthService;
+    let mockCachingService: CachingService;
     beforeEach(() => {
         localStorage.clear();
-        authService = new AuthService();
+        mockCachingService = { clear() { } } as CachingService;
+        authService = new AuthService(mockCachingService);
     });
 
     it('should not be an admin user before logging in', () => {
@@ -73,5 +76,11 @@ describe('AuthService', () => {
         authService.clearCredentials();
         const userId: string = authService.getUserId();
         expect(userId).toBeNull();
+    });
+
+    it('should clear the cache when clearing credentials', () => {
+        spyOn(mockCachingService, 'clear');
+        authService.clearCredentials();
+        expect(mockCachingService.clear).toHaveBeenCalled();
     });
 });

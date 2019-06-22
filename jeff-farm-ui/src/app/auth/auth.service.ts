@@ -11,6 +11,8 @@ export class AuthService {
   private readonly USER_ID_KEY: string = 'userId';
   private readonly ADMIN_USER_KEY: string = 'isAdminUser';
 
+  constructor(private cachingService: CachingService) { }
+
   getUserId(): string {
     return localStorage.getItem(this.USER_ID_KEY);
   }
@@ -18,9 +20,6 @@ export class AuthService {
   isAdminUser(): boolean {
     return localStorage.getItem(this.ADMIN_USER_KEY) === String(true);
   }
-
-  constructor(
-    private cachingService: CachingService) { }
 
   clearCredentials() {
     localStorage.removeItem(this.USER_ID_KEY);
