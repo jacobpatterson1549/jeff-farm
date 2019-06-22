@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -47,10 +48,12 @@ public class SimpleResultSetTransformerTest
 	public void testTransform_twoRows() throws SQLException
 	{
 		ResultSet mockResultSet = mock(ResultSet.class);
-		when(mockResultSet.next()).thenReturn(true, true);
+		when(mockResultSet.next()).thenReturn(true);
 		ResultSetTransformer<String> resultSetTransformer
 			= new SimpleResultSetTransformer<>(rs -> "c");
 
-		resultSetTransformer.transform(mockResultSet);
+		String result = resultSetTransformer.transform(mockResultSet);
+		fail("expected exception to be thrown when ResultSet"
+			+ " has more than one row, bug got: " + result);
 	}
 }
