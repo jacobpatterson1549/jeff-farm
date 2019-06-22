@@ -38,7 +38,15 @@ export class CachingService {
     }
 
     remove(url: string) {
-        this.completedCache.delete(url);
-        this.pendingCache.delete(url);
+        this.removeDeep(url, this.completedCache);
+        this.removeDeep(url, this.pendingCache);
+    }
+
+    private removeDeep(key: string, map: Map<string, any>) {
+        for (const k of map.keys()) {
+            if (k.startsWith(key)) {
+                map.delete(k);
+            }
+        }
     }
 }
