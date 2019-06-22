@@ -94,7 +94,7 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 			new ListResultSetTransformer<>(this::mapItem),
 			userIdDao);
 
-		return this.execute(this::addItemsToGroup,
+		return this.execute(T::setInspectionItems,
 			readGroupFunctionCall,
 			readItemsFunctionCall);
 	}
@@ -198,13 +198,6 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 			userIdDao);
 
 		return this.execute(functionCall);
-	}
-
-	private T addItemsToGroup(T crudItemGroup, List<V> crudItems)
-	{
-		crudItemGroup.setInspectionItems(crudItems);
-
-		return crudItemGroup;
 	}
 
 	private List<T> partitionItemsForGroups(
