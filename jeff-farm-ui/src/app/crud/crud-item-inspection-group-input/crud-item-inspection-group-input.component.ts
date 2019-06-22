@@ -38,7 +38,6 @@ export class CrudItemInspectionGroupInputComponent<
     if (this.inspectionItems.enabled) {
       this.crudItemInspectionGroupService.getTargets()
         .subscribe((targets: Map<number, string>) => {
-          this.selectTargets = {};
           this.selectTargets[0] = ' ';
           for (const [targetId, targetName] of Object.entries(targets)) {
             this.selectTargets[+targetId] = targetName;
