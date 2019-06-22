@@ -1,14 +1,14 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PageNotFoundComponent } from './page-not-found.component';
-import { GlobalProviders } from './global-providers';
 import { ErrorMessagesModule } from './error-messages/error-messages.module';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import { GlobalProviders } from './global-providers';
+import { PageNotFoundComponent } from './page-not-found.component';
 
 @NgModule({
   providers: [

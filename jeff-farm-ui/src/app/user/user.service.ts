@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service';
+import { CrudChild } from '../crud/crud-child';
 import { CrudItemService } from '../crud/crud-item.service';
-import { User } from './user';
+import { FormItem } from '../crud/form-item';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { LoginService } from '../login/login.service';
-import { CrudChild } from '../crud/crud-child';
+import { User } from './user';
 import { UserPasswordReplacement } from './user-password-replacement';
-import { FormItem } from '../crud/form-item';
 
 @Injectable()
 export class UserService extends CrudItemService<User> {

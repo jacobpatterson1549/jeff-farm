@@ -1,5 +1,5 @@
-import { User } from './user';
 import { FormItem, FormItemType } from '../crud/form-item';
+import { User } from './user';
 
 export class UserPasswordReplacement extends User {
 

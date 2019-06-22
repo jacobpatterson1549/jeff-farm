@@ -1,11 +1,12 @@
+import { nextTick } from 'q';
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { AuthService } from '../auth/auth.service';
+import { LoginService } from '../login/login.service';
 import { User } from '../user/user';
 import { UserService } from '../user/user.service';
-import { LoginService } from '../login/login.service';
-import { AuthService } from '../auth/auth.service';
-import { nextTick } from 'q';
 
 @Component({
   providers: [UserService],

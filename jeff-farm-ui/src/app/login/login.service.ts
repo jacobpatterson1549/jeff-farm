@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { AuthService } from '../auth/auth.service';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { User } from '../user/user';
-import { AuthService } from '../auth/auth.service';
 import { LoginSuccess } from './login-success';
 
 @Injectable({

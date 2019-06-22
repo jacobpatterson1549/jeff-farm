@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Title } from '@angular/platform-browser';
-
-import { CrudItemService } from '../crud-item.service';
-import { CrudChild } from '../crud-child';
-import { CrudItem } from '../crud-item';
-import { CrudDeleteComponent } from '../crud-delete/crud-delete.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { CrudChild } from '../crud-child';
+import { CrudDeleteComponent } from '../crud-delete/crud-delete.component';
+import { CrudItem } from '../crud-item';
+import { CrudItemService } from '../crud-item.service';
 import { FormItem } from '../form-item';
 
 @Component({

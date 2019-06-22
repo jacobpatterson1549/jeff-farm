@@ -1,13 +1,14 @@
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
+
+import { HttpClient } from '@angular/common/http';
 
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
-import { CrudItemInspectionGroup } from './crud-item-inspection-group';
 import { CrudItem } from './crud-item';
-import { CrudItemService } from './crud-item.service';
 import { CrudItemInspection } from './crud-item-inspection';
+import { CrudItemInspectionGroup } from './crud-item-inspection-group';
 import { CrudItemInspectionGroupUpdate } from './crud-item-inspection-group-update';
+import { CrudItemService } from './crud-item.service';
 
 export abstract class CrudItemInspectionGroupService<
   U extends CrudItem, V extends CrudItemInspection<U>,

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { ErrorMessagesService } from './error-messages.service';
+
 import { ErrorMessage } from './error-message';
+import { ErrorMessagesService } from './error-messages.service';
 
 @Component({
   selector: 'app-error-messages',

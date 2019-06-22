@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-import { CrudItemService } from '../crud/crud-item.service';
 import { CrudChild } from '../crud/crud-child';
-import { Poultry } from './poultry';
+import { CrudItemService } from '../crud/crud-item.service';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
+import { Poultry } from './poultry';
 
 @Injectable()
 export class PoultryService extends CrudItemService<Poultry> {

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 class PasswordFormGroup extends FormGroup {
     constructor(passwordControl: FormControl, fb: FormBuilder) {

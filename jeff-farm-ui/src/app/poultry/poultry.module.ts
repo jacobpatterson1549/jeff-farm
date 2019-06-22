@@ -1,9 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
 
-import { CrudModule } from '../crud/crud.module';
 import { CrudItemService } from '../crud/crud-item.service';
+import { CrudModule } from '../crud/crud.module';
 import { PoultryService } from './poultry.service';
 
 @NgModule({

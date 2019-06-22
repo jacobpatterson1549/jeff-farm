@@ -1,4 +1,4 @@
-import { Validators, FormControl, ValidatorFn, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 export enum FormItemType {
     String,

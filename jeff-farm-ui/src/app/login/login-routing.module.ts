@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { CrudFormComponent } from '../crud/crud-form/crud-form.component';
 import { LoginHomeComponent } from './login-home.component';

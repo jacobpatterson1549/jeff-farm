@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { CrudItemService } from '../crud-item.service';
 import { CrudItem } from '../crud-item';
+import { CrudItemService } from '../crud-item.service';
 
 @Component({
   templateUrl: './crud-detail.component.html',

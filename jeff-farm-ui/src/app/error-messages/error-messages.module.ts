@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ErrorMessagesComponent } from './error-messages.component';
+import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { ErrorMessagesComponent } from './error-messages.component';
 
 @NgModule({
   declarations: [

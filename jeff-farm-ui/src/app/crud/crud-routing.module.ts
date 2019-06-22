@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
+import { CrudDetailComponent } from './crud-detail/crud-detail.component';
+import { CrudFormComponent } from './crud-form/crud-form.component';
 import { CrudHomeComponent } from './crud-home/crud-home.component';
 import { CrudListComponent } from './crud-list/crud-list.component';
-import { CrudFormComponent } from './crud-form/crud-form.component';
 import { CrudViewComponent } from './crud-view/crud-view.component';
-import { CrudDetailComponent } from './crud-detail/crud-detail.component';
 
 const routes: Routes = [
     {

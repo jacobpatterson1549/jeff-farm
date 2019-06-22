@@ -1,13 +1,13 @@
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormGroup, FormArray, AbstractControl, FormBuilder } from '@angular/forms';
-
-import { FormItemType, FormItem } from '../form-item';
-import { CrudItem } from '../crud-item';
-import { CrudItemInspectionGroupService } from '../crud-item-inspection-group.service';
-import { CrudItemInspectionGroup } from '../crud-item-inspection-group';
-import { CrudItemInspection } from '../crud-item-inspection';
-import { CrudItemInputComponent } from '../crud-item-input/crud-item-input.component';
+import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+
+import { CrudItem } from '../crud-item';
+import { CrudItemInputComponent } from '../crud-item-input/crud-item-input.component';
+import { CrudItemInspection } from '../crud-item-inspection';
+import { CrudItemInspectionGroup } from '../crud-item-inspection-group';
+import { CrudItemInspectionGroupService } from '../crud-item-inspection-group.service';
+import { FormItem, FormItemType } from '../form-item';
 
 @Component({
   selector: 'app-crud-item-inspection-group-input',

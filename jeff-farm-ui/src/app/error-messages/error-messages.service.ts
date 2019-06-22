@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+
+import { HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../auth/auth.service';
 import { ErrorMessage } from './error-message';

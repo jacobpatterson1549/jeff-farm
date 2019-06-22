@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
-import { CrudItemService } from '../crud-item.service';
 import { CrudChild } from '../crud-child';
 import { CrudItem } from '../crud-item';
+import { CrudItemService } from '../crud-item.service';
 
 @Component({
   templateUrl: './crud-list.component.html',

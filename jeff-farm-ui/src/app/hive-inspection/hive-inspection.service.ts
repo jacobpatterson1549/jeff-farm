@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import { CrudItemService } from '../crud/crud-item.service';
-import { HiveInspection } from './hive-inspection';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
+import { HiveInspection } from './hive-inspection';
 
 @Injectable()
 export class HiveInspectionService extends CrudItemService<HiveInspection> {

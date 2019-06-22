@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
-import { AuthService } from '../auth/auth.service';
 import { catchError } from 'rxjs/operators';
 
-import { LoginService } from './login.service';
-import { environment } from '../../environments/environment';
-import { LoginSuccess } from './login-success';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+
+import { environment } from '../../environments/environment';
+import { AuthService } from '../auth/auth.service';
+import { LoginSuccess } from './login-success';
+import { LoginService } from './login.service';
 
 @Component({
   templateUrl: './login.component.html',

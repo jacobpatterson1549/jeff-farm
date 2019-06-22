@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormArray } from '@angular/forms';
+import { FormArray, FormGroup } from '@angular/forms';
 
-import { FormItem, FormItemType } from '../form-item';
 import { CrudItem } from '../crud-item';
+import { FormItem, FormItemType } from '../form-item';
 
 @Component({
   selector: 'app-crud-item-input',

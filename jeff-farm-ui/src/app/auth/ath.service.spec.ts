@@ -1,5 +1,5 @@
-import { AuthService } from './auth.service';
 import { LoginSuccess } from '../login/login-success';
+import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
     let authService: AuthService;

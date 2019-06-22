@@ -1,8 +1,9 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { async, TestBed } from '@angular/core/testing';
+
 import { AppRoutingModule } from './app-routing.module';
-import { PageNotFoundComponent } from './page-not-found.component';
+import { AppComponent } from './app.component';
 import { ErrorMessagesModule } from './error-messages/error-messages.module';
+import { PageNotFoundComponent } from './page-not-found.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
