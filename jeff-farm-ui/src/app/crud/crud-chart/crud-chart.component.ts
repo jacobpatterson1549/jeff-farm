@@ -34,18 +34,16 @@ export class CrudChartComponent
       }
     },
     xAxis: {
-      // type: 'datetime',
       categories: [],
       crosshair: true
     },
     yAxis: {
-      title: { }
+      title: {}
     },
     series: []
   };
   private formItems: FormItem[];
   private groups: T[];
-  private targetNames: string[];
 
   constructor(
     route: ActivatedRoute,
@@ -66,39 +64,38 @@ export class CrudChartComponent
       });
     this.crudItemInspectionGroupService.getTargets()
       .subscribe((targets: Map<number, string>) => {
-        this.targetNames = Object.values(targets);
+        this.options.series = Object.values(targets).map(targetName => {
+          return {
+            name: targetName,
+            data: [],
+          };
+        });
         this.chartFormItem(0);
       });
   }
 
   private chartFormItem(index: number) {
-    if (this.groups == null || this.targetNames == null) {
+    if (this.groups == null || !this.options.series.length) {
       return;
     }
 
     // reset the series
-    const series = [];
-    for (const targetName of this.targetNames) {
-      series.push({
-        name: targetName,
-        data: Array(this.groups.length).fill(''),
-      });
-    }
+    this.options.series.forEach(s => s.data = Array(this.groups.length).fill(''));
 
     // add data to the empty series
     const formItemName: string = this.formItems[index].name;
+    this.options.yAxis.title.text = formItemName;
     for (let x = 0; x < this.groups.length; x++) {
       const group = this.groups[x];
       for (const inspectionItem of group.inspectionItems) {
-        const seriesIndex = series.findIndex(s => s.name === inspectionItem.targetName);
+        const seriesIndex = this.options.series
+        .findIndex(s => s.name === inspectionItem.targetName);
         if (seriesIndex >= 0) {
-          series[seriesIndex].data[x] = inspectionItem[formItemName];
+          this.options.series[seriesIndex].data[x] = inspectionItem[formItemName];
         }
       }
     }
 
-    this.options.yAxis.title.text = formItemName;
-    this.options.series = series;
     Highcharts.chart('chart', this.options); // plot the data
   }
 }
