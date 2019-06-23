@@ -7,6 +7,7 @@ import { CrudItem } from '../crud-item';
 import { CrudItemInspection } from '../crud-item-inspection';
 import { CrudItemInspectionGroup } from '../crud-item-inspection-group';
 import { CrudItemInspectionGroupService } from '../crud-item-inspection-group.service';
+import { FormItem } from '../form-item';
 
 @Component({
   selector: 'app-crud-chart',
@@ -18,15 +19,12 @@ export class CrudChartComponent
   T extends CrudItemInspectionGroup<V>>
   implements OnInit {
 
-  groups: T[];
   public options: any = {
     chart: {
-      type: 'scatter',
+      type: 'column',
       height: 700
     },
-    title: {
-      text: 'Sample Scatter Plot'
-    },
+    title: {},
     credits: {
       enabled: false
     },
@@ -36,26 +34,18 @@ export class CrudChartComponent
       }
     },
     xAxis: {
-      type: 'datetime',
-      labels: {
-        formatter() {
-          return Highcharts.dateFormat('%e %b %y', this.value);
-        }
-      }
+      // type: 'datetime',
+      categories: [],
+      crosshair: true
     },
-    series: [
-      {
-        name: 'Normal',
-        turboThreshold: 500000,
-        data: [[new Date('2018-01-25 18:38:31').getTime(), 2]]
-      },
-      {
-        name: 'Abnormal',
-        turboThreshold: 500000,
-        data: [[new Date('2018-02-05 18:38:31').getTime(), 7]]
-      }
-    ]
+    yAxis: {
+      title: { }
+    },
+    series: []
   };
+  private formItems: FormItem[];
+  private groups: T[];
+  private targetNames: string[];
 
   constructor(
     route: ActivatedRoute,
@@ -64,10 +54,51 @@ export class CrudChartComponent
   }
 
   ngOnInit() {
-    Highcharts.chart('chart', this.options);
+    this.options.title.text
+      = `${this.crudItemInspectionGroupService.getTypeName()} chart`;
+    this.formItems = this.crudItemInspectionGroupService.createCrudItemInspection()
+      .getFormItems();
     this.crudItemInspectionGroupService.getList()
       .subscribe((groups: T[]) => {
         this.groups = groups;
+        this.options.xAxis.categories = groups.map(group => group.createdDate);
+        this.chartFormItem(0);
       });
+    this.crudItemInspectionGroupService.getTargets()
+      .subscribe((targets: Map<number, string>) => {
+        this.targetNames = Object.values(targets);
+        this.chartFormItem(0);
+      });
+  }
+
+  private chartFormItem(index: number) {
+    if (this.groups == null || this.targetNames == null) {
+      return;
+    }
+
+    // reset the series
+    const series = [];
+    for (const targetName of this.targetNames) {
+      series.push({
+        name: targetName,
+        data: Array(this.groups.length).fill(''),
+      });
+    }
+
+    // add data to the empty series
+    const formItemName: string = this.formItems[index].name;
+    for (let x = 0; x < this.groups.length; x++) {
+      const group = this.groups[x];
+      for (const inspectionItem of group.inspectionItems) {
+        const seriesIndex = series.findIndex(s => s.name === inspectionItem.targetName);
+        if (seriesIndex >= 0) {
+          series[seriesIndex].data[x] = inspectionItem[formItemName];
+        }
+      }
+    }
+
+    this.options.yAxis.title.text = formItemName;
+    this.options.series = series;
+    Highcharts.chart('chart', this.options); // plot the data
   }
 }

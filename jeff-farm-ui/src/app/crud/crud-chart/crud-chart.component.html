@@ -1,2 +1,12 @@
+<p>
+  <span>Chart: </span>
+  <select (change)="chartFormItem($event.target.selectedIndex)">
+    <option *ngFor="let formItem of formItems">
+      {{formItem.name}}
+    </option>
+  </select>
+</p>
+
 <div id="chart"></div>
+
 <app-navigation></app-navigation>
