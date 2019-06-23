@@ -4,7 +4,4 @@ import { Component } from '@angular/core';
   selector: 'app-help',
   templateUrl: './help.component.html',
 })
-export class HelpComponent {
-
-  constructor() { }
-}
+export class HelpComponent { }

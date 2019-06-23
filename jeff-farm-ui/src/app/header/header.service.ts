@@ -8,7 +8,12 @@ import { HeaderItem } from './header-item';
 })
 export class HeaderService {
 
-  headerItems: HeaderItem[] = [];
+  // headerItems: HeaderItem[] = [];
+  headerItems: HeaderItem[] = [
+    { name: 'a', url: 'aa' },
+    { name: 'b', url: 'bb' },
+    { name: 'b', url: 'cc' },
+  ];
 
   constructor(private titleService: Title) { }
 

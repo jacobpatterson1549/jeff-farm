@@ -8,5 +8,9 @@ import { HeaderService } from './header.service';
 })
 export class HeaderComponent {
 
-  constructor(headerService: HeaderService) { }
+  constructor(private headerService: HeaderService) { }
+
+  getHeaderItems() {
+    return this.headerService.headerItems;
+  }
 }

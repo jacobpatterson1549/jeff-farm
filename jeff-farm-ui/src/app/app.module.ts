@@ -24,8 +24,8 @@ import { PageNotFoundComponent } from './page-not-found.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    FooterModule, // keep before footer module
     AppRoutingModule,
-    FooterModule,
     ErrorMessagesModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],

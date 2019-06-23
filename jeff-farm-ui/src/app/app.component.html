@@ -1,6 +1,18 @@
-<app-header></app-header>
-<link rel="preconnect" [href]="getServerURL()">
-<h1>Just Effective Farm Facilitation</h1>
-<app-error-messages></app-error-messages>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
+<header class="header">
+    <div class="container">
+        <app-header></app-header>
+    </div>
+</header>
+
+<main role="main" class="container">
+    <link rel="preconnect" [href]="getServerURL()">
+    <h1>Just Effective Farm Facilitation</h1>
+    <app-error-messages></app-error-messages>
+    <router-outlet></router-outlet>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <app-footer></app-footer>
+    </div>
+</footer>
