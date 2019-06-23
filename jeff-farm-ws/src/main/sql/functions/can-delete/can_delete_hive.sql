@@ -11,11 +11,11 @@ $body$
 			AND
 		NOT EXISTS
 		(
-			SELECT hi.hive_id
+			SELECT hi.target_id
 			FROM hive_inspections AS hi
-			WHERE hi.hive_id = can_delete_hive.id
+			WHERE hi.target_id = can_delete_hive.id
 		)
-		into can_delete_hive.can_delete;
+		INTO can_delete_hive.can_delete;
 	END
 $body$
 LANGUAGE plpgsql;
