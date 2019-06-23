@@ -1,6 +1,3 @@
--- DROP TABLE hives_audit;
--- SELECT * FROM hives_audit LIMIT 0;
--- 
 CREATE TABLE IF NOT EXISTS hives_audit
 	( audit_id SERIAL PRIMARY KEY
 	, action_type CHAR(1) NOT NULL -- i (insert), b (before update), a (after update), d (delete)

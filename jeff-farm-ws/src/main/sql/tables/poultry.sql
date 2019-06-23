@@ -1,6 +1,3 @@
--- DROP TABLE poultry;
--- SELECT  * FROM poultry LIMIT 0;
-
 CREATE TABLE IF NOT EXISTS poultry
 	( id SERIAL PRIMARY KEY
 	, farm_id INT NOT NULL

@@ -1,6 +1,3 @@
--- DROP TABLE hive_inspections;
--- SELECT  * FROM hive_inspections LIMIT 0;
-
 CREATE TABLE IF NOT EXISTS hive_inspections
 	( id SERIAL PRIMARY KEY
 	, group_id INT NOT NULL

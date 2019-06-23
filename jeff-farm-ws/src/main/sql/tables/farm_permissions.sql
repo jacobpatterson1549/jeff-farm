@@ -1,6 +1,3 @@
--- DROP TABLE farm_permissions;
--- SELECT  * FROM farm_permissions LIMIT 0;
-
 CREATE TABLE IF NOT EXISTS farm_permissions
 	( id SERIAL PRIMARY KEY
 	, farm_id INT NOT NULL

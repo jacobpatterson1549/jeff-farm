@@ -1,6 +1,3 @@
--- DROP TABLE poultry_inspections;
--- SELECT  * FROM poultry_inspections LIMIT 0;
-
 CREATE TABLE IF NOT EXISTS poultry_inspections
 	( id SERIAL PRIMARY KEY
 	, group_id INT NOT NULL

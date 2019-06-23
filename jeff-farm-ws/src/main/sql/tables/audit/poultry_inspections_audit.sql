@@ -1,6 +1,3 @@
--- DROP TABLE poultry_inspections_audit;
--- SELECT * FROM poultry_inspections_audit LIMIT 0;
--- 
 CREATE TABLE IF NOT EXISTS poultry_inspections_audit
 	( audit_id SERIAL PRIMARY KEY
 	, action_type CHAR(1) NOT NULL -- i (insert), b (before update), a (after update), d (delete)

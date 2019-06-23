@@ -1,6 +1,3 @@
--- DROP TABLE hives;
--- SELECT  * FROM hives LIMIT 0;
-
 CREATE TABLE IF NOT EXISTS hives
 	( id SERIAL PRIMARY KEY
 	, farm_id INT NOT NULL

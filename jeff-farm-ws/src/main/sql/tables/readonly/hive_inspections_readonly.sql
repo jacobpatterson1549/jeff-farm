@@ -1,6 +1,3 @@
--- DROP TABLE hive_inspections_readonly;
--- SELECT  * FROM hive_inspections_readonly LIMIT 0;
-
 CREATE TABLE IF NOT EXISTS hive_inspections_readonly
 	( id INT
 	, group_id INT
