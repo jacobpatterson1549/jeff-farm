@@ -1,8 +1,7 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-public class HiveInspection extends CrudItem<HiveInspection>
+public class HiveInspection extends CrudItemInspection<Hive, HiveInspection>
 {
-	public static final String HIVE_ID_COLUMN = "hive_id";  // parent column
 	public static final String QUEEN_SEEN_COLUMN = "queen_seen";
 	public static final String EGGS_SEEN_COLUMN = "eggs_seen";
 	public static final String LAYING_PATTERN_STARS_COLUMN = "laying_pattern_stars";

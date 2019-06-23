@@ -21,7 +21,7 @@ public class ApplicationConfig extends Application
 		resources.add(FarmResource.class);
 		resources.add(FarmPermissionResource.class);
 		resources.add(HiveResource.class);
-		resources.add(HiveInspectionResource.class);
+		resources.add(HiveInspectionGroupResource.class);
 		resources.add(PoultryResource.class);
 		resources.add(PoultryInspectionGroupResource.class);
 		return resources;
