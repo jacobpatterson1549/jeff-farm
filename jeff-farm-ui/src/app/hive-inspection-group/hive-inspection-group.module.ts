@@ -2,15 +2,20 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { CrudItemInspectionGroupService } from '../crud/crud-item-inspection-group.service';
 import { CrudItemService } from '../crud/crud-item.service';
 import { CrudModule } from '../crud/crud.module';
-import { HiveInspectionService } from './hive-inspection-group.service';
+import { HiveInspectionGroupService } from './hive-inspection-group.service';
 
 @NgModule({
   providers: [
     {
+      provide: CrudItemInspectionGroupService,
+      useClass: HiveInspectionGroupService
+    },
+    {
       provide: CrudItemService,
-      useClass: HiveInspectionService
+      useClass: HiveInspectionGroupService
     },
   ],
   imports: [
@@ -22,4 +27,4 @@ import { HiveInspectionService } from './hive-inspection-group.service';
     }]),
   ],
 })
-export class HiveInspectionModule { }
+export class HiveInspectionGroupModule { }

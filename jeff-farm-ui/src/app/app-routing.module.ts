@@ -30,7 +30,7 @@ const routes: Routes = [
   {
     path: 'farm/:farm_id/hive/inspection',
     loadChildren: () => import('./hive-inspection-group/hive-inspection-group.module')
-      .then(m => m.HiveInspectionModule),
+      .then(m => m.HiveInspectionGroupModule),
     canActivate: [AuthGuard],
   },
   {
