@@ -21,7 +21,7 @@ CREATE FUNCTION create_hive_inspection
 AS
 $body$
 	BEGIN
-		IF permission_check_hive(set_user_id(create_hive_inspection.user_id), create_hive_inspection.hive_id) THEN
+		IF permission_check_hive_inspection_group(set_user_id(create_hive_inspection.user_id), create_hive_inspection.group_id) THEN
 			INSERT INTO hive_inspections
 				( group_id
 				, target_id
@@ -57,8 +57,10 @@ $body$
 				, create_hive_inspection.weather
 				, create_hive_inspection.temperature_f
 				, create_hive_inspection.wind_speed_mph
-			FROM hives AS h
-			WHERE h.id = create_hive_inspection.hive_id
+			FROM hive_inspection_groups AS hig
+			JOIN hives AS h ON create_hive_inspection.target_id = h.id
+			WHERE hig.id = create_hive_inspection.group_id
+				AND hig.farm_id = h.farm_id
 			RETURNING LASTVAL()
 			INTO create_hive_inspection.id;
 		END IF;

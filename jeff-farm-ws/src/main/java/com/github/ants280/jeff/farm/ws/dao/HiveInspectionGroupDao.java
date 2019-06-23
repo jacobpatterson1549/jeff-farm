@@ -44,9 +44,8 @@ public class HiveInspectionGroupDao
 	{
 		Function<HiveInspection, List<SqlFunctionParameter>>
 			itemParameterMapper
-			= hiveInspection -> Arrays.asList(new IntegerSqlFunctionParameter(
-				HiveInspection.GROUP_ID_COLUMN,
-				-1), // is reset by executeCreate()
+			= hiveInspection -> Arrays.asList(
+			new IntegerSqlFunctionParameter(HiveInspection.GROUP_ID_COLUMN, -1), // is reset by executeCreate()
 			new IntegerSqlFunctionParameter(HiveInspection.TARGET_ID_COLUMN, hiveInspection.getTargetId()),
 			new BooleanSqlFunctionParameter(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.getQueenSeen()),
 			new BooleanSqlFunctionParameter(HiveInspection.EGGS_SEEN_COLUMN, hiveInspection.getEggsSeen()),
