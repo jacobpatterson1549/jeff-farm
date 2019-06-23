@@ -1,17 +1,19 @@
-DROP FUNCTION IF EXISTS read_hive_inspections;
-CREATE FUNCTION read_hive_inspections
+DROP FUNCTION IF EXISTS read_hive_inspections_for_farm;
+CREATE FUNCTION read_hive_inspections_for_farm
 	( IN user_id INT
-	, IN hive_id INT
+	, IN farm_id INT
 	)
-RETURNS SETOF hive_inspections
+RETURNS SETOF hive_inspections_readonly
 AS
 $body$
 	BEGIN
-		IF permission_check_hive(set_user_id(read_hive_inspections.user_id), read_hive_inspections.hive_id) THEN
+		IF permission_check_farm(set_user_id(read_hive_inspections_for_farm.user_id), read_hive_inspections_for_farm.farm_id) THEN
 			RETURN QUERY
 			SELECT
-				hi.id
-				, hi.hive_id
+				  hi.id
+				, hi.group_id
+				, hi.target_id
+				, h.name
 				, hi.queen_seen
 				, hi.eggs_seen
 				, hi.laying_pattern_stars
@@ -29,8 +31,9 @@ $body$
 				, hi.created_date
 				, hi.modified_date
 			FROM hive_inspections AS hi
-			WHERE hi.hive_id = read_hive_inspections.hive_id
-			ORDER BY hi.created_date DESC;
+			JOIN hives AS h ON hi.target_id = h.id
+			WHERE h.farm_id = read_hive_inspections_for_farm.farm_id
+			ORDER BY hi.group_id, hi.created_date DESC;
 		END IF;
 	END
 $body$

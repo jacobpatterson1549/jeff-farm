@@ -1,7 +1,8 @@
 DROP FUNCTION IF EXISTS create_hive_inspection;
 CREATE FUNCTION create_hive_inspection
 	( IN user_id INT
-	, IN hive_id INT
+	, IN group_id INT
+	, IN target_id INT
 	, IN queen_seen BOOLEAN
 	, IN eggs_seen BOOLEAN
 	, IN laying_pattern_stars INT
@@ -22,7 +23,8 @@ $body$
 	BEGIN
 		IF permission_check_hive(set_user_id(create_hive_inspection.user_id), create_hive_inspection.hive_id) THEN
 			INSERT INTO hive_inspections
-				( hive_id
+				( group_id
+				, target_id
 				, queen_seen
 				, eggs_seen
 				, laying_pattern_stars
@@ -39,7 +41,8 @@ $body$
 				, wind_speed_mph
 				)
 			SELECT
-				  create_hive_inspection.hive_id
+				  create_hive_inspection.group_id
+				, create_hive_inspection.target_id
 				, create_hive_inspection.queen_seen
 				, create_hive_inspection.eggs_seen
 				, create_hive_inspection.laying_pattern_stars

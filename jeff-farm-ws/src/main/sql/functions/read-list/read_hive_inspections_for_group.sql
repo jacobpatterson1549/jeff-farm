@@ -1,13 +1,13 @@
-DROP FUNCTION IF EXISTS read_hive_inspection;
-CREATE FUNCTION read_hive_inspection
+DROP FUNCTION IF EXISTS read_hive_inspections_for_group;
+CREATE FUNCTION read_hive_inspections_for_group
 	( IN user_id INT
-	, IN id INT
+	, IN group_id INT
 	)
 RETURNS SETOF hive_inspections_readonly
 AS
 $body$
 	BEGIN
-		IF permission_check_hive_inspection(set_user_id(read_hive_inspection.user_id), read_hive_inspection.id) THEN
+		IF permission_check_hive_inspection_group(set_user_id(read_hive_inspections_for_group.user_id), read_hive_inspections_for_group.group_id) THEN
 			RETURN QUERY
 			SELECT
 				  hi.id
@@ -31,8 +31,9 @@ $body$
 				, hi.created_date
 				, hi.modified_date
 			FROM hive_inspections AS hi
-			JOIN hive AS h ON pi.target_id = h.id
-			WHERE hi.id = read_hive_inspection.id;
+			JOIN hives AS h ON hi.target_id = h.id
+			WHERE hi.group_id = read_hive_inspections_for_group.group_id
+			ORDER BY hi.created_date DESC;
 		END IF;
 	END
 $body$

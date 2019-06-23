@@ -3,7 +3,8 @@
 
 CREATE TABLE IF NOT EXISTS hive_inspections
 	( id SERIAL PRIMARY KEY
-	, hive_id INT REFERENCES hives (id)
+	, group_id INT NOT NULL
+	, target_id INT NOT NULL
 	, queen_seen BOOLEAN
 	, eggs_seen BOOLEAN
 	, laying_pattern_stars INT
@@ -21,8 +22,10 @@ CREATE TABLE IF NOT EXISTS hive_inspections
 	, created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	, modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
+	, FOREIGN KEY (group_id)
+		REFERENCES hive_inspection_groups(id)
 	, FOREIGN KEY (hive_id)
-		REFERENCES hives (id)
+		REFERENCES hive(id)
 	);
 
 CREATE OR REPLACE FUNCTION hive_inspection_update_modified_date_function()

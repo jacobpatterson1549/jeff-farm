@@ -13,6 +13,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/user_roles.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/farms.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/hives.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/hive_inspection_groups.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/hive_inspections.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/poultry.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/poultry_inspection_groups.sql"/>
@@ -23,6 +24,7 @@
 	<changeSet id="tables/readonly" author="jacobpatterson1549" runOnChange="true">
 		<comment>Tables used as return types of functions.</comment>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/readonly/farm_permissions_readonly.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/readonly/hive_inspections_readonly.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/readonly/poultry_inspections_readonly.sql"/>
 	</changeSet>
 
@@ -30,6 +32,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/users_audit.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/farms_audit.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/hives_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/hive_inspection_groups_audit.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/hive_inspections_audit.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/poultry_audit.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/poultry_inspection_groups_audit.sql"/>
@@ -49,6 +52,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_farm_permission.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_hive.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_hive_inspection.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_hive_inspection_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_poultry.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_poultry_inspection.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_poultry_inspection_group.sql"/>
@@ -68,6 +72,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_farm_permission.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_hive.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_hive_inspection.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_hive_inspection_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_poultry.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_poultry_inspection.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_poultry_inspection_group.sql"/>
@@ -79,6 +84,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_farm_permission.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_hive.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_hive_inspection.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_hive_inspection_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_poultry.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_poultry_inspection.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_poultry_inspection_group.sql"/>
@@ -90,7 +96,9 @@
 	<changeSet id="functions/read-list" author="jacobpatterson1549" runOnChange="true">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_farm_permissions.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_farms.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_hive_inspections.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_hive_inspection_groups.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_hive_inspections_for_farm.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_hive_inspections_for_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_hives.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_poultry_inspection_groups.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_poultry_inspections_for_farm.sql"/>
@@ -103,6 +111,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_hive.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_hive_inspection.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_hive_inspection_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_poultry.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_poultry_inspection.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_poultry_inspection_group.sql"/>
@@ -116,11 +125,17 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_farm_permission.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_hive.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_hive_inspection.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_hive_inspection_group.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_hive_inspections.sql"/><!-- TODO: rename THESE to delete_hive_inspections_for_group.sql -->
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_poultry.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_poultry_inspection.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_poultry_inspection_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_poultry_inspections.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_user.sql"/>
+	</changeSet>
+
+	<changeSet id="adhoc_hive_inspection_groups" author="jacobpatterson1549" runOnChange="true" runInTransaction="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="adhoc_hive_inspection_groups.sql"/>
 	</changeSet>
 
 </databaseChangeLog>

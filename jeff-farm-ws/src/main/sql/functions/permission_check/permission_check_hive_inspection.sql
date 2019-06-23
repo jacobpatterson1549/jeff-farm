@@ -11,8 +11,8 @@ $body$
 		(
 			SELECT fp.user_id, hi.id
 			FROM farm_permissions AS fp
-			JOIN hives AS h ON fp.farm_id = h.farm_id
-			JOIN hive_inspections AS hi ON h.id = hi.hive_id
+			JOIN hive_inspection_groups AS hig ON fp.farm_id = hig.farm_id
+			JOIN hive_inspections AS hi ON hig.id = hi.group_id
 			WHERE fp.user_id = permission_check_hive_inspection.user_id
 				AND hi.id = permission_check_hive_inspection.hive_inspection_id
 		)
