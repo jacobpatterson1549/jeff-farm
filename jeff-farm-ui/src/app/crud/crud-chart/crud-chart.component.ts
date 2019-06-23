@@ -1,6 +1,7 @@
 import * as Highcharts from 'highcharts';
 
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
 import { CrudItem } from '../crud-item';
@@ -51,11 +52,13 @@ export class CrudChartComponent
 
   constructor(
     route: ActivatedRoute,
+    private titleService: Title,
     private crudItemInspectionGroupService: CrudItemInspectionGroupService<U, V, T>) {
     this.crudItemInspectionGroupService.setRoute(route);
   }
 
   ngOnInit() {
+    this.titleService.setTitle(`${this.crudItemInspectionGroupService.getTypeName()} chart`);
     this.options.title.text
       = `${this.crudItemInspectionGroupService.getTypeName()} chart`;
     this.formItems = this.crudItemInspectionGroupService.createCrudItemInspection()
