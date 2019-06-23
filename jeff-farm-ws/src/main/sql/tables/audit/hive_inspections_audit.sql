@@ -219,20 +219,20 @@ $hive_inspections_audit$
 			, OLD.id
 			, OLD.group_id
 			, OLD.target_id
-			, OLDqueen_seen
-            , OLDeggs_seen
-            , OLDlaying_pattern_stars
-            , OLDtemperament_stars
-            , OLDqueen_cells
-            , OLDsupersedure_cells
-            , OLDswarm_cells
-            , OLDcomb_building_stars
-            , OLDframes_sealed_brood
-            , OLDframes_open_brood
-            , OLDframes_honey
-            , OLDweather
-            , OLDtemperature_f
-            , OLDwind_speed_mph
+			, OLD.queen_seen
+            , OLD.eggs_seen
+            , OLD.laying_pattern_stars
+            , OLD.temperament_stars
+            , OLD.queen_cells
+            , OLD.supersedure_cells
+            , OLD.swarm_cells
+            , OLD.comb_building_stars
+            , OLD.frames_sealed_brood
+            , OLD.frames_open_brood
+            , OLD.frames_honey
+            , OLD.weather
+            , OLD.temperature_f
+            , OLD.wind_speed_mph
 			);
 		RETURN NEW;
 	END;
