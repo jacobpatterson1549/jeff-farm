@@ -69,9 +69,9 @@ export class CrudChartComponent
       });
     this.crudItemInspectionGroupService.getTargets()
       .subscribe((targets: Map<number, string>) => {
-        this.options.series = Object.values(targets).map(targetName => {
+        this.options.series = Object.keys(targets).map(targetId => {
           return {
-            name: targetName,
+            name: targets[targetId],
             data: [],
           };
         });
