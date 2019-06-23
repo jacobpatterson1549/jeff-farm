@@ -1,10 +1,10 @@
 DROP FUNCTION IF EXISTS create_poultry_inspection;
 CREATE FUNCTION create_poultry_inspection
 	( IN user_id INT
-	, group_id INT -- TODO: Add IN to all non-out parameters (audit all functions)
-	, target_id INT
-	, bird_count INT
-	, egg_count INT
+	, IN group_id INT
+	, IN target_id INT
+	, IN bird_count INT
+	, IN egg_count INT
 	, OUT id INT
 	)
 AS
