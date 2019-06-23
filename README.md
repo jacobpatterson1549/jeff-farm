@@ -22,4 +22,4 @@ a website to track farm efficiency
 
 
 ## License
-Project is licensed under the [MIT license](LICENSE.md).
+Project is licensed under the [MIT license](LICENSE).
