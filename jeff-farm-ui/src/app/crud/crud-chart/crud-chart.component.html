@@ -1,6 +1,6 @@
 <p>
   <span>Chart: </span>
-  <select (change)="chartFormItem($event.target.selectedIndex)">
+  <select class="custom-select" (change)="chartFormItem($event.target.selectedIndex)">
     <option *ngFor="let formItem of formItems">
       {{formItem.name}}
     </option>
