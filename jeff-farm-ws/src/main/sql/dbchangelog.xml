@@ -135,7 +135,7 @@
 	</changeSet>
 
 	<changeSet id="adhoc_after" author="jacobpatterson1549" runOnChange="true" runInTransaction="true">
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="adhoc_after"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="adhoc_after.sql"/>
 	</changeSet>
 
 </databaseChangeLog>
