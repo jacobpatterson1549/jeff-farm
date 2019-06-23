@@ -4,6 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
+import { CrudChild } from './crud-child';
 import { CrudItem } from './crud-item';
 import { CrudItemInspection } from './crud-item-inspection';
 import { CrudItemInspectionGroup } from './crud-item-inspection-group';
@@ -22,6 +23,12 @@ export abstract class CrudItemInspectionGroupService<
   }
 
   abstract createCrudItemInspection(): V;
+
+  getCrudGroups(): CrudChild[] {
+    return [
+      { name: 'Chart', path: 'chart' },
+    ];
+  }
 
   get(): Observable<T> {
     return super.get()

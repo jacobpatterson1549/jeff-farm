@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LoginStatusModule } from '../login-status/login-status.module';
 import { SpinnerModule } from '../spinner/spinner.module';
+import { CrudChartComponent } from './crud-chart/crud-chart.component';
 import { CrudDeleteComponent } from './crud-delete/crud-delete.component';
 import { CrudDetailComponent } from './crud-detail/crud-detail.component';
 import { CrudFormComponent } from './crud-form/crud-form.component';
@@ -24,12 +25,16 @@ import { CrudItemInputComponent } from './crud-item-input/crud-item-input.compon
 import {
     CrudItemInspectionGroupInputComponent
 } from './crud-item-inspection-group-input/crud-item-inspection-group-input.component';
+import { CrudItemInspectionGroupGuard } from './crud-item-inspection-group.guard';
 import { CrudListComponent } from './crud-list/crud-list.component';
 import { CrudRoutingModule } from './crud-routing.module';
 import { CrudViewComponent } from './crud-view/crud-view.component';
 import { NavigationComponent } from './navigation.component';
 
 @NgModule({
+  providers: [
+    CrudItemInspectionGroupGuard,
+  ],
   declarations: [
     NavigationComponent,
     CrudHomeComponent,
@@ -47,6 +52,7 @@ import { NavigationComponent } from './navigation.component';
     CrudItemInputColorComponent,
     CrudItemInputPasswordComponent,
     CrudItemInputTextAreaComponent,
+    CrudChartComponent,
   ],
   imports: [
     CommonModule,
