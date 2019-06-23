@@ -134,5 +134,4 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_user.sql"/>
 	</changeSet>
 
-ng serve --open
 </databaseChangeLog>
