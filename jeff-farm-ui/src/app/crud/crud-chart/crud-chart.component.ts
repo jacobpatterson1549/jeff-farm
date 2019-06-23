@@ -19,18 +19,20 @@ export class CrudChartComponent
   T extends CrudItemInspectionGroup<V>>
   implements OnInit {
 
-  public options: any = {
+  public options = {
     chart: {
       type: 'column',
       height: 700
     },
-    title: {},
+    title: {
+      text: '',
+    },
     credits: {
       enabled: false
     },
     tooltip: {
       formatter() {
-        return `x: ${Highcharts.dateFormat('%e %b %y %H:%M:%S', this.x)} y: ${this.y.toFixed(2)}`;
+        return this.y;
       }
     },
     xAxis: {
@@ -38,7 +40,9 @@ export class CrudChartComponent
       crosshair: true
     },
     yAxis: {
-      title: {}
+      title: {
+        text: '',
+      }
     },
     series: []
   };
