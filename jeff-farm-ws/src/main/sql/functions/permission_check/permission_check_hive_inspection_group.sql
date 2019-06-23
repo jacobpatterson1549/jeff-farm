@@ -9,11 +9,11 @@ $body$
 	BEGIN
 		SELECT EXISTS
 		(
-			SELECT fp.user_id, pig.id
+			SELECT fp.user_id, hig.id
 			FROM farm_permissions AS fp
-			JOIN hive_inspection_groups AS pig ON fp.farm_id = pig.farm_id
+			JOIN hive_inspection_groups AS hig ON fp.farm_id = hig.farm_id
 			WHERE fp.user_id = permission_check_hive_inspection_group.user_id
-				AND pig.id = permission_check_hive_inspection_group.hive_inspection_group_id
+				AND hig.id = permission_check_hive_inspection_group.hive_inspection_group_id
 		)
 		INTO permission_check;
 
