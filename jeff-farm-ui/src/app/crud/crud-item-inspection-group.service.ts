@@ -12,7 +12,8 @@ import { CrudItemInspectionGroupUpdate } from './crud-item-inspection-group-upda
 import { CrudItemService } from './crud-item.service';
 
 export abstract class CrudItemInspectionGroupService<
-  U extends CrudItem, V extends CrudItemInspection<U>,
+  U extends CrudItem,
+  V extends CrudItemInspection<U>,
   T extends CrudItemInspectionGroup<V>>
   extends CrudItemService<T> {
 
