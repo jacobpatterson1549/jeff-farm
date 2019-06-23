@@ -19,7 +19,8 @@ ALTER TABLE hive_inspections RENAME COLUMN hive_id TO target_id;
 
 ALTER TABLE hive_inspections ALTER COLUMN group_id SET NOT NULL;
 
-
+ALTER TABLE hive_inspections_audit ADD COLUMN group_id INT;
+ALTER TABLE hive_inspections_audit RENAME COLUMN hive_id TO target_id;
 
 END IF;
 

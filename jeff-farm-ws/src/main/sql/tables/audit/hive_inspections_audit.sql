@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS hive_inspections_audit
 	, user_id INT NOT NULL
 	, action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	, id INT
-	, hive_id INT
+	, group_id INT
+	, target_id INT
 	, queen_seen BOOLEAN
 	, eggs_seen BOOLEAN
 	, laying_pattern_stars INT
@@ -30,45 +31,47 @@ RETURNS TRIGGER AS
 $hive_inspections_audit$
 	BEGIN
 		INSERT INTO hive_inspections_audit
-				( action_type
-				, user_id
-				, id
-				, hive_id
-				, queen_seen
-				, eggs_seen
-				, laying_pattern_stars
-				, temperament_stars
-				, queen_cells
-				, supersedure_cells
-				, swarm_cells
-				, comb_building_stars
-				, frames_sealed_brood
-				, frames_open_brood
-				, frames_honey
-				, weather
-				, temperature_f
-				, wind_speed_mph
-				)
-			VALUES
-				( 'i'
-				, get_user_id()
-				, NEW.id
-				, NEW.hive_id
-				, NEW.queen_seen
-				, NEW.eggs_seen
-				, NEW.laying_pattern_stars
-				, NEW.temperament_stars
-				, NEW.queen_cells
-				, NEW.supersedure_cells
-				, NEW.swarm_cells
-				, NEW.comb_building_stars
-				, NEW.frames_sealed_brood
-				, NEW.frames_open_brood
-				, NEW.frames_honey
-				, NEW.weather
-				, NEW.temperature_f
-				, NEW.wind_speed_mph
-				);
+			( action_type
+			, user_id
+			, id
+			, group_id
+			, target_id
+			, queen_seen
+            , eggs_seen
+            , laying_pattern_stars
+            , temperament_stars
+            , queen_cells
+            , supersedure_cells
+            , swarm_cells
+            , comb_building_stars
+            , frames_sealed_brood
+            , frames_open_brood
+            , frames_honey
+            , weather
+            , temperature_f
+            , wind_speed_mph
+			)
+		VALUES
+			( 'i'
+			, get_user_id()
+			, NEW.id
+			, NEW.group_id
+			, NEW.target_id
+			, NEW.queen_seen
+            , NEW.eggs_seen
+            , NEW.laying_pattern_stars
+            , NEW.temperament_stars
+            , NEW.queen_cells
+            , NEW.supersedure_cells
+            , NEW.swarm_cells
+            , NEW.comb_building_stars
+            , NEW.frames_sealed_brood
+            , NEW.frames_open_brood
+            , NEW.frames_honey
+            , NEW.weather
+            , NEW.temperature_f
+            , NEW.wind_speed_mph
+			);
 		RETURN NEW;
 	END;
 $hive_inspections_audit$
@@ -88,85 +91,89 @@ RETURNS TRIGGER AS
 $hive_inspections_audit$
 	BEGIN
 		INSERT INTO hive_inspections_audit
-				( action_type
-				, user_id
-				, id
-				, hive_id
-				, queen_seen
-				, eggs_seen
-				, laying_pattern_stars
-				, temperament_stars
-				, queen_cells
-				, supersedure_cells
-				, swarm_cells
-				, comb_building_stars
-				, frames_sealed_brood
-				, frames_open_brood
-				, frames_honey
-				, weather
-				, temperature_f
-				, wind_speed_mph
-				)
-			VALUES
-				( 'b'
-				, get_user_id()
-				, OLD.id
-				, OLD.hive_id
-				, OLD.queen_seen
-				, OLD.eggs_seen
-				, OLD.laying_pattern_stars
-				, OLD.temperament_stars
-				, OLD.queen_cells
-				, OLD.supersedure_cells
-				, OLD.swarm_cells
-				, OLD.comb_building_stars
-				, OLD.frames_sealed_brood
-				, OLD.frames_open_brood
-				, OLD.frames_honey
-				, OLD.weather
-				, OLD.temperature_f
-				, OLD.wind_speed_mph
-				);
+			( action_type
+			, user_id
+			, id
+			, group_id
+			, target_id
+			, queen_seen
+            , eggs_seen
+            , laying_pattern_stars
+            , temperament_stars
+            , queen_cells
+            , supersedure_cells
+            , swarm_cells
+            , comb_building_stars
+            , frames_sealed_brood
+            , frames_open_brood
+            , frames_honey
+            , weather
+            , temperature_f
+            , wind_speed_mph
+			)
+		VALUES
+			( 'b'
+			, get_user_id()
+			, OLD.id
+			, OLD.group_id
+			, OLD.target_id
+			, OLD.queen_seen
+            , OLD.eggs_seen
+            , OLD.laying_pattern_stars
+            , OLD.temperament_stars
+            , OLD.queen_cells
+            , OLD.supersedure_cells
+            , OLD.swarm_cells
+            , OLD.comb_building_stars
+            , OLD.frames_sealed_brood
+            , OLD.frames_open_brood
+            , OLD.frames_honey
+            , OLD.weather
+            , OLD.temperature_f
+            , OLD.wind_speed_mph
+			);
 		INSERT INTO hive_inspections_audit
-				( action_type
-				, user_id
-				, id
-				, hive_id
-				, queen_seen
-				, eggs_seen
-				, laying_pattern_stars
-				, temperament_stars
-				, queen_cells
-				, supersedure_cells
-				, swarm_cells
-				, comb_building_stars
-				, frames_sealed_brood
-				, frames_open_brood
-				, frames_honey
-				, weather
-				, temperature_f
-				, wind_speed_mph
-				)
-			VALUES
-				( 'a'
-				, get_user_id()
-				, NEW.id
-				, NEW.hive_id
-				, NEW.queen_seen
-				, NEW.eggs_seen
-				, NEW.laying_pattern_stars
-				, NEW.temperament_stars
-				, NEW.queen_cells
-				, NEW.supersedure_cells
-				, NEW.swarm_cells
-				, NEW.comb_building_stars
-				, NEW.frames_sealed_brood
-				, NEW.frames_open_brood
-				, NEW.frames_honey
-				, NEW.weather
-				, NEW.temperature_f
-				, NEW.wind_speed_mph
-				);
+			( action_type
+			, user_id
+			, id
+			, group_id
+			, target_id
+			, queen_seen
+            , eggs_seen
+            , laying_pattern_stars
+            , temperament_stars
+            , queen_cells
+            , supersedure_cells
+            , swarm_cells
+            , comb_building_stars
+            , frames_sealed_brood
+            , frames_open_brood
+            , frames_honey
+            , weather
+            , temperature_f
+            , wind_speed_mph
+			)
+		VALUES
+			( 'a'
+			, get_user_id()
+			, NEW.id
+			, NEW.group_id
+			, NEW.target_id
+			, NEW.queen_seen
+            , NEW.eggs_seen
+            , NEW.laying_pattern_stars
+            , NEW.temperament_stars
+            , NEW.queen_cells
+            , NEW.supersedure_cells
+            , NEW.swarm_cells
+            , NEW.comb_building_stars
+            , NEW.frames_sealed_brood
+            , NEW.frames_open_brood
+            , NEW.frames_honey
+            , NEW.weather
+            , NEW.temperature_f
+            , NEW.wind_speed_mph
+			);
 		RETURN NEW;
 	END;
 $hive_inspections_audit$
@@ -186,45 +193,47 @@ RETURNS TRIGGER AS
 $hive_inspections_audit$
 	BEGIN
 		INSERT INTO hive_inspections_audit
-				( action_type
-				, user_id
-				, id
-				, hive_id
-				, queen_seen
-				, eggs_seen
-				, laying_pattern_stars
-				, temperament_stars
-				, queen_cells
-				, supersedure_cells
-				, swarm_cells
-				, comb_building_stars
-				, frames_sealed_brood
-				, frames_open_brood
-				, frames_honey
-				, weather
-				, temperature_f
-				, wind_speed_mph
-				)
-			VALUES
-				( 'd'
-				, get_user_id()
-				, OLD. id
-				, OLD.hive_id
-				, OLD.queen_seen
-				, OLD.eggs_seen
-				, OLD.laying_pattern_stars
-				, OLD.temperament_stars
-				, OLD.queen_cells
-				, OLD.supersedure_cells
-				, OLD.swarm_cells
-				, OLD.comb_building_stars
-				, OLD.frames_sealed_brood
-				, OLD.frames_open_brood
-				, OLD.frames_honey
-				, OLD.weather
-				, OLD.temperature_f
-				, OLD.wind_speed_mph
-				);
+			( action_type
+			, user_id
+			, id
+			, group_id
+			, target_id
+			, queen_seen
+            , eggs_seen
+            , laying_pattern_stars
+            , temperament_stars
+            , queen_cells
+            , supersedure_cells
+            , swarm_cells
+            , comb_building_stars
+            , frames_sealed_brood
+            , frames_open_brood
+            , frames_honey
+            , weather
+            , temperature_f
+            , wind_speed_mph
+			)
+		VALUES
+			( 'd'
+			, get_user_id()
+			, OLD.id
+			, OLD.group_id
+			, OLD.target_id
+			, OLDqueen_seen
+            , OLDeggs_seen
+            , OLDlaying_pattern_stars
+            , OLDtemperament_stars
+            , OLDqueen_cells
+            , OLDsupersedure_cells
+            , OLDswarm_cells
+            , OLDcomb_building_stars
+            , OLDframes_sealed_brood
+            , OLDframes_open_brood
+            , OLDframes_honey
+            , OLDweather
+            , OLDtemperature_f
+            , OLDwind_speed_mph
+			);
 		RETURN NEW;
 	END;
 $hive_inspections_audit$
