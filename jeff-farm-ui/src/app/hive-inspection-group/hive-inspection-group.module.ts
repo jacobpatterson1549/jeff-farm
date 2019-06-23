@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { CrudItemService } from '../crud/crud-item.service';
 import { CrudModule } from '../crud/crud.module';
-import { HiveInspectionService } from './hive-inspection.service';
+import { HiveInspectionService } from './hive-inspection-group.service';
 
 @NgModule({
   providers: [

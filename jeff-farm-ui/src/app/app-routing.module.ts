@@ -28,8 +28,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'farm/:farm_id/hive/:hive_id/inspection',
-    loadChildren: () => import('./hive-inspection/hive-inspection.module')
+    path: 'farm/:farm_id/hive/inspection',
+    loadChildren: () => import('./hive-inspection-group/hive-inspection-group.module')
       .then(m => m.HiveInspectionModule),
     canActivate: [AuthGuard],
   },

@@ -1,7 +1,8 @@
-import { CrudItem } from '../crud/crud-item';
+import { CrudItemInspection } from '../crud/crud-item-inspection';
 import { FormItem, FormItemType } from '../crud/form-item';
+import { Hive } from '../hive/hive';
 
-export class HiveInspection extends CrudItem {
+export class HiveInspection extends CrudItemInspection<Hive> {
 
     private queenSeen: boolean;
     private eggsSeen: boolean;
@@ -18,8 +19,8 @@ export class HiveInspection extends CrudItem {
     private temperatureF: number;
     private windSpeedMph: number;
 
-    constructor(hiveId: number) {
-        super(hiveId);
+    constructor(groupId: number) {
+        super(groupId);
     }
 
     getFormItems(): FormItem[] {
@@ -42,6 +43,6 @@ export class HiveInspection extends CrudItem {
     }
 
     getDisplayValue(): string {
-        return this.createdDate;
+        return this.targetName.toString();
     }
 }
