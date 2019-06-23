@@ -46,7 +46,7 @@ export class CrudChartComponent
     },
     series: []
   };
-  private formItems: FormItem[];
+  formItems: FormItem[];
   private groups: T[];
 
   constructor(
@@ -79,7 +79,7 @@ export class CrudChartComponent
       });
   }
 
-  private chartFormItem(index: number) {
+  chartFormItem(index: number) {
     if (this.groups == null || !this.options.series.length) {
       return;
     }
