@@ -134,8 +134,8 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_user.sql"/>
 	</changeSet>
 
-	<changeSet id="adhoc_hive_inspection_groups" author="jacobpatterson1549" runOnChange="true" runInTransaction="true">
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="adhoc_hive_inspection_groups.sql"/>
+	<changeSet id="adhoc_after" author="jacobpatterson1549" runOnChange="true" runInTransaction="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="adhoc_after"/>
 	</changeSet>
 
 </databaseChangeLog>
