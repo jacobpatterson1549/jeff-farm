@@ -1,0 +1,19 @@
+import { Injectable } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+
+import { HeaderItem } from './header-item';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class HeaderService {
+
+  headerItems: HeaderItem[] = [];
+
+  constructor(private titleService: Title) { }
+
+  setPage(title: string, headerItems: HeaderItem[]) {
+    this.titleService.setTitle(title);
+    this.headerItems = headerItems;
+  }
+}

@@ -7,7 +7,9 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ErrorMessagesModule } from './error-messages/error-messages.module';
+import { FooterModule } from './footer/footer.module';
 import { GlobalProviders } from './global-providers';
+import { HeaderComponent } from './header/header.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 
 @NgModule({
@@ -17,11 +19,13 @@ import { PageNotFoundComponent } from './page-not-found.component';
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    FooterModule,
     ErrorMessagesModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
