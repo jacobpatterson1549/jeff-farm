@@ -23,7 +23,7 @@ export class HiveService extends CrudItemService<Hive> {
     return 'hive';
   }
 
-  getCrudChildren(): CrudChild[] {
+  getCrudGroups(): CrudChild[] {
     return [
       { name: 'Inspection', path: 'inspection' },
     ];
