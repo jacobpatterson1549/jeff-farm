@@ -7,7 +7,7 @@ import { CrudItem } from '../crud-item';
 import { CrudItemInspection } from '../crud-item-inspection';
 import { CrudItemInspectionGroup } from '../crud-item-inspection-group';
 import { CrudItemInspectionGroupService } from '../crud-item-inspection-group.service';
-import { FormItem } from '../form-item';
+import { FormItem, FormItemType } from '../form-item';
 
 @Component({
   selector: 'app-crud-chart',
@@ -59,7 +59,8 @@ export class CrudChartComponent
     this.options.title.text
       = `${this.crudItemInspectionGroupService.getTypeName()} chart`;
     this.formItems = this.crudItemInspectionGroupService.createCrudItemInspection()
-      .getFormItems();
+      .getFormItems()
+      .filter(f => [FormItemType.Integer, FormItemType.Stars].indexOf(f.type) >= 0);
     this.crudItemInspectionGroupService.getList()
       .subscribe((groups: T[]) => {
         this.groups = groups.reverse();
