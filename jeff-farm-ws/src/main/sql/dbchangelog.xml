@@ -126,11 +126,11 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_hive.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_hive_inspection.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_hive_inspection_group.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_hive_inspections.sql"/><!-- TODO: rename THESE to delete_hive_inspections_for_group.sql -->
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_hive_inspections_for_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_poultry.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_poultry_inspection.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_poultry_inspection_group.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_poultry_inspections.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_poultry_inspections_for_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_user.sql"/>
 	</changeSet>
 

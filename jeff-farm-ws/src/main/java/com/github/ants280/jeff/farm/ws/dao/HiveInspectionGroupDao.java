@@ -179,7 +179,7 @@ public class HiveInspectionGroupDao
 			id));
 		this.executeDelete("delete_hive_inspection_group",
 			groupIdInParameterList,
-			"delete_hive_inspections",
+			"delete_hive_inspections_for_group",
 			groupIdInParameterList);
 	}
 

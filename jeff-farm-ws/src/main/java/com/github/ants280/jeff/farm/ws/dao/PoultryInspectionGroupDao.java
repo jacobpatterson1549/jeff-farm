@@ -151,7 +151,7 @@ public class PoultryInspectionGroupDao
 			id));
 		this.executeDelete("delete_poultry_inspection_group",
 			groupIdInParameterList,
-			"delete_poultry_inspections",
+			"delete_poultry_inspections_for_group",
 			groupIdInParameterList);
 	}
 
