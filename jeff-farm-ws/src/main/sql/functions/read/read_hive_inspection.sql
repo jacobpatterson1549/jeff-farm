@@ -31,7 +31,7 @@ $body$
 				, hi.created_date
 				, hi.modified_date
 			FROM hive_inspections AS hi
-			JOIN hive AS h ON hi.target_id = h.id
+			JOIN hives AS h ON hi.target_id = h.id
 			WHERE hi.id = read_hive_inspection.id;
 		END IF;
 	END
