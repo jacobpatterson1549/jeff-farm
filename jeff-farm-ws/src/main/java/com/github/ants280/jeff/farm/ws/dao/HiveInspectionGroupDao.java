@@ -214,6 +214,7 @@ public class HiveInspectionGroupDao
 		return new HiveInspection().setId(rs.getInt(HiveInspection.ID_COLUMN))
 			.setParentId(rs.getInt(HiveInspection.GROUP_ID_COLUMN))
 			.setTargetId(rs.getInt(HiveInspection.TARGET_ID_COLUMN))
+			.setTargetName(rs.getString(HiveInspection.TARGET_NAME_COLUMN))
 			.setQueenSeen(rs.getBoolean(HiveInspection.QUEEN_SEEN_COLUMN))
 			.setEggsSeen(rs.getBoolean(HiveInspection.EGGS_SEEN_COLUMN))
 			.setLayingPatternStars(rs.getInt(HiveInspection.LAYING_PATTERN_STARS_COLUMN))
