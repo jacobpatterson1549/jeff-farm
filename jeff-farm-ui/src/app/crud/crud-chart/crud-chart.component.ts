@@ -62,8 +62,8 @@ export class CrudChartComponent
       .getFormItems();
     this.crudItemInspectionGroupService.getList()
       .subscribe((groups: T[]) => {
-        this.groups = groups;
-        this.options.xAxis.categories = groups.map(group => group.createdDate);
+        this.groups = groups.reverse();
+        this.options.xAxis.categories = this.groups.map(group => group.createdDate);
         this.chartFormItem(0);
       });
     this.crudItemInspectionGroupService.getTargets()
@@ -93,13 +93,13 @@ export class CrudChartComponent
       const group = this.groups[x];
       for (const inspectionItem of group.inspectionItems) {
         const seriesIndex = this.options.series
-        .findIndex(s => s.name === inspectionItem.targetName);
+          .findIndex(s => s.name === inspectionItem.targetName);
         if (seriesIndex >= 0) {
           this.options.series[seriesIndex].data[x] = inspectionItem[formItemName];
         }
       }
     }
 
-    Highcharts.chart('chart', this.options); // plot the data
+    Highcharts.chart('chart', this.options); // Plot the data to the "chart" div.
   }
 }
