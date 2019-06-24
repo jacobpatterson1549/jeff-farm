@@ -11,8 +11,11 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private authService: AuthService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(req.clone({
-            url: `${req.url};jsessionid=${this.authService.getJsessionId()}`,
-        }));
+        return this.authService.isLoggedIn()
+            ? next.handle(req.clone({
+                withCredentials: true,
+                url: `${req.url};jsessionid=${this.authService.getJsessionId()}`,
+            }))
+            : next.handle(req);
     }
 }

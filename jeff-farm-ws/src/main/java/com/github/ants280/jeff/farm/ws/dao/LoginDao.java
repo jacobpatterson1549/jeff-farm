@@ -40,7 +40,7 @@ public class LoginDao
 		
 		// The session MUST be crated before the login call.
 		// See org.apache.catalina.authenticator.AuthenticatorBase.register()
-		String jsessionId = request.getSession(true).getId();
+		HttpSession session = request.getSession(true);
 
 		request.login(user.getUserName(), user.getPassword());
 
@@ -52,7 +52,9 @@ public class LoginDao
 			throw new JeffFarmWsException("No access");
 		}
 
-		return jsessionId;
+		// Send the session id.  Sent in url.
+		// Retrieved at CoyoteAdapter.postParseRequest::SessionTrackingMode.URL
+		return session.getId();
 	}
 
 	public void logout()
