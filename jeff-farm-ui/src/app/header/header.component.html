@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-sm navbar-light bg-light" *ngIf="authService.isLoggedIn()">
   <a class="navbar-brand" href="#">Farms</a>
   <div id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item" *ngFor="let headerItem of headerItems">
+      <li class="nav-item" *ngFor="let headerItem of headerService.headerItems">
         <a class="nav-link" [routerLink]="headerItem.url">{{headerItem.name}}</a>
       </li>
     </ul>

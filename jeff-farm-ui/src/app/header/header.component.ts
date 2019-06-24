@@ -1,19 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { HeaderItem } from './header-item';
+import { AuthService } from '../auth/auth.service';
 import { HeaderService } from './header.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
-  headerItems: HeaderItem[];
-
-  constructor(private headerService: HeaderService) { }
-
-  ngOnInit(): void {
-    this.headerItems = this.headerService.headerItems;
-  }
+  constructor(
+    private headerService: HeaderService,
+    private authService: AuthService) { }
 }
