@@ -12,7 +12,7 @@ export class HeaderService {
   headerItems: HeaderItem[] = [
     { name: 'a', url: 'aa' },
     { name: 'b', url: 'bb' },
-    { name: 'b', url: 'cc' },
+    { name: 'c', url: 'cc' },
   ];
 
   constructor(private titleService: Title) { }
