@@ -21,16 +21,21 @@ export class HeaderService {
 
   setHeaderItems(headerItems: HeaderItem[]) {
     this.headerItems = headerItems;
+    this.refreshNames();
+  }
 
+  updateNames(headerItem: HeaderItem) {
+    this.cache[headerItem.type][headerItem.id] = headerItem.name;
+    this.refreshNames();
+  }
+
+  private refreshNames() {
     for (const headerItem of this.headerItems) {
-      if (headerItem.type !== null && headerItem.id !== null) {
-        this.cache[headerItem.type][headerItem.id] = headerItem.name;
-      }
-      if (!headerItem.name) {
-        headerItem.name = this.cache[headerItem.type][headerItem.id]
-          || `[${getHeaderItemTypeName(headerItem.type)} #${headerItem.id}]`;
+      if (headerItem.type >= 0 && headerItem.id) {
+        headerItem.name = (this.cache[headerItem.type][headerItem.id])
+          ? this.cache[headerItem.type][headerItem.id]
+          : `[${getHeaderItemTypeName(headerItem.type)} #${headerItem.id}]`;
       }
     }
-    console.log('setting header items:' + Date.now());
   }
 }

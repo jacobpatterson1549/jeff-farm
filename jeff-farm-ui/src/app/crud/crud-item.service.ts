@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
@@ -64,6 +64,11 @@ export abstract class CrudItemService<T extends CrudItem> {
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('read')),
         map((data: T) => Object.assign(this.createCrudItem(), data)),
+        tap((crudItem: T) => {
+          const headerItem: HeaderItem
+            = new HeaderItem(this.headerItemType, crudItem.id, crudItem.getDisplayValue());
+          this.headerService.updateNames(headerItem);
+        }),
       );
   }
 
