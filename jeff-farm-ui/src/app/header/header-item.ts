@@ -1,5 +1,6 @@
 export enum HeaderItemType {
     FARM,
+    FARM_PERMISSION,
     HIVE,
     HIVE_INSPECTION_GROUP,
     POULTRY,
@@ -8,31 +9,30 @@ export enum HeaderItemType {
 }
 
 export class HeaderItem {
-    url: string;
     type: HeaderItemType;
     id: number;
     name: string;
 
-    static from(url: string, name: string): HeaderItem {
-        return new HeaderItem(url, null, null, name);
+    static from(name: string): HeaderItem {
+        return new HeaderItem(null, null, name);
     }
 
     // constructor(url: string, name: string);
-    constructor(url: string, type: HeaderItemType, id: number, name?: string) {
-        this.url = url;
+    constructor(type: HeaderItemType, id: number, name?: string) {
         this.type = type;
         this.id = id;
         this.name = name;
     }
+}
 
-    getTypeName(): string {
-        switch (this.type) {
-            case HeaderItemType.FARM: return 'Farm';
-            case HeaderItemType.HIVE: return 'Hive';
-            case HeaderItemType.HIVE: return 'Poultry';
-            case HeaderItemType.HIVE_INSPECTION_GROUP:
-            case HeaderItemType.POULTRY_INSPECTION_GROUP: return 'inspection';
-            default: return 'unknown';
-        }
+export function getHeaderItemTypeName(headerItemType: HeaderItemType): string {
+    switch (headerItemType) {
+        case HeaderItemType.FARM: return 'Farm';
+        case HeaderItemType.FARM_PERMISSION: return 'Permission';
+        case HeaderItemType.HIVE: return 'Hive';
+        case HeaderItemType.HIVE_INSPECTION_GROUP: return 'Hive Inspection';
+        case HeaderItemType.POULTRY: return 'Poultry';
+        case HeaderItemType.POULTRY_INSPECTION_GROUP: return 'Poultry Inspection';
+        default: return 'unknown';
     }
 }

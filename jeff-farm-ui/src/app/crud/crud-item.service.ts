@@ -6,6 +6,8 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
+import { getHeaderItemTypeName, HeaderItem, HeaderItemType } from '../header/header-item';
+import { HeaderService } from '../header/header.service';
 import { CrudChild } from './crud-child';
 import { CrudItem } from './crud-item';
 import { FormItem } from './form-item';
@@ -15,6 +17,8 @@ export abstract class CrudItemService<T extends CrudItem> {
   private route: ActivatedRoute;
 
   constructor(
+    public headerItemType: HeaderItemType,
+    private headerService: HeaderService,
     protected errorMessagesService: ErrorMessagesService,
     protected http: HttpClient) { }
 
@@ -32,10 +36,17 @@ export abstract class CrudItemService<T extends CrudItem> {
 
   protected abstract getBaseUrl(): string;
 
-  abstract getTypeName(): string;
+  protected abstract getHeaderItems(): HeaderItem[];
+
+  getTypeName(): string {
+    return getHeaderItemTypeName(this.headerItemType);
+  }
 
   setRoute(route: ActivatedRoute) {
     this.route = route;
+    this.route.params.subscribe(val => {
+      this.headerService.setHeaderItems(this.getHeaderItems());
+    });
   }
 
   post(t: T, createdValue: any): Observable<number> {
@@ -108,7 +119,8 @@ export abstract class CrudItemService<T extends CrudItem> {
   }
 
   getCanDeleteMessage(): string {
-    return `Cannot delete ${this.getTypeName()} because it has children or is in a group.`;
+    const typeName: string = this.getTypeName();
+    return `Cannot delete ${typeName} because it has children or is in a group.`;
   }
 
   getViewStepsToParent(): number {

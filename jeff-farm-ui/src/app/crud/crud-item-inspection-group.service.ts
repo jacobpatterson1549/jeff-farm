@@ -4,6 +4,8 @@ import { catchError, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
+import { HeaderItemType } from '../header/header-item';
+import { HeaderService } from '../header/header.service';
 import { CrudChild } from './crud-child';
 import { CrudItem } from './crud-item';
 import { CrudItemInspection } from './crud-item-inspection';
@@ -18,9 +20,15 @@ export abstract class CrudItemInspectionGroupService<
   extends CrudItemService<T> {
 
   constructor(
+    headerItemType: HeaderItemType,
+    headerService: HeaderService,
     errorMessagesService: ErrorMessagesService,
     http: HttpClient) {
-    super(errorMessagesService, http);
+    super(
+      headerItemType,
+      headerService,
+      errorMessagesService,
+      http);
   }
 
   abstract createCrudItemInspection(): V;
@@ -67,6 +75,7 @@ export abstract class CrudItemInspectionGroupService<
       );
   }
 
+  // TODO: call parentCrudItemService.getList().pipe(map) and delete /targets enpoints.
   getTargets(): Observable<Map<number, string>> {
     const url = `${this.getBaseUrl()}/targets/${this.getParentId()}`;
     return this.http.get<Map<number, string>>(url)

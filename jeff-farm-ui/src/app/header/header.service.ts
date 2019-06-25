@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { HeaderItem, HeaderItemType } from './header-item';
+import { getHeaderItemTypeName, HeaderItem, HeaderItemType } from './header-item';
 
 @Injectable({
   providedIn: 'root'
@@ -17,18 +17,9 @@ export class HeaderService {
         this.cache[type] = {};
       }
     }
-
-    // DEBUG setup:
-    this.setPage('xyz', [
-      HeaderItem.from('aa', 'a'),
-      HeaderItem.from('bb', 'b'),
-      HeaderItem.from('cc', 'c'),
-      new HeaderItem('/farm/14', HeaderItemType.FARM, 14),
-    ]);
   }
 
-  setPage(title: string, headerItems: HeaderItem[]) {
-    this.titleService.setTitle(title);
+  setHeaderItems(headerItems: HeaderItem[]) {
     this.headerItems = headerItems;
 
     for (const headerItem of this.headerItems) {
@@ -37,8 +28,9 @@ export class HeaderService {
       }
       if (!headerItem.name) {
         headerItem.name = this.cache[headerItem.type][headerItem.id]
-          || `[${headerItem.getTypeName()} #${headerItem.id}]`;
+          || `[${getHeaderItemTypeName(headerItem.type)} #${headerItem.id}]`;
       }
     }
+    console.log('setting header items:' + Date.now());
   }
 }

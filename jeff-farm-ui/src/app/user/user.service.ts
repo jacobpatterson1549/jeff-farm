@@ -11,6 +11,8 @@ import { CrudChild } from '../crud/crud-child';
 import { CrudItemService } from '../crud/crud-item.service';
 import { FormItem } from '../crud/form-item';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
+import { getHeaderItemTypeName, HeaderItem, HeaderItemType } from '../header/header-item';
+import { HeaderService } from '../header/header.service';
 import { LoginService } from '../login/login.service';
 import { User } from './user';
 import { UserPasswordReplacement } from './user-password-replacement';
@@ -22,21 +24,32 @@ export class UserService extends CrudItemService<User> {
     private authService: AuthService,
     private loginService: LoginService,
     private router: Router,
+    headerService: HeaderService,
     errorMessagesService: ErrorMessagesService,
     http: HttpClient) {
-    super(errorMessagesService, http);
+    super(
+      HeaderItemType.USER,
+      headerService,
+      errorMessagesService,
+      http);
   }
 
   createCrudItem(): User {
     return new User();
   }
 
-  getCrudChildren(): CrudChild[] {
-    return [{ name: 'Update Password', path: 'update/password' }];
+  getHeaderItems(): HeaderItem[] {
+    const headerItems: HeaderItem[] = [];
+    headerItems.push(HeaderItem.from(getHeaderItemTypeName(this.headerItemType)));
+    const id: string = this.getId();
+    if (id) {
+      headerItems.push(new HeaderItem(this.headerItemType, +id));
+    }
+    return headerItems;
   }
 
-  getTypeName(): string {
-    return 'user';
+  getCrudChildren(): CrudChild[] {
+    return [{ name: 'Update Password', path: 'update/password' }];
   }
 
   protected getBaseUrl(): string {

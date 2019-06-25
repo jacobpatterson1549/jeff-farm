@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 
 import { CrudItemInspectionGroupService } from '../crud/crud-item-inspection-group.service';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
+import { getHeaderItemTypeName, HeaderItem, HeaderItemType } from '../header/header-item';
+import { HeaderService } from '../header/header.service';
 import { Poultry } from '../poultry/poultry';
+import { PoultryService } from '../poultry/poultry.service';
 import { PoultryInspection } from './poultry-inspection';
 import { PoultryInspectionGroup } from './poultry-inspection-group';
 
@@ -11,11 +14,16 @@ import { PoultryInspectionGroup } from './poultry-inspection-group';
 export class PoultryInspectionGroupService
   extends CrudItemInspectionGroupService<Poultry, PoultryInspection, PoultryInspectionGroup> {
 
-    constructor(
-      errorMessagesService: ErrorMessagesService,
-      http: HttpClient) {
-      super(errorMessagesService, http);
-    }
+  constructor(
+    headerService: HeaderService,
+    errorMessagesService: ErrorMessagesService,
+    http: HttpClient) {
+    super(
+      HeaderItemType.POULTRY_INSPECTION_GROUP,
+      headerService,
+      errorMessagesService,
+      http);
+  }
 
   createCrudItem(): PoultryInspectionGroup {
     return new PoultryInspectionGroup(+this.getParentId());
@@ -25,8 +33,17 @@ export class PoultryInspectionGroupService
     return new PoultryInspection(+this.getParentId());
   }
 
-  getTypeName(): string {
-    return 'poultry inspection group';
+  getHeaderItems(): HeaderItem[] {
+    const headerItems: HeaderItem[] = [];
+    headerItems.push(HeaderItem.from(getHeaderItemTypeName(HeaderItemType.FARM)));
+    headerItems.push(new HeaderItem(HeaderItemType.FARM, +this.getParentId()));
+    headerItems.push(HeaderItem.from(getHeaderItemTypeName(HeaderItemType.POULTRY)));
+    headerItems.push(HeaderItem.from(getHeaderItemTypeName(this.headerItemType)));
+    const id: string = this.getId();
+    if (id) {
+      headerItems.push(new HeaderItem(this.headerItemType, +id));
+    }
+    return headerItems;
   }
 
   protected getBaseUrl(): string {

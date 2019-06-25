@@ -4,23 +4,36 @@ import { Injectable } from '@angular/core';
 import { CrudChild } from '../crud/crud-child';
 import { CrudItemService } from '../crud/crud-item.service';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
+import { getHeaderItemTypeName, HeaderItem, HeaderItemType } from '../header/header-item';
+import { HeaderService } from '../header/header.service';
 import { Farm } from './farm';
 
 @Injectable()
 export class FarmService extends CrudItemService<Farm> {
 
   constructor(
+    headerService: HeaderService,
     errorMessagesService: ErrorMessagesService,
     http: HttpClient) {
-    super(errorMessagesService, http);
+    super(
+      HeaderItemType.FARM,
+      headerService,
+      errorMessagesService,
+      http);
   }
 
   createCrudItem(): Farm {
     return new Farm();
   }
 
-  getTypeName(): string {
-    return 'farm';
+  getHeaderItems(): HeaderItem[] {
+    const headerItems: HeaderItem[] = [];
+    headerItems.push(HeaderItem.from(getHeaderItemTypeName(this.headerItemType)));
+    const id: string = this.getId();
+    if (id) {
+      headerItems.push(new HeaderItem(this.headerItemType, +id));
+    }
+    return headerItems;
   }
 
   getCrudChildren(): CrudChild[] {
