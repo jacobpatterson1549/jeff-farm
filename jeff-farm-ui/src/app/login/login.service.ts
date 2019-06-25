@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { HttpClient } from '@angular/common/http';
@@ -27,10 +27,13 @@ export class LoginService {
   }
 
   logout(): Observable<any> {
-    this.authService.clearCredentials(); // clear even if logout fails.
     return this.httpClient.get<any>('user/logout')
       .pipe(
-        catchError(this.errorMessagesService.handleError<any>('logout')),
+        catchError(error => {
+          this.authService.clearCredentials();
+          return this.errorMessagesService.handleError<any>('logout')(error);
+        }),
+        tap(_ => this.authService.clearCredentials()),
       );
   }
 
