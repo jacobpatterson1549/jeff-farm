@@ -11,7 +11,6 @@ export class HostInterceptor implements HttpInterceptor {
     private readonly HOST_URL: string = environment.SERVER_URL;
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const hostReq = req.clone({ url: this.HOST_URL + req.url });
-        return next.handle(hostReq);
+        return next.handle(req.clone({ url: this.HOST_URL + req.url }));
     }
 }

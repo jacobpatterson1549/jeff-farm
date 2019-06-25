@@ -24,7 +24,7 @@ public class LoginDao
 		this.request = request;
 	}
 
-	public void login(User user) throws ServletException
+	public String login(User user) throws ServletException
 	{
 		HttpSession oldSession = request.getSession(false);
 		if (oldSession != null)
@@ -33,14 +33,14 @@ public class LoginDao
 				&& request.getRemoteUser() != null
 				&& request.getRemoteUser().equals(user.getUserName()))
 			{
-				return;
+				return oldSession.getId();
 			}
 			oldSession.invalidate();
 		}
 		
 		// The session MUST be crated before the login call.
 		// See org.apache.catalina.authenticator.AuthenticatorBase.register()
-		request.getSession(true);
+		HttpSession session = request.getSession(true);
 
 		request.login(user.getUserName(), user.getPassword());
 
@@ -51,6 +51,10 @@ public class LoginDao
 		{
 			throw new JeffFarmWsException("No access");
 		}
+
+		// Send the session id.  Sent in url.
+		// Retrieved at CoyoteAdapter.postParseRequest::SessionTrackingMode.URL
+		return session.getId();
 	}
 
 	public void logout()

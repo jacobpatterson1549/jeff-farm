@@ -20,8 +20,8 @@ public class LoginSuccessTest
 	@Test
 	public void testSerialize()
 	{
-		LoginSuccess loginSuccess = new LoginSuccess(true,61);
-		String expectedValue = "{\"adminUser\":true,\"userId\":61}";
+		LoginSuccess loginSuccess = new LoginSuccess(true, 61, "xyz");
+		String expectedValue = "{\"adminUser\":true,\"jsessionId\":\"xyz\",\"userId\":61}";
 
 		String actualValue = jsonb.toJson(loginSuccess);
 

@@ -41,10 +41,11 @@ public class LoginResource
 	{
 		try
 		{
-			loginDao.login(user);
+			String jsessionId = loginDao.login(user);
 			LoginSuccess loginSuccess = new LoginSuccess(
 				userIdDao.hasAdimnRole(),
-				userIdDao.getUserId());
+				userIdDao.getUserId(),
+				jsessionId);
 			return Response.ok(loginSuccess).build();
 		}
 		catch (ServletException ex)

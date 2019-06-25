@@ -17,21 +17,21 @@ describe('AuthService', () => {
     });
 
     it('should be an admin user if one is provided', () => {
-        const loginSuccess: LoginSuccess = { adminUser: true, userId: 1 };
+        const loginSuccess: LoginSuccess = { adminUser: true, userId: 1, jsessionId: 'xyz' };
         authService.setLoggedIn(loginSuccess);
         const isAdminUser: boolean = authService.isAdminUser();
         expect(isAdminUser).toBeTruthy();
     });
 
     it('should not be an admin user if one is not provided.', () => {
-        const loginSuccess: LoginSuccess = { adminUser: false, userId: 1 };
+        const loginSuccess: LoginSuccess = { adminUser: false, userId: 1, jsessionId: 'xyz' };
         authService.setLoggedIn(loginSuccess);
         const isAdminUser: boolean = authService.isAdminUser();
         expect(isAdminUser).toBeFalsy();
     });
 
     it('should not be an admin user after logging out', () => {
-        const loginSuccess: LoginSuccess = { adminUser: true, userId: 1 };
+        const loginSuccess: LoginSuccess = { adminUser: true, userId: 1, jsessionId: 'xyz' };
         authService.setLoggedIn(loginSuccess);
         authService.clearCredentials();
         const isAdminUser: boolean = authService.isAdminUser();
@@ -44,14 +44,14 @@ describe('AuthService', () => {
     });
 
     it('should be logged in after logging in', () => {
-        const loginSuccess: LoginSuccess = { adminUser: false, userId: 1 };
+        const loginSuccess: LoginSuccess = { adminUser: false, userId: 1, jsessionId: 'xyz' };
         authService.setLoggedIn(loginSuccess);
         const isLoggedIn: boolean = authService.isLoggedIn();
         expect(isLoggedIn).toBeTruthy();
     });
 
     it('should not be logged in after logging out', () => {
-        const loginSuccess: LoginSuccess = { adminUser: false, userId: 198 };
+        const loginSuccess: LoginSuccess = { adminUser: false, userId: 198, jsessionId: 'xyz' };
         authService.setLoggedIn(loginSuccess);
         authService.clearCredentials();
         const isLoggedIn: boolean = authService.isLoggedIn();
@@ -64,14 +64,14 @@ describe('AuthService', () => {
     });
 
     it('should not have a user id before logging in', () => {
-        const loginSuccess: LoginSuccess = { adminUser: false, userId: 198 };
+        const loginSuccess: LoginSuccess = { adminUser: false, userId: 198, jsessionId: 'xyz' };
         authService.setLoggedIn(loginSuccess);
         const userId: string = authService.getUserId();
         expect(userId).toBe('198');
     });
 
     it('should not have a user id after logging out', () => {
-        const loginSuccess: LoginSuccess = { adminUser: false, userId: 198 };
+        const loginSuccess: LoginSuccess = { adminUser: false, userId: 198, jsessionId: 'xyz' };
         authService.setLoggedIn(loginSuccess);
         authService.clearCredentials();
         const userId: string = authService.getUserId();

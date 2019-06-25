@@ -84,4 +84,8 @@
 		<role-name>${security.role.admin}</role-name>
 	</security-role>
 
+	<session-config>
+		<tracking-mode>URL</tracking-mode>
+	</session-config>
+
 </web-app>
