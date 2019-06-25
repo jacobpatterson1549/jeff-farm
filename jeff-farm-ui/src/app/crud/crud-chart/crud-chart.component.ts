@@ -23,7 +23,6 @@ export class CrudChartComponent
   public options = {
     chart: {
       type: 'column',
-      height: 700
     },
     title: {
       text: '',
