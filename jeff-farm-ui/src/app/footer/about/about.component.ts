@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faGithubSquare, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-about',
@@ -9,6 +9,6 @@ export class AboutComponent {
   userLinkedinUrl = 'https://www.linkedin.com/in/jacobpatterson1549/';
   userGithubUrl = 'https://github.com/jacobpatterson1549';
   projectUrl = 'https://github.com/jacobpatterson1549/jeff-farm';
-  userLinkedinIcon = faSpinner;
-  userGithubIcon = faSpinner;
+  userLinkedinIcon = faLinkedin;
+  userGithubIcon = faGithubSquare;
 }
