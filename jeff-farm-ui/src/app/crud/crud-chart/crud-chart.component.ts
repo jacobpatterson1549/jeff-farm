@@ -1,6 +1,6 @@
 import * as Highcharts from 'highcharts';
+import { forkJoin } from 'rxjs';
 
-import { getUrlScheme } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -78,24 +78,42 @@ export class CrudChartComponent
     this.formItems = this.crudItemInspectionGroupService.createCrudItemInspection()
       .getFormItems()
       .filter(f => [FormItemType.Integer, FormItemType.Stars].indexOf(f.type) >= 0);
-    this.crudItemInspectionGroupService.getList()
-      .subscribe((groups: T[]) => {
-        this.groups = groups;
-        this.groups.reverse();
-        this.groupUrls = this.groups.map(group => this.getUrl(group));
-        this.options.xAxis.categories = this.groups.map(group => group.createdDate);
-        this.chartFormItem(0);
-      });
-    this.crudItemInspectionGroupService.getTargets()
-      .subscribe((targets: Map<number, string>) => {
-        this.options.series = Object.keys(targets).map(targetId => {
-          return {
-            name: targets[targetId],
-            data: [],
-          };
+    this.getData();
+  }
+
+  private getData() {
+    forkJoin({
+      groupList: this.crudItemInspectionGroupService.getList(),
+      targetsMap: this.crudItemInspectionGroupService.getTargets(),
+    }).subscribe({
+      next: value => {
+        this.setGroups(value.groupList);
+        this.setTargets(value.targetsMap);
+      },
+      complete: () => {
+        this.options.series.forEach(s => {
+          s.groupUrls = this.groupUrls;
         });
         this.chartFormItem(0);
-      });
+      },
+    });
+  }
+
+  private setGroups(groups: T[]) {
+    this.groups = groups;
+    this.groups.reverse();
+    this.groupUrls = this.groups.map(group => this.getUrl(group));
+    this.options.xAxis.categories = this.groups.map(group => group.createdDate);
+    this.chartFormItem(0);
+  }
+
+  private setTargets(targets: Map<number, string>) {
+    this.options.series = Object.keys(targets).map(targetId => {
+      return {
+        name: targets[targetId],
+        data: [],
+      };
+    });
   }
 
   private getUrl(group: T): string {
@@ -105,15 +123,9 @@ export class CrudChartComponent
   }
 
   chartFormItem(index: number) {
-    if (this.groups == null || !this.options.series.length) {
-      return;
-    }
-
     // reset the series
     this.options.series.forEach(s => {
       s.data = Array(this.groups.length).fill('');
-      // It would be nice to do this ONCE when the groups/targets are retrieved:
-      s.groupUrls = this.groupUrls;
     });
 
     // add data to the empty series
