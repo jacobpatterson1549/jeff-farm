@@ -12,14 +12,14 @@ import { HiveInspectionGroup } from './hive-inspection-group';
 export class HiveInspectionGroupService
   extends CrudItemInspectionGroupService<Hive, HiveInspection, HiveInspectionGroup> {
 
-    constructor(
-      errorMessagesService: ErrorMessagesService,
-      http: HttpClient) {
-      super(
-        'hive inspection',
-        errorMessagesService,
-        http);
-    }
+  constructor(
+    errorMessagesService: ErrorMessagesService,
+    http: HttpClient) {
+    super(
+      'hive inspection',
+      errorMessagesService,
+      http);
+  }
 
   createCrudItem(): HiveInspectionGroup {
     return new HiveInspectionGroup(+this.getParentId());
