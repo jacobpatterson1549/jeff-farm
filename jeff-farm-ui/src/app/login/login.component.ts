@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm() {
-    this.login(this.loginForm.value)
+    this.login(this.loginForm.value);
   }
 
   demoLogin() {
