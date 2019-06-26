@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { SpinnerModule } from '../spinner/spinner.module';
 import { LoginStatusComponent } from './login-status.component';
 
 @NgModule({
@@ -8,7 +9,8 @@ import { LoginStatusComponent } from './login-status.component';
     LoginStatusComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SpinnerModule,
   ],
   exports: [
     LoginStatusComponent,

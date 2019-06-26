@@ -2,4 +2,5 @@
   <span>Logged in as {{user.userName}}</span>
   <button type="button" class="btn btn-info" (click)="viewAccount()" routerLinkActive="active">{{viewUserButtonText}}</button>
   <button type="button" class="btn btn-info" (click)="logout()" routerLinkActive="active">Logout</button>
+  <app-spinner [visible]="working"></app-spinner>
 </nav>

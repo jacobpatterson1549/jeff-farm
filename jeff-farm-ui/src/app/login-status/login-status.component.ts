@@ -1,4 +1,4 @@
-import { nextTick } from 'q';
+import { catchError } from 'rxjs/operators';
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -18,6 +18,7 @@ export class LoginStatusComponent implements OnInit {
 
   user: User;
   viewUserButtonText: string;
+  working = false;
 
   constructor(
     private authService: AuthService,
@@ -41,7 +42,12 @@ export class LoginStatusComponent implements OnInit {
   }
 
   logout() {
+    this.working = true;
     this.loginService.logout()
+      .pipe(catchError((error: Error) => {
+        this.working = false;
+        throw error;
+      }))
       .subscribe(_ => this.router.navigate(['/login']));
   }
 }
