@@ -23,7 +23,8 @@ export class NavigationComponent {
   }
 
   canGoUp() {
-    return ['/', '/farms'].indexOf(this.router.url) < 0;
+    console.log(this.router.url);
+    return ['/', '/farm'].indexOf(this.router.url) < 0;
   }
 
   goUp() {
