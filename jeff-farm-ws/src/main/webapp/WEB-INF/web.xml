@@ -59,6 +59,7 @@
 			<url-pattern>${servlet.url.prefix}/login/*</url-pattern>
 		</web-resource-collection>
 	</security-constraint>
+
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>secured-endpoints</web-resource-name>
@@ -69,6 +70,7 @@
 			<role-name>${security.role.user}</role-name>
 		</auth-constraint>
 	</security-constraint>
+
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>admin-endpoints</web-resource-name>
@@ -79,6 +81,7 @@
 			<role-name>${security.role.admin}</role-name>
 		</auth-constraint>
 	</security-constraint>
+
 	<security-role>
 		<role-name>${security.role.user}</role-name>
 		<role-name>${security.role.admin}</role-name>

@@ -5,3 +5,6 @@ CREATE TABLE IF NOT EXISTS roles
 INSERT INTO roles (role_name) VALUES ('user') ON CONFLICT DO NOTHING;
 
 INSERT INTO roles (role_name) VALUES ('admin') ON CONFLICT DO NOTHING;
+
+INSERT INTO roles (role_name) VALUES ('demo') ON CONFLICT DO NOTHING;
+

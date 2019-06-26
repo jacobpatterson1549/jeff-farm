@@ -30,6 +30,7 @@
 		<credential.handler.salt.length>8</credential.handler.salt.length>
 		<security.role.user>user</security.role.user>
 		<security.role.admin>admin</security.role.admin>
+		<security.role.demo>demo</security.role.demo>
 		<!--derived properties (potentially overwritten by production profile-->
 		<site.origin>http://localhost:4200</site.origin>
 		<server.scheme>http</server.scheme>
