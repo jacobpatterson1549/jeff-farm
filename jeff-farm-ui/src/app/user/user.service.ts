@@ -11,8 +11,7 @@ import { CrudChild } from '../crud/crud-child';
 import { CrudItemService } from '../crud/crud-item.service';
 import { FormItem } from '../crud/form-item';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
-import { getHeaderItemTypeName, HeaderItem, HeaderItemType } from '../header/header-item';
-import { HeaderService } from '../header/header.service';
+import { HeaderItem } from '../header/header-item';
 import { LoginService } from '../login/login.service';
 import { User } from './user';
 import { UserPasswordReplacement } from './user-password-replacement';
@@ -24,12 +23,10 @@ export class UserService extends CrudItemService<User> {
     private authService: AuthService,
     private loginService: LoginService,
     private router: Router,
-    headerService: HeaderService,
     errorMessagesService: ErrorMessagesService,
     http: HttpClient) {
     super(
-      HeaderItemType.USER,
-      headerService,
+      'user',
       errorMessagesService,
       http);
   }
@@ -39,13 +36,7 @@ export class UserService extends CrudItemService<User> {
   }
 
   getHeaderItems(): HeaderItem[] {
-    const headerItems: HeaderItem[] = [];
-    headerItems.push(HeaderItem.from(getHeaderItemTypeName(this.headerItemType)));
-    const id: string = this.getId();
-    if (id) {
-      headerItems.push(new HeaderItem(this.headerItemType, +id));
-    }
-    return headerItems;
+    return [];
   }
 
   getCrudChildren(): CrudChild[] {

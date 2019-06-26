@@ -6,8 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
-import { getHeaderItemTypeName, HeaderItem, HeaderItemType } from '../header/header-item';
-import { HeaderService } from '../header/header.service';
+import { HeaderItem } from '../header/header-item';
 import { CrudChild } from './crud-child';
 import { CrudItem } from './crud-item';
 import { FormItem } from './form-item';
@@ -17,8 +16,7 @@ export abstract class CrudItemService<T extends CrudItem> {
   private route: ActivatedRoute;
 
   constructor(
-    public headerItemType: HeaderItemType,
-    private headerService: HeaderService,
+    private typeName: string,
     protected errorMessagesService: ErrorMessagesService,
     protected http: HttpClient) { }
 
@@ -36,17 +34,14 @@ export abstract class CrudItemService<T extends CrudItem> {
 
   protected abstract getBaseUrl(): string;
 
-  protected abstract getHeaderItems(): HeaderItem[];
+  abstract getHeaderItems(): HeaderItem[];
 
   getTypeName(): string {
-    return getHeaderItemTypeName(this.headerItemType);
+    return this.typeName;
   }
 
   setRoute(route: ActivatedRoute) {
     this.route = route;
-    this.route.params.subscribe(val => {
-      this.headerService.setHeaderItems(this.getHeaderItems());
-    });
   }
 
   post(t: T, createdValue: any): Observable<number> {
@@ -64,11 +59,6 @@ export abstract class CrudItemService<T extends CrudItem> {
       .pipe(
         catchError(this.errorMessagesService.handleError<any>('read')),
         map((data: T) => Object.assign(this.createCrudItem(), data)),
-        tap((crudItem: T) => {
-          const headerItem: HeaderItem
-            = new HeaderItem(this.headerItemType, crudItem.id, crudItem.getDisplayValue());
-          this.headerService.updateNames(headerItem);
-        }),
       );
   }
 

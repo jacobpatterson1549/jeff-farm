@@ -4,8 +4,6 @@ import { catchError, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
-import { HeaderItemType } from '../header/header-item';
-import { HeaderService } from '../header/header.service';
 import { CrudChild } from './crud-child';
 import { CrudItem } from './crud-item';
 import { CrudItemInspection } from './crud-item-inspection';
@@ -20,13 +18,11 @@ export abstract class CrudItemInspectionGroupService<
   extends CrudItemService<T> {
 
   constructor(
-    headerItemType: HeaderItemType,
-    headerService: HeaderService,
+    typeName: string,
     errorMessagesService: ErrorMessagesService,
     http: HttpClient) {
     super(
-      headerItemType,
-      headerService,
+      typeName,
       errorMessagesService,
       http);
   }

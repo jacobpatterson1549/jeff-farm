@@ -14,6 +14,7 @@ export class CrudHomeComponent<T extends CrudItem> implements OnInit {
   crudItemName: string;
 
   constructor(
+    private headerService: HeaderService,
     private route: ActivatedRoute,
     private crudItemService: CrudItemService<T>) {
 
@@ -22,5 +23,8 @@ export class CrudHomeComponent<T extends CrudItem> implements OnInit {
 
   ngOnInit() {
     this.crudItemName = this.crudItemService.getTypeName();
+    this.route.params.subscribe(val => {
+      this.headerService.setHeaderItems(this.crudItemService.getHeaderItems());
+    });
   }
 }

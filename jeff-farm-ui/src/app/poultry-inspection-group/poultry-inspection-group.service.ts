@@ -3,10 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { CrudItemInspectionGroupService } from '../crud/crud-item-inspection-group.service';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
-import { getHeaderItemTypeName, HeaderItem, HeaderItemType } from '../header/header-item';
-import { HeaderService } from '../header/header.service';
+import { HeaderItem } from '../header/header-item';
 import { Poultry } from '../poultry/poultry';
-import { PoultryService } from '../poultry/poultry.service';
 import { PoultryInspection } from './poultry-inspection';
 import { PoultryInspectionGroup } from './poultry-inspection-group';
 
@@ -15,12 +13,10 @@ export class PoultryInspectionGroupService
   extends CrudItemInspectionGroupService<Poultry, PoultryInspection, PoultryInspectionGroup> {
 
   constructor(
-    headerService: HeaderService,
     errorMessagesService: ErrorMessagesService,
     http: HttpClient) {
     super(
-      HeaderItemType.POULTRY_INSPECTION_GROUP,
-      headerService,
+      'poultry inspection',
       errorMessagesService,
       http);
   }
@@ -34,16 +30,10 @@ export class PoultryInspectionGroupService
   }
 
   getHeaderItems(): HeaderItem[] {
-    const headerItems: HeaderItem[] = [];
-    headerItems.push(HeaderItem.from(getHeaderItemTypeName(HeaderItemType.FARM)));
-    headerItems.push(new HeaderItem(HeaderItemType.FARM, +this.getParentId()));
-    headerItems.push(HeaderItem.from(getHeaderItemTypeName(HeaderItemType.POULTRY)));
-    headerItems.push(HeaderItem.from(getHeaderItemTypeName(this.headerItemType)));
-    const id: string = this.getId();
-    if (id) {
-      headerItems.push(new HeaderItem(this.headerItemType, +id));
-    }
-    return headerItems;
+    return [
+      { url: `farm/${this.getParentId()}`, name: 'farm' },
+      { url: `farm/${this.getParentId()}/poultry`, name: 'poultry' },
+    ];
   }
 
   protected getBaseUrl(): string {
