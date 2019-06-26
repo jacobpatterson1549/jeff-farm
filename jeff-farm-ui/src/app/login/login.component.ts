@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 import { environment } from '../../environments/environment';
 import { AuthService } from '../auth/auth.service';
+import { User } from '../user/user';
 import { LoginSuccess } from './login-success';
 import { LoginService } from './login.service';
 
@@ -58,8 +59,16 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm() {
+    this.login(this.loginForm.value)
+  }
+
+  demoLogin() {
+    this.login({userName: 'demo', password: 'demo'} as User);
+  }
+
+  private login(user: User) {
     this.working = true;
-    this.loginService.login(this.loginForm.value)
+    this.loginService.login(user)
       .pipe(catchError((error: Error) => {
         this.working = false;
         throw error;

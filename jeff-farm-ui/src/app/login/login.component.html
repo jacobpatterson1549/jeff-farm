@@ -25,3 +25,10 @@
   <app-spinner [visible]="working"></app-spinner>
 
 </form>
+
+<div>
+  <button class="btn btn-info" [disabled]="working || (!serverRunning && production)" (click)="demoLogin()"
+  title="The demo user can only view certain farms.
+  Attempting to modify any data with the demo user will cause a logout to occur.">Demo</button>
+  <span>[readonly mode]</span>
+</div>
