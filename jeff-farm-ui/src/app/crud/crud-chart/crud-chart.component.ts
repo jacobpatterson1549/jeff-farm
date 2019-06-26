@@ -1,8 +1,9 @@
 import * as Highcharts from 'highcharts';
 
+import { getUrlScheme } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { CrudItem } from '../crud-item';
 import { CrudItemInspection } from '../crud-item-inspection';
@@ -44,12 +45,26 @@ export class CrudChartComponent
         text: '',
       }
     },
+    plotOptions: {
+      series: {
+        cursor: 'pointer',
+        point: {
+          events: {
+            click() {
+              location.href = this.series.options.groupUrls[this.index];
+            }
+          }
+        }
+      }
+    },
     series: []
   };
   formItems: FormItem[];
   private groups: T[];
+  private groupUrls: string[];
 
   constructor(
+    private router: Router,
     route: ActivatedRoute,
     private titleService: Title,
     private crudItemInspectionGroupService: CrudItemInspectionGroupService<U, V, T>) {
@@ -65,7 +80,9 @@ export class CrudChartComponent
       .filter(f => [FormItemType.Integer, FormItemType.Stars].indexOf(f.type) >= 0);
     this.crudItemInspectionGroupService.getList()
       .subscribe((groups: T[]) => {
-        this.groups = groups.reverse();
+        this.groups = groups;
+        this.groups.reverse();
+        this.groupUrls = this.groups.map(group => this.getUrl(group));
         this.options.xAxis.categories = this.groups.map(group => group.createdDate);
         this.chartFormItem(0);
       });
@@ -81,13 +98,23 @@ export class CrudChartComponent
       });
   }
 
+  private getUrl(group: T): string {
+    const url = this.router.url;
+    const lastSlash = url.lastIndexOf('/') + 1;
+    return url.substr(0, lastSlash) + group.id;
+  }
+
   chartFormItem(index: number) {
     if (this.groups == null || !this.options.series.length) {
       return;
     }
 
     // reset the series
-    this.options.series.forEach(s => s.data = Array(this.groups.length).fill(''));
+    this.options.series.forEach(s => {
+      s.data = Array(this.groups.length).fill('');
+      // It would be nice to do this ONCE when the groups/targets are retrieved:
+      s.groupUrls = this.groupUrls;
+    });
 
     // add data to the empty series
     const formItemName: string = this.formItems[index].name;
