@@ -59,6 +59,7 @@ import { NavigationComponent } from './navigation.component';
     NgbModule, // for delete modal
     ReactiveFormsModule,
     CrudRoutingModule,
+    LoginStatusModule,
     SpinnerModule,
   ],
   exports: [

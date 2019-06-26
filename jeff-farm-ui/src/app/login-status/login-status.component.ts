@@ -26,13 +26,11 @@ export class LoginStatusComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    if (this.authService.isLoggedIn()) {
-      this.userService.get()
-        .subscribe(user => {
-          this.user = user;
-        });
-      this.viewUserButtonText = this.authService.isAdminUser() ? 'Users' : 'View Account';
-    }
+    this.userService.get()
+      .subscribe(user => {
+        this.user = user;
+      });
+    this.viewUserButtonText = this.authService.isAdminUser() ? 'Users' : 'View Account';
   }
 
   viewAccount() {
