@@ -10,6 +10,7 @@ import { ErrorMessagesModule } from './error-messages/error-messages.module';
 import { FooterModule } from './footer/footer.module';
 import { GlobalProviders } from './global-providers';
 import { HeaderComponent } from './header/header.component';
+import { LoginStatusModule } from './login-status/login-status.module';
 import { PageNotFoundComponent } from './page-not-found.component';
 
 @NgModule({
@@ -24,7 +25,8 @@ import { PageNotFoundComponent } from './page-not-found.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FooterModule, // keep before footer module
+    LoginStatusModule,
+    FooterModule, // keep before routing module
     AppRoutingModule,
     ErrorMessagesModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),

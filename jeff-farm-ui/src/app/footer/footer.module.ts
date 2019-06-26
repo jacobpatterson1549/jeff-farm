@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AboutComponent } from './about/about.component';
 import { FooterRoutingModule } from './footer-routing.module';
@@ -15,6 +16,7 @@ import { HelpComponent } from './help/help.component';
   imports: [
     CommonModule,
     FooterRoutingModule,
+    FontAwesomeModule,
   ],
   exports: [
     FooterComponent,

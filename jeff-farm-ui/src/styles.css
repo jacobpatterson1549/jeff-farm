@@ -20,3 +20,7 @@ input {
 *.ng-invalid:not(form):not(div) {
     border: 1px solid red;
 }
+
+fa-icon {
+    margin: .5em;
+}

@@ -4,4 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-help',
   templateUrl: './help.component.html',
 })
-export class HelpComponent { }
+export class HelpComponent {
+  issuesUrl = 'https://github.com/jacobpatterson1549/jeff-farm/issues';
+}
