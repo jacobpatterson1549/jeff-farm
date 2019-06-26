@@ -64,7 +64,20 @@
 		<web-resource-collection>
 			<web-resource-name>secured-endpoints</web-resource-name>
 			<url-pattern>${servlet.url.prefix}/*</url-pattern>
-			<http-method-omission>OPTIONS</http-method-omission>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>*</role-name> <!-- user must be logged in -->
+		</auth-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>secured-endpoints-modify</web-resource-name>
+			<url-pattern>${servlet.url.prefix}/*</url-pattern>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>${security.role.user}</role-name>
@@ -85,6 +98,7 @@
 	<security-role>
 		<role-name>${security.role.user}</role-name>
 		<role-name>${security.role.admin}</role-name>
+		<role-name>${security.role.demo}</role-name>
 	</security-role>
 
 	<session-config>

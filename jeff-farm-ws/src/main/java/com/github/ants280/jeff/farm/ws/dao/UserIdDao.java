@@ -41,6 +41,12 @@ public class UserIdDao
 		return request.isUserInRole(Property.ADMIN_ROLE.getValue());
 	}
 
+
+	public boolean hasDemoRole()
+	{
+		return request.isUserInRole(Property.DEMO_ROLE.getValue());
+	}
+
 	private HttpSession getCurrentSession()
 	{
 		return request.getSession(false);

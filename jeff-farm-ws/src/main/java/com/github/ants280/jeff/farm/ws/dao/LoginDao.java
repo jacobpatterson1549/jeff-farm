@@ -47,7 +47,7 @@ public class LoginDao
 		User actualUser = userDao.read(user.getUserName());
 		userIdDao.setUserId(actualUser.getId());
 
-		if (!userIdDao.hasUserRole())
+		if (!userIdDao.hasUserRole() && !userIdDao.hasDemoRole())
 		{
 			throw new JeffFarmWsException("No access");
 		}

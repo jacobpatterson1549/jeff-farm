@@ -7,6 +7,7 @@ public enum Property
 {
 	USER_ROLE("security.role.user"),
 	ADMIN_ROLE("security.role.admin"),
+	DEMO_ROLE("security.role.demo"),
 	SERVER_SCHEME("server.scheme"),
 	SERVER_HOST("server.host"),
 	SERVER_PORT("server.port"),
