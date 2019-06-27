@@ -14,7 +14,8 @@ $body$
 			SELECT h.farm_id, p.farm_id
 			FROM hives AS h
 			CROSS JOIN poultry AS p
-			WHERE can_delete_farm.id IN (h.farm_id, p.farm_id)
+			CROSS JOIN cattle AS c
+			WHERE can_delete_farm.id IN (h.farm_id, p.farm_id, c.farm_id)
 		)
 		INTO can_delete_farm.can_delete;
 	END

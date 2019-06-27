@@ -19,10 +19,14 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/poultry_inspection_groups.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/poultry_inspections.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/farm_permissions.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/cattle.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/cattle_maps.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/cattle_coordinates.sql"/>
 	</changeSet>
 
 	<changeSet id="tables/readonly" author="jacobpatterson1549" runOnChange="true">
 		<comment>Tables used as return types of functions.</comment>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/readonly/cattle_maps_readonly.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/readonly/farm_permissions_readonly.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/readonly/hive_inspections_readonly.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/readonly/poultry_inspections_readonly.sql"/>
@@ -38,6 +42,9 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/poultry_inspection_groups_audit.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/poultry_inspections_audit.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/farm_permissions_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/cattle_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/cattle_maps_audit.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="tables/audit/cattle_coordinates_audit.sql"/>
 	</changeSet>
 
 	<changeSet id="functions/misc" author="jacobpatterson1549" runOnChange="true">
@@ -48,6 +55,9 @@
 
 	<changeSet id="functions/permission_check" author="jacobpatterson1549" runOnChange="true">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_admin_user.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_cattle.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_cattle_coordinate.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_cattle_map.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_farm_permission.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/permission_check/permission_check_hive.sql"/>
@@ -60,6 +70,7 @@
 	</changeSet>
 
 	<changeSet id="functions/can-delete" author="jacobpatterson1549" runOnChange="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/can-delete/can_delete_cattle.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/can-delete/can_delete_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/can-delete/can_delete_farm_permission.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/can-delete/can_delete_hive.sql"/>
@@ -68,6 +79,9 @@
 	</changeSet>
 
 	<changeSet id="functions/create" author="jacobpatterson1549" runOnChange="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_cattle.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_cattle_coordinate.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_cattle_map.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_farm_permission.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/create/create_hive.sql"/>
@@ -80,6 +94,9 @@
 	</changeSet>
 
 	<changeSet id="functions/read" author="jacobpatterson1549" runOnChange="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_cattle.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_cattle_coordinate.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_cattle_map.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_farm_permission.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read/read_hive.sql"/>
@@ -94,6 +111,10 @@
 	</changeSet>
 
 	<changeSet id="functions/read-list" author="jacobpatterson1549" runOnChange="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_cattle_coordinates_for_farm.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_cattle_coordinates_for_map.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_cattle_list.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_cattle_maps.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_farm_permissions.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_farms.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_hive_inspection_groups.sql"/>
@@ -108,6 +129,8 @@
 	</changeSet>
 
 	<changeSet id="functions/update" author="jacobpatterson1549" runOnChange="true">
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_cattle.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_cattle_coordinate.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_hive.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_hive_inspection.sql"/>
@@ -121,6 +144,10 @@
 
 	<changeSet id="functions/delete" author="jacobpatterson1549" runOnChange="true">
 		<comment>Use can-delete functions for permission checking.</comment>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_cattle.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_cattle_coordinate.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_cattle_coordinates_for_map.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_cattle_map.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_farm_permission.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/delete/delete_hive.sql"/>
