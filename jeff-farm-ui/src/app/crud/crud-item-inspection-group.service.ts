@@ -71,7 +71,6 @@ export abstract class CrudItemInspectionGroupService<
       );
   }
 
-  // TODO: call parentCrudItemService.getList().pipe(map) and delete /targets enpoints.
   getTargets(): Observable<Map<number, string>> {
     const url = `${this.getBaseUrl()}/targets/${this.getParentId()}`;
     return this.http.get<Map<number, string>>(url)
