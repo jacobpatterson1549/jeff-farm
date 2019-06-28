@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { CrudItemMapService } from '../crud/crud-item-map-service';
 import { CrudItemService } from '../crud/crud-item.service';
 import { CrudModule } from '../crud/crud.module';
-import { LivestockService } from '../livestock/livestock.service';
 import { LivestockMapService } from './livestock-map.service';
 
 @NgModule({
@@ -16,7 +15,7 @@ import { LivestockMapService } from './livestock-map.service';
     },
     {
       provide: CrudItemService,
-      useClass: LivestockService
+      useClass: LivestockMapService
     },
   ],
   imports: [

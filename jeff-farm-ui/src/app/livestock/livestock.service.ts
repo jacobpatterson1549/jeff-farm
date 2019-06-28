@@ -30,7 +30,7 @@ export class LivestockService extends CrudItemService<Livestock> {
 
   getCrudChildren(): CrudChild[] {
     return [
-      // { name: 'Map', path: 'map' },
+      { name: 'Map', path: 'map' },
     ];
   }
 
