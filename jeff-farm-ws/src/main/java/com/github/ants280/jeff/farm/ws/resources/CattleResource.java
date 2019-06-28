@@ -15,7 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/poultry")
+@Path("/cattle")
 public class CattleResource
 {
 	private final CattleDao poultryDao;

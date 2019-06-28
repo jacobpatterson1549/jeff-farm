@@ -16,6 +16,17 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AdminUserGuard],
   },
+  // {
+  //   path: 'farm/:farm_id/cattle/:id/map',
+  //   loadChildren: () => import('./cattle-map/cattle-map.module')
+  //     .then(m => m.CattleMapModule),
+  //   canActivate: [AuthGuard],
+  // },
+  {
+    path: 'farm/:farm_id/cattle',
+    loadChildren: () => import('./cattle/cattle.module').then(m => m.CattleModule),
+    canActivate: [AuthGuard],
+  },
   {
     path: 'farm/:farm_id/poultry/inspection',
     loadChildren: () => import('./poultry-inspection-group/poultry-inspection-group.module')

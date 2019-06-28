@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.sql.DataSource;
 
+@Singleton
 public class CattleMapDao extends CrudItemMapDao
 {
 	private final CattleDao cattleDao;
