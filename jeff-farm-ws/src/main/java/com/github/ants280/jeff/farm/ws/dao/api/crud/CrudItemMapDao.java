@@ -156,9 +156,10 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 			= updateMapParameterMapper.apply(entityUpdate.getMap());
 		String updateCoordinatesFunctionName = String.format("update_%s_coordinate", crudItemName);
 		List<List<SqlFunctionParameter>> updateCoordinatesInParameters
-			= Arrays.stream(entityUpdate.getAddCoordinates())
-			.map(updateCoordinateParameterMapper)
-			.collect(Collectors.toList());
+			= entityUpdate.getMap().getCoordinates()
+				.stream()
+				.map(updateCoordinateParameterMapper)
+				.collect(Collectors.toList());
 		String createCoordinatesFunctionName = String.format("create_%s_coordinate", crudItemName);
 		List<List<SqlFunctionParameter>> createCoordinatesInParameters
 			= Arrays.stream(entityUpdate.getAddCoordinates())
