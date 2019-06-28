@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS cattle_coordinates_audit
 	, user_id INT NOT NULL
 	, action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	, id INT
-	, group_id INT NOT NULL
+	, map_id INT NOT NULL
 	, latitude INT NOT NULL
 	, longitude INT NOT NULL
 	, display_order INT NOT NULL
@@ -19,7 +19,7 @@ $cattle_coordinates_audit$
 			( action_type
 			, user_id
 			, id
-			, group_id
+			, map_id
 			, target_id
 			, latitude
 			, longitude
@@ -29,7 +29,7 @@ $cattle_coordinates_audit$
 			( 'i'
 			, get_user_id()
 			, NEW.id
-			, NEW.group_id
+			, NEW.map_id
 			, NEW.target_id
 			, NEW.latitude
 			, NEW.longitude
@@ -57,7 +57,7 @@ $cattle_coordinates_audit$
 			( action_type
 			, user_id
 			, id
-			, group_id
+			, map_id
 			, target_id
 			, latitude
 			, longitude
@@ -67,7 +67,7 @@ $cattle_coordinates_audit$
 			( 'b'
 			, get_user_id()
 			, OLD.id
-			, OLD.group_id
+			, OLD.map_id
 			, OLD.target_id
 			, OLD.latitude
 			, OLD.longitude
@@ -77,7 +77,7 @@ $cattle_coordinates_audit$
 			( action_type
 			, user_id
 			, id
-			, group_id
+			, map_id
 			, target_id
 			, latitude
 			, longitude
@@ -87,7 +87,7 @@ $cattle_coordinates_audit$
 			( 'a'
 			, get_user_id()
 			, NEW.id
-			, NEW.group_id
+			, NEW.map_id
 			, NEW.target_id
 			, NEW.latitude
 			, NEW.longitude
@@ -115,7 +115,7 @@ $cattle_coordinates_audit$
 			( action_type
 			, user_id
 			, id
-			, group_id
+			, map_id
 			, target_id
 			, latitude
 			, longitude
@@ -125,7 +125,7 @@ $cattle_coordinates_audit$
 			( 'd'
 			, get_user_id()
 			, OLD.id
-			, OLD.group_id
+			, OLD.map_id
 			, OLD.target_id
 			, OLD.latitude
 			, OLD.longitude
