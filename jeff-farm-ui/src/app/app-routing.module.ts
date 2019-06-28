@@ -17,7 +17,7 @@ const routes: Routes = [
     canActivateChild: [AdminUserGuard],
   },
   {
-    path: 'farm/:farm_id/livestock/:livestock_id/map',
+    path: 'farm/:farm_id/livestock/map',
     loadChildren: () => import('./livestock-map/livestock-map.module')
       .then(m => m.LivestockMapModule),
     canActivate: [AuthGuard],

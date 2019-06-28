@@ -105,7 +105,7 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 		String readMapFunctionName = String.format("read_%s_maps", crudItemName);
 		List<SqlFunctionParameter> readMapsInParameters = Collections.singletonList(
 			new IntegerSqlFunctionParameter(CrudItem.ID_COLUMN, target_id)); // TODO: should be parentId!!! (+all parameters on read-list functions)
-		String readCoordinatesFunctionName = String.format("read_%s_coordinates_for_target", crudItemName);
+		String readCoordinatesFunctionName = String.format("read_%s_coordinates_for_farm", crudItemName);
 		List<SqlFunctionParameter> readCoordinatesInParameters = Collections.singletonList(
 			new IntegerSqlFunctionParameter(CrudItem.ID_COLUMN, target_id));
 

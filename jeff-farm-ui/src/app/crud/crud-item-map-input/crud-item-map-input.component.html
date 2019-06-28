@@ -1,1 +1,8 @@
-<p>crud-item-map-input works!</p>
+<div>
+    <span>Target: </span>
+    <select class="custom-select" (change)="setTarget($event.target.selectedIndex)">
+        <option *ngFor="let targetId of objectKeys(selectTargets)">
+            {{selectTargets[targetId]}}
+        </option>
+    </select>
+</div>

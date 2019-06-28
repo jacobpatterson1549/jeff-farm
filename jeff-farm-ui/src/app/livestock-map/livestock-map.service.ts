@@ -30,6 +30,6 @@ export class LivestockMapService extends CrudItemMapService {
   }
 
   protected getParentId(): string {
-    return this.getRouteParam('livestock_id');
+    return this.getRouteParam('farm_id');
   }
 }

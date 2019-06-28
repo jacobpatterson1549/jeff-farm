@@ -16,8 +16,10 @@ export class CrudItemInputComponent<T extends CrudItem> implements OnInit {
   crudForm: FormGroup;
   formItemType = FormItemType; // used for the ngSwitch in the template
   inspectionItems: FormArray;
+  coordinates: FormArray;
 
   ngOnInit() {
     this.inspectionItems = this.crudForm.get('inspectionItems') as FormArray;
+    this.coordinates = this.crudForm.get('coordinates') as FormArray;
   }
 }

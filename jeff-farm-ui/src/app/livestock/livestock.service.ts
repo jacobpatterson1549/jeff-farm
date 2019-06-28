@@ -28,7 +28,7 @@ export class LivestockService extends CrudItemService<Livestock> {
     ];
   }
 
-  getCrudChildren(): CrudChild[] {
+  getCrudGroups(): CrudChild[] {
     return [
       { name: 'Map', path: 'map' },
     ];

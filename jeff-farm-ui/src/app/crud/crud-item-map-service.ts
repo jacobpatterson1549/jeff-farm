@@ -4,7 +4,6 @@ import { catchError, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
-import { CrudChild } from './crud-child';
 import { CrudItemCoordinate } from './crud-item-coordinate';
 import { CrudItemMap } from './crud-item-map';
 import { CrudItemMapUpdate } from './crud-item-map-update';
@@ -28,12 +27,6 @@ export abstract class CrudItemMapService extends CrudItemService<CrudItemMap> {
 
     createCrudItemCoordinate(): CrudItemCoordinate {
         return new CrudItemCoordinate(+this.getId());
-    }
-
-    getCrudGroups(): CrudChild[] {
-        return [
-            { name: 'Chart', path: 'chart' },
-        ];
     }
 
     get(): Observable<CrudItemMap> {

@@ -118,7 +118,7 @@
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_hive_inspections_for_group.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_hives.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_livestock_coordinates_for_map.sql"/>
-		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_livestock_coordinates_for_target.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_livestock_coordinates_for_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_livestock_list.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_livestock_maps.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/read-list/read_poultry_inspection_groups.sql"/>
