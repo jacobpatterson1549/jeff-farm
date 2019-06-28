@@ -50,7 +50,7 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 
 		String createMapFunctionName = String.format("create_%s_map", crudItemName);
 		String createCoordinatesFunctionName = String.format("create_%s_coordinate", crudItemName);
-		List<List<SqlFunctionParameter>> coordinatesInParametes = crudItemMap.getCoordinates()
+		List<List<SqlFunctionParameter>> coordinatesInParameters = crudItemMap.getCoordinates()
 			.stream()
 			.map(createCoordinateParameterMapper)
 			.collect(Collectors.toList());
@@ -60,12 +60,12 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 			createMapFunctionName,
 			Collections.emptyList(),
 			new SimpleResultSetTransformer<>(rs -> rs.getInt(CrudItem.ID_COLUMN)),
-			parentId -> this.setParentId(parentId, coordinatesInParametes),
+			parentId -> this.setParentId(parentId, coordinatesInParameters),
 			userIdDao);
 		SqlFunctionCall<Void>
 			createItemsFunctionCall
 			= new BatchCommandSqlFunctionCall(createCoordinatesFunctionName,
-			coordinatesInParametes,
+			coordinatesInParameters,
 			userIdDao);
 
 		return this.execute((a, b) -> a,

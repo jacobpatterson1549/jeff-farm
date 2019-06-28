@@ -5,44 +5,40 @@ import { CrudChild } from '../crud/crud-child';
 import { CrudItemService } from '../crud/crud-item.service';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { HeaderItem } from '../header/header-item';
-import { HeaderService } from '../header/header.service';
-import { Farm } from './farm';
+import { Livestock } from './livestock';
 
 @Injectable()
-export class FarmService extends CrudItemService<Farm> {
+export class LivestockService extends CrudItemService<Livestock> {
 
   constructor(
-    headerService: HeaderService,
     errorMessagesService: ErrorMessagesService,
     http: HttpClient) {
     super(
-      'farm',
+      'livestock',
       errorMessagesService,
       http);
   }
-
-  createCrudItem(): Farm {
-    return new Farm();
+  createCrudItem(): Livestock {
+    return new Livestock(+this.getParentId());
   }
 
   getHeaderItems(): HeaderItem[] {
-    return [];
+    return [
+      { url: `farm/${this.getParentId()}`, name: 'farm' },
+    ];
   }
 
   getCrudChildren(): CrudChild[] {
     return [
-      { name: 'Permissions', path: 'permission' },
-      { name: 'Hives', path: 'hive' },
-      { name: 'Poultry', path: 'poultry' },
-      { name: 'Livestock', path: 'livestock' },
+      // { name: 'Map', path: 'map' },
     ];
   }
 
   protected getBaseUrl(): string {
-    return 'farm';
+    return 'livestock';
   }
 
   protected getParentId(): string {
-    return '';
+    return this.getRouteParam('farm_id');
   }
 }

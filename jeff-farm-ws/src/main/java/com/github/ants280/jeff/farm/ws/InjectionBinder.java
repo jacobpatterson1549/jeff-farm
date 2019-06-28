@@ -27,8 +27,8 @@ public class InjectionBinder extends AbstractBinder
 		bindAsSingleton(PoultryDao.class);
 		bindAsSingleton(PoultryDao.class);
 		bindAsSingleton(PoultryInspectionGroupDao.class);
-		bindAsSingleton(CattleDao.class);
-		bindAsSingleton(CattleMapDao.class);
+		bindAsSingleton(LivestockDao.class);
+		bindAsSingleton(LivestockMapDao.class);
 	}
 
 	private <T> void bindAsSingleton(Class<T> singletonClass)

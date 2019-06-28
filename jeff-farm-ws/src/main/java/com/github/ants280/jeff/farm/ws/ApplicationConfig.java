@@ -24,8 +24,8 @@ public class ApplicationConfig extends Application
 		resources.add(HiveInspectionGroupResource.class);
 		resources.add(PoultryResource.class);
 		resources.add(PoultryInspectionGroupResource.class);
-		resources.add(CattleResource.class);
-		resources.add(CattleMapResource.class);
+		resources.add(LivestockResource.class);
+		resources.add(LivestockMapResource.class);
 		return resources;
 	}
 

@@ -17,14 +17,14 @@ const routes: Routes = [
     canActivateChild: [AdminUserGuard],
   },
   // {
-  //   path: 'farm/:farm_id/cattle/:id/map',
-  //   loadChildren: () => import('./cattle-map/cattle-map.module')
-  //     .then(m => m.CattleMapModule),
+  //   path: 'farm/:farm_id/livestock/:id/map',
+  //   loadChildren: () => import('./livestock-map/livestock-map.module')
+  //     .then(m => m.LivestockMapModule),
   //   canActivate: [AuthGuard],
   // },
   {
-    path: 'farm/:farm_id/cattle',
-    loadChildren: () => import('./cattle/cattle.module').then(m => m.CattleModule),
+    path: 'farm/:farm_id/livestock',
+    loadChildren: () => import('./livestock/livestock.module').then(m => m.LivestockModule),
     canActivate: [AuthGuard],
   },
   {
