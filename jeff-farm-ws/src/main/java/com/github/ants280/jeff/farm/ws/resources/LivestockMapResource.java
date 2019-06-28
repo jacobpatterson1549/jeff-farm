@@ -50,7 +50,7 @@ public class LivestockMapResource
 	@GET
 	@Path("list/{parentId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getPoultryList(@PathParam("parentId") int parentId)
+	public Response getLivestockList(@PathParam("parentId") int parentId)
 	{
 		List<CrudItemMap> livestockMaps
 			= livestockMapDao.readList(parentId);

@@ -1,13 +1,13 @@
 CREATE TABLE IF NOT EXISTS livestock_coordinates
 	( id SERIAL PRIMARY KEY
-	, group_id INT NOT NULL
+	, map_id INT NOT NULL
 	, latitude DOUBLE PRECISION NOT NULL
 	, longitude DOUBLE PRECISION NOT NULL
 	, display_order INT NOT NULL
 	, created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	, modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
-	, FOREIGN KEY (group_id)
+	, FOREIGN KEY (map_id)
 		REFERENCES livestock_maps(id)
 	);
 
