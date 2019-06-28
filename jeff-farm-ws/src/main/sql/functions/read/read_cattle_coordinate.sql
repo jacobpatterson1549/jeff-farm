@@ -11,7 +11,7 @@ $body$
 			RETURN QUERY
 			SELECT
 				  cc.id
-				, cc.group_id
+				, cc.map_id
 				, cc.latitude
 				, cc.longitude
 				, cc.display_order

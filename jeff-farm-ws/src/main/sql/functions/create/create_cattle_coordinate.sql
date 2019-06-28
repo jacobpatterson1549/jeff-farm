@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS create_cattle_coordinate;
 CREATE FUNCTION create_cattle_coordinate
 	( IN user_id INT
-	, IN group_id INT
+	, IN map_id INT
 	, IN latitude INT
 	, IN longitude INT
 	, IN display_order INT
@@ -10,15 +10,15 @@ CREATE FUNCTION create_cattle_coordinate
 AS
 $body$
 	BEGIN
-		IF permission_check_cattle_map(set_user_id(create_cattle_coordinate.user_id), create_cattle_coordinate.group_id) THEN
+		IF permission_check_cattle_map(set_user_id(create_cattle_coordinate.user_id), create_cattle_coordinate.map_id) THEN
 			INSERT INTO cattle_coordinates
-				( group_id
+				( map_id
 				, latitude
 				, longitude
 				, display_order
 				)
 			SELECT
-				  create_cattle_coordinate.group_id
+				  create_cattle_coordinate.map_id
 				, create_cattle_coordinate.latitude
 				, create_cattle_coordinate.longitude
 				, create_cattle_coordinate.display_order
