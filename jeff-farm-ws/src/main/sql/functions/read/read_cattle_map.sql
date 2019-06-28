@@ -11,7 +11,7 @@ $body$
 			RETURN QUERY
 			SELECT
 				  cm.id
-				, cm.group_id
+				, cm.farm_id
 				, cm.target_id
 				, c.name
 				, cm.created_date

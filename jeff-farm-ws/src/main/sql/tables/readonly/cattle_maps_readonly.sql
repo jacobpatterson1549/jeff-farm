@@ -3,7 +3,6 @@ CREATE TABLE IF NOT EXISTS cattle_maps_readonly -- TODO: move these +name tables
 	, farm_id INT NOT NULL
 	, target_id INT NOT NULL
 	, target_name VARCHAR(255)
-	, notes VARCHAR(4095)
 	, created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	, modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
