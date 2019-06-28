@@ -129,8 +129,13 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 
 	public void update(CrudItemMapUpdate entityUpdate)
 	{
+		Function<CrudItemMap, List<SqlFunctionParameter>> updateMapParameterMapper
+			= crudItemMap ->Arrays.asList(
+			new IntegerSqlFunctionParameter(CrudItemMap.ID_COLUMN, crudItemMap.getId()),
+			new IntegerSqlFunctionParameter(CrudItemMap.TARGET_ID_COLUMN, crudItemMap.getTargetId()));
 		Function<CrudItemCoordinate, List<SqlFunctionParameter>> updateCoordinateParameterMapper
 			= crudItemCoordinate ->Arrays.asList(
+				new IntegerSqlFunctionParameter(CrudItemCoordinate.ID_COLUMN, crudItemCoordinate.getId()),
 				new DoubleSqlFunctionParameter(CrudItemCoordinate.LATITUDE_COLUMN, crudItemCoordinate.getLatitude()),
 				new DoubleSqlFunctionParameter(CrudItemCoordinate.LONGITUDE_COLUMN, crudItemCoordinate.getLongitude()),
 				new IntegerSqlFunctionParameter(CrudItemCoordinate.DISPLAY_ORDER_COLUMN, crudItemCoordinate.getDisplayOrder()));
@@ -144,40 +149,49 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 			= coordinateId -> Collections.singletonList(
 				new IntegerSqlFunctionParameter(CrudItemCoordinate.ID_COLUMN, coordinateId));
 
-		// Note the map is not updated because it is currently just a relation.
+		String updateMapFunctionName = String.format("update_%s_map", crudItemName);
+		List<SqlFunctionParameter> updateMapInParameters
+			= updateMapParameterMapper.apply(entityUpdate.getMap());
 		String updateCoordinatesFunctionName = String.format("update_%s_coordinate", crudItemName);
-		List<List<SqlFunctionParameter>> itemInParameters
+		List<List<SqlFunctionParameter>> updateCoordinatesInParameters
 			= Arrays.stream(entityUpdate.getAddCoordinates())
 			.map(updateCoordinateParameterMapper)
 			.collect(Collectors.toList());
 		String createCoordinatesFunctionName = String.format("create_%s_coordinate", crudItemName);
-		List<List<SqlFunctionParameter>> createInParameters
+		List<List<SqlFunctionParameter>> createCoordinatesInParameters
 			= Arrays.stream(entityUpdate.getAddCoordinates())
 				.map(addCoordinateParameterMapper)
 				.collect(Collectors.toList());
 		String deleteCoordinatesFunctionName = String.format("delete_%s_coordinate", crudItemName);
-		List<List<SqlFunctionParameter>> deleteItemsInParameters
+		List<List<SqlFunctionParameter>> deleteCoordinatesInParameters
 			= IntStream.of(entityUpdate.getRemoveCoordinateIds())
 				.mapToObj(deleteCoordinateParameterMapper)
 				.collect(Collectors.toList());
 
 		SqlFunctionCall<Void>
+			updateMapFunctionCall
+			= new SimpleCommandSqlFunctionCall<>(updateMapFunctionName,
+			updateMapInParameters,
+			null,
+			userIdDao);
+		SqlFunctionCall<Void>
 			updateCoordinatesFunctionCall
 			= new BatchCommandSqlFunctionCall(updateCoordinatesFunctionName,
-			itemInParameters,
+			updateCoordinatesInParameters,
 			userIdDao);
 		SqlFunctionCall<Void>
 			createCoordinatesFunctionCall
 			= new BatchCommandSqlFunctionCall(createCoordinatesFunctionName,
-			createInParameters,
+			createCoordinatesInParameters,
 			userIdDao);
 		SqlFunctionCall<Void>
 			deleteCoordinatesFunctionCall
 			= new BatchCommandSqlFunctionCall(deleteCoordinatesFunctionName,
-			deleteItemsInParameters,
+			deleteCoordinatesInParameters,
 			userIdDao);
 
 		this.execute(
+			updateMapFunctionCall,
 			updateCoordinatesFunctionCall,
 			createCoordinatesFunctionCall,
 			deleteCoordinatesFunctionCall);

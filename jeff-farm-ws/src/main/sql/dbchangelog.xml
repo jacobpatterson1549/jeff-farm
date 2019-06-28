@@ -131,6 +131,7 @@
 	<changeSet id="functions/update" author="jacobpatterson1549" runOnChange="true">
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_cattle.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_cattle_coordinate.sql"/>
+		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_cattle_map.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_farm.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_hive.sql"/>
 		<sqlFile relativeToChangelogFile="true" splitStatements="false" path="functions/update/update_hive_inspection.sql"/>
