@@ -2,8 +2,8 @@ DROP FUNCTION IF EXISTS update_cattle_coordinate;
 CREATE FUNCTION update_cattle_coordinate
 	( IN user_id INT
 	, IN id INT
-	, IN latitude INT
-	, IN longitude INT
+	, IN latitude DOUBLE PRECISION
+	, IN longitude DOUBLE PRECISION
 	, IN display_order INT
 	)
 RETURNS VOID

@@ -2,8 +2,8 @@ DROP FUNCTION IF EXISTS create_cattle_coordinate;
 CREATE FUNCTION create_cattle_coordinate
 	( IN user_id INT
 	, IN map_id INT
-	, IN latitude INT
-	, IN longitude INT
+	, IN latitude DOUBLE PRECISION
+	, IN longitude DOUBLE PRECISION
 	, IN display_order INT
 	, OUT id INT
 	)

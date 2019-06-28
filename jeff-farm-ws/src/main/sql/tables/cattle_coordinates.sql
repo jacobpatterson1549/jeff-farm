@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS cattle_coordinates
 	( id SERIAL PRIMARY KEY
 	, group_id INT NOT NULL
-	, latitude INT NOT NULL
-	, longitude INT NOT NULL
+	, latitude DOUBLE PRECISION NOT NULL
+	, longitude DOUBLE PRECISION NOT NULL
 	, display_order INT NOT NULL
 	, created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	, modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP

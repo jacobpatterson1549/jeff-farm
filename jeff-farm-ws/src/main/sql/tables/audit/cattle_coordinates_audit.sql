@@ -4,10 +4,10 @@ CREATE TABLE IF NOT EXISTS cattle_coordinates_audit
 	, user_id INT NOT NULL
 	, action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	, id INT
-	, map_id INT NOT NULL
-	, latitude INT NOT NULL
-	, longitude INT NOT NULL
-	, display_order INT NOT NULL
+	, map_id INT
+	, latitude DOUBLE PRECISION
+	, longitude DOUBLE PRECISION
+	, display_order INT
 	);
 
 
