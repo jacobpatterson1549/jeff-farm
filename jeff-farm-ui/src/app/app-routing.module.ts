@@ -16,12 +16,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AdminUserGuard],
   },
-  // {
-  //   path: 'farm/:farm_id/livestock/:id/map',
-  //   loadChildren: () => import('./livestock-map/livestock-map.module')
-  //     .then(m => m.LivestockMapModule),
-  //   canActivate: [AuthGuard],
-  // },
+  {
+    path: 'farm/:farm_id/livestock/:livestock_id/map',
+    loadChildren: () => import('./livestock-map/livestock-map.module')
+      .then(m => m.LivestockMapModule),
+    canActivate: [AuthGuard],
+  },
   {
     path: 'farm/:farm_id/livestock',
     loadChildren: () => import('./livestock/livestock.module').then(m => m.LivestockModule),

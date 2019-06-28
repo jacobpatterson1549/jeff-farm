@@ -26,6 +26,7 @@ import {
     CrudItemInspectionGroupInputComponent
 } from './crud-item-inspection-group-input/crud-item-inspection-group-input.component';
 import { CrudItemInspectionGroupGuard } from './crud-item-inspection-group.guard';
+import { CrudItemMapInputComponent } from './crud-item-map-input/crud-item-map-input.component';
 import { CrudListComponent } from './crud-list/crud-list.component';
 import { CrudRoutingModule } from './crud-routing.module';
 import { CrudViewComponent } from './crud-view/crud-view.component';
@@ -45,6 +46,7 @@ import { NavigationComponent } from './navigation.component';
     CrudDeleteComponent,
     CrudItemInputComponent,
     CrudItemInspectionGroupInputComponent,
+    CrudItemMapInputComponent,
     CrudItemInputStringComponent,
     CrudItemInputBooleanComponent,
     CrudItemInputIntegerComponent,
