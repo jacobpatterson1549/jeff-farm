@@ -9,8 +9,8 @@ $body$
 	BEGIN
 		IF permission_check_cattle(set_user_id(delete_cattle.user_id), delete_cattle.id) THEN
 			DELETE
-			FROM cattle AS h
-			WHERE h.id = delete_cattle.id;
+			FROM cattle AS c
+			WHERE c.id = delete_cattle.id;
 		END IF;
 	END
 $body$
