@@ -1,6 +1,6 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-public abstract class CrudItemMapUpdate
+public class CrudItemMapUpdate
 {
 	private CrudItemMap map;
 	private CrudItemCoordinate[] addCoordinates;
