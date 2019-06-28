@@ -58,7 +58,8 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 		SqlFunctionCall<Integer> createGroupFunctionCall
 			= new SideEffectSqlFunctionCall<>(
 			createMapFunctionName,
-			Collections.singletonList(
+			Arrays.asList(
+				new IntegerSqlFunctionParameter(CrudItemMap.ID_COLUMN, crudItemMap.getParentId()),
 				new IntegerSqlFunctionParameter(CrudItemMap.TARGET_ID_COLUMN, crudItemMap.getTargetId())),
 			new SimpleResultSetTransformer<>(rs -> rs.getInt(CrudItem.ID_COLUMN)),
 			parentId -> this.setParentId(parentId, coordinatesInParameters),
@@ -228,8 +229,9 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 	{
 		return new CrudItemMap()
 			.setId(rs.getInt(CrudItemMap.ID_COLUMN))
-			.setTargetId(rs.getInt(rs.getInt(CrudItemMap.TARGET_ID_COLUMN)))
-			.setTargetName(rs.getString(rs.getString(CrudItemMap.TARGET_NAME_COLUMN)))
+			.setParentId(rs.getInt("farm_id")) // HACK!
+			.setTargetId(rs.getInt(CrudItemMap.TARGET_ID_COLUMN))
+			.setTargetName(rs.getString(CrudItemMap.TARGET_NAME_COLUMN))
 			.setCreatedTimestamp(rs.getTimestamp(CrudItemMap.CREATED_DATE_COLUMN))
 			.setModifiedTimestamp(rs.getTimestamp(CrudItemMap.MODIFIED_DATE_COLUMN));
 	}
@@ -238,6 +240,7 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 	{
 		return new CrudItemCoordinate()
 			.setId(rs.getInt(CrudItemCoordinate.ID_COLUMN))
+			.setParentId(rs.getInt(CrudItemCoordinate.MAP_ID_COLUMN))
 			.setLatitude(rs.getDouble(CrudItemCoordinate.LATITUDE_COLUMN))
 			.setLongitude(rs.getDouble(CrudItemCoordinate.LONGITUDE_COLUMN))
 			.setCreatedTimestamp(rs.getTimestamp(CrudItemCoordinate.CREATED_DATE_COLUMN))

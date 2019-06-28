@@ -11,9 +11,9 @@ $body$
 			AND
 		NOT EXISTS
 		(
-			SELECT cm.livestock_id
+			SELECT cm.target_id
 			FROM livestock_maps AS cm
-			WHERE cm.livestock_id = can_delete_livestock.id
+			WHERE cm.target_id = can_delete_livestock.id
 		)
 		INTO can_delete_livestock.can_delete;
 	END

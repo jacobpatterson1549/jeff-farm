@@ -19,7 +19,7 @@ $body$
 				, cc.modified_date
 			FROM livestock_coordinates AS cc
 			JOIN livestock_maps AS cm ON cc.map_id = cm.id
-			JOIN livestock AS c ON cm.livestock_id = c.id
+			JOIN livestock AS c ON cm.target_id = c.id
 			WHERE c.farm_id = read_livestock_coordinates_for_farm.farm_id
 			ORDER BY cc.display_order ASC;
 		END IF;

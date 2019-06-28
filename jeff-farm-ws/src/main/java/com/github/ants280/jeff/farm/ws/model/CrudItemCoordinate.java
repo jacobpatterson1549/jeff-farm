@@ -2,8 +2,7 @@ package com.github.ants280.jeff.farm.ws.model;
 
 public class CrudItemCoordinate extends CrudItem<CrudItemCoordinate>
 {
-	// TODO: rename this column in the db to map_id :
-	public static final String MAP_ID_COLUMN = "group_id"; // parent id
+	public static final String MAP_ID_COLUMN = "map_id"; // parent id
 	public static final String LATITUDE_COLUMN = "latitude";
 	public static final String LONGITUDE_COLUMN = "longitude";
 	public static final String DISPLAY_ORDER_COLUMN = "display_order";

@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS livestock_maps_audit
 	, user_id INT NOT NULL
 	, action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	, id INT
-	, livestock_id INT NOT NULL
+	, target_id INT NOT NULL
 	);
 
 
@@ -16,13 +16,13 @@ $livestock_maps_audit$
 			( action_type
 			, user_id
 			, id
-			, livestock_id
+			, target_id
 			)
 		VALUES
 			( 'i'
 			, get_user_id()
 			, NEW.id
-			, NEW.livestock_id
+			, NEW.target_id
 			);
 		RETURN NEW;
 	END;
@@ -46,25 +46,25 @@ $livestock_maps_audit$
 			( action_type
 			, user_id
 			, id
-			, livestock_id
+			, target_id
 			)
 		VALUES
 			( 'b'
 			, get_user_id()
 			, OLD.id
-			, OLD.livestock_id
+			, OLD.target_id
 			);
 		INSERT INTO livestock_maps_audit
 			( action_type
 			, user_id
 			, id
-			, livestock_id
+			, target_id
 			)
 		VALUES
 			( 'a'
 			, get_user_id()
 			, NEW.id
-			, NEW.livestock_id
+			, NEW.target_id
 			);
 		RETURN NEW;
 	END;
@@ -88,13 +88,13 @@ $livestock_maps_audit$
 			( action_type
 			, user_id
 			, id
-			, livestock_id
+			, target_id
 			)
 		VALUES
 			( 'd'
 			, get_user_id()
 			, OLD.id
-			, OLD.livestock_id
+			, OLD.target_id
 			);
 		RETURN NEW;
 	END;

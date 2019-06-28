@@ -13,7 +13,7 @@ public class CrudItemMap extends CrudItem<CrudItemMap>
 	@Override
 	protected CrudItemMap getThis()
 	{
-		return null;
+		return this;
 	}
 
 	public int getTargetId()

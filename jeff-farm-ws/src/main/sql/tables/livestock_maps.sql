@@ -1,13 +1,13 @@
 CREATE TABLE IF NOT EXISTS livestock_maps
 	( id SERIAL PRIMARY KEY
 	, farm_id INT NOT NULL
-	, livestock_id INT NOT NULL
+	, target_id INT NOT NULL
 	, created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	, modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 	, FOREIGN KEY (farm_id)
 		REFERENCES farms (id)
-	, FOREIGN KEY (livestock_id)
+	, FOREIGN KEY (target_id)
 		REFERENCES livestock(id)
 	);
 

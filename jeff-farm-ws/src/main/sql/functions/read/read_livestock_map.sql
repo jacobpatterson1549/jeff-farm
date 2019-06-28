@@ -12,12 +12,12 @@ $body$
 			SELECT
 				  cm.id
 				, cm.farm_id
-				, cm.livestock_id
+				, cm.target_id
 				, c.name
 				, cm.created_date
 				, cm.modified_date
 			FROM livestock_maps AS cm
-			JOIN livestock AS c ON cm.livestock_id = c.id
+			JOIN livestock AS c ON cm.target_id = c.id
 			WHERE cm.id = read_livestock_map.id;
 		END IF;
 	END
