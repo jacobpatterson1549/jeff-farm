@@ -20,7 +20,6 @@ $cattle_coordinates_audit$
 			, user_id
 			, id
 			, map_id
-			, target_id
 			, latitude
 			, longitude
 			, display_order
@@ -30,7 +29,6 @@ $cattle_coordinates_audit$
 			, get_user_id()
 			, NEW.id
 			, NEW.map_id
-			, NEW.target_id
 			, NEW.latitude
 			, NEW.longitude
 			, NEW.display_order
@@ -58,7 +56,6 @@ $cattle_coordinates_audit$
 			, user_id
 			, id
 			, map_id
-			, target_id
 			, latitude
 			, longitude
 			, display_order
@@ -68,7 +65,6 @@ $cattle_coordinates_audit$
 			, get_user_id()
 			, OLD.id
 			, OLD.map_id
-			, OLD.target_id
 			, OLD.latitude
 			, OLD.longitude
 			, OLD.display_order
@@ -78,7 +74,6 @@ $cattle_coordinates_audit$
 			, user_id
 			, id
 			, map_id
-			, target_id
 			, latitude
 			, longitude
 			, display_order
@@ -88,7 +83,6 @@ $cattle_coordinates_audit$
 			, get_user_id()
 			, NEW.id
 			, NEW.map_id
-			, NEW.target_id
 			, NEW.latitude
 			, NEW.longitude
 			, NEW.display_order
@@ -116,7 +110,6 @@ $cattle_coordinates_audit$
 			, user_id
 			, id
 			, map_id
-			, target_id
 			, latitude
 			, longitude
 			, display_order
@@ -126,7 +119,6 @@ $cattle_coordinates_audit$
 			, get_user_id()
 			, OLD.id
 			, OLD.map_id
-			, OLD.target_id
 			, OLD.latitude
 			, OLD.longitude
 			, OLD.display_order

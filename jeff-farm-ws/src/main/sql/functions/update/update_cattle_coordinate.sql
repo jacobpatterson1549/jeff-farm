@@ -11,12 +11,12 @@ AS
 $body$
 	BEGIN
 		IF permission_check_cattle_coordinate(set_user_id(update_cattle_coordinate.user_id), update_cattle_coordinate.id) THEN
-			UPDATE cattle_coordinates AS h
+			UPDATE cattle_coordinates AS cc
 				SET
 					  latitude = update_cattle_coordinate.latitude
 					, longitude = update_cattle_coordinate.longitude
 					, display_order = update_cattle_coordinate.display_order
-				WHERE h.id = update_cattle_coordinate.id;
+				WHERE cc.id = update_cattle_coordinate.id;
 		END IF;
 	END
 $body$

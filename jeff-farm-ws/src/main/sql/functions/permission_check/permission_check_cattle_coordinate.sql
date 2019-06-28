@@ -12,9 +12,9 @@ $body$
 			SELECT fp.user_id, cc.id
 			FROM farm_permissions AS fp
 			JOIN cattle_maps AS cm ON fp.farm_id = cm.farm_id
-			JOIN cattle_coordinates AS cc ON cm.id = cm.map_id
+			JOIN cattle_coordinates AS cc ON cm.id = cc.map_id
 			WHERE fp.user_id = permission_check_cattle_coordinate.user_id
-				AND cm.id = permission_check_cattle_coordinate.cattle_coordinate_id
+				AND cc.id = permission_check_cattle_coordinate.cattle_coordinate_id
 		)
 		INTO permission_check;
 

@@ -23,8 +23,7 @@ $body$
 				, create_cattle_coordinate.longitude
 				, create_cattle_coordinate.display_order
 			FROM cattle_maps AS cm
-			WHERE cm.id = create_cattle_coordinate.group_id
-				AND cm.farm_id = p.farm_id
+			WHERE cm.id = create_cattle_coordinate.map_id
 			RETURNING LASTVAL()
 			INTO create_cattle_coordinate.id;
 		END IF;

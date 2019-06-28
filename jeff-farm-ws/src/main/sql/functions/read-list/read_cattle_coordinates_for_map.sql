@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS read_cattle_coordinates_for_group;
-CREATE FUNCTION read_cattle_coordinates_for_group
+DROP FUNCTION IF EXISTS read_cattle_coordinates_for_map;
+CREATE FUNCTION read_cattle_coordinates_for_map
 	( IN user_id INT
 	, IN map_id INT
 	)
@@ -7,7 +7,7 @@ RETURNS SETOF cattle_coordinates
 AS
 $body$
 	BEGIN
-		IF permission_check_cattle_map(set_user_id(read_cattle_coordinates_for_group.user_id), read_cattle_coordinates_for_group.map_id) THEN
+		IF permission_check_cattle_map(set_user_id(read_cattle_coordinates_for_map.user_id), read_cattle_coordinates_for_map.map_id) THEN
 			RETURN QUERY
 			SELECT
 				  cc.id
@@ -18,7 +18,7 @@ $body$
 				, cc.created_date
 				, cc.modified_date
 			FROM cattle_coordinates AS cc
-			WHERE cc.map_id = read_cattle_coordinates_for_group.map_id
+			WHERE cc.map_id = read_cattle_coordinates_for_map.map_id
 			ORDER BY cc.display_order ASC;
 		END IF;
 	END
