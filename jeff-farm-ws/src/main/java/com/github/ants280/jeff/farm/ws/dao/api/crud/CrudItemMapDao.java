@@ -58,7 +58,8 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 		SqlFunctionCall<Integer> createGroupFunctionCall
 			= new SideEffectSqlFunctionCall<>(
 			createMapFunctionName,
-			Collections.emptyList(),
+			Collections.singletonList(
+				new IntegerSqlFunctionParameter(CrudItemMap.TARGET_ID_COLUMN, crudItemMap.getTargetId())),
 			new SimpleResultSetTransformer<>(rs -> rs.getInt(CrudItem.ID_COLUMN)),
 			parentId -> this.setParentId(parentId, coordinatesInParameters),
 			userIdDao);

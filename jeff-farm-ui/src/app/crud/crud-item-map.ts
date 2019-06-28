@@ -15,6 +15,7 @@ export class CrudItemMap extends CrudItem {
     }
 
     getFormItems(): FormItem[] {
+        // uses custom input.
         return [];
     }
 
@@ -28,8 +29,8 @@ export class CrudItemMap extends CrudItem {
         const formArray: FormArray = new FormArray(coordinateFormGroups, [Validators.required]);
         const formGroup: FormGroup = super.getFormGroup(fb);
         formGroup.addControl('coordinates', formArray);
-        formGroup.addControl('targetId', fb.control(this.targetId));
-        formGroup.addControl('targetName', fb.control(this.targetName));
+        formGroup.addControl('targetId', fb.control(this.targetId, Validators.required));
+        formGroup.addControl('targetName', fb.control(this.targetName, Validators.required));
         return formGroup;
     }
 }

@@ -1,8 +1,50 @@
-<div>
+<div *ngIf="selectTargets">
     <span>Target: </span>
-    <select class="custom-select" (change)="setTarget($event.target.selectedIndex)">
+    <select class="custom-select" (change)="setTarget($event.target.selectedIndex)"
+        control="crudForm.get('targetName')">
         <option *ngFor="let targetId of objectKeys(selectTargets)">
             {{selectTargets[targetId]}}
         </option>
     </select>
 </div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th colspan="5">Coordinates:</th>
+        </tr>
+        <tr>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Move Up</th>
+            <th>MoveDown</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--TODO: coordinate component?-->
+        <tr *ngFor="let coordinate of coordinates.controls">
+            <td>
+                <app-crud-item-input-integer [control]="coordinate.get('latitude')" [name]="latitude">
+                </app-crud-item-input-integer>
+            </td>
+            <td>
+                <app-crud-item-input-integer [control]="coordinate.get('longitude')" [name]="longitude">
+                </app-crud-item-input-integer>
+            </td>
+            <td><a class="btn btn-dark">↑</a></td>
+            <!--TODO: disable first-->
+            <td><a class="btn btn-dark">↓</a></td>
+            <!--TODO: disable last-->
+            <td><a class="btn btn-danger">X</a></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5">
+                <a class="btn btn-secondary" (click)="addCoordinate()">Add
+                    Coordinate</a>
+            </td>
+        </tr>
+    </tfoot>
+</table>
