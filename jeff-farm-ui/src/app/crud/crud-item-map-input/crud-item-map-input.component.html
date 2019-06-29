@@ -37,9 +37,14 @@
     <tfoot *ngIf="coordinates.enabled">
         <tr>
             <td colspan="5">
+                <!-- Does not work in development mode (http://localhost:4200)
+                     unless ran locally with https
+                     OR used on phone via usb in chrome dev tools (Remote Devices) with port forwarding-->
                 <button class="btn btn-secondary" type="button" (click)="addCoordinate()">Add
                     Coordinate</button>
             </td>
         </tr>
     </tfoot>
 </table>
+
+<div id="chart"></div>

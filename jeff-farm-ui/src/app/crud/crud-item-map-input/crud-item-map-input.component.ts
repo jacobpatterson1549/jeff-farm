@@ -1,3 +1,5 @@
+import * as Highcharts from 'highcharts';
+
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -20,7 +22,42 @@ export class CrudItemMapInputComponent implements OnInit {
   selectTargets: object = {};
   objectKeys = Object.keys; // used in the template
   private canAddCoordinate = false;
-  // @ViewChildren(CrudItemInputComponent) groupEditors: QueryList<CrudItemInputComponent<T>>;
+  public options = {
+    chart: {
+      type: 'scatter',
+    },
+    title: {
+      text: 'Coordinate Map',
+    },
+    credits: {
+      enabled: false
+    },
+    tooltip: {
+      formatter() {
+        return `Latitude: ${this.y}<br/>Longitude: ${this.x}`;
+      }
+    },
+    legend: {
+      enabled: false
+    },
+    yAxis: {
+      title: {
+        text: 'latitude',
+      }
+    },
+    xAxis: {
+      title: {
+        text: 'longitude',
+      }
+    },
+    plotOptions: {
+      scatter: {
+        lineWidth: 2,
+        allowPointSelect: false,
+      }
+    },
+    series: [],
+  };
 
   constructor(
     route: ActivatedRoute,
@@ -35,12 +72,27 @@ export class CrudItemMapInputComponent implements OnInit {
     this.crudItemMapService.getTargets()
       .subscribe(targets => {
         this.selectTargets = targets;
-        // this.selectTargets[0] = '';
-        // for (const [targetId, targetName] of Object.entries(targets)) {
-        //   this.selectTargets[+targetId] = targetName;
-        // }
       });
     this.canAddCoordinate = 'geolocation' in navigator; // (also must be https)
+    this.initChart();
+  }
+
+  private initChart() {
+    if (this.coordinates.enabled) {
+      this.options.title.text = 'Editable' + this.options.title.text;
+      this.options.plotOptions.scatter.allowPointSelect = true;
+      // TODO: connect last point to first.
+    }
+
+    this.options.series[0] = { data: [] };
+    for (const coordinate of this.coordinates.controls) {
+      this.options.series[0].data.push([
+        coordinate.get('longitude').value,
+        coordinate.get('latitude').value,
+      ]);
+    }
+
+    Highcharts.chart('chart', this.options); // Plot the data to the "chart" div.
   }
 
   setTarget(targetIndex: number) {
