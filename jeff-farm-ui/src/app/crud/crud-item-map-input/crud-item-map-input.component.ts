@@ -24,13 +24,11 @@ export class CrudItemMapInputComponent implements OnInit {
   private canAddCoordinate = false;
   public options = {
     chart: {
-      type: 'scatter',
+      type: 'series',
+      animation: false,
     },
     title: {
       text: 'Coordinate Map',
-    },
-    credits: {
-      enabled: false
     },
     tooltip: {
       formatter() {
@@ -54,9 +52,17 @@ export class CrudItemMapInputComponent implements OnInit {
       scatter: {
         lineWidth: 2,
         allowPointSelect: false,
-      }
+      },
     },
-    series: [],
+    series: [{
+      type: 'scatter',
+        data: [],
+        cursor: null,
+        dragDrop: {
+          draggableX: true,
+          draggableY: true
+        },
+    } as Highcharts.SeriesScatterOptions],
   };
 
   constructor(
@@ -78,15 +84,16 @@ export class CrudItemMapInputComponent implements OnInit {
   }
 
   private initChart() {
+    const series = this.options.series[0];
     if (this.coordinates.enabled) {
-      this.options.title.text = 'Editable' + this.options.title.text;
-      this.options.plotOptions.scatter.allowPointSelect = true;
-      // TODO: connect last point to first.
+      this.options.title.text = 'Editable ' + this.options.title.text;
+      // this.options.plotOptions.scatter.allowPointSelect = true;
+      series.cursor = 'move';
+      series.dragDrop.draggableX = true;
+      series.dragDrop.draggableY = true;
     }
-
-    this.options.series[0] = { data: [] };
     for (const coordinate of this.coordinates.controls) {
-      this.options.series[0].data.push([
+      series.data.push([
         coordinate.get('longitude').value,
         coordinate.get('latitude').value,
       ]);
