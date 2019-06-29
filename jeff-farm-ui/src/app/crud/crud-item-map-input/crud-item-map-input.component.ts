@@ -1,4 +1,5 @@
 import * as Highcharts from 'highcharts';
+import DP_Highcharts from 'highcharts/modules/draggable-points';
 
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
@@ -24,7 +25,6 @@ export class CrudItemMapInputComponent implements OnInit {
   private canAddCoordinate = false;
   public options = {
     chart: {
-      type: 'series',
       animation: false,
     },
     title: {
@@ -56,12 +56,12 @@ export class CrudItemMapInputComponent implements OnInit {
     },
     series: [{
       type: 'scatter',
-        data: [],
-        cursor: null,
-        dragDrop: {
-          draggableX: true,
-          draggableY: true
-        },
+      cursor: null,
+      dragDrop: {
+        draggableX: false,
+        draggableY: false,
+      },
+      data: []
     } as Highcharts.SeriesScatterOptions],
   };
 
@@ -84,6 +84,7 @@ export class CrudItemMapInputComponent implements OnInit {
   }
 
   private initChart() {
+    DP_Highcharts(Highcharts); // load the draggable points module
     const series = this.options.series[0];
     if (this.coordinates.enabled) {
       this.options.title.text = 'Editable ' + this.options.title.text;
