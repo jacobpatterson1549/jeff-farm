@@ -1,8 +1,8 @@
-<div *ngIf="selectTargets">
+<div *ngIf="crudForm && selectTargets">
     <span>Target: </span>
     <select class="custom-select" (change)="setTarget($event.target.selectedIndex)"
-        control="crudForm.get('targetName')">
-        <option *ngFor="let targetId of objectKeys(selectTargets)">
+        [formControl]="crudForm.get('targetName')">
+        <option *ngFor="let targetId of objectKeys(selectTargets)" [ngValue]="selectTargets[targetId]">
             {{selectTargets[targetId]}}
         </option>
     </select>
@@ -16,27 +16,26 @@
         <tr>
             <th>Latitude</th>
             <th>Longitude</th>
-            <th>Move Up</th>
-            <th>MoveDown</th>
-            <th>Remove</th>
+            <th *ngIf="coordinates.enabled">Move Up</th>
+            <th *ngIf="coordinates.enabled">Move Down</th>
+            <th *ngIf="coordinates.enabled">Remove</th>
         </tr>
     </thead>
     <tbody>
-        <!--TODO: coordinate component?-->
         <tr *ngFor="let coordinate of coordinates.controls">
             <td>
-                <app-crud-item-input-integer [control]="coordinate.get('latitude')" [name]="latitude">
+                <app-crud-item-input-integer [control]="coordinate.get('latitude')" name="latitude">
                 </app-crud-item-input-integer>
             </td>
             <td>
-                <app-crud-item-input-integer [control]="coordinate.get('longitude')" [name]="longitude">
+                <app-crud-item-input-integer [control]="coordinate.get('longitude')" name="longitude">
                 </app-crud-item-input-integer>
             </td>
-            <td><a class="btn btn-dark">↑</a></td>
+            <td *ngIf="coordinates.enabled"><a class="btn btn-light">↑</a></td>
             <!--TODO: disable first-->
-            <td><a class="btn btn-dark">↓</a></td>
+            <td *ngIf="coordinates.enabled"><a class="btn btn-light">↓</a></td>
             <!--TODO: disable last-->
-            <td><a class="btn btn-danger">X</a></td>
+            <td *ngIf="coordinates.enabled"><a class="btn btn-danger">X</a></td>
         </tr>
     </tbody>
     <tfoot>

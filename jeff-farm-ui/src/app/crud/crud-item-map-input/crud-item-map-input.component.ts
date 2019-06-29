@@ -34,10 +34,11 @@ export class CrudItemMapInputComponent implements OnInit {
     this.formItems = this.crudItemMapService.createCrudItem().getFormItems();
     this.crudItemMapService.getTargets()
       .subscribe(targets => {
-        this.selectTargets[0] = '';
-        for (const [targetId, targetName] of Object.entries(targets)) {
-          this.selectTargets[+targetId] = targetName;
-        }
+        this.selectTargets = targets;
+        // this.selectTargets[0] = '';
+        // for (const [targetId, targetName] of Object.entries(targets)) {
+        //   this.selectTargets[+targetId] = targetName;
+        // }
       });
     this.canAddCoordinate = 'geolocation' in navigator; // (also must be https)
   }
