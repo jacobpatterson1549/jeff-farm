@@ -16,9 +16,11 @@
         <tr>
             <th>Latitude</th>
             <th>Longitude</th>
-            <th *ngIf="coordinates.enabled">Move Up</th>
-            <th *ngIf="coordinates.enabled">Move Down</th>
-            <th *ngIf="coordinates.enabled">Remove</th>
+            <ng-container *ngIf="coordinates.enabled">
+                <th>Move Up</th>
+                <th>Move Down</th>
+                <th>Remove</th>
+            </ng-container>
         </tr>
     </thead>
     <tbody>
@@ -31,11 +33,13 @@
                 <app-crud-item-input-integer [control]="coordinate.get('longitude')" name="longitude">
                 </app-crud-item-input-integer>
             </td>
-            <td *ngIf="coordinates.enabled"><a class="btn btn-light">↑</a></td>
-            <!--TODO: disable first-->
-            <td *ngIf="coordinates.enabled"><a class="btn btn-light">↓</a></td>
-            <!--TODO: disable last-->
-            <td *ngIf="coordinates.enabled"><a class="btn btn-danger">X</a></td>
+            <ng-container *ngIf="coordinates.enabled">
+                <td><a class="btn btn-light">↑</a></td>
+                <!--TODO: disable first-->
+                <td><a class="btn btn-light">↓</a></td>
+                <!--TODO: disable last-->
+                <td><a class="btn btn-danger">X</a></td>
+            </ng-container>
         </tr>
     </tbody>
     <tfoot>
