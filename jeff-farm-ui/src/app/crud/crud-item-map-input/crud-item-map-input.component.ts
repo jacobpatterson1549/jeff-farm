@@ -53,6 +53,13 @@ export class CrudItemMapInputComponent implements OnInit {
         lineWidth: 2,
         allowPointSelect: false,
       },
+      series: {
+        point: {
+          events: {
+            drop: null,
+          }
+        }
+      },
     },
     series: [{
       type: 'scatter',
@@ -88,10 +95,15 @@ export class CrudItemMapInputComponent implements OnInit {
     const series = this.options.series[0];
     if (this.coordinates.enabled) {
       this.options.title.text = 'Editable ' + this.options.title.text;
+      // TODO: select propert coordinate in list :
       // this.options.plotOptions.scatter.allowPointSelect = true;
+      this.options.plotOptions.series.point.events.drop = (event) => {
+        this.dropCoordinate(event.target.index, event.newPoint.y, event.newPoint.x);
+      };
       series.cursor = 'move';
       series.dragDrop.draggableX = true;
       series.dragDrop.draggableY = true;
+
     }
     for (const coordinate of this.coordinates.controls) {
       series.data.push([
@@ -145,5 +157,12 @@ export class CrudItemMapInputComponent implements OnInit {
       this.coordinates.at(j)
         .get('displayOrder').setValue(j);
     }
+  }
+
+  dropCoordinate(index: number, latitude: number, longitude: number) {
+    console.log('here!');
+    const coordinate = this.coordinates.at(index);
+    coordinate.get('latitude').setValue(latitude);
+    coordinate.get('longitude').setValue(longitude);
   }
 }
