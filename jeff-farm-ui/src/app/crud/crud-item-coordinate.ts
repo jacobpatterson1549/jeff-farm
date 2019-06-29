@@ -24,7 +24,7 @@ export class CrudItemCoordinate extends CrudItem {
         const formGroup: FormGroup = super.getFormGroup(fb);
         formGroup.addControl('latitude', fb.control(this.latitude));
         formGroup.addControl('longitude', fb.control(this.longitude));
-        formGroup.addControl('longitude', fb.control(this.longitude));
+        formGroup.addControl('displayOrder', fb.control(this.displayOrder));
         return formGroup;
     }
 

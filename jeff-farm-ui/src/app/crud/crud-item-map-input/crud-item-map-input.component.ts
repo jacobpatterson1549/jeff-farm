@@ -56,8 +56,34 @@ export class CrudItemMapInputComponent implements OnInit {
         const coordinate = new CrudItemCoordinate(this.crudForm.get('id').value);
         coordinate.latitude = position.coords.latitude;
         coordinate.longitude = position.coords.longitude;
+        coordinate.displayOrder = this.coordinates.length;
         this.coordinates.push(coordinate.getFormGroup(this.fb));
       });
+    }
+  }
+
+  moveCoordinateUp(index: number) {
+    this.swapCoordinates(index, -1);
+  }
+
+  moveCoordinateDown(index: number) {
+    this.swapCoordinates(index, +1);
+  }
+
+  private swapCoordinates(index: number, delta: number) {
+    const coordinateA = this.coordinates.at(index);
+    const coordinateB = this.coordinates.at(index + delta);
+    coordinateA.get('displayOrder').setValue(index + delta);
+    coordinateB.get('displayOrder').setValue(index);
+    this.coordinates.setControl(index + delta, coordinateA);
+    this.coordinates.setControl(index, coordinateB);
+  }
+
+  removeCoordinate(index: number) {
+    this.coordinates.removeAt(index);
+    for (let j = index; j < this.coordinates.length; j++) {
+      this.coordinates.at(j)
+        .get('displayOrder').setValue(j);
     }
   }
 }

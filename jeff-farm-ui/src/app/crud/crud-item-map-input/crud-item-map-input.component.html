@@ -11,20 +11,11 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th colspan="5">Coordinates:</th>
-        </tr>
-        <tr>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <ng-container *ngIf="coordinates.enabled">
-                <th>Move Up</th>
-                <th>Move Down</th>
-                <th>Remove</th>
-            </ng-container>
+            <th colspan="5" [formGroup]="coordinates">Coordinates:</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let coordinate of coordinates.controls">
+        <tr *ngFor="let coordinate of coordinates.controls; index as i; first as isFirst; last as isLast">
             <td>
                 <app-crud-item-input-integer [control]="coordinate.get('latitude')" name="latitude">
                 </app-crud-item-input-integer>
@@ -34,11 +25,12 @@
                 </app-crud-item-input-integer>
             </td>
             <ng-container *ngIf="coordinates.enabled">
-                <td><a class="btn btn-light">↑</a></td>
-                <!--TODO: disable first-->
-                <td><a class="btn btn-light">↓</a></td>
-                <!--TODO: disable last-->
-                <td><a class="btn btn-danger">X</a></td>
+                <td><button class="btn btn-light" type="button" [disabled]="isFirst" (click)="moveCoordinateUp(i)"
+                        title="Move Up">↑</button></td>
+                <td><button class="btn btn-light" type="button" [disabled]="isLast" (click)="moveCoordinateDown(i)"
+                        title="Move Down">↓</button></td>
+                <td><button class="btn btn-danger" type="button" (click)="removeCoordinate(i)" title="Remove">X</button>
+                </td>
             </ng-container>
         </tr>
     </tbody>
