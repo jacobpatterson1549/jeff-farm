@@ -34,11 +34,11 @@
             </ng-container>
         </tr>
     </tbody>
-    <tfoot>
+    <tfoot *ngIf="coordinates.enabled">
         <tr>
             <td colspan="5">
-                <a class="btn btn-secondary" (click)="addCoordinate()">Add
-                    Coordinate</a>
+                <button class="btn btn-secondary" type="button" (click)="addCoordinate()">Add
+                    Coordinate</button>
             </td>
         </tr>
     </tfoot>
