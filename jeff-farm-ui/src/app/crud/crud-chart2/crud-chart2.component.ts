@@ -49,6 +49,15 @@ export class CrudChart2Component<T extends CrudItem> implements OnInit {
       }
     },
     plotOptions: {
+      series: {
+        point: {
+          events: {
+            click() {
+              location.href = `${location.href}/${this.series.options.url}`;
+            }
+          }
+        }
+      },
       scatter: {
         lineWidth: 2,
         allowPointSelect: false,
@@ -88,7 +97,8 @@ export class CrudChart2Component<T extends CrudItem> implements OnInit {
             .map((coordinate: CrudItemCoordinate) => [
               coordinate.longitude,
               coordinate.latitude,
-            ])
+            ]),
+          url: crudItemMap.id,
         };
       });
     Highcharts.chart('chart', this.options); // Plot the data to the "chart" div.
