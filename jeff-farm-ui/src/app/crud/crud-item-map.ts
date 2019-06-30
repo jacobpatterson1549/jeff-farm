@@ -7,7 +7,7 @@ import { FormItem } from './form-item';
 export class CrudItemMap extends CrudItem {
 
     public coordinates: CrudItemCoordinate[] = [];
-    private targetId: number;
+    public targetId: number;
     private targetName: string;
 
     constructor(parentId: number) {

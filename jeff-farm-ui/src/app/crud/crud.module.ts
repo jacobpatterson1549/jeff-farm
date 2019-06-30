@@ -31,6 +31,7 @@ import { CrudListComponent } from './crud-list/crud-list.component';
 import { CrudRoutingModule } from './crud-routing.module';
 import { CrudViewComponent } from './crud-view/crud-view.component';
 import { NavigationComponent } from './navigation.component';
+import { CrudChart2Component } from './crud-chart2/crud-chart2.component';
 
 @NgModule({
   providers: [
@@ -55,6 +56,7 @@ import { NavigationComponent } from './navigation.component';
     CrudItemInputPasswordComponent,
     CrudItemInputTextAreaComponent,
     CrudChartComponent,
+    CrudChart2Component,
   ],
   imports: [
     CommonModule,

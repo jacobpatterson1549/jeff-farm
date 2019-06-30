@@ -1,0 +1,10 @@
+<p *ngIf="chartTargets">
+  <span>Chart: </span>
+  <select class="custom-select" (change)="setChartTarget($event.target.selectedIndex)">
+    <option *ngFor="let chartTarget of chartTargets">
+      {{chartTarget.name}}
+    </option>
+  </select>
+</p>
+
+<div id="chart"></div>
