@@ -21,7 +21,6 @@ export class CrudItemInspectionGroupInputComponent<
   @Input()
   inspectionItems: FormArray;
   formItems: FormItem[];
-  formItemType = FormItemType; // used for the ngSwitch in the template // TODO: DELETEME ?
   selectTargets: object = {};
   objectKeys = Object.keys; // used in the template
   @ViewChildren(CrudItemInputComponent) groupEditors: QueryList<CrudItemInputComponent<T>>;

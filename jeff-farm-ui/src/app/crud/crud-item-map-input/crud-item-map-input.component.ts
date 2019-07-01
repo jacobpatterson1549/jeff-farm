@@ -19,7 +19,6 @@ export class CrudItemMapInputComponent implements OnInit {
   coordinates: FormArray;
   crudForm: FormGroup;
   formItems: FormItem[];
-  formItemType = FormItemType; // used for the ngSwitch in the template
   selectTargets: object = {};
   objectKeys = Object.keys; // used in the template
   private canAddCoordinate = false;
