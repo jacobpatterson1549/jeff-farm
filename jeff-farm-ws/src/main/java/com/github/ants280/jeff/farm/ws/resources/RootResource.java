@@ -1,15 +1,14 @@
 package com.github.ants280.jeff.farm.ws.resources;
 
 import com.github.ants280.jeff.farm.ws.dao.ConnectionDao;
+import com.github.ants280.jeff.farm.ws.dao.HttpServletRequestDao;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -17,14 +16,15 @@ import javax.ws.rs.core.Response;
 public class RootResource
 {
 	private final ConnectionDao connectionDao;
-	private final ServletRequest request;
+	private final HttpServletRequestDao httpServletRequestDao;
 
 	@Inject
 	public RootResource(
-		ConnectionDao connectionDao, @Context HttpServletRequest request)
+		ConnectionDao connectionDao,
+		HttpServletRequestDao httpServletRequestDao)
 	{
 		this.connectionDao = connectionDao;
-		this.request = request;
+		this.httpServletRequestDao = httpServletRequestDao;
 	}
 
 	@GET
@@ -38,6 +38,7 @@ public class RootResource
 	{
 		Package applicationPackage = this.getClass().getPackage();
 		boolean hasValidConnection = connectionDao.hasValidConnection();
+		ServletRequest request = httpServletRequestDao.getRequest();
 
 		Map<String, Object> versionInfo = new LinkedHashMap<>();
 		versionInfo.put("package", applicationPackage);

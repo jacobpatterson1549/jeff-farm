@@ -13,19 +13,22 @@ public class LoginDao
 {
 	private final UserDao userDao;
 	private final UserIdDao userIdDao;
-	private final HttpServletRequest request;
+	private final HttpServletRequestDao httpServletRequestDao;
 
 	@Inject
 	public LoginDao(
-		UserDao userDao, UserIdDao userIdDao, HttpServletRequest request)
+		UserDao userDao,
+		UserIdDao userIdDao,
+		HttpServletRequestDao httpServletRequestDao)
 	{
 		this.userDao = userDao;
 		this.userIdDao = userIdDao;
-		this.request = request;
+		this.httpServletRequestDao = httpServletRequestDao;
 	}
 
 	public String login(User user) throws ServletException
 	{
+		HttpServletRequest request = httpServletRequestDao.getRequest();
 		HttpSession oldSession = request.getSession(false);
 		if (oldSession != null)
 		{
@@ -59,6 +62,7 @@ public class LoginDao
 
 	public void logout()
 	{
+		HttpServletRequest request = httpServletRequestDao.getRequest();
 		HttpSession session = request.getSession(false);
 
 		if (session != null)
