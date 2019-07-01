@@ -53,10 +53,13 @@ public class Main
 		context.setParentClassLoader(Main.class.getClassLoader());
 
 		tomcat.start();
-		Logger.getLogger(Main.class.getName())
-			.log(Level.INFO,
-				"Server started at {0}/ - Press Ctrl-C to stop.",
-				uri);
+		Logger logger = Logger.getLogger(Main.class.getName());
+		logger.log(Level.INFO,
+			"Connector is secure: {0}",
+			tomcat.getConnector().getSecure());
+		logger.log(Level.INFO,
+			"Server started at {0}/ - Press Ctrl-C to stop.",
+			uri);
 		tomcat.getServer().await();
 	}
 }
