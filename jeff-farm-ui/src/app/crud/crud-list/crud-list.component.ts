@@ -33,8 +33,7 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
     this.crudItemService.getList().subscribe((items: T[]) => this.crudItems = items);
 
     const crudItem: T = this.crudItemService.createCrudItem();
-    const chartInspection = crudItem instanceof CrudItemInspectionGroup;
     const chartMap = crudItem instanceof CrudItemMap;
-    this.showChart = chartInspection || chartMap;
+    this.showChart = chartMap;
   }
 }
