@@ -14,7 +14,9 @@ export class AuthInterceptor implements HttpInterceptor {
         return this.authService.isLoggedIn()
             ? next.handle(req.clone({
                 withCredentials: true,
-                url: `${req.url};jsessionid=${this.authService.getJsessionId()}`,
+                setHeaders: {
+                    'javax.servlet.request.ssl_session_id': this.authService.getJsessionId(),
+                },
             }))
             : next.handle(req);
     }

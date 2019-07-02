@@ -55,9 +55,6 @@ public class Main
 		tomcat.start();
 		Logger logger = Logger.getLogger(Main.class.getName());
 		logger.log(Level.INFO,
-			"Connector is secure: {0}",
-			tomcat.getConnector().getSecure());
-		logger.log(Level.INFO,
 			"Server started at {0}/ - Press Ctrl-C to stop.",
 			uri);
 		tomcat.getServer().await();
