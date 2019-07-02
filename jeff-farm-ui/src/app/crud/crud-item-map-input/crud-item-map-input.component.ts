@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { CrudItemCoordinate } from '../crud-item-coordinate';
 import { CrudItemMapService } from '../crud-item-map-service';
-import { FormItem, FormItemType } from '../form-item';
+import { FormItem } from '../form-item';
 
 @Component({
   selector: 'app-crud-item-map-input',
@@ -21,6 +21,7 @@ export class CrudItemMapInputComponent implements OnInit {
   formItems: FormItem[];
   selectTargets: object = {};
   objectKeys = Object.keys; // used in the template
+  selectedCoordinates: boolean[];
   private canAddCoordinate = false;
   public options = {
     chart: {
@@ -56,6 +57,8 @@ export class CrudItemMapInputComponent implements OnInit {
         point: {
           events: {
             drop: null,
+            select: null,
+            unselect: null,
           }
         }
       },
@@ -94,15 +97,20 @@ export class CrudItemMapInputComponent implements OnInit {
     const series = this.options.series[0];
     if (this.coordinates.enabled) {
       this.options.title.text = 'Editable ' + this.options.title.text;
-      // TODO: select propert coordinate in list :
-      // this.options.plotOptions.scatter.allowPointSelect = true;
+      this.options.plotOptions.scatter.allowPointSelect = true;
       this.options.plotOptions.series.point.events.drop = (event) => {
         this.dropCoordinate(event.target.index, event.newPoint.y, event.newPoint.x);
+      };
+      this.options.plotOptions.series.point.events.select = (event) => {
+        this.selectedCoordinates[event.target.index % this.coordinates.length] = true;
+      };
+      this.options.plotOptions.series.point.events.unselect = (event) => {
+        this.selectedCoordinates[event.target.index % this.coordinates.length] = false;
       };
       series.cursor = 'move';
       series.dragDrop.draggableX = true;
       series.dragDrop.draggableY = true;
-
+      this.selectedCoordinates = Array(this.coordinates.length).fill(false);
     }
     this.updateChart();
   }
@@ -158,11 +166,19 @@ export class CrudItemMapInputComponent implements OnInit {
     coordinateB.get('displayOrder').setValue(index);
     this.coordinates.setControl(index + delta, coordinateA);
     this.coordinates.setControl(index, coordinateB);
+    this.swapSelectedTargets(index, delta);
     this.updateChart();
+  }
+
+  private swapSelectedTargets(index: number, delta: number) {
+    const previousSelection = this.selectTargets[index];
+    this.selectTargets[index] = this.selectTargets[index + delta];
+    this.selectTargets[index + delta] = previousSelection;
   }
 
   removeCoordinate(index: number) {
     this.coordinates.removeAt(index);
+    this.selectedCoordinates.splice(index, 1);
     for (let j = index; j < this.coordinates.length; j++) {
       this.coordinates.at(j)
         .get('displayOrder').setValue(j);
