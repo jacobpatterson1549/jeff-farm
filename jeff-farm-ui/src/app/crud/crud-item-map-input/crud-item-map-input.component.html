@@ -16,7 +16,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let coordinate of coordinates.controls; index as i; first as isFirst; last as isLast"
-            [ngClass]="{ 'bg-info': selectedCoordinates[i] }">
+            [ngClass]="{ 'bg-info': selectedCoordinates && selectedCoordinates[i] }">
             <td>
                 <app-crud-item-input-integer [control]="coordinate.get('latitude')" name="latitude">
                 </app-crud-item-input-integer>

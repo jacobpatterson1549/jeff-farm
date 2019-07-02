@@ -105,10 +105,10 @@ export class CrudItemMapInputComponent implements OnInit {
         this.dropCoordinate(event.target.index, event.newPoint.y, event.newPoint.x);
       };
       this.options.plotOptions.series.point.events.select = (event) => {
-        this.selectedCoordinates[event.target.index % this.coordinates.length] = true;
+        this.selectedCoordinates[event.target.index] = true;
       };
       this.options.plotOptions.series.point.events.unselect = (event) => {
-        this.selectedCoordinates[event.target.index % this.coordinates.length] = false;
+        this.selectedCoordinates[event.target.index] = false;
       };
       series.cursor = 'move';
       series.dragDrop.draggableX = true;
@@ -119,17 +119,14 @@ export class CrudItemMapInputComponent implements OnInit {
   }
 
   updateChart() {
-    const data = this.options.series[0].data;
-    data.length = 0;
+    const data = []
     for (const coordinate of this.coordinates.controls) {
       data.push([
         coordinate.get('longitude').value,
         coordinate.get('latitude').value,
       ]);
     }
-    if (data.length > 1) {
-      data.push(data[0]); // HACK: Add the first point to the end so the points are connected.
-    }
+    this.options.series[0].data = data;
 
     Highcharts.chart('chart', this.options); // Plot the data to the "chart" div.
   }
@@ -190,11 +187,8 @@ export class CrudItemMapInputComponent implements OnInit {
   }
 
   dropCoordinate(index: number, latitude: number, longitude: number) {
-    index = index % this.coordinates.length;
     const coordinate = this.coordinates.at(index);
     coordinate.get('latitude').setValue(latitude);
     coordinate.get('longitude').setValue(longitude);
-    // Update the chart to account for the duplicate first point hack:
-    this.updateChart();
   }
 }
