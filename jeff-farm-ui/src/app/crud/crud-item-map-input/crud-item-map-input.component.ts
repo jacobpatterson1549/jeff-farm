@@ -190,7 +190,6 @@ export class CrudItemMapInputComponent implements OnInit {
   }
 
   dropCoordinate(index: number, latitude: number, longitude: number) {
-    console.log('here!');
     const coordinate = this.coordinates.at(index);
     coordinate.get('latitude').setValue(latitude);
     coordinate.get('longitude').setValue(longitude);
