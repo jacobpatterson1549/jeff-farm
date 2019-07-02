@@ -61,6 +61,18 @@
 	</security-constraint>
 
 	<security-constraint>
+		<display-name>Deny all HTTP methods except those needed for crud</display-name>
+		<web-resource-collection>
+			<url-pattern>${servlet.url.prefix}/*</url-pattern>
+			<http-method-omission>POST</http-method-omission>
+			<http-method-omission>GET</http-method-omission>
+			<http-method-omission>PUT</http-method-omission>
+			<http-method-omission>DELETE</http-method-omission>
+		</web-resource-collection>
+		<auth-constraint/>
+	</security-constraint>
+
+	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>secured-endpoints</web-resource-name>
 			<url-pattern>${servlet.url.prefix}/*</url-pattern>
@@ -88,7 +100,6 @@
 		<web-resource-collection>
 			<web-resource-name>admin-endpoints</web-resource-name>
 			<url-pattern>${servlet.url.prefix}/user/list</url-pattern>
-			<http-method-omission>OPTIONS</http-method-omission>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>${security.role.admin}</role-name>
