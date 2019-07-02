@@ -190,8 +190,11 @@ export class CrudItemMapInputComponent implements OnInit {
   }
 
   dropCoordinate(index: number, latitude: number, longitude: number) {
+    index = index % this.coordinates.length;
     const coordinate = this.coordinates.at(index);
     coordinate.get('latitude').setValue(latitude);
     coordinate.get('longitude').setValue(longitude);
+    // Update the chart to account for the duplicate first point hack:
+    this.updateChart();
   }
 }
