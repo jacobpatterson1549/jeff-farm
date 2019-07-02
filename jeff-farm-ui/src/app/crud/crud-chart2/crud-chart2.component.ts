@@ -32,7 +32,8 @@ export class CrudChart2Component<T extends CrudItem> implements OnInit {
     },
     tooltip: {
       formatter() {
-        return `Latitude: ${this.y}<br/>Longitude: ${this.x}`;
+        return `<strong>${this.series.name}</strong>`
+          + `<br/>Latitude: ${this.y}<br/>Longitude: ${this.x}`;
       }
     },
     legend: {
