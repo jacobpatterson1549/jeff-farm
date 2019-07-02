@@ -54,6 +54,9 @@ export class CrudItemMapInputComponent implements OnInit {
         allowPointSelect: false,
       },
       series: {
+        marker: {
+          radius: 10,
+        },
         point: {
           events: {
             drop: null,
