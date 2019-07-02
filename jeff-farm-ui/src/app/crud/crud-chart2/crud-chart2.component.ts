@@ -20,10 +20,6 @@ export interface ChartTarget {
 export class CrudChart2Component<T extends CrudItem> implements OnInit {
 
   @Input()
-  chartInspection: boolean;
-  @Input()
-  chartMap: boolean;
-  @Input()
   crudItems: T[];
   chartTargets: ChartTarget[];
   public options = {

@@ -119,7 +119,7 @@ export class CrudItemMapInputComponent implements OnInit {
   }
 
   updateChart() {
-    const data = []
+    const data = [];
     for (const coordinate of this.coordinates.controls) {
       data.push([
         coordinate.get('longitude').value,

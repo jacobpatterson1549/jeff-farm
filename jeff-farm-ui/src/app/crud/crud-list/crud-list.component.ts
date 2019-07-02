@@ -16,7 +16,7 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
   crudChildren: CrudChild[];
   crudItemName: string;
   crudItems: T[];
-  showChart = false;
+  showMapChart = false;
 
   constructor(
     private titleService: Title,
@@ -33,7 +33,6 @@ export class CrudListComponent<T extends CrudItem> implements OnInit {
     this.crudItemService.getList().subscribe((items: T[]) => this.crudItems = items);
 
     const crudItem: T = this.crudItemService.createCrudItem();
-    const chartMap = crudItem instanceof CrudItemMap;
-    this.showChart = chartMap;
+    this.showMapChart = crudItem instanceof CrudItemMap;
   }
 }
