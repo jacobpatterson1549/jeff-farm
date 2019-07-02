@@ -89,6 +89,7 @@ export class CrudChart2Component<T extends CrudItem> implements OnInit {
       .map((t: T) => {
         const crudItemMap = t instanceof CrudItemMap ? t : null;
         return {
+          type: 'scatter',
           name: crudItemMap.createdDate,
           data: this.getMapData(crudItemMap.coordinates),
           url: crudItemMap.id,
