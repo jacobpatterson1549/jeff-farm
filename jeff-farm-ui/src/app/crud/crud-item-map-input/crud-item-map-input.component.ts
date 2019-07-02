@@ -104,11 +104,20 @@ export class CrudItemMapInputComponent implements OnInit {
       series.dragDrop.draggableY = true;
 
     }
+    this.updateChart();
+  }
+
+  updateChart() {
+    const data = this.options.series[0].data;
+    data.length = 0;
     for (const coordinate of this.coordinates.controls) {
-      series.data.push([
+      data.push([
         coordinate.get('longitude').value,
         coordinate.get('latitude').value,
       ]);
+    }
+    if (data.length > 1) {
+      data.push(data[0]); // HACK: Add the first point to the end so the points are connected.
     }
 
     Highcharts.chart('chart', this.options); // Plot the data to the "chart" div.
@@ -122,13 +131,14 @@ export class CrudItemMapInputComponent implements OnInit {
   }
 
   addCoordinate() {
-    if (this.canAddCoordinate) { // TODO: popup if false
+    if (this.canAddCoordinate) {
       navigator.geolocation.getCurrentPosition((position: Position) => {
         const coordinate = new CrudItemCoordinate(this.crudForm.get('id').value);
         coordinate.latitude = position.coords.latitude;
         coordinate.longitude = position.coords.longitude;
         coordinate.displayOrder = this.coordinates.length;
         this.coordinates.push(coordinate.getFormGroup(this.fb));
+        this.updateChart();
       });
     }
   }
@@ -148,6 +158,7 @@ export class CrudItemMapInputComponent implements OnInit {
     coordinateB.get('displayOrder').setValue(index);
     this.coordinates.setControl(index + delta, coordinateA);
     this.coordinates.setControl(index, coordinateB);
+    this.updateChart();
   }
 
   removeCoordinate(index: number) {
@@ -156,6 +167,7 @@ export class CrudItemMapInputComponent implements OnInit {
       this.coordinates.at(j)
         .get('displayOrder').setValue(j);
     }
+    this.updateChart();
   }
 
   dropCoordinate(index: number, latitude: number, longitude: number) {

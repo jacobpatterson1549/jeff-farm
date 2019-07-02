@@ -94,14 +94,22 @@ export class CrudChart2Component<T extends CrudItem> implements OnInit {
         const crudItemMap = t instanceof CrudItemMap ? t : null;
         return {
           name: crudItemMap.createdDate,
-          data: crudItemMap.coordinates
-            .map((coordinate: CrudItemCoordinate) => [
-              coordinate.longitude,
-              coordinate.latitude,
-            ]),
+          data: this.getMapData(crudItemMap.coordinates),
           url: crudItemMap.id,
         };
       });
     Highcharts.chart('chart', this.options); // Plot the data to the "chart" div.
+  }
+
+  private getMapData(coordinates: CrudItemCoordinate[]): number[][] {
+    const data: number[][] = coordinates
+      .map((coordinate: CrudItemCoordinate) => [
+        coordinate.longitude,
+        coordinate.latitude,
+      ]);
+    if (data.length > 1) {
+      data.push(data[0]); // HACK: Add the first point to the end so the points are connected.
+    }
+    return data;
   }
 }
