@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS livestock_maps_readonly -- TODO: move these +name tables into the table files?
+CREATE TABLE IF NOT EXISTS livestock_maps_readonly
 	( id SERIAL PRIMARY KEY
 	, farm_id INT NOT NULL
 	, target_id INT NOT NULL
