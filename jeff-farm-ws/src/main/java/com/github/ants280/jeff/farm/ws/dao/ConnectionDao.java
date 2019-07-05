@@ -1,9 +1,9 @@
 package com.github.ants280.jeff.farm.ws.dao;
 
+import com.github.ants280.jeff.farm.ws.Property;
 import com.github.ants280.jeff.farm.ws.dao.api.SqlDaoException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -13,7 +13,6 @@ import javax.sql.DataSource;
 @Singleton
 public class ConnectionDao
 {
-	private static final String SQL_SELECT_1 = "SELECT 1";
 	private final DataSource dataSource;
 
 	@Inject
@@ -25,10 +24,12 @@ public class ConnectionDao
 	public boolean hasValidConnection()
 	{
 		try (
-			Connection connection = dataSource.getConnection();
-			Statement statement = connection.createStatement())
+			Connection connection = dataSource.getConnection())
 		{
-			return statement.execute(SQL_SELECT_1);
+			String validationQueryTimeoutSeconds
+				= Property.VALIDATION_QUERY_TIMEOUT_SECONDS.getValue();
+			int timeout = Integer.parseInt(validationQueryTimeoutSeconds);
+			return connection.isValid(timeout);
 		}
 		catch (SQLException ex)
 		{

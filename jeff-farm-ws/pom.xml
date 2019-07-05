@@ -22,6 +22,7 @@
 		<jdbc.driver.artifact.id>postgresql</jdbc.driver.artifact.id>
 		<jdbc.driver.version>42.2.5</jdbc.driver.version>
 		<jdbc.driver.class.name>org.postgresql.Driver</jdbc.driver.class.name>
+		<validation.query.timeout.seconds>5</validation.query.timeout.seconds>
 		<resource.data.source.name>jdbc/jeff-farm-data-source</resource.data.source.name> <!-- also in InjectionBinder.java -->
 		<resource.data.source.auth>Container</resource.data.source.auth>
 		<resource.data.source.type>javax.sql.DataSource</resource.data.source.type>

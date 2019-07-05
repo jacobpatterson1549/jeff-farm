@@ -16,6 +16,7 @@ public enum Property
 	PASSWORD_GENERATOR_ITERATIONS("credential.handler.iterations"),
 	PASSWORD_GENERATOR_SALT_LENGTH("credential.handler.salt.length"),
 	DATA_SOURCE_NAME("resource.data.source.name"),
+	VALIDATION_QUERY_TIMEOUT_SECONDS("validation.query.timeout.seconds"),
 	USER_DIR("user.dir");
 
 	static

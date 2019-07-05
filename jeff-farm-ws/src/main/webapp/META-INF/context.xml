@@ -9,6 +9,8 @@
 			  maxWaitMillis="10000"
 			  username="${jdbc.username}"
 			  password="${jdbc.password}"
+			  validationQuery="SELECT 1"
+			  validationQueryTimeout="${validation.query.timeout.seconds}"
 			  driverClassName="${jdbc.driver.class.name}"
 			  url="${jdbc.url}"/>
 
