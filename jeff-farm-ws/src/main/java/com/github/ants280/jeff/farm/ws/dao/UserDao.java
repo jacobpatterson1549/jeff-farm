@@ -2,6 +2,7 @@ package com.github.ants280.jeff.farm.ws.dao;
 
 import com.github.ants280.jeff.farm.ws.JeffFarmWsException;
 import com.github.ants280.jeff.farm.ws.PasswordGenerator;
+import com.github.ants280.jeff.farm.ws.TextRequirement;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SideEffectSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SimpleCommandSqlFunctionCall;
 import com.github.ants280.jeff.farm.ws.dao.api.call.SqlFunctionCall;
@@ -17,6 +18,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.sql.DataSource;
@@ -40,6 +42,8 @@ public class UserDao extends CrudItemDao<User>
 	@Override
 	public int create(User user)
 	{
+		this.validateUserName(user.getUserName());
+		this.validatePassword(user.getPassword());
 		return this.execute(new SimpleCommandSqlFunctionCall<>("create_user",
 			Arrays.asList(new StringSqlFunctionParameter(User.USER_NAME_COLUMN,
 					user.getUserName()),
@@ -91,6 +95,7 @@ public class UserDao extends CrudItemDao<User>
 
 	public void updatePassword(UserPasswordReplacement userPasswordReplacement)
 	{
+		this.validatePassword(userPasswordReplacement.getNewPassword());
 		SqlFunctionCall passwordCheckingFunctionCall = this.createPasswordCheckingCall(
 			userPasswordReplacement.getCurrentPassword());
 		SqlFunctionCall updatePasswordFunctionCall = new SimpleCommandSqlFunctionCall<>(
@@ -153,5 +158,31 @@ public class UserDao extends CrudItemDao<User>
 		{
 			throw new JeffFarmWsException("Incorrect current password.");
 		}
+	}
+
+	private void validateUserName(String userName)
+	{
+		TextRequirement.validate(userName, "Username", 3,
+			new TextRequirement("Lowercase letter", "a-z", 0),
+			new TextRequirement("Number", "0-9", 0));
+
+		char firstChar = userName.charAt(0);
+		if (firstChar < 'a' || firstChar > 'z')
+		{
+			throw new JeffFarmWsException(
+				"First character of username must be a lowercase letter.");
+		}
+	}
+
+	private void validatePassword(String password)
+	{
+		TextRequirement.validate(password, "Password", 8,
+			new TextRequirement("Lowercase letter", "a-z", 1),
+			new TextRequirement("Uppercase letter", "A-Z", 1),
+			new TextRequirement("Number", "0-9", 1),
+			new TextRequirement(
+				"Symbol",
+				Pattern.quote("`~!@#$%^&*()[]{}/=?+\\|,.<>'\"-_"),
+				1));
 	}
 }

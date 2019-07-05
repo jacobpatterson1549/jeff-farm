@@ -55,22 +55,25 @@ public class UserDaoTest
 	@Test
 	public void testUpdatePassword() throws SQLException
 	{
+		String currentPassword = "current password";
+		String encrypetdCurrentPassword = "encrypted current password";
+		String newPassword = "new_Password1";
 		Connection mockConnection = mock(Connection.class);
 		PreparedStatement mockPreparedStatement = mock(PreparedStatement.class);
 		ResultSet mockResultSet = mock(ResultSet.class);
 		when(mockDataSource.getConnection()).thenReturn(mockConnection);
 		when(mockUserIdDao.getUserId()).thenReturn(104);
 		when(mockUserIdDao.hasAdimnRole()).thenReturn(isAdmin);
-		when(mockPasswordGenerator.isStoredPassword("current password", "encrypted current password")).thenReturn(currentPasswordCorrect);
+		when(mockPasswordGenerator.isStoredPassword(currentPassword, encrypetdCurrentPassword)).thenReturn(currentPasswordCorrect);
 		when(mockConnection.prepareStatement(any(String.class))).thenReturn(mockPreparedStatement);
 		when(mockPreparedStatement.execute()).thenReturn(true);
 		when(mockPreparedStatement.getResultSet()).thenReturn(mockResultSet);
 		when(mockResultSet.next()).thenReturn(true, false);
-		when(mockResultSet.getString(any(String.class))).thenReturn("encrypted current password");
+		when(mockResultSet.getString(any(String.class))).thenReturn(encrypetdCurrentPassword);
 		UserPasswordReplacement passwordReplacement = new UserPasswordReplacement()
 			.setId(104)
-			.setCurrentPassword("current password")
-			.setNewPassword("new password");
+			.setCurrentPassword(currentPassword)
+			.setNewPassword(newPassword);
 
 		try
 		{
@@ -86,8 +89,8 @@ public class UserDaoTest
 		}
 
 		verify(mockConnection, times(currentPasswordCorrect ? 2 : 1)).prepareStatement(any(String.class));
-		verify(mockPasswordGenerator, times(1)).isStoredPassword("current password", "encrypted current password");
+		verify(mockPasswordGenerator, times(1)).isStoredPassword(currentPassword, encrypetdCurrentPassword);
 		verify(mockUserIdDao, times(0)).hasAdimnRole(); // relic of old version, should not be checked by code (because the CURRENT user id need always be checked)
-		verify(mockPasswordGenerator, times(1)).getHashedPassword("new password");
+		verify(mockPasswordGenerator, times(1)).getHashedPassword(newPassword);
 	}
 }
