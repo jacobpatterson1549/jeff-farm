@@ -9,6 +9,18 @@ AS
 $body$
 	BEGIN
 		IF permission_check_farm(set_user_id(create_farm_permission.user_id), create_farm_permission.farm_id) THEN
+
+			IF EXISTS
+			(
+				SELECT 1
+				FROM farm_permissions AS fp
+				WHERE fp.farm_id = create_farm_permission.farm_id
+					AND fp.user_id = create_farm_permission.user_id
+			)
+			THEN
+				RAISE EXCEPTION 'Farm permission for user already exists.';
+			END IF;
+
 			INSERT INTO farm_permissions
 				( farm_id
 				, user_id
