@@ -9,6 +9,14 @@ CREATE FUNCTION create_user
 AS
 $body$
 	BEGIN
+		IF EXISTS
+		(
+			SELECT 1 FROM users AS u WHERE u.user_name = create_user.user_name
+		)
+		THEN
+			RAISE EXCEPTION 'Username % already exists.', create_user.user_name;
+		END IF;
+
 		WITH new_user (id) AS (
 			INSERT INTO users
 				( user_name
