@@ -30,7 +30,8 @@ public class TextRequirementTest
 			new Object[]{"ALL_UPPERCASE", "a-z", 1, false},
 			new Object[]{"$symbols_are_here.", "$^_.,", 4, true},
 			new Object[]{"not enough d1g1t5", "0-9", 4, false},
-			new Object[]{"it is ok to contain no digits here", "0-9", 0, true});
+			new Object[]{"it is ok to contain no digits here", "0-9", 0, true},
+			new Object[]{null, "0-9", 0, false});
 	}
 
 	@Test
