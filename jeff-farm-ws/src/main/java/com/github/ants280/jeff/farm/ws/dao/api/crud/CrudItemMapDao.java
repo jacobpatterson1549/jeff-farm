@@ -244,6 +244,7 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 			.setParentId(rs.getInt(CrudItemCoordinate.MAP_ID_COLUMN))
 			.setLatitude(rs.getDouble(CrudItemCoordinate.LATITUDE_COLUMN))
 			.setLongitude(rs.getDouble(CrudItemCoordinate.LONGITUDE_COLUMN))
+			.setDisplayOrder(rs.getInt(CrudItemCoordinate.DISPLAY_ORDER_COLUMN))
 			.setCreatedTimestamp(rs.getTimestamp(CrudItemCoordinate.CREATED_DATE_COLUMN))
 			.setModifiedTimestamp(rs.getTimestamp(CrudItemCoordinate.MODIFIED_DATE_COLUMN));
 	}
