@@ -21,7 +21,6 @@ public class TextRequirement
 		String name,
 		int minLength,
 		TextRequirement... textRequirements)
-		throws JeffFarmWsException
 	{
 		if (text == null || text.length() < minLength)
 		{
