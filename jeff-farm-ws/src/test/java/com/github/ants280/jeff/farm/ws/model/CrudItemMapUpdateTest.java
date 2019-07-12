@@ -56,6 +56,4 @@ public class CrudItemMapUpdateTest
 		assertThat(update.getAddCoordinates().length, is(0));
 		assertThat(update.getRemoveCoordinateIds().length, is(0));
 	}
-
-
 }

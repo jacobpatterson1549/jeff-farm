@@ -41,7 +41,7 @@ public abstract class SqlFunctionParameter<T>
 	@Override
 	public String toString()
 	{
-		return String.format("%s{name=%s,value=%s",
+		return String.format("%s{name=%s,value=%s}",
 			this.getClass().getSimpleName(),
 			name,
 			value);
