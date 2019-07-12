@@ -36,7 +36,7 @@ public class CrudItemMapUpdateTest
 	public void testDeserialize_basic()
 	{
 		String serialized =
-			"{\"map\":{\"parentId\":14,\"coordinates\":[{\"latitude\":87.6,\"longitude\":-242.7,\"id\":1},{\"latitude\":67.9,\"longitude\":50.0,\"id\":2}],\"id\":1,\"targetId\":2,\"targetName\":\"Cattle\"},\"addCoordinates\":[],\"removeCoordinateIds\":[]}";
+			"{\"map\":{\"parentId\":14,\"coordinates\":[{\"latitude\":87.6,\"longitude\":-242.7,\"displayOrder\":2,\"id\":1},{\"latitude\":67.9,\"longitude\":50.0,\"displayOrder\":1,\"id\":2}],\"id\":1,\"targetId\":2,\"targetName\":\"Cattle\"},\"addCoordinates\":[],\"removeCoordinateIds\":[]}";
 
 		CrudItemMapUpdate update = jsonb.fromJson(serialized,
 			CrudItemMapUpdate.class);
@@ -45,9 +45,11 @@ public class CrudItemMapUpdateTest
 		assertThat(update.getMap().getCoordinates().size(), is(2));
 		assertThat(update.getMap().getCoordinates().get(0).getLatitude(), is(87.6));
 		assertThat(update.getMap().getCoordinates().get(0).getLongitude(), is(-242.7));
+		assertThat(update.getMap().getCoordinates().get(0).getDisplayOrder(), is(2));
 		assertThat(update.getMap().getCoordinates().get(0).getId(), is(1));
 		assertThat(update.getMap().getCoordinates().get(1).getLatitude(), is(67.9));
 		assertThat(update.getMap().getCoordinates().get(1).getLongitude(), is(50.0));
+		assertThat(update.getMap().getCoordinates().get(1).getDisplayOrder(), is(1));
 		assertThat(update.getMap().getCoordinates().get(1).getId(), is(2));
 		assertThat(update.getMap().getTargetId(), is(2));
 		assertThat(update.getMap().getTargetName(), is("Cattle"));
