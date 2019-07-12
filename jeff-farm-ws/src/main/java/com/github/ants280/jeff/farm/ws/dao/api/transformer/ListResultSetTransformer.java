@@ -9,11 +9,11 @@ import java.util.List;
 public class ListResultSetTransformer<T>
 	implements ResultSetTransformer<List<T>>
 {
-	private final RowMapper<T> crudItemRowMapper;
+	private final RowMapper<T> rowMapper;
 
 	public ListResultSetTransformer(RowMapper<T> rowMapper)
 	{
-		this.crudItemRowMapper = rowMapper;
+		this.rowMapper = rowMapper;
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class ListResultSetTransformer<T>
 		List<T> results = new ArrayList<>();
 		while (resultSet.next())
 		{
-			results.add(crudItemRowMapper.getValue(resultSet));
+			results.add(rowMapper.getValue(resultSet));
 		}
 
 		return results;
