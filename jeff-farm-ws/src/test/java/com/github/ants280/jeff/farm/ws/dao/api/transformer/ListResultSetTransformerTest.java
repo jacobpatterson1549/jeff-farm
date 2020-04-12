@@ -25,7 +25,7 @@ public class ListResultSetTransformerTest
 		RowMapper<Integer> rowMapper = (resultSet) -> i.incrementAndGet();
 
 		ResultSetTransformer<List<Integer>> listResultSetTransformer
-			= new ListResultSetTransformer(rowMapper);
+			= new ListResultSetTransformer<>(rowMapper);
 		List<Integer> actualOutput
 			= listResultSetTransformer.transform(mockResultSet);
 		List<Integer> expectedOutput = Arrays.asList(1, 2, 3);
