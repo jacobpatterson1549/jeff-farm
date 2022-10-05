@@ -1,10 +1,11 @@
 package com.github.ants280.jeff.farm.ws;
 
 import com.github.ants280.jeff.farm.ws.resources.*;
-import java.util.*;
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-import org.glassfish.jersey.jsonb.*;
+import java.util.HashSet;
+import java.util.Set;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+import org.glassfish.jersey.jsonb.JsonBindingFeature;
 
 @ApplicationPath("/")
 public class ApplicationConfig extends Application
