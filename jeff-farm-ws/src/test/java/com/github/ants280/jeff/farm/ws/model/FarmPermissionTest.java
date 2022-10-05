@@ -3,7 +3,7 @@ package com.github.ants280.jeff.farm.ws.model;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 public class FarmPermissionTest
