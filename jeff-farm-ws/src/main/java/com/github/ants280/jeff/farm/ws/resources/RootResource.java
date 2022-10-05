@@ -28,7 +28,7 @@ public class RootResource
 		return Response.ok(this.getVersionInfo()).build();
 	}
 
-	private Map getVersionInfo()
+	private Map<String, Object> getVersionInfo()
 	{
 		Package applicationPackage = this.getClass().getPackage();
 		boolean hasValidConnection = connectionDao.hasValidConnection();
