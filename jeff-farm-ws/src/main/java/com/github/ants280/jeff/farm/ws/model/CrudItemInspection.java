@@ -1,6 +1,6 @@
 package com.github.ants280.jeff.farm.ws.model;
 
-public abstract class CrudItemInspection<V extends CrudItem, T extends CrudItemInspection<V, T>>
+public abstract class CrudItemInspection<V extends CrudItem<V>, T extends CrudItemInspection<V, T>>
 	extends CrudItem<T>
 {
 	public static final String GROUP_ID_COLUMN = "group_id";

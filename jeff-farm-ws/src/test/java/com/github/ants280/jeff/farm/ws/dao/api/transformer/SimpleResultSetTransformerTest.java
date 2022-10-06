@@ -20,7 +20,7 @@ public class SimpleResultSetTransformerTest
 	{
 		ResultSet mockResultSet = mock(ResultSet.class);
 		when(mockResultSet.next()).thenReturn(false);
-		ResultSetTransformer r = new SimpleResultSetTransformer<>(null);
+		ResultSetTransformer<?> r = new SimpleResultSetTransformer<>(null);
 
 		Object result = r.transform(mockResultSet);
 

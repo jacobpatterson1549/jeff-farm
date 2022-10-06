@@ -25,7 +25,7 @@ public class CrudItemTest
 	public void testGetId()
 	{
 		int id = 8;
-		CrudItem crudItem = new CrudItemImpl().setId(id);
+		CrudItem<?> crudItem = new CrudItemImpl().setId(id);
 
 		int id1 = crudItem.getId();
 
@@ -36,7 +36,7 @@ public class CrudItemTest
 	public void testGetCreatedDate()
 	{
 		Timestamp createdDate = Timestamp.from(Instant.now());
-		CrudItem crudItem = new CrudItemImpl().setCreatedTimestamp(createdDate);
+		CrudItem<?> crudItem = new CrudItemImpl().setCreatedTimestamp(createdDate);
 
 		String createdDate1 = crudItem.getCreatedDate();
 
@@ -47,7 +47,7 @@ public class CrudItemTest
 	public void testGetModifiedDate()
 	{
 		Timestamp modifiedDate = Timestamp.from(Instant.now());
-		CrudItem crudItem = new CrudItemImpl().setModifiedTimestamp(modifiedDate);
+		CrudItem<?> crudItem = new CrudItemImpl().setModifiedTimestamp(modifiedDate);
 
 		String modifiedDate1 = crudItem.getModifiedDate();
 
@@ -56,7 +56,7 @@ public class CrudItemTest
 	@Test
 	public void testGetModifiedDate_null()
 	{
-		CrudItem crudItem = new CrudItemImpl().setModifiedTimestamp(null);
+		CrudItem<?> crudItem = new CrudItemImpl().setModifiedTimestamp(null);
 
 		String modifiedDate1 = crudItem.getModifiedDate();
 
