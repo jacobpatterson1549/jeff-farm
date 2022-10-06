@@ -276,7 +276,7 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 			.filter(sqlFunctionParameter -> sqlFunctionParameter.getName()
 				.equals(CrudItemCoordinate.MAP_ID_COLUMN)
 				&& sqlFunctionParameter instanceof IntegerSqlFunctionParameter)
-			.map(sqlFunctionParameter -> (IntegerSqlFunctionParameter) sqlFunctionParameter)
+			.map(IntegerSqlFunctionParameter.class::cast)
 			.forEach(sqlFunctionParameter -> sqlFunctionParameter.setValue(
 				parentId));
 	}

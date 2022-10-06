@@ -123,7 +123,7 @@ public class FarmPermissionDao extends CrudItemDao<FarmPermission>
 			.filter(sqlFunctionParameter -> sqlFunctionParameter.getName()
 				.equals(FarmPermission.USER_ID_COLUMN)
 				&& sqlFunctionParameter instanceof IntegerSqlFunctionParameter)
-			.map(sqlFunctionParameter -> (IntegerSqlFunctionParameter) sqlFunctionParameter)
+			.map(IntegerSqlFunctionParameter.class::cast)
 			.forEach(sqlFunctionParameter -> sqlFunctionParameter.setValue(userId));
 	}
 }

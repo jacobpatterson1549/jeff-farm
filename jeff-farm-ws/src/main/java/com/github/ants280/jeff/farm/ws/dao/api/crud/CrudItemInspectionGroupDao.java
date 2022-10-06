@@ -227,7 +227,7 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 			.filter(sqlFunctionParameter -> sqlFunctionParameter.getName()
 				.equals(parentIdColumnName)
 				&& sqlFunctionParameter instanceof IntegerSqlFunctionParameter)
-			.map(sqlFunctionParameter -> (IntegerSqlFunctionParameter) sqlFunctionParameter)
+			.map(IntegerSqlFunctionParameter.class::cast)
 			.forEach(sqlFunctionParameter -> sqlFunctionParameter.setValue(
 				parentId));
 	}
