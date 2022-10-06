@@ -37,7 +37,7 @@ public class SqlFunctionDao
 			new SqlFunctionCall[]{functionCall});
 	}
 
-	public void execute(SqlFunctionCall... functionCalls)
+	public void execute(SqlFunctionCall<?>... functionCalls)
 	{
 		this.execute(() -> null, functionCalls);
 	}

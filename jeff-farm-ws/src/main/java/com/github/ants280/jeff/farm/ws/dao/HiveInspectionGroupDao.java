@@ -42,7 +42,7 @@ public class HiveInspectionGroupDao
 	@Override
 	public int create(HiveInspectionGroup hiveInspectionGroup)
 	{
-		Function<HiveInspection, List<SqlFunctionParameter>>
+		Function<HiveInspection, List<SqlFunctionParameter<?>>>
 			itemParameterMapper
 			= hiveInspection -> Arrays.asList(
 			new IntegerSqlFunctionParameter(HiveInspection.GROUP_ID_COLUMN, -1), // is reset by executeCreate()
@@ -106,7 +106,7 @@ public class HiveInspectionGroupDao
 	public void update(
 		CrudItemInspectionGroupUpdate<HiveInspection, HiveInspectionGroup> hiveInspectionGroupUpdate)
 	{
-		Function<HiveInspection, List<SqlFunctionParameter>>
+		Function<HiveInspection, List<SqlFunctionParameter<?>>>
 			updateParameterMapper
 			= hiveInspection -> Arrays.asList(new IntegerSqlFunctionParameter(HiveInspection.ID_COLUMN, hiveInspection.getId()),
 			new BooleanSqlFunctionParameter(HiveInspection.QUEEN_SEEN_COLUMN, hiveInspection.getQueenSeen()),
@@ -123,7 +123,7 @@ public class HiveInspectionGroupDao
 			new StringSqlFunctionParameter(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather()),
 			new IntegerSqlFunctionParameter(HiveInspection.TEMPERATURE_F_COLUMN, hiveInspection.getTemperatureF()),
 			new IntegerSqlFunctionParameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph()));
-		Function<HiveInspection, List<SqlFunctionParameter>>
+		Function<HiveInspection, List<SqlFunctionParameter<?>>>
 			addItemParameterMapper
 			= hiveInspection -> Arrays.asList(new IntegerSqlFunctionParameter(HiveInspection.GROUP_ID_COLUMN,
 				hiveInspectionGroupUpdate.getGroup().getId()),
@@ -142,7 +142,7 @@ public class HiveInspectionGroupDao
 			new StringSqlFunctionParameter(HiveInspection.WEATHER_COLUMN, hiveInspection.getWeather()),
 			new IntegerSqlFunctionParameter(HiveInspection.TEMPERATURE_F_COLUMN, hiveInspection.getTemperatureF()),
 			new IntegerSqlFunctionParameter(HiveInspection.WIND_SPEED_MPH_COLUMN, hiveInspection.getWindSpeedMph()));
-		IntFunction<List<SqlFunctionParameter>>
+		IntFunction<List<SqlFunctionParameter<?>>>
 			deleteItemParameterMapper
 			= itemId -> Collections.singletonList(new IntegerSqlFunctionParameter(
 			HiveInspection.ID_COLUMN,
@@ -172,7 +172,7 @@ public class HiveInspectionGroupDao
 	@Override
 	public void delete(int id)
 	{
-		List<SqlFunctionParameter>
+		List<SqlFunctionParameter<?>>
 			groupIdInParameterList
 			= Collections.singletonList(new IntegerSqlFunctionParameter(
 			HiveInspection.ID_COLUMN,

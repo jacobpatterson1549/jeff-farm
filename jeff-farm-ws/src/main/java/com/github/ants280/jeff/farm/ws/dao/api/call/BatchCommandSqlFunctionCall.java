@@ -9,11 +9,11 @@ import java.util.List;
 
 public class BatchCommandSqlFunctionCall extends SqlFunctionCall<Void>
 {
-	private final List<List<SqlFunctionParameter>> inParametersList;
+	private final List<List<SqlFunctionParameter<?>>> inParametersList;
 
 	public BatchCommandSqlFunctionCall(
 		String functionCallSql,
-		List<List<SqlFunctionParameter>> inParametersList,
+		List<List<SqlFunctionParameter<?>>> inParametersList,
 		UserIdDao userIdDao)
 	{
 		super(
@@ -32,7 +32,7 @@ public class BatchCommandSqlFunctionCall extends SqlFunctionCall<Void>
 			return; // Nothing to do.
 		}
 
-		for (List<SqlFunctionParameter> inParameters : inParametersList)
+		for (List<SqlFunctionParameter<?>> inParameters : inParametersList)
 		{
 			this.setParameters(preparedStatement, inParameters);
 			preparedStatement.addBatch();

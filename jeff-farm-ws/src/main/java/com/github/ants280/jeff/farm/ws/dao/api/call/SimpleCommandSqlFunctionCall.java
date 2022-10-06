@@ -11,14 +11,14 @@ import java.util.List;
 
 public class SimpleCommandSqlFunctionCall<T> extends SqlFunctionCall<T>
 {
-	private final List<SqlFunctionParameter> inParameters;
+	private final List<SqlFunctionParameter<?>> inParameters;
 	private final ResultSetTransformer<T> resultSetTransformer;
 	private T result;
 	private boolean resultsSet;
 
 	public SimpleCommandSqlFunctionCall(
 		String functionCallSql,
-		List<SqlFunctionParameter> inParameters,
+		List<SqlFunctionParameter<?>> inParameters,
 		ResultSetTransformer<T> resultSetTransformer,
 		UserIdDao userIdDao)
 	{

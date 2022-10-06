@@ -50,9 +50,9 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 
 	protected int executeCreate(
 		String createGroupFunctionName,
-		List<SqlFunctionParameter> groupInParameters,
+		List<SqlFunctionParameter<?>> groupInParameters,
 		String createItemsFunctionName,
-		List<List<SqlFunctionParameter>> itemInParameters,
+		List<List<SqlFunctionParameter<?>>> itemInParameters,
 		String groupIdColumnName,
 		String parentIdColumnName)
 	{
@@ -77,9 +77,9 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 
 	protected T executeRead(
 		String readGroupFunctionName,
-		List<SqlFunctionParameter> readGroupInParameters,
+		List<SqlFunctionParameter<?>> readGroupInParameters,
 		String readItemsFunctionName,
-		List<SqlFunctionParameter> readItemsInParameters)
+		List<SqlFunctionParameter<?>> readItemsInParameters)
 	{
 		SqlFunctionCall<T>
 			readGroupFunctionCall
@@ -101,9 +101,9 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 
 	protected List<T> executeReadList(
 		String readGroupFunctionName,
-		List<SqlFunctionParameter> readGroupInParameters,
+		List<SqlFunctionParameter<?>> readGroupInParameters,
 		String readItemsFunctionName,
-		List<SqlFunctionParameter> readItemsInParameters)
+		List<SqlFunctionParameter<?>> readItemsInParameters)
 	{
 		SimpleCommandSqlFunctionCall<List<T>>
 			readGroupFunctionCall
@@ -125,13 +125,13 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 
 	protected void executeUpdate(
 		String updateGroupFunctionName,
-		List<SqlFunctionParameter> groupInParameters,
+		List<SqlFunctionParameter<?>> groupInParameters,
 		String updateItemsFunctionName,
-		List<List<SqlFunctionParameter>> itemInParameters,
+		List<List<SqlFunctionParameter<?>>> itemInParameters,
 		String createItemsFunctionName,
-		List<List<SqlFunctionParameter>> createInParameters,
+		List<List<SqlFunctionParameter<?>>> createInParameters,
 		String deleteItemsFunctionName,
-		List<List<SqlFunctionParameter>> deleteItemsInParameters)
+		List<List<SqlFunctionParameter<?>>> deleteItemsInParameters)
 	{
 		SqlFunctionCall<Void>
 			updateGroupFunctionCall
@@ -164,9 +164,9 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 
 	protected void executeDelete(
 		String deleteGroupFunctionName,
-		List<SqlFunctionParameter> deleteGroupInParameters,
+		List<SqlFunctionParameter<?>> deleteGroupInParameters,
 		String deleteItemsFunctionName,
-		List<SqlFunctionParameter> deleteItemsInParameters)
+		List<SqlFunctionParameter<?>> deleteItemsInParameters)
 	{
 		SqlFunctionCall<Void>
 			deleteGroupFunctionCall
@@ -186,7 +186,7 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 
 	protected boolean canDelete(
 		String functionName,
-		List<SqlFunctionParameter> inParameters,
+		List<SqlFunctionParameter<?>> inParameters,
 		String outParameterName)
 	{
 		SqlFunctionCall<Boolean>
@@ -218,7 +218,7 @@ public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?,
 
 	private void setParentId(
 		Integer parentId,
-		List<List<SqlFunctionParameter>> itemInParameters,
+		List<List<SqlFunctionParameter<?>>> itemInParameters,
 		String parentIdColumnName)
 	{
 		// set the parentId in the itemInParameters

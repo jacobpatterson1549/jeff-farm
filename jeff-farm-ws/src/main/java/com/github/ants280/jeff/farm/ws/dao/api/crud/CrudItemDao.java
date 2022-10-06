@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
 
-public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
+public abstract class CrudItemDao<T extends CrudItem<T>> extends SqlFunctionDao
 {
 	public CrudItemDao(DataSource dataSource, UserIdDao userIdDao)
 	{
@@ -35,7 +35,7 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 	protected abstract T mapRow(ResultSet rs) throws SQLException;
 
 	protected int executeCreate(
-		String functionName, List<SqlFunctionParameter> inParameters)
+		String functionName, List<SqlFunctionParameter<?>> inParameters)
 	{
 		SqlFunctionCall<Integer>
 			functionCall
@@ -48,7 +48,7 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 	}
 
 	protected T executeRead(
-		String functionName, List<SqlFunctionParameter> inParameters)
+		String functionName, List<SqlFunctionParameter<?>> inParameters)
 	{
 		SqlFunctionCall<T> functionCall = new SimpleCommandSqlFunctionCall<>(
 			functionName,
@@ -59,7 +59,7 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 	}
 
 	protected List<T> executeReadList(
-		String functionName, List<SqlFunctionParameter> inParameters)
+		String functionName, List<SqlFunctionParameter<?>> inParameters)
 	{
 		SqlFunctionCall<List<T>>
 			functionCall
@@ -71,7 +71,7 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 	}
 
 	protected void executeUpdate( // and delete
-		String functionName, List<SqlFunctionParameter> inParameters)
+		String functionName, List<SqlFunctionParameter<?>> inParameters)
 	{
 		SqlFunctionCall<Void> functionCall = new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
@@ -82,7 +82,7 @@ public abstract class CrudItemDao<T extends CrudItem> extends SqlFunctionDao
 
 	protected boolean canDelete(
 		String functionName,
-		List<SqlFunctionParameter> inParameters,
+		List<SqlFunctionParameter<?>> inParameters,
 		String outParameterName)
 	{
 		SqlFunctionCall<Boolean>

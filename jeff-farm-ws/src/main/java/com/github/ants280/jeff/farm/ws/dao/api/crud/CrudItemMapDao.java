@@ -41,7 +41,7 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 
 	public int create(CrudItemMap crudItemMap)
 	{
-		Function<CrudItemCoordinate, List<SqlFunctionParameter>> createCoordinateParameterMapper
+		Function<CrudItemCoordinate, List<SqlFunctionParameter<?>>> createCoordinateParameterMapper
 			= crudItemCoordinate ->Arrays.asList(
 				new IntegerSqlFunctionParameter(CrudItemCoordinate.MAP_ID_COLUMN, -1), // Is reset by SideEffectSqlFunctionCall.
 				new DoubleSqlFunctionParameter(CrudItemCoordinate.LATITUDE_COLUMN, crudItemCoordinate.getLatitude()),
@@ -50,7 +50,7 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 
 		String createMapFunctionName = String.format("create_%s_map", crudItemName);
 		String createCoordinatesFunctionName = String.format("create_%s_coordinate", crudItemName);
-		List<List<SqlFunctionParameter>> coordinatesInParameters = crudItemMap.getCoordinates()
+		List<List<SqlFunctionParameter<?>>> coordinatesInParameters = crudItemMap.getCoordinates()
 			.stream()
 			.map(createCoordinateParameterMapper)
 			.collect(Collectors.toList());
@@ -79,9 +79,9 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 	{
 		String readMapFunctionName = String.format("read_%s_map", crudItemName);
 		String readCoordinatesFunctionName = String.format("read_%s_coordinates_for_map", crudItemName);
-		List<SqlFunctionParameter> readMapInParameters = Collections.singletonList(
+		List<SqlFunctionParameter<?>> readMapInParameters = Collections.singletonList(
 			new IntegerSqlFunctionParameter(CrudItemMap.ID_COLUMN, id));
-		List<SqlFunctionParameter> readCoordinatesInParameters = Collections.singletonList(
+		List<SqlFunctionParameter<?>> readCoordinatesInParameters = Collections.singletonList(
 			new IntegerSqlFunctionParameter(CrudItemCoordinate.MAP_ID_COLUMN, id));
 
 		SqlFunctionCall<CrudItemMap>
@@ -105,10 +105,10 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 	public List<CrudItemMap> readList(int targetId)
 	{
 		String readMapFunctionName = String.format("read_%s_maps", crudItemName);
-		List<SqlFunctionParameter> readMapsInParameters = Collections.singletonList(
+		List<SqlFunctionParameter<?>> readMapsInParameters = Collections.singletonList(
 			new IntegerSqlFunctionParameter(CrudItem.ID_COLUMN, targetId)); // TODO: should be parentId!!! (+all parameters on read-list functions)
 		String readCoordinatesFunctionName = String.format("read_%s_coordinates_for_farm", crudItemName);
-		List<SqlFunctionParameter> readCoordinatesInParameters = Collections.singletonList(
+		List<SqlFunctionParameter<?>> readCoordinatesInParameters = Collections.singletonList(
 			new IntegerSqlFunctionParameter(CrudItem.ID_COLUMN, targetId));
 
 		SimpleCommandSqlFunctionCall<List<CrudItemMap>>
@@ -131,42 +131,42 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 
 	public void update(CrudItemMapUpdate entityUpdate)
 	{
-		Function<CrudItemMap, List<SqlFunctionParameter>> updateMapParameterMapper
+		Function<CrudItemMap, List<SqlFunctionParameter<?>>> updateMapParameterMapper
 			= crudItemMap ->Arrays.asList(
 			new IntegerSqlFunctionParameter(CrudItemMap.ID_COLUMN, crudItemMap.getId()),
 			new IntegerSqlFunctionParameter(CrudItemMap.TARGET_ID_COLUMN, crudItemMap.getTargetId()));
-		Function<CrudItemCoordinate, List<SqlFunctionParameter>> updateCoordinateParameterMapper
+		Function<CrudItemCoordinate, List<SqlFunctionParameter<?>>> updateCoordinateParameterMapper
 			= crudItemCoordinate ->Arrays.asList(
 				new IntegerSqlFunctionParameter(CrudItemCoordinate.ID_COLUMN, crudItemCoordinate.getId()),
 				new DoubleSqlFunctionParameter(CrudItemCoordinate.LATITUDE_COLUMN, crudItemCoordinate.getLatitude()),
 				new DoubleSqlFunctionParameter(CrudItemCoordinate.LONGITUDE_COLUMN, crudItemCoordinate.getLongitude()),
 				new IntegerSqlFunctionParameter(CrudItemCoordinate.DISPLAY_ORDER_COLUMN, crudItemCoordinate.getDisplayOrder()));
-		Function<CrudItemCoordinate, List<SqlFunctionParameter>> addCoordinateParameterMapper
+		Function<CrudItemCoordinate, List<SqlFunctionParameter<?>>> addCoordinateParameterMapper
 			= crudItemCoordinate ->Arrays.asList(
 				new IntegerSqlFunctionParameter(CrudItemCoordinate.MAP_ID_COLUMN, entityUpdate.getMap().getId()),
 				new DoubleSqlFunctionParameter(CrudItemCoordinate.LATITUDE_COLUMN, crudItemCoordinate.getLatitude()),
 				new DoubleSqlFunctionParameter(CrudItemCoordinate.LONGITUDE_COLUMN, crudItemCoordinate.getLongitude()),
 				new IntegerSqlFunctionParameter(CrudItemCoordinate.DISPLAY_ORDER_COLUMN, crudItemCoordinate.getDisplayOrder()));
-		IntFunction<List<SqlFunctionParameter>> deleteCoordinateParameterMapper
+		IntFunction<List<SqlFunctionParameter<?>>> deleteCoordinateParameterMapper
 			= coordinateId -> Collections.singletonList(
 				new IntegerSqlFunctionParameter(CrudItemCoordinate.ID_COLUMN, coordinateId));
 
 		String updateMapFunctionName = String.format("update_%s_map", crudItemName);
-		List<SqlFunctionParameter> updateMapInParameters
+		List<SqlFunctionParameter<?>> updateMapInParameters
 			= updateMapParameterMapper.apply(entityUpdate.getMap());
 		String updateCoordinatesFunctionName = String.format("update_%s_coordinate", crudItemName);
-		List<List<SqlFunctionParameter>> updateCoordinatesInParameters
+		List<List<SqlFunctionParameter<?>>> updateCoordinatesInParameters
 			= entityUpdate.getMap().getCoordinates()
 				.stream()
 				.map(updateCoordinateParameterMapper)
 				.collect(Collectors.toList());
 		String createCoordinatesFunctionName = String.format("create_%s_coordinate", crudItemName);
-		List<List<SqlFunctionParameter>> createCoordinatesInParameters
+		List<List<SqlFunctionParameter<?>>> createCoordinatesInParameters
 			= Arrays.stream(entityUpdate.getAddCoordinates())
 				.map(addCoordinateParameterMapper)
 				.collect(Collectors.toList());
 		String deleteCoordinatesFunctionName = String.format("delete_%s_coordinate", crudItemName);
-		List<List<SqlFunctionParameter>> deleteCoordinatesInParameters
+		List<List<SqlFunctionParameter<?>>> deleteCoordinatesInParameters
 			= IntStream.of(entityUpdate.getRemoveCoordinateIds())
 				.mapToObj(deleteCoordinateParameterMapper)
 				.collect(Collectors.toList());
@@ -204,10 +204,10 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 	public void delete(int id)
 	{
 		String deleteMapFunctionName = String.format("delete_%s_map", crudItemName);
-		List<SqlFunctionParameter> deleteMapInParameters = Collections.singletonList(
+		List<SqlFunctionParameter<?>> deleteMapInParameters = Collections.singletonList(
 			new IntegerSqlFunctionParameter(CrudItemMap.ID_COLUMN, id));
 		String deleteCoordinatesForMapFunctionName = String.format("delete_%s_coordinates_for_map", crudItemName);
-		List<SqlFunctionParameter> deleteCoordinatesInParameters = Collections.singletonList(
+		List<SqlFunctionParameter<?>> deleteCoordinatesInParameters = Collections.singletonList(
 			new IntegerSqlFunctionParameter(CrudItemCoordinate.MAP_ID_COLUMN, id));
 
 		SqlFunctionCall<Void>
@@ -268,7 +268,7 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 
 	private void setParentId(
 		Integer parentId,
-		List<List<SqlFunctionParameter>> itemInParameters)
+		List<List<SqlFunctionParameter<?>>> itemInParameters)
 	{
 		// set the parentId in the itemInParameters
 		itemInParameters.stream()

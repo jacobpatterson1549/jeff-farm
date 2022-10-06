@@ -34,7 +34,7 @@ public class FarmPermissionDao extends CrudItemDao<FarmPermission>
 	@Override
 	public int create(FarmPermission farmPermission)
 	{
-		List<SqlFunctionParameter> createFarmPermissionInParameters = Arrays.asList(
+		List<SqlFunctionParameter<?>> createFarmPermissionInParameters = Arrays.asList(
 			new IntegerSqlFunctionParameter(FarmPermission.FARM_ID_COLUMN, farmPermission.getParentId()),
 			new IntegerSqlFunctionParameter(FarmPermission.USER_ID_COLUMN, -1)); // filled in below
 		SqlFunctionCall<Integer> userNameCheckingFunctionCall
@@ -112,7 +112,7 @@ public class FarmPermissionDao extends CrudItemDao<FarmPermission>
 			.setModifiedTimestamp(rs.getTimestamp(FarmPermission.MODIFIED_DATE_COLUMN));
 	}
 
-	private void setUserId(Integer userId, List<SqlFunctionParameter> createFarmPermissionInParameters)
+	private void setUserId(Integer userId, List<SqlFunctionParameter<?>> createFarmPermissionInParameters)
 	{
 		if (userId == null)
 		{

@@ -96,9 +96,9 @@ public class UserDao extends CrudItemDao<User>
 	public void updatePassword(UserPasswordReplacement userPasswordReplacement)
 	{
 		this.validatePassword(userPasswordReplacement.getNewPassword());
-		SqlFunctionCall passwordCheckingFunctionCall = this.createPasswordCheckingCall(
+		SqlFunctionCall<?> passwordCheckingFunctionCall = this.createPasswordCheckingCall(
 			userPasswordReplacement.getCurrentPassword());
-		SqlFunctionCall updatePasswordFunctionCall = new SimpleCommandSqlFunctionCall<>(
+		SqlFunctionCall<?> updatePasswordFunctionCall = new SimpleCommandSqlFunctionCall<>(
 			"update_user_password",
 			Arrays.asList(
 				new IntegerSqlFunctionParameter(

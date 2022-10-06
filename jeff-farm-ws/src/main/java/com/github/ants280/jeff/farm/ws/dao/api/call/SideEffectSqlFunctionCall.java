@@ -18,7 +18,7 @@ public class SideEffectSqlFunctionCall<T> extends SimpleCommandSqlFunctionCall<T
 
 	public SideEffectSqlFunctionCall(
 		String functionName,
-		List<SqlFunctionParameter> inParameters,
+		List<SqlFunctionParameter<?>> inParameters,
 		ResultSetTransformer<T> resultSetTransformer,
 		Consumer<T> resultConsumer,
 		UserIdDao userIdDao)

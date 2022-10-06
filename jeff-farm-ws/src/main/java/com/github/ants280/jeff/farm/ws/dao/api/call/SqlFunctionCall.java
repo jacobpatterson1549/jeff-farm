@@ -35,14 +35,14 @@ public abstract class SqlFunctionCall<T>
 
 	protected void setParameters(
 		PreparedStatement preparedStatement,
-		List<SqlFunctionParameter> inParameters) throws SQLException
+		List<SqlFunctionParameter<?>> inParameters) throws SQLException
 	{
 		int index = 1;
 		if (userIdDao != null)
 		{
 			preparedStatement.setInt(index++, userIdDao.getUserId());
 		}
-		for (SqlFunctionParameter inParameter : inParameters)
+		for (SqlFunctionParameter<?> inParameter : inParameters)
 		{
 			inParameter.setValue(preparedStatement, index++);
 		}

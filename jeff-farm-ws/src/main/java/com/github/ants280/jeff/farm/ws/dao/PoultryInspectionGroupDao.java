@@ -41,7 +41,7 @@ public class PoultryInspectionGroupDao
 	@Override
 	public int create(PoultryInspectionGroup poultryInspectionGroup)
 	{
-		Function<PoultryInspection, List<SqlFunctionParameter>>
+		Function<PoultryInspection, List<SqlFunctionParameter<?>>>
 			itemParameterMapper
 			= poultryInspection -> Arrays.asList(new IntegerSqlFunctionParameter(
 				PoultryInspection.GROUP_ID_COLUMN,
@@ -97,7 +97,7 @@ public class PoultryInspectionGroupDao
 	public void update(
 		CrudItemInspectionGroupUpdate<PoultryInspection, PoultryInspectionGroup> poultryInspectionGroupUpdate)
 	{
-		Function<PoultryInspection, List<SqlFunctionParameter>>
+		Function<PoultryInspection, List<SqlFunctionParameter<?>>>
 			updateParameterMapper
 			= poultryInspection -> Arrays.asList(new IntegerSqlFunctionParameter(PoultryInspection.ID_COLUMN,
 				poultryInspection.getId()),
@@ -105,7 +105,7 @@ public class PoultryInspectionGroupDao
 				poultryInspection.getBirdCount()),
 			new IntegerSqlFunctionParameter(PoultryInspection.EGG_COUNT_COLUMN,
 				poultryInspection.getEggCount()));
-		Function<PoultryInspection, List<SqlFunctionParameter>>
+		Function<PoultryInspection, List<SqlFunctionParameter<?>>>
 			addItemParameterMapper
 			= poultryInspection -> Arrays.asList(new IntegerSqlFunctionParameter(PoultryInspection.GROUP_ID_COLUMN,
 				poultryInspectionGroupUpdate.getGroup().getId()),
@@ -115,7 +115,7 @@ public class PoultryInspectionGroupDao
 				poultryInspection.getBirdCount()),
 			new IntegerSqlFunctionParameter(PoultryInspection.EGG_COUNT_COLUMN,
 				poultryInspection.getEggCount()));
-		IntFunction<List<SqlFunctionParameter>>
+		IntFunction<List<SqlFunctionParameter<?>>>
 			deleteItemParameterMapper
 			= itemId -> Collections.singletonList(new IntegerSqlFunctionParameter(
 			PoultryInspection.ID_COLUMN,
@@ -145,7 +145,7 @@ public class PoultryInspectionGroupDao
 	@Override
 	public void delete(int id)
 	{
-		List<SqlFunctionParameter>
+		List<SqlFunctionParameter<?>>
 			groupIdInParameterList
 			= Collections.singletonList(new IntegerSqlFunctionParameter(PoultryInspection.ID_COLUMN,
 			id));
