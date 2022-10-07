@@ -59,7 +59,7 @@ public class UserDaoTest
 	public void testUpdatePassword() throws SQLException
 	{
 		String currentPassword = "current password";
-		String encrypetdCurrentPassword = "encrypted current password";
+		String encryptedCurrentPassword = "encrypted current password";
 		String newPassword = "new_Password1";
 		Connection mockConnection = mock(Connection.class);
 		PreparedStatement mockPreparedStatement = mock(PreparedStatement.class);
@@ -67,12 +67,12 @@ public class UserDaoTest
 		when(mockDataSource.getConnection()).thenReturn(mockConnection);
 		when(mockUserIdDao.getUserId()).thenReturn(104);
 		when(mockUserIdDao.hasAdimnRole()).thenReturn(isAdmin);
-		when(mockPasswordGenerator.isStoredPassword(currentPassword, encrypetdCurrentPassword)).thenReturn(currentPasswordCorrect);
+		when(mockPasswordGenerator.isStoredPassword(currentPassword, encryptedCurrentPassword)).thenReturn(currentPasswordCorrect);
 		when(mockConnection.prepareStatement(any(String.class))).thenReturn(mockPreparedStatement);
 		when(mockPreparedStatement.execute()).thenReturn(true);
 		when(mockPreparedStatement.getResultSet()).thenReturn(mockResultSet);
 		when(mockResultSet.next()).thenReturn(true, false);
-		when(mockResultSet.getString(any(String.class))).thenReturn(encrypetdCurrentPassword);
+		when(mockResultSet.getString(any(String.class))).thenReturn(encryptedCurrentPassword);
 		UserPasswordReplacement passwordReplacement = new UserPasswordReplacement()
 			.setId(104)
 			.setCurrentPassword(currentPassword)
@@ -92,7 +92,7 @@ public class UserDaoTest
 		}
 
 		verify(mockConnection, times(currentPasswordCorrect ? 2 : 1)).prepareStatement(any(String.class));
-		verify(mockPasswordGenerator, times(1)).isStoredPassword(currentPassword, encrypetdCurrentPassword);
+		verify(mockPasswordGenerator, times(1)).isStoredPassword(currentPassword, encryptedCurrentPassword);
 		verify(mockUserIdDao, times(0)).hasAdimnRole(); // relic of old version, should not be checked by code (because the CURRENT user id need always be checked)
 		verify(mockPasswordGenerator, times(1)).getHashedPassword(newPassword);
 	}

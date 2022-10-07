@@ -22,8 +22,8 @@ public class UserTest
 	public void testSerialize()
 	{
 		int id = 1996;
-		String userName = "daPrez";
-		String password = "crAAZYkat17";
+		String userName = "daPresident";
+		String password = "CRAZY_kat17";
 		String firstName = "Bob";
 		String lastName = "Dole";
 		User user = new User()
@@ -46,13 +46,13 @@ public class UserTest
 	@Test
 	public void testDeserialize_noPassword()
 	{
-		String serializedUser = "{\"id\":1996,\"userName\":\"daPrez\",\"firstName\":\"Bob\",\"lastName\":\"Dole\"}";
+		String serializedUser = "{\"id\":1996,\"userName\":\"daPresident\",\"firstName\":\"Bob\",\"lastName\":\"Dole\"}";
 
 		User user = jsonb.fromJson(serializedUser, User.class);
 
 		assertThat(user.getId(), is(1996));
 		assertThat("no password needs to be provided to update a User", user.getPassword(), is(nullValue()));
-		assertThat(user.getUserName(), is("daPrez"));
+		assertThat(user.getUserName(), is("daPresident"));
 		assertThat(user.getFirstName(), is("Bob"));
 		assertThat(user.getLastName(), is("Dole"));
 	}
@@ -60,10 +60,10 @@ public class UserTest
 	@Test
 	public void testDeserialize_passwordDeserialized()
 	{
-		String serializedUser = "{\"id\":1996,\"userName\":\"daPrez\",\"password\":\"crAAZYkat17\",\"firstName\":\"Bob\",\"lastName\":\"Dole\"}";
+		String serializedUser = "{\"id\":1996,\"userName\":\"DaPresident\",\"password\":\"CRAZY_kat17\",\"firstName\":\"Bob\",\"lastName\":\"Dole\"}";
 
 		User user = jsonb.fromJson(serializedUser, User.class);
 
-		assertThat("password should be deserialized when a User is created from the ui", user.getPassword(), is("crAAZYkat17"));
+		assertThat("password should be deserialized when a User is created from the ui", user.getPassword(), is("CRAZY_kat17"));
 	}
 }

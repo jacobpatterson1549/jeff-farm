@@ -20,7 +20,7 @@ public class HiveInspectionTest
 	@Test
 	public void testDeserialize_basic()
 	{
-		String serializedHiveInspection = "{\"id\":47,\"parentId\":19,\"queenSeen\":false,\"eggsSeen\":true,\"layingPatternStars\":3,\"temperamentStars\":4,\"queenCells\":11,\"supersedureCells\":22,\"swarmCells\":32,\"combBuildingStars\":5,\"framesSealedBrood\":14,\"framesOpenBrood\":8,\"framesHoney\":6,\"weather\":\"hott\",\"temperatureF\":83,\"windSpeedMph\":17}";
+		String serializedHiveInspection = "{\"id\":47,\"parentId\":19,\"queenSeen\":false,\"eggsSeen\":true,\"layingPatternStars\":3,\"temperamentStars\":4,\"queenCells\":11,\"supersedureCells\":22,\"swarmCells\":32,\"combBuildingStars\":5,\"framesSealedBrood\":14,\"framesOpenBrood\":8,\"framesHoney\":6,\"weather\":\"hot\",\"temperatureF\":83,\"windSpeedMph\":17}";
 
 		HiveInspection hiveInspection = jsonb.fromJson(serializedHiveInspection, HiveInspection.class);
 
@@ -37,7 +37,7 @@ public class HiveInspectionTest
 		assertThat(hiveInspection.getFramesSealedBrood(), is(14));
 		assertThat(hiveInspection.getFramesOpenBrood(), is(8));
 		assertThat(hiveInspection.getFramesHoney(), is(6));
-		assertThat(hiveInspection.getWeather(), is("hott"));
+		assertThat(hiveInspection.getWeather(), is("hot"));
 		assertThat(hiveInspection.getTemperatureF(), is(83));
 		assertThat(hiveInspection.getWindSpeedMph(), is(17));
 	}
