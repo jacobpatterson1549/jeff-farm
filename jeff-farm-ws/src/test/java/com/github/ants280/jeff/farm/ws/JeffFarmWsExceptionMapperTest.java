@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.internal.Errors;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.model.Resource;
 import org.glassfish.jersey.test.JerseyTest;
@@ -44,7 +45,7 @@ public class JeffFarmWsExceptionMapperTest extends JerseyTest
 		Resource.Builder resourceBuilder = Resource.builder("dummy");
 		resourceBuilder.addMethod("GET").handledBy(this::handleRequest).build();
 
-		Logger.getLogger("org.glassfish.jersey.internal.Errors").setLevel(Level.OFF); // NOTE: set the logger name to "" to disable all logging
+		Logger.getLogger(Errors.class.getName()).setLevel(Level.OFF); // NOTE: set the logger name to "" to disable all logging
 
 		return new ResourceConfig().registerResources(resourceBuilder.build())
 			.register(JeffFarmWsExceptionMapper.class);
