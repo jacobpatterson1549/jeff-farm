@@ -31,7 +31,7 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 {
 	private final String crudItemName;
 
-	public CrudItemMapDao(DataSource dataSource, UserIdDao userIdDao, String crudItemName)
+	protected CrudItemMapDao(DataSource dataSource, UserIdDao userIdDao, String crudItemName)
 	{
 		super(dataSource, userIdDao);
 		this.crudItemName = crudItemName;

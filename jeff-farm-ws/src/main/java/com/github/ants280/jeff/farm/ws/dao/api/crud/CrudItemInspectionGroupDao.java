@@ -24,7 +24,7 @@ import javax.sql.DataSource;
 public abstract class CrudItemInspectionGroupDao<V extends CrudItemInspection<?, V>, T extends CrudItemInspectionGroup<V, T>>
 	extends SqlFunctionDao
 {
-	public CrudItemInspectionGroupDao(DataSource dataSource, UserIdDao userIdDao)
+	protected CrudItemInspectionGroupDao(DataSource dataSource, UserIdDao userIdDao)
 	{
 		super(dataSource, userIdDao);
 	}

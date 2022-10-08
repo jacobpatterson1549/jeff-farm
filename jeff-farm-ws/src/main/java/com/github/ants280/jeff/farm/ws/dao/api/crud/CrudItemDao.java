@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 
 public abstract class CrudItemDao<T extends CrudItem<T>> extends SqlFunctionDao
 {
-	public CrudItemDao(DataSource dataSource, UserIdDao userIdDao)
+	protected CrudItemDao(DataSource dataSource, UserIdDao userIdDao)
 	{
 		super(dataSource, userIdDao);
 	}

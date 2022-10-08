@@ -17,7 +17,7 @@ public abstract class SqlFunctionCall<T>
 	@Inject
 	private UserIdDao userIdDao;
 
-	public SqlFunctionCall(String functionCallSql, int numParameters, UserIdDao userIdDao)
+	protected SqlFunctionCall(String functionCallSql, int numParameters, UserIdDao userIdDao)
 	{
 		this.functionCallSql = functionCallSql;
 		this.numParameters = numParameters;
