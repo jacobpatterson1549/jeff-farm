@@ -1,5 +1,6 @@
 package com.github.ants280.jeff.farm.ws.model;
 
+import java.util.Arrays;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import static org.hamcrest.CoreMatchers.is;
@@ -8,7 +9,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Enclosed.class)
 public class HiveTest
 {
 	private Jsonb jsonb;
@@ -54,55 +59,41 @@ public class HiveTest
 		assertThat(hive.getModifiedDate(), is(nullValue()));
 	}
 	
-	@Test(expected = Exception.class)
-	public void testDeserialize_colorWithoutPoundSign()
+	@RunWith(Parameterized.class)
+	public static class InvalidDeserializeColorTest
 	{
-		String serializedHive = "{\"queenColor\":\"00ff00\"}";
+		private final String name;
+		private final String serializedHive;
+		private final Jsonb jsonb;
 
-		jsonb.fromJson(serializedHive, Hive.class);
+		public InvalidDeserializeColorTest(String name, String serializedHive)
+		{
+			this.name = name;
+			this.serializedHive = serializedHive;
+			this.jsonb = JsonbBuilder.create();
+		}
 
-		fail("expected to fail");
+		@Parameterized.Parameters(name = "{0}: serializedHive: {1}")
+		public static Iterable<Object[]> data()
+		{
+			return Arrays.asList(
+					// new Object[] { 1, ""},
+					new Object[] { "colorWithoutPoundSign" , "{\"queenColor\":\"00ff00\"}" },
+					new Object[] { "invalidColor_null" , "{{\"queenColor\":\"1\"}" },
+					new Object[] { "invalidColor_large" , "{\"queenColor\":null}" },
+					new Object[] { "invalidColor_small" , "{\"queenColor\":\"#fff\"}" },
+					new Object[] { "invalidColor_badHex", "{\"queenColor\":\"#alfred\"}" });
+		}
+
+		@Test(expected = Exception.class)
+		public void testDeserialize()
+		{
+			jsonb.fromJson(serializedHive, Hive.class);
+
+			fail("expected " + name + " to fail");
+		}
 	}
-	
-	@Test(expected = Exception.class)
-	public void testDeserialize_invalidColor_null()
-	{
-		String serializedHive = "{{\"queenColor\":\"1\"}";
 
-		jsonb.fromJson(serializedHive, Hive.class);
-
-		fail("expected to fail");
-	}
-	@Test(expected = Exception.class)
-	public void testDeserialize_invalidColor_large()
-	{
-		String serializedHive = "{\"queenColor\":null}";
-
-		jsonb.fromJson(serializedHive, Hive.class);
-
-		fail("expected to fail");
-	}
-	
-	@Test(expected = Exception.class)
-	public void testDeserialize_invalidColor_small()
-	{
-		String serializedHive = "{\"queenColor\":\"#fff\"}";
-
-		jsonb.fromJson(serializedHive, Hive.class);
-
-		fail("expected to fail");
-	}
-	
-	@Test(expected = Exception.class)
-	public void testDeserialize_invalidColor_badHex()
-	{
-		String serializedHive = "{\"queenColor\":\"#alfred\"}";
-
-		jsonb.fromJson(serializedHive, Hive.class);
-
-		fail("expected to fail");
-	}
-	
 	@Test
 	public void testDeserialize_UPPERCASE_ok()
 	{
