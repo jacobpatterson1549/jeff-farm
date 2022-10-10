@@ -23,7 +23,7 @@ export class CrudHomeComponent<T extends CrudItem> implements OnInit {
 
   ngOnInit() {
     this.crudItemName = this.crudItemService.getTypeName();
-    this.route.params.subscribe(val => {
+    this.route.params.subscribe(_val => {
       this.headerService.setHeaderItems(this.crudItemService.getHeaderItems());
     });
   }

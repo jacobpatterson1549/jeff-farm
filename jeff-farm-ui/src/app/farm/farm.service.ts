@@ -5,14 +5,12 @@ import { CrudChild } from '../crud/crud-child';
 import { CrudItemService } from '../crud/crud-item.service';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
 import { HeaderItem } from '../header/header-item';
-import { HeaderService } from '../header/header.service';
 import { Farm } from './farm';
 
 @Injectable()
 export class FarmService extends CrudItemService<Farm> {
 
   constructor(
-    headerService: HeaderService,
     errorMessagesService: ErrorMessagesService,
     http: HttpClient) {
     super(

@@ -25,8 +25,8 @@ describe('LoginService', () => {
         httpClientSpy.get.and.returnValue(of(new HttpResponse({})));
         loginService.logout()
             .subscribe(
-                success => expect(authServiceSpy.clearCredentials).toHaveBeenCalled(),
-                error => fail('expected logout success'));
+                _success => expect(authServiceSpy.clearCredentials).toHaveBeenCalled(),
+                _error => fail('expected logout success'));
         expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
     });
 
@@ -34,8 +34,8 @@ describe('LoginService', () => {
         httpClientSpy.get.and.returnValue(throwError(new HttpErrorResponse({})));
         loginService.logout()
             .subscribe(
-                success => fail('expected logout failure'),
-                error => {
+                _success => fail('expected logout failure'),
+                _error => {
                     expect(errorMessagesServiceSpy.handleError).toHaveBeenCalled();
                     expect(authServiceSpy.clearCredentials).toHaveBeenCalled();
                 });
