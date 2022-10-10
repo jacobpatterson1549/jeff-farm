@@ -119,7 +119,7 @@ export class CrudChartComponent
   private getUrl(group: T): string {
     const url = this.router.url;
     const lastSlash = url.lastIndexOf('/') + 1;
-    return url.substr(0, lastSlash) + group.id;
+    return url.substring(0, lastSlash) + group.id;
   }
 
   chartFormItem(index: number) {

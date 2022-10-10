@@ -22,7 +22,7 @@ export class CachingInterceptor implements HttpInterceptor {
                 this.clearCache(req.url);
                 break;
             case 'DELETE':
-                this.clearCache(req.url.substr(0, req.url.lastIndexOf('/')));
+                this.clearCache(req.url.substring(0, req.url.lastIndexOf('/')));
                 break;
             default:
                 break;
