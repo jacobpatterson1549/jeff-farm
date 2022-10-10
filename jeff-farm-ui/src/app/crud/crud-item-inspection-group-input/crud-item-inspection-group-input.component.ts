@@ -7,7 +7,7 @@ import { CrudItemInputComponent } from '../crud-item-input/crud-item-input.compo
 import { CrudItemInspection } from '../crud-item-inspection';
 import { CrudItemInspectionGroup } from '../crud-item-inspection-group';
 import { CrudItemInspectionGroupService } from '../crud-item-inspection-group.service';
-import { FormItem, FormItemType } from '../form-item';
+import { FormItem } from '../form-item';
 
 @Component({
   selector: 'app-crud-item-inspection-group-input',

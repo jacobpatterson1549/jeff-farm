@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { CrudChild } from '../crud/crud-child';
 import { CrudItemService } from '../crud/crud-item.service';
 import { ErrorMessagesService } from '../error-messages/error-messages.service';
-import { FarmService } from '../farm/farm.service';
 import { HeaderItem } from '../header/header-item';
 import { Hive } from './hive';
 

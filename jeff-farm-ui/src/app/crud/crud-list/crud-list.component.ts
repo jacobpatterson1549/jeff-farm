@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 
 import { CrudChild } from '../crud-child';
 import { CrudItem } from '../crud-item';
-import { CrudItemInspectionGroup } from '../crud-item-inspection-group';
 import { CrudItemMap } from '../crud-item-map';
 import { CrudItemService } from '../crud-item.service';
 
