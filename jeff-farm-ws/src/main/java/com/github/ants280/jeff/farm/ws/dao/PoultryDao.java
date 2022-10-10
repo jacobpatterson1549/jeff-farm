@@ -29,7 +29,8 @@ public class PoultryDao extends CrudItemDao<Poultry>
 			"create_poultry",
 			Arrays.asList(
 				new IntegerSqlFunctionParameter(Poultry.FARM_ID_COLUMN, poultry.getParentId()),
-				new StringSqlFunctionParameter(Poultry.NAME_COLUMN, poultry.getName())));
+				new StringSqlFunctionParameter(Poultry.NAME_COLUMN, poultry.getName())),
+			Poultry.ID_COLUMN);
 	}
 
 	@Override

@@ -10,7 +10,6 @@ import com.github.ants280.jeff.farm.ws.dao.api.crud.CrudItemDao;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.IntegerSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.StringSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.transformer.SimpleResultSetTransformer;
-import com.github.ants280.jeff.farm.ws.model.CrudItem;
 import com.github.ants280.jeff.farm.ws.model.User;
 import com.github.ants280.jeff.farm.ws.model.UserPasswordReplacement;
 import java.sql.ResultSet;
@@ -54,7 +53,7 @@ public class UserDao extends CrudItemDao<User>
 				new StringSqlFunctionParameter(User.LAST_NAME_COLUMN,
 					user.getLastName())),
 			new SimpleResultSetTransformer<>(resultSet -> resultSet.getInt(
-				CrudItem.ID_COLUMN)),
+				User.ID_COLUMN)),
 			null));  // unchecked create
 	}
 
@@ -102,7 +101,7 @@ public class UserDao extends CrudItemDao<User>
 			"update_user_password",
 			Arrays.asList(
 				new IntegerSqlFunctionParameter(
-					UserPasswordReplacement.ID_COLUMN,
+					User.ID_COLUMN,
 					userPasswordReplacement.getId()),
 				new StringSqlFunctionParameter(
 					User.PASSWORD_COLUMN,

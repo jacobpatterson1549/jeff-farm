@@ -30,7 +30,8 @@ public class HiveDao extends CrudItemDao<Hive>
 				Arrays.asList(
 						new IntegerSqlFunctionParameter(Hive.FARM_ID_COLUMN, hive.getParentId()),
 						new StringSqlFunctionParameter(Hive.NAME_COLUMN, hive.getName()),
-						new IntegerSqlFunctionParameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger())));
+						new IntegerSqlFunctionParameter(Hive.QUEEN_COLOR_COLUMN, hive.getQueenColorInteger())),
+				Hive.ID_COLUMN);
 	}
 
 	@Override

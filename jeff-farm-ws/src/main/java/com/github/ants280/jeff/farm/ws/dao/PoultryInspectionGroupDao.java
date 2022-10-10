@@ -63,7 +63,7 @@ public class PoultryInspectionGroupDao
 				.stream()
 				.map(itemParameterMapper)
 				.collect(Collectors.toList()),
-			PoultryInspectionGroup.ID_COLUMN,
+			PoultryInspection.ID_COLUMN,
 			PoultryInspection.GROUP_ID_COLUMN);
 	}
 

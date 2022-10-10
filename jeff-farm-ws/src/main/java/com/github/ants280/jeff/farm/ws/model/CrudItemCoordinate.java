@@ -2,6 +2,9 @@ package com.github.ants280.jeff.farm.ws.model;
 
 public class CrudItemCoordinate extends CrudItem<CrudItemCoordinate>
 {
+	public static final String ID_COLUMN = "id";
+	public static final String CREATED_DATE_COLUMN = "created_date";
+	public static final String MODIFIED_DATE_COLUMN = "modified_date";
 	public static final String MAP_ID_COLUMN = "map_id"; // parent id
 	public static final String LATITUDE_COLUMN = "latitude";
 	public static final String LONGITUDE_COLUMN = "longitude";

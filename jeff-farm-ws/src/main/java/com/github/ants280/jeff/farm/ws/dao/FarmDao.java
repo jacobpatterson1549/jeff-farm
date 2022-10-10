@@ -29,7 +29,8 @@ public class FarmDao extends CrudItemDao<Farm>
 				"create_farm",
 				Arrays.asList(
 						new StringSqlFunctionParameter(Farm.NAME_COLUMN, farm.getName()),
-						new StringSqlFunctionParameter(Farm.LOCATION_COLUMN, farm.getLocation())));
+						new StringSqlFunctionParameter(Farm.LOCATION_COLUMN, farm.getLocation())),
+				Farm.ID_COLUMN);
 	}
 
 	@Override

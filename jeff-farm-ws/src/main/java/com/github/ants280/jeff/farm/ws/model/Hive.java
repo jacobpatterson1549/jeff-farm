@@ -6,6 +6,10 @@ import javax.json.bind.annotation.JsonbTransient;
 
 public class Hive extends CrudItem<Hive>
 {
+	public static final String ID_COLUMN = "id";
+	public static final String CREATED_DATE_COLUMN = "created_date";
+	public static final String MODIFIED_DATE_COLUMN = "modified_date";
+	public static final String CAN_DELETE_ITEM = "can_delete";
 	public static final String FARM_ID_COLUMN = "farm_id"; // parent column
 	public static final String NAME_COLUMN = "name";
 	public static final String QUEEN_COLOR_COLUMN = "queen_color";

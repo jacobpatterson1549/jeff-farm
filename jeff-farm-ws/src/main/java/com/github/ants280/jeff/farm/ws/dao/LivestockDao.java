@@ -29,7 +29,8 @@ public class LivestockDao extends CrudItemDao<Livestock>
 			"create_livestock",
 			Arrays.asList(
 				new IntegerSqlFunctionParameter(Livestock.FARM_ID_COLUMN, livestock.getParentId()),
-				new StringSqlFunctionParameter(Livestock.NAME_COLUMN, livestock.getName())));
+				new StringSqlFunctionParameter(Livestock.NAME_COLUMN, livestock.getName())),
+			Livestock.ID_COLUMN);
 	}
 
 	@Override

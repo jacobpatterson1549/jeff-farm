@@ -9,7 +9,6 @@ import com.github.ants280.jeff.farm.ws.dao.api.parameter.IntegerSqlFunctionParam
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.SqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.parameter.StringSqlFunctionParameter;
 import com.github.ants280.jeff.farm.ws.dao.api.transformer.SimpleResultSetTransformer;
-import com.github.ants280.jeff.farm.ws.model.CrudItem;
 import com.github.ants280.jeff.farm.ws.model.FarmPermission;
 import com.github.ants280.jeff.farm.ws.model.User;
 import java.sql.ResultSet;
@@ -51,7 +50,7 @@ public class FarmPermissionDao extends CrudItemDao<FarmPermission>
 			= new SimpleCommandSqlFunctionCall<>("create_farm_permission",
 			createFarmPermissionInParameters,
 			new SimpleResultSetTransformer<>(resultSet -> resultSet.getInt(
-				CrudItem.ID_COLUMN)),
+				FarmPermission.ID_COLUMN)),
 			userIdDao);
 		return this.execute(
 			(userId, createdFarmPermissionId) -> createdFarmPermissionId,

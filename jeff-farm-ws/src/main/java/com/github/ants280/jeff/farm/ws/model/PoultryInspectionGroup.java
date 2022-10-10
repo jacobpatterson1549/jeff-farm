@@ -5,6 +5,9 @@ import java.util.List;
 public class PoultryInspectionGroup
 	extends CrudItemInspectionGroup<PoultryInspection, PoultryInspectionGroup>
 {
+	public static final String ID_COLUMN = "id";
+	public static final String CREATED_DATE_COLUMN = "created_date";
+	public static final String MODIFIED_DATE_COLUMN = "modified_date";
 	public static final String FARM_ID_COLUMN = "farm_id"; // parent column
 	public static final String NOTES_COLUMN = "notes";
 	private List<PoultryInspection> items;

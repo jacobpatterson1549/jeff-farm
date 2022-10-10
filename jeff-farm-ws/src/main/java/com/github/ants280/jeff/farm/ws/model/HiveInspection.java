@@ -2,6 +2,12 @@ package com.github.ants280.jeff.farm.ws.model;
 
 public class HiveInspection extends CrudItemInspection<Hive, HiveInspection>
 {
+	public static final String ID_COLUMN = "id";
+	public static final String CREATED_DATE_COLUMN = "created_date";
+	public static final String MODIFIED_DATE_COLUMN = "modified_date";
+	public static final String GROUP_ID_COLUMN = "group_id";
+	public static final String TARGET_ID_COLUMN = "target_id";
+	public static final String TARGET_NAME_COLUMN = "target_name";
 	public static final String QUEEN_SEEN_COLUMN = "queen_seen";
 	public static final String EGGS_SEEN_COLUMN = "eggs_seen";
 	public static final String LAYING_PATTERN_STARS_COLUMN = "laying_pattern_stars";

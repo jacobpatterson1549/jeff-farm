@@ -35,14 +35,13 @@ public abstract class CrudItemDao<T extends CrudItem<T>> extends SqlFunctionDao
 	protected abstract T mapRow(ResultSet rs) throws SQLException;
 
 	protected int executeCreate(
-		String functionName, List<SqlFunctionParameter<?>> inParameters)
+		String functionName, List<SqlFunctionParameter<?>> inParameters, String idColumn)
 	{
 		SqlFunctionCall<Integer>
 			functionCall
 			= new SimpleCommandSqlFunctionCall<>(functionName,
 			inParameters,
-			new SimpleResultSetTransformer<>(resultSet -> resultSet.getInt(
-				CrudItem.ID_COLUMN)),
+			new SimpleResultSetTransformer<>(resultSet -> resultSet.getInt(idColumn)),
 			userIdDao);
 		return this.execute(functionCall);
 	}

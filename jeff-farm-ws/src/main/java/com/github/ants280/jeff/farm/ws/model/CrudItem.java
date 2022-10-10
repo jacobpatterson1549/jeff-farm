@@ -9,10 +9,6 @@ import javax.json.bind.annotation.JsonbTransient;
 
 public abstract class CrudItem<T extends CrudItem<T>>
 {
-	public static final String ID_COLUMN = "id";
-	public static final String CREATED_DATE_COLUMN = "created_date";
-	public static final String MODIFIED_DATE_COLUMN = "modified_date";
-	public static final String CAN_DELETE_ITEM = "can_delete";
 	private static final DateTimeFormatter DATE_FORMAT
 		= DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL)
 		.withLocale(Locale.getDefault())

@@ -4,6 +4,10 @@ import javax.json.bind.annotation.JsonbTransient;
 
 public class User extends CrudItem<User>
 {
+	public static final String ID_COLUMN = "id";
+	public static final String CREATED_DATE_COLUMN = "created_date";
+	public static final String MODIFIED_DATE_COLUMN = "modified_date";
+	public static final String CAN_DELETE_ITEM = "can_delete";
 	public static final String USER_NAME_COLUMN = "user_name";
 	// The name of the column containing passwords, is not a hardcoded password.
 	@SuppressWarnings("squid:S2068")

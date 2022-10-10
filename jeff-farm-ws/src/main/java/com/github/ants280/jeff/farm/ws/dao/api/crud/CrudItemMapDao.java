@@ -61,7 +61,7 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 			Arrays.asList(
 				new IntegerSqlFunctionParameter(CrudItemMap.ID_COLUMN, crudItemMap.getParentId()),
 				new IntegerSqlFunctionParameter(CrudItemMap.TARGET_ID_COLUMN, crudItemMap.getTargetId())),
-			new SimpleResultSetTransformer<>(rs -> rs.getInt(CrudItem.ID_COLUMN)),
+			new SimpleResultSetTransformer<>(rs -> rs.getInt(CrudItemMap.ID_COLUMN)),
 			parentId -> this.setParentId(parentId, coordinatesInParameters),
 			userIdDao);
 		SqlFunctionCall<Void>
@@ -106,10 +106,10 @@ public abstract class CrudItemMapDao extends SqlFunctionDao
 	{
 		String readMapFunctionName = String.format("read_%s_maps", crudItemName);
 		List<SqlFunctionParameter<?>> readMapsInParameters = Collections.singletonList(
-			new IntegerSqlFunctionParameter(CrudItem.ID_COLUMN, targetId)); // TODO: should be parentId!!! (+all parameters on read-list functions)
+			new IntegerSqlFunctionParameter(CrudItemMap.ID_COLUMN, targetId)); // TODO: should be parentId!!! (+all parameters on read-list functions)
 		String readCoordinatesFunctionName = String.format("read_%s_coordinates_for_farm", crudItemName);
 		List<SqlFunctionParameter<?>> readCoordinatesInParameters = Collections.singletonList(
-			new IntegerSqlFunctionParameter(CrudItem.ID_COLUMN, targetId));
+			new IntegerSqlFunctionParameter(CrudItemMap.ID_COLUMN, targetId));
 
 		SimpleCommandSqlFunctionCall<List<CrudItemMap>>
 			readGroupFunctionCall

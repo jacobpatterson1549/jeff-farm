@@ -4,6 +4,10 @@ import java.util.List;
 
 public class CrudItemMap extends CrudItem<CrudItemMap>
 {
+	public static final String ID_COLUMN = "id";
+	public static final String CREATED_DATE_COLUMN = "created_date";
+	public static final String MODIFIED_DATE_COLUMN = "modified_date";
+	public static final String CAN_DELETE_ITEM = "can_delete";
 	public static final String TARGET_ID_COLUMN = "target_id";
 	public static final String TARGET_NAME_COLUMN = "target_name";
 	private int targetId;
