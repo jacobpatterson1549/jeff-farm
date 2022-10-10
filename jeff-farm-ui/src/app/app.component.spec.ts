@@ -1,4 +1,5 @@
 import { async, TestBed } from '@angular/core/testing';
+import {APP_BASE_HREF} from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +11,9 @@ import { PageNotFoundComponent } from './page-not-found.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [
+        { provide: APP_BASE_HREF, useValue: '/'},
+      ],
       declarations: [
         AppComponent,
         PageNotFoundComponent,
