@@ -2,6 +2,20 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli).
 
+## Install old versions
+
+The application requires legacy versions of node, npm, and ng.
+Install them with the commands below to match the versions in [package.json](package.json).
+This uses the [n](https://github.com/tj/n) command.
+
+```bash
+
+sudo npm install -g n
+sudo n 10.15.3
+sudo npm install -g @angular/cli@9.1.10
+npm install
+```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
