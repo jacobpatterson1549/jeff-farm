@@ -24,3 +24,7 @@ input {
 fa-icon {
     margin: .5em;
 }
+
+table > caption {
+    display: none;
+}
