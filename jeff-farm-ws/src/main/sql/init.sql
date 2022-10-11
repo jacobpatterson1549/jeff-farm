@@ -1,6 +1,6 @@
 -- $ sudo mysql
 CREATE DATABASE jeff_farm_db;
-CREATE USER farmer with PASSWORD 'flint5+0N3';
+CREATE USER farmer with PASSWORD '???';
 --GRANT ALL PRIVILEGES ON JEFF_FARM_DB TO farmer;
 -- exit
 
